@@ -1,0 +1,9 @@
+<h2>Verify Offer</h2>
+
+<p>Name: <%= offer.fullName %></p>
+<p>Email: <%= offer.email %></p>
+<p>Project: <%= offer.project %></p>
+
+<form action="/admin/offer/verify/<%= offer.offerId %>" method="POST">
+    <button type="submit">Verify & Approve</button>
+</form>

@@ -86,6 +86,177 @@ const getPdfsCount = async (req, res) => {
     res.status(500).json({ error: "Failed to fetch PDF count" });
   }
 };
+
+// user casses data 
+const Teacher = require("../models/Teacher");
+const Organisation = require("../models/Organisation");
+const bcrypt = require("bcryptjs");
+
+
+// ================= GET ALL USERS =================
+const getAllUsers = async (req, res) => {
+  try {
+
+    const students = await User.find().lean();
+    const teachers = await Teacher.find().lean();
+    const organisations = await Organisation.find().lean();
+
+    const allUsers = [
+      ...students.map(u => ({ ...u, userType: "student" })),
+      ...teachers.map(u => ({ ...u, userType: "teacher" })),
+      ...organisations.map(u => ({ ...u, userType: "organisation" }))
+    ];
+
+    res.json(allUsers);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching users" });
+  }
+};
+
+
+// ================= UPDATE USER =================
+const updateUser = async (req, res) => {
+
+  try {
+
+    const { id, userType } = req.params;
+    const { name, email, role, password } = req.body;
+
+    let Model;
+
+    if (userType === "student") Model = User;
+    if (userType === "teacher") Model = Teacher;
+    if (userType === "organisation") Model = Organisation;
+
+    let updateData = {
+      name,
+      email,
+      role
+    };
+
+    // 🔐 password only update if provided
+    if (password && password.trim() !== "") {
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      updateData.password = hashedPassword;
+
+    }
+
+    await Model.findByIdAndUpdate(id, updateData);
+
+    res.json({ success: true });
+
+  } catch (error) {
+
+    console.error(error);
+    res.json({ success: false });
+
+  }
+
+};
+
+
+// ================= DELETE USER =================
+const deleteUser = async (req, res) => {
+
+  try {
+
+    const { id, userType } = req.params;
+
+    let Model;
+
+    if (userType === "student") Model = User;
+    if (userType === "teacher") Model = Teacher;
+    if (userType === "organisation") Model = Organisation;
+
+    await Model.findByIdAndDelete(id);
+
+    res.json({ success: true });
+
+  } catch (error) {
+    console.error(error);
+    res.json({ success: false });
+  }
+};
+// ================= OPEN EDIT PAGE =================
+
+const editUserPage = async (req,res)=>{
+
+  try{
+
+    const {id,userType} = req.params;
+
+    let Model;
+
+    if(userType==="student") Model = User;
+    if(userType==="teacher") Model = Teacher;
+    if(userType==="organisation") Model = Organisation;
+
+    const user = await Model.findById(id);
+
+    res.render("Admin/users/edit-user",{
+      user,
+      userType
+    });
+
+  }catch(err){
+
+    console.log(err);
+    res.send("User not found");
+
+  }
+
+};
+
+
+
+// ================= UPDATE FROM FORM =================
+const updateUserFromForm = async (req,res)=>{
+
+  try{
+
+    const {id,userType} = req.params;
+    const {name,email,role,password} = req.body;
+
+    let Model;
+
+    if(userType==="student") Model = User;
+    if(userType==="teacher") Model = Teacher;
+    if(userType==="organisation") Model = Organisation;
+
+    let user = await Model.findById(id);
+
+    if(!user){
+      return res.send("User not found");
+    }
+
+    user.name = name;
+    user.email = email;
+    user.role = role;
+
+    // 🔥 password change
+    if(password && password.trim() !== ""){
+
+      const hashedPassword = await bcrypt.hash(password,10);
+      user.password = hashedPassword;
+
+    }
+
+    await user.save();
+
+    res.redirect("/admin/dashboard");
+
+  }catch(err){
+
+    console.log(err);
+    res.send("Update failed");
+
+  }
+
+};
 module.exports = {
   addCertificate,
   getRegistrationsCount,
@@ -95,4 +266,11 @@ module.exports = {
   getOrganisationCount,
   getEbooksCount,
   getPdfsCount,
+
+  getAllUsers,
+  updateUser,
+  deleteUser,
+
+  editUserPage,
+  updateUserFromForm
 };

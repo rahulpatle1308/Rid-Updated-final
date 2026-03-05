@@ -117,7 +117,6 @@ const ensureUploadDirs = () => {
     });
 };
 ensureUploadDirs();
-
 // ========== ADDITIONAL MIDDLEWARE ==========
 const configureMiddleware = () => {
   app.use(cookieParser());
@@ -296,10 +295,6 @@ app.listen = function () {
 
   app.get("/student", authenticateJWT, roleMiddleware("student"), (req, res) => {
     res.sendFile(path.join(__dirname, "public", "student.html"));
-  });
-
-  app.get("/admin", authenticateJWT, roleMiddleware("admin"), (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "Admin/admin.html"));
   });
 
   app.get("/reset-password", (req, res) => {
@@ -521,7 +516,30 @@ app.use("/", previousRoutes);
 
 app.use("/uploads", express.static("uploads"));
 
-// ======= MAIN ROUTES (404 is inside this) =======
+// ======= MAIN ROUTES (Admin Routes) =======
+const adminAuthRoutes = require("./routes/adminAuthRoutes");
+const requireAdmin = require("./middleware/requireAdmin");
+app.use("/admin", adminAuthRoutes);
+app.get("/admin/dashboard", requireAdmin, (req, res) => {
+  res.render("Admin/admin", {
+    admin: req.admin
+  });
+});
+app.get("/offerlatter",(req,res)=>{
+  res.render("Admin/offerlatter/offerlatter-form.ejs")
+})
+
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
+
+const offerRoutes = require("./routes/offerRoutes");
+app.use("/admin/offer", offerRoutes);
+const adminUserRoutes = require("./routes/adminUserRoutes");
+
+app.use("/api/admin", adminUserRoutes);
+
+
 
 
 

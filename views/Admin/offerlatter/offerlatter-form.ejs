@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>✨ creative offer · letter (no phone · month/year) ✨</title>
+    <!-- Animate.css & Material Symbols -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(165deg, #e8def0 0%, #f9e7f2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.2rem;
+            position: relative;
+        }
+
+        /* floating blobs */
+        body::before {
+            content: '';
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle at 20% 30%, rgba(255, 200, 220, 0.5), transparent 60%);
+            top: 10px;
+            left: -50px;
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle at 80% 70%, rgba(190, 160, 240, 0.4), transparent 70%);
+            bottom: 0;
+            right: -80px;
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* header */
+        .header {
+            width: 100%;
+            max-width: 1300px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 60px 20px 60px 20px;
+            padding: 0.9rem 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 15px 35px -10px rgba(90, 50, 120, 0.2);
+            z-index: 10;
+        }
+
+        .web-text {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            font-size: 0.9rem;
+            color: #2c1f3a;
+            font-weight: 500;
+        }
+
+        .web-text span {
+            font-weight: 700;
+            color: #4d2f6e;
+        }
+
+        .right-text {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 0.4rem 1rem;
+            border-radius: 40px 10px 40px 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #2c1d3b;
+            cursor: default;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+        }
+
+        .material-symbols-outlined {
+            font-size: 1.2rem;
+        }
+
+        /* main content */
+        .main-content {
+            max-width: 1100px;
+            width: 100%;
+            z-index: 20;
+        }
+
+        .logo {
+            margin-bottom: 1.5rem;
+        }
+
+        .logo img {
+            height: 70px;
+            filter: drop-shadow(0 6px 10px #c6b2dc);
+        }
+
+        .form-header {
+            margin-bottom: 2rem;
+        }
+
+        .form-title {
+            font-size: clamp(2rem, 6vw, 3rem);
+            font-weight: 800;
+            background: linear-gradient(130deg, #311b4b, #8b5ca6, #c6688c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .form-subtitle {
+            font-size: 1.1rem;
+            color: #4b3a60;
+            background: rgba(245, 235, 255, 0.5);
+            backdrop-filter: blur(4px);
+            padding: 0.6rem 2rem 0.6rem 1.8rem;
+            border-radius: 80px 12px 80px 12px;
+            width: fit-content;
+            border-left: 8px solid #b386c9;
+        }
+
+        /* form card */
+        .form-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 4rem 1.8rem 4rem 1.8rem;
+            padding: 2.5rem 2.2rem;
+            box-shadow: 0 30px 50px -20px #442f5a, 0 0 0 2px rgba(255, 255, 255, 0.7) inset;
+            border: 1px solid rgba(255, 240, 250, 0.9);
+            margin-bottom: 2rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem 1.8rem;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .field label {
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.3px;
+            color: #2a1d36;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .field label span {
+            color: #c53b6c;
+            font-size: 1.2rem;
+        }
+
+        .field label .material-symbols-outlined {
+            font-size: 1.4rem;
+            color: #9a6eb0;
+        }
+
+        .field input,
+        .field select {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(180, 150, 210, 0.3);
+            border-radius: 30px 8px 30px 8px;
+            padding: 1rem 1.4rem;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.2s;
+            font-weight: 500;
+            color: #1b1225;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.02);
+        }
+
+        .field input:focus,
+        .field select:focus {
+            border-color: #b175cf;
+            box-shadow: 0 12px 22px -14px #9b6eb3, 0 0 0 4px rgba(220, 180, 250, 0.4);
+            background: white;
+        }
+
+        /* mode group — three chips */
+        .mode-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            margin-top: 0.4rem;
+            background: rgba(250, 240, 255, 0.5);
+            padding: 1.2rem 1.4rem;
+            border-radius: 60px 16px 60px 16px;
+            border: 2px dashed rgba(170, 130, 200, 0.6);
+        }
+
+        .mode-option {
+            flex: 1 1 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: white;
+            padding: 0.9rem 1.4rem;
+            border-radius: 50px 12px 50px 12px;
+            font-weight: 600;
+            color: #2b1b36;
+            box-shadow: 0 8px 15px -6px rgba(110, 70, 150, 0.2);
+            border: 1px solid rgba(200, 170, 220, 0.6);
+            transition: 0.15s;
+            cursor: pointer;
+        }
+
+        .mode-option.selected {
+            background: #36234d;
+            color: white;
+            border-color: #b27ad0;
+            box-shadow: 0 12px 18px -8px #5c3992;
+        }
+
+        .mode-option input[type="radio"] {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #b794cf;
+            border-radius: 40% 60% 60% 40% / 50% 40% 60% 50%;
+            background: white;
+            transition: 0.1s;
+            margin: 0;
+        }
+
+        .mode-option input[type="radio"]:checked {
+            background: #cf9eff;
+            border-color: #3d2455;
+            transform: scale(1.15);
+            box-shadow: 0 0 0 3px #e9d0ff;
+        }
+
+        .mode-option.selected input[type="radio"]:checked {
+            background: white;
+            border-color: white;
+        }
+
+        /* duration row (two subfields side by side) */
+        .duration-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .duration-row .field {
+            flex: 1 1 120px;
+        }
+
+        /* create button */
+        .create-btn {
+            background: linear-gradient(125deg, #2c1a44, #674693, #b379b0);
+            border: none;
+            border-radius: 80px 16px 80px 16px;
+            padding: 1.3rem 2rem;
+            color: white;
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 25px 35px -15px #402b5c, 0 2px 0 0 #f2deff inset;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            width: 100%;
+            margin-top: 1.2rem;
+        }
+
+        .create-btn:hover {
+            transform: scale(1.02);
+            background: linear-gradient(125deg, #382358, #7b53ad, #c68fc4);
+            box-shadow: 0 30px 40px -12px #52377c;
+        }
+
+        .create-btn .material-symbols-outlined {
+            font-size: 2rem;
+        }
+
+        /* success card / ID card */
+        .success-card {
+            margin-top: 2.5rem;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            border-radius: 3rem 1.2rem 3rem 1.2rem;
+            padding: 2rem 2.2rem;
+            border: 2px solid white;
+            box-shadow: 0 25px 30px -20px #3d2d4f;
+            display: none;
+            animation: fadeInUp 0.5s;
+        }
+
+        .success-card.show {
+            display: block;
+        }
+
+        .success-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1d092e;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .id-badge {
+            background: #322048;
+            color: #f0e2ff;
+            padding: 0.5rem 2rem;
+            border-radius: 60px 12px 60px 12px;
+            font-family: monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            display: inline-block;
+            border: 2px solid #dbbaff;
+            margin: 0.8rem 0;
+        }
+
+        .copy-btn {
+            background: #b8a0d0;
+            border: none;
+            padding: 0.6rem 1.8rem;
+            border-radius: 40px 8px 40px 8px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            border: 1px solid white;
+            transition: 0.1s;
+        }
+
+        .copy-btn:hover {
+            background: #d0b5ea;
+        }
+
+        /* responsive */
+        @media (max-width: 700px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+            }
+
+            .full-width {
+                grid-column: span 1;
+            }
+
+            .mode-group {
+                flex-direction: column;
+            }
+
+            .duration-row {
+                flex-direction: column;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: start;
+                gap: 0.8rem;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .form-card {
+                padding: 1.8rem 1.2rem;
+            }
+        }
+
+        .required-note {
+            font-size: 0.9rem;
+            color: #6a4f7a;
+            margin-top: 1.5rem;
+            border-top: 2px dotted #bba5cf;
+            padding-top: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header">
+            <div class="web-text">
+                <p>✨ <span>OfferLetter</span> by RID Creative</p>
+                <p>Helpline: <span>+91 98927 82728</span></p>
+                <p>Email: <span>offer@rid.org</span></p>
+            </div>
+            <div class="right-text">
+                <a class="link"><span class="material-symbols-outlined">important_devices</span> Main Content</a>
+                <a class="link">A⁺ A A⁻</a>
+                <a class="link"><span class="material-symbols-outlined">forum</span> Feedback</a>
+                <a class="link"><span class="material-symbols-outlined">support_agent</span> Support</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div class="logo">
+            <!-- creative logo placeholder (svg) -->
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%238b5ca6' /%3E%3Cpath d='M30 40 L50 25 L70 40 L70 65 L50 80 L30 65 Z' fill='%23f9e7f2' opacity='0.9'/%3E%3Ctext x='28' y='68' font-size='22' fill='%23301a44' font-weight='bold'%3ERID%3C/text%3E%3C/svg%3E"
+                alt="RID Logo" height="82px">
+        </div>
+
+        <div class="form-header">
+            <h1 class="form-title animate__animated animate__pulse">✨ create offer letter</h1>
+            <p class="form-subtitle">fill details & generate unique offer ID — <strong>month/year duration · three
+                    modes</strong></p>
+        </div>
+
+        <!-- creative form card (phone removed, duration month/year) -->
+        <div class="form-card">
+            <form id="offerForm" action="/admin/offer/create" method="POST">
+                <div class="form-grid">
+
+                    <!-- Full Name -->
+                    <div class="field full-width">
+                        <label>
+                            <span class="material-symbols-outlined">badge</span>
+                            Full Name <span>*</span>
+                        </label>
+                        <input type="text" name="fullName" placeholder="e.g. Ananya Sharma" required>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="field">
+                        <label>
+                            <span class="material-symbols-outlined">mail</span>
+                            Email <span>*</span>
+                        </label>
+                        <input type="email" name="email" placeholder="Enter Email" required>
+                    </div>
+
+                    <!-- Date of Birth -->
+                    <div class="field">
+                        <label>
+                            <span class="material-symbols-outlined">cake</span>
+                            Date of Birth <span>*</span>
+                        </label>
+                        <input type="date" name="dob" required>
+                    </div>
+
+                    <!-- Date of Joining -->
+                    <div class="field">
+                        <label>
+                            <span class="material-symbols-outlined">calendar_today</span>
+                            Date of Joining <span>*</span>
+                        </label>
+                        <input type="date" name="doj" required>
+                    </div>
+
+                    <!-- Issue Date -->
+                    <div class="field">
+                        <label>
+                            <span class="material-symbols-outlined">event</span>
+                            Issue Date <span>*</span>
+                        </label>
+                        <input type="date" name="issueDate" required>
+                    </div>
+                    <!-- Project Name -->
+                    <div class="field full-width">
+                        <label>
+                            <span class="material-symbols-outlined">assignment</span>
+                            Project Name <span>*</span>
+                        </label>
+                        <input type="text" name="project" placeholder="e.g. Nova design system" required>
+                    </div>
+
+                    <!-- Duration -->
+                    <div class="full-width duration-row">
+                        <div class="field">
+                            <label>
+                                <span class="material-symbols-outlined">hourglass_empty</span>
+                                Duration Value <span>*</span>
+                            </label>
+                            <input type="number" name="durationNum" min="1" max="60" required>
+                        </div>
+
+                        <div class="field">
+                            <label>
+                                <span class="material-symbols-outlined">calendar_month</span>
+                                Duration Unit <span>*</span>
+                            </label>
+                            <select name="durationUnit" required>
+                                <option value="">Select</option>
+                                <option value="months">Months</option>
+                                <option value="years">Years</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Work Mode -->
+                    <div class="field full-width">
+                        <label>
+                            <span class="material-symbols-outlined">lan</span>
+                            Work Mode <span>*</span>
+                        </label>
+
+                        <div class="mode-group">
+
+                            <label class="mode-option">
+                                <input type="radio" name="workMode" value="Remote" required>
+                                🌍 Remote
+                            </label>
+
+                            <label class="mode-option">
+                                <input type="radio" name="workMode" value="On-site">
+                                🏢 On-site
+                            </label>
+
+                            <label class="mode-option">
+                                <input type="radio" name="workMode" value="Hybrid">
+                                🔄 Hybrid
+                            </label>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="create-btn">
+                    <span class="material-symbols-outlined">cognition</span>
+                    CREATE OFFER & GENERATE ID
+                    <span class="material-symbols-outlined">auto_awesome</span>
+                </button>
+
+                <div class="required-note">
+                    <span style="color:#c53b6c;">*</span> Required fields
+                </div>
+            </form>
+        </div>
+
+        <!-- success / ID display (hidden initially) -->
+        <div class="success-card" id="successCard">
+            <div class="success-title">
+                <span class="material-symbols-outlined" style="font-size:2.5rem;">celebration</span> offer letter
+                generated!
+            </div>
+            <p style="font-size:1.2rem; margin-bottom: 0.5rem;">your unique offer ID:</p>
+            <div class="id-badge" id="offerIdDisplay">OFF-ABCD-2025</div>
+            <button class="copy-btn" id="copyIdBtn"><span class="material-symbols-outlined">content_copy</span> copy
+                ID</button>
+            <p style="margin-top:1.5rem; color:#3b294b;">✨ offer details have been recorded. keep this ID for reference.
+            </p>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const form = document.getElementById("offerForm");
+
+            /* ==============================
+               WORK MODE SELECT DESIGN
+            ============================== */
+
+            const modeOptions = document.querySelectorAll(".mode-option");
+
+            function highlightMode() {
+                modeOptions.forEach(opt => opt.classList.remove("selected"));
+
+                const checked = document.querySelector("input[name='workMode']:checked");
+                if (checked) {
+                    checked.closest(".mode-option").classList.add("selected");
+                }
+            }
+
+            modeOptions.forEach(option => {
+                option.addEventListener("click", function () {
+                    const radio = this.querySelector("input[type='radio']");
+                    radio.checked = true;
+                    highlightMode();
+                });
+            });
+
+            document.querySelectorAll("input[name='workMode']").forEach(radio => {
+                radio.addEventListener("change", highlightMode);
+            });
+
+            highlightMode();
+
+            /* ==============================
+               FORM VALIDATION (ONLY)
+               NO preventDefault
+            ============================== */
+
+            form.addEventListener("submit", function (e) {
+
+                const fullName = form.querySelector("input[name='fullName']").value.trim();
+                const email = form.querySelector("input[name='email']").value.trim();
+                const dob = form.querySelector("input[name='dob']").value;
+                const doj = form.querySelector("input[name='doj']").value;
+                const project = form.querySelector("input[name='project']").value.trim();
+                const durationNum = form.querySelector("input[name='durationNum']").value;
+                const durationUnit = form.querySelector("select[name='durationUnit']").value;
+                const workMode = document.querySelector("input[name='workMode']:checked");
+
+                if (!fullName || !email || !dob || !doj || !project || !durationNum || !durationUnit || !workMode) {
+                    e.preventDefault(); // block only if empty
+                    alert("⚠ Please fill all required fields.");
+                    return;
+                }
+
+                // If everything filled → allow backend POST normally
+                console.log("Submitting form to backend...");
+            });
+
+        });
+    </script>
+</body>
+
+</html>

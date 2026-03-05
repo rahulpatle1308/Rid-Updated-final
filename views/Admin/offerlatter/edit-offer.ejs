@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Offer · Creative Admin</title>
+    <!-- Google Font & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f0f5fe 0%, #e9effa 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        /* main card – same style as admin-card but narrower */
+        .edit-card {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 2rem;
+            box-shadow: 0 25px 45px -12px rgba(0,30,70,0.25),
+                        0 10px 20px -8px rgba(0,0,0,0.1);
+            padding: 2rem 2rem 2.5rem;
+            border: 1px solid rgba(255,255,255,0.7);
+        }
+
+        /* header with icon */
+        .form-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2.2rem;
+        }
+
+        .form-header i {
+            font-size: 2rem;
+            background: white;
+            padding: 0.8rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 18px -8px rgba(40,80,150,0.3);
+            color: #1f3a5f;
+        }
+
+        .form-header h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            background: linear-gradient(145deg, #162b45, #1f3a5f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        /* form grid – 2 columns on wide screens, 1 on mobile */
+        .creative-form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem 2rem;
+        }
+
+        /* full-width items (like buttons or special rows) */
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* form group */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #27496e;
+            letter-spacing: 0.02em;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .form-group label i {
+            color: #3e7bda;
+            font-size: 0.9rem;
+            width: 1.2rem;
+        }
+
+        /* input, select styling */
+        .form-control {
+            background: white;
+            border: 1.5px solid #e1e8f0;
+            border-radius: 18px;
+            padding: 0.85rem 1.2rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #162b45;
+            transition: all 0.2s;
+            width: 100%;
+            outline: none;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .form-control:focus {
+            border-color: #3e7bda;
+            box-shadow: 0 10px 20px -16px #3e7bda, 0 0 0 3px rgba(62,123,218,0.15);
+        }
+
+        /* special handling for duration group (inline number + select) */
+        .duration-group {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+        }
+
+        .duration-group .form-control {
+            flex: 2;
+        }
+
+        .duration-group select {
+            flex: 1;
+            background: white;
+            cursor: pointer;
+        }
+
+        /* button */
+        .btn-submit {
+            background: linear-gradient(105deg, #1f9a5a, #17874d);
+            border: none;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 2rem;
+            border-radius: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            cursor: pointer;
+            box-shadow: 0 15px 25px -10px #1f9a5a80;
+            transition: all 0.2s;
+            border: 1px solid rgba(255,255,255,0.2);
+            width: auto;
+            min-width: 220px;
+        }
+
+        .btn-submit:hover {
+            background: linear-gradient(105deg, #17874d, #0f6a3b);
+            transform: translateY(-3px);
+            box-shadow: 0 22px 30px -12px #1f9a5a;
+        }
+
+        .btn-submit i {
+            font-size: 1.2rem;
+        }
+
+        /* responsive break */
+        @media (max-width: 700px) {
+            body { padding: 1rem; }
+            .edit-card { padding: 1.5rem; }
+            .form-header h2 { font-size: 1.7rem; }
+            .creative-form { grid-template-columns: 1fr; gap: 1.2rem; }
+            .btn-submit { width: 100%; }
+        }
+
+        /* small polish for selects */
+        select.form-control {
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%233e7bda" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1rem;
+        }
+
+        /* date input custom icon (optional) */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            opacity: 0.5;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="edit-card">
+        <div class="form-header">
+            <i class="fas fa-pen-to-square"></i>
+            <h2>Edit Offer Letter</h2>
+        </div>
+
+        <form action="/admin/offer/update/<%= offer._id %>" method="POST" class="creative-form">
+            <!-- Full Name -->
+            <div class="form-group">
+                <label><i class="fas fa-user"></i> Full Name</label>
+                <input type="text" name="fullName" class="form-control" value="<%= offer.fullName %>" required>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label><i class="fas fa-envelope"></i> Email</label>
+                <input type="email" name="email" class="form-control" value="<%= offer.email %>" required>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="form-group">
+                <label><i class="fas fa-cake-candles"></i> Date of Birth</label>
+                <input type="date" name="dob" class="form-control"
+                       value="<%= offer.dob ? offer.dob.toISOString().split('T')[0] : '' %>">
+            </div>
+
+            <!-- Issue Date -->
+            <div class="form-group">
+                <label><i class="fas fa-calendar-check"></i> Issue Date</label>
+                <input type="date" name="issueDate" class="form-control"
+                       value="<%= offer.issueDate ? offer.issueDate.toISOString().split('T')[0] : '' %>" required>
+            </div>
+
+            <!-- Date of Joining -->
+            <div class="form-group">
+                <label><i class="fas fa-briefcase"></i> Date of Joining</label>
+                <input type="date" name="doj" class="form-control"
+                       value="<%= offer.doj ? offer.doj.toISOString().split('T')[0] : '' %>" required>
+            </div>
+
+            <!-- Project -->
+            <div class="form-group">
+                <label><i class="fas fa-diagram-project"></i> Project</label>
+                <input type="text" name="project" class="form-control" value="<%= offer.project %>" required>
+            </div>
+
+            <!-- Duration (combined number + unit) -->
+            <div class="form-group full-width">
+                <label><i class="fas fa-hourglass-half"></i> Duration</label>
+                <div class="duration-group">
+                    <input type="number" name="durationNum" class="form-control"
+                           value="<%= offer.duration ? offer.duration.split(' ')[0] : '' %>" required placeholder="e.g. 6">
+                    <select name="durationUnit" class="form-control">
+                        <option value="Months" <%= offer.duration && offer.duration.includes("Months") ? "selected" : "" %>>Months</option>
+                        <option value="Years" <%= offer.duration && offer.duration.includes("Years") ? "selected" : "" %>>Years</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Work Mode + Status in one row? we'll keep two columns but they are already two fields, we can put them side by side naturally because grid is 2col -->
+            <!-- Work Mode -->
+            <div class="form-group">
+                <label><i class="fas fa-globe"></i> Work Mode</label>
+                <select name="workMode" class="form-control">
+                    <option value="Remote" <%= offer.workMode === "Remote" ? "selected" : "" %>>Remote</option>
+                    <option value="On-site" <%= offer.workMode === "On-site" ? "selected" : "" %>>On-site</option>
+                    <option value="Hybrid" <%= offer.workMode === "Hybrid" ? "selected" : "" %>>Hybrid</option>
+                </select>
+            </div>
+
+            <!-- Status -->
+            <div class="form-group">
+                <label><i class="fas fa-circle-check"></i> Status</label>
+                <select name="status" class="form-control">
+                    <option value="Pending" <%= offer.status === "Pending" ? "selected" : "" %>>Pending</option>
+                    <option value="Verified" <%= offer.status === "Verified" ? "selected" : "" %>>Verified</option>
+                </select>
+            </div>
+
+            <!-- Submit button - full width -->
+            <div class="full-width" style="display: flex; justify-content: flex-end; margin-top: 1rem;">
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-cloud-upload-alt"></i> Update Offer
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

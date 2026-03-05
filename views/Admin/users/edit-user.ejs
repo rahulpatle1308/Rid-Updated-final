@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Edit User</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#f5f6fa;
+padding:40px;
+}
+
+.form-box{
+max-width:500px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 10px 20px rgba(0,0,0,0.1);
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin:10px 0;
+border:1px solid #ccc;
+border-radius:6px;
+}
+
+button{
+padding:10px 20px;
+background:#4CAF50;
+border:none;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}
+
+button:hover{
+background:#45a049;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="form-box">
+
+<h2>Edit User</h2>
+
+<form action="/api/admin/user/update/<%= userType %>/<%= user._id %>" method="POST">
+
+<label>Name</label>
+<input type="text" name="name" value="<%= user.name %>" required>
+
+
+<label>Email</label>
+<input type="email" name="email" value="<%= user.email %>" required>
+
+
+<label>Role</label>
+<select name="role">
+
+<option value="student" <%= user.role==="student"?"selected":"" %>>
+Student
+</option>
+
+<option value="teacher" <%= user.role==="teacher"?"selected":"" %>>
+Teacher
+</option>
+
+<option value="organisation" <%= user.role==="organisation"?"selected":"" %>>
+Organisation
+</option>
+
+<option value="admin" <%= user.role==="admin"?"selected":"" %>>
+Admin
+</option>
+
+</select>
+
+
+<label>New Password (optional)</label>
+<input type="password" name="password" placeholder="Leave blank if no change">
+
+<button type="submit">Update User</button>
+
+</form>
+
+</div>
+
+</body>
+</html>

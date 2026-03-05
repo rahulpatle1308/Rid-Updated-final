@@ -763,3 +763,90 @@ async function generateExperienceLetterPDF(app, filePath) {
     }
   });
 }
+
+
+// ================= ADMIN FUNCTIONS =================
+
+// // 📊 Stats
+exports.getStats = async (req, res) => {
+  try {
+    const total = await Application.countDocuments();
+    const completion = await Application.countDocuments({ certificateType: "CERTIFICATE_OF_COMPLETION" });
+    const experience = await Application.countDocuments({ certificateType: "EXPERIENCE_LETTER" });
+    const verified = await Application.countDocuments({ status: "VERIFIED" });
+
+    res.json({ total, completion, experience, verified });
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+// 📋 All Applications
+exports.getAllApplications = async (req, res) => {
+  try {
+    const apps = await Application.find().sort({ createdAt: -1 });
+    res.json(apps);
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+// 📝 Edit Form
+exports.editForm = async (req, res) => {
+  try {
+
+    const app = await Application.findById(req.params.id);
+
+    if (!app) {
+      return res.send("Application not found");
+    }
+
+    res.render("Admin/applications/edit-application", { app });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+};
+
+// 🔄 Update
+exports.updateApplication = async (req, res) => {
+  try {
+    await Application.findByIdAndUpdate(req.params.id, req.body);
+    res.redirect("/api/admin/list-page");
+  } catch (err) {
+    res.status(500).send("Update Error");
+  }
+};
+
+// ❌ Delete
+exports.deleteApplication = async (req, res) => {
+  try {
+    await Application.findByIdAndDelete(req.params.id);
+    res.redirect("/api/admin/list-page");
+  } catch (err) {
+    res.status(500).send("Delete Error");
+  }
+};
+// ✅ Admin Panel Verify
+exports.adminVerifyFromPanel = async (req, res) => {
+  try {
+
+    const app = await Application.findById(req.params.id);
+
+    if (!app) {
+      return res.send("Application not found");
+    }
+
+    app.status = "VERIFIED";
+    app.verifiedAt = new Date();
+
+    await app.save();
+
+    res.redirect("/api/admin/list-page");
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Verify Error");
+  }
+};
