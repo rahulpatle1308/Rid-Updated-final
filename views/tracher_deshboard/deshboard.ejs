@@ -10,7 +10,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
     <link rel="stylesheet" href="css\teacherDeshboard.css">
+    <style>
+        .gift-popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+.gift-popup-content{
+background:white;
+padding:30px;
+border-radius:10px;
+text-align:center;
+width:400px;
+}
+
+.gift-popup input{
+width:100%;
+padding:10px;
+margin-top:10px;
+}
+    </style>
 </head>
+
 <body>
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
@@ -949,6 +978,20 @@
         </div>
     </div>
 
+
+    <div id="giftPopup" class="gift-popup">
+    <div class="gift-popup-content">
+        <h2>🎉 Birthday Website Created</h2>
+
+        <input type="text" id="popupLink" readonly>
+
+        <div style="margin-top:15px;">
+            <button onclick="copyPopupLink()" class="btn btn-primary">Copy Link</button>
+            <button onclick="closeGiftPopup()" class="btn btn-outline">Close</button>
+        </div>
+    </div>
+</div>
+
     <!-- Toast Notification Container -->
     <div id="toastContainer"></div>
 
@@ -1114,7 +1157,7 @@
             currentPage = page;
             // ✅ MOBILE पर AUTOMATIC SIDEBAR CLOSE
             closeMobileSidebar();
-             // Load analytics test ranking
+            // Load analytics test ranking
             if (page === "analytics") {
                 loadTestRankingCards();
             }
@@ -2535,31 +2578,63 @@
 
             initializeStudentsPage();
         });
-        document.addEventListener("submit", async function (e) {
-            if (e.target.id === "giftForm") {
-                e.preventDefault();
+    document.addEventListener("submit", async function (e) {
+    if (e.target.id === "giftForm") {
+        e.preventDefault();
 
-                const formData = new FormData(e.target);
+        const formData = new FormData(e.target);
 
-                const res = await fetch("/create-gift", {
-                    method: "POST",
-                    body: formData
-                });
-
-                const data = await res.json();
-
-                const link = window.location.origin + data.url;
-
-                document.getElementById("generatedLink").value = link;
-                document.getElementById("result").style.display = "block";
-
-                // ❌ auto open removed
-                // window.open(link, "_blank");
-            }
+        const res = await fetch("/create-gift", {
+            method: "POST",
+            body: formData
         });
-        function logout() {
+
+        const data = await res.json();
+
+        console.log(data);   // 🔥 यह add करो
+
+        if (!data.success) {
+            alert("Gift create failed");
+            return;
+        }
+
+        const link = window.location.origin + data.url;
+
+        showGiftPopup(link);
+    }
+});
+       function logout() {
             window.location.href = "index.html";
         }
+
+        function copyLink() {
+            const linkInput = document.getElementById("generatedLink");
+
+            linkInput.select();
+            linkInput.setSelectionRange(0, 99999);
+
+            navigator.clipboard.writeText(linkInput.value);
+
+            alert("Link Copied Successfully!");
+        }
+
+        function showGiftPopup(link) {
+    document.getElementById("popupLink").value = link;
+    document.getElementById("giftPopup").style.display = "flex";
+}
+
+function closeGiftPopup() {
+    document.getElementById("giftPopup").style.display = "none";
+}
+
+function copyPopupLink() {
+    const link = document.getElementById("popupLink");
+
+    navigator.clipboard.writeText(link.value);
+
+    alert("Link Copied!");
+}
     </script>
 </body>
+
 </html>

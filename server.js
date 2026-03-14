@@ -16,19 +16,14 @@ const dashboardRoutes = require("./routes/dashboard-count-all-system.js");
 const candidateRoutes = require("./routes/candidateRoutes.js");
 
 
-
 // Load environment variables
 dotenv.config();
 
 // Initialize express app
 const app = express();
 const port = process.env.PORT || 9191;
-
-
 const http = require("http");
 const server = http.createServer(app);
-
-
 const mongoUrl = process.env.MONGODB_URI;
 
 console.log('🔗 Attempting MongoDB Atlas connection...');
@@ -121,6 +116,17 @@ ensureUploadDirs();
 const configureMiddleware = () => {
   app.use(cookieParser());
 
+  app.use(
+    fileUpload({
+      useTempFiles: false,
+      limits: { fileSize: 50 * 1024 * 1024 }
+    })
+  );
+
+  app.use(passport.initialize());
+  app.use(passport.session());
+  require("./config/passport")(passport);
+};
   // ❌ express-fileupload remove karo (multer use ho raha hai)
   // app.use(
   //   fileUpload({
@@ -130,10 +136,6 @@ const configureMiddleware = () => {
   //   })
   // );
 
-  app.use(passport.initialize());
-  app.use(passport.session());
-  require("./config/passport")(passport);
-};
 
 
 // ========== VIEW ENGINE SETUP ==========
@@ -142,6 +144,11 @@ const configureViews = () => {
   app.set("views", [path.join(__dirname, "views", 'ebook'), path.join(__dirname, "views")]);
   app.use(express.static(path.join(__dirname, "public")));
 };
+
+//=========================RTS MIDDLEWIRE=====================
+// ===== RTS MODULE CONNECT =====
+const rtsApp = require("./RTS/rtsmiddlewire");
+app.use("/rts", rtsApp);
 
 // ========== GLOBAL VARIABLES MIDDLEWARE ==========
 app.use((req, res, next) => {
@@ -164,7 +171,7 @@ app.use('/ebook', require('./routes/authebookRoutes'));
 // ========== WORKSHOP ROUTES (MOVE HERE) ==========
 const workshopRoutes = require('./routes/workshopRoutes');
 app.use('/api/workshop', workshopRoutes);
-app.use("/api/course", require("./RTS/routes/courseRoutes.js"));
+
 // ========== MAIN APPLICATION ROUTES ==========
 const configureRoutes = () => {
   // API Routes
@@ -390,13 +397,7 @@ configureMiddleware();
 configureViews();
 
 // ======= RTS AUTH ROUTES (MUST BE BEFORE 404) =======
-const signupRoutes = require("./RTS/routes/signupRoutes.js");
-const loginRoutes  = require("./RTS/routes/loginRoutes.js");
-const forgotPasswordRoutes = require("./RTS/routes/forgotPasswordRoutes.js");
 
-app.use("/api", signupRoutes);
-app.use("/api", loginRoutes);
-app.use("/api", forgotPasswordRoutes);
 
 //=============test routers
 const teacherRoutes = require("./routes/teacherRoutes");
@@ -423,6 +424,9 @@ app.use(teacherAnalyticsRoutess);
 
 app.get("/ebook", (req, res) => {
   res.render("ebook/dashboard");
+});
+app.get("/about", (req, res) => {
+  res.sendFile(path.join(process.cwd(), "public/about/about.html"));
 });
 
 
@@ -504,10 +508,15 @@ app.get("/com",(req,res)=>{
 app.use("/api/candidates", candidateRoutes);
 
 
-app.get("/research-dashboard",(req,res)=>{
-  res.render("organisation/research-dashboard.ejs")
+// app.get("/research-dashboard",(req,res)=>{
+//   res.render("organisation/research-dashboard.ejs")
 
-})
+// })
+
+
+// Research Paper Routes
+const researchPaperRoutes = require("./routes/research/research-paper");
+app.use("/", researchPaperRoutes);
 
 // ye previous year paper ke liye h
 
@@ -528,8 +537,6 @@ app.get("/admin/dashboard", requireAdmin, (req, res) => {
 app.get("/offerlatter",(req,res)=>{
   res.render("Admin/offerlatter/offerlatter-form.ejs")
 })
-
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
@@ -539,9 +546,39 @@ const adminUserRoutes = require("./routes/adminUserRoutes");
 
 app.use("/api/admin", adminUserRoutes);
 
+const service=require("./routes/service/servicerouter.js")
+app.use("/",service)
+
+const intership=require("./routes/intanships/intanshippage.js")
+app.use("/",intership)
 
 
+// service pages auto diteated logic routes
+const Lead = require("./models/Lead.js");
 
+app.post("/api/save-lead", async (req,res)=>{
+
+ try{
+
+ const lead = new Lead(req.body)
+
+ await lead.save()
+
+ res.json({
+   success:true
+ })
+
+ }catch(err){
+
+ console.log(err)
+
+ res.status(500).json({
+   success:false
+ })
+
+ }
+
+})
 
 configureRoutes();
 

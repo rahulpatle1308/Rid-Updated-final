@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title || 'RTS Dashboard' %></title>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+    <link rel="stylesheet" href="./css/header.css">
+    <link rel="stylesheet" href="./css/sidebar.css">
+    <link rel="stylesheet" href="./css/banner.css">
+    <link rel="stylesheet" href="./css/courses.css">
+    <link rel="stylesheet" href="./css/footer.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <%- include('partials/header') %>
+    
+    <!-- Sidebar -->
+    <%- include('partials/sidebar') %>
+    
+    <!-- Main Content -->
+    <main>
+     
+     
+        
+        <!-- Courses Grid -->
+        <%- include('partials/courses-grid') %>
+    </main>
+    
+    <!-- Footer -->
+    <%- include('partials/footer') %>
+    
+    <!-- External JavaScript -->
+    <script>
+        // Pass EJS variables to JavaScript
+        window.API_BASE_URL = "<%= typeof apiBaseUrl !== 'undefined' ? apiBaseUrl : '' %>";
+  window.USER_DATA = <%- JSON.stringify(user || {}) %>;
+    </script>
+    
+    <script src="./js/config.js"></script>
+    <script src="./js/visit-counter.js"></script>
+    <script src="./js/banner-slider.js"></script>
+    <script src="./js/search-filter.js"></script>
+    <script src="./js/ui-handlers.js"></script>
+    <script src="./js/dashboard.js"></script>
+    
+    <!-- Ionicons for footer icons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+body {
+  margin: 0;
+  font-family: Arial;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-box {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  width: 350px;
+}
+
+.auth-box h2 {
+  text-align: center;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background: #1e3c72;
+  color: white;
+  border: none;
+}
+
+a {
+  text-align: center;
+  display: block;
+  margin-top: 10px;
+}

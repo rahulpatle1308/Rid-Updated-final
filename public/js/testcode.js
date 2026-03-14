@@ -129,7 +129,7 @@ function submitQuiz() {
 
         // ✅ same result page open
         window.location.href =
-          "/RTS/public/Deshbord/category/test/submit-test.html";
+          "/teachermainsubmit/submit-test.html";
 
         return;
     }
@@ -151,8 +151,7 @@ function submitQuiz() {
         localStorage.setItem("notAttempted", notAttempted);
         localStorage.setItem("score", score);
 
-        window.location.href =
-          "/RTS/public/Deshbord/category/test/submit-student-test.html";
+        window.location.href ="/TestSubmitedStudent/submit-student-test.html";
     })
     .catch(err => {
         console.error("Submit Error:", err);

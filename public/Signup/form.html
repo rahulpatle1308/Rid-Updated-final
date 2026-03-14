@@ -374,6 +374,26 @@ document.querySelectorAll("input").forEach(i =>
 function goToLogin(){
   window.location.href = "/login";
 }
+
+
+window.addEventListener("load", () => {
+
+  const params = new URLSearchParams(window.location.search);
+  const roleParam = params.get("role");
+
+  if(roleParam){
+    const roleSelect = document.getElementById("role");
+    roleSelect.value = roleParam;
+
+    if(roleParam === "organisation"){
+      document.getElementById("orgSelection").style.display = "block";
+      isOrgSelected = false;
+    }
+
+    validateForm();
+  }
+
+});
 </script>
 
 </body>

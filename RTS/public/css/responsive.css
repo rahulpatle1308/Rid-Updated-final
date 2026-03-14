@@ -1,0 +1,302 @@
+/* ================= HIDE BANNER ON PHONE ================= */
+@media (max-width: 768px) {
+    .banner-main {
+        display: none !important;
+    }
+}
+
+/* RESPONSIVE STYLES (COURSES-RELATED HATAYE) */
+@media (max-width: 1300px) {
+    .dropdown-menu {
+        margin-left: 1100px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .nav-menu {
+        margin-left: 200px;
+    }
+
+    .main-nav {
+        margin-left: 600px;
+    }
+
+    .dropdown-menu {
+        margin-left: 880px;
+    }
+}
+
+@media (max-width: 992px) {
+    body {
+        padding-top: 90px;
+    }
+
+    .nav-container {
+        padding: 10px 15px;
+        height: auto;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-menu {
+        position: fixed;
+        top: 110px;
+        left: -100%;
+        width: 80%;
+        height: calc(100vh - 110px);
+        background: var(--white);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0;
+        transition: left 0.3s ease;
+        box-shadow: 2px 0 10px rgba(105, 3, 3, 0.1);
+        z-index: 998;
+        margin-left: 0;
+        overflow-y: auto;
+    }
+
+    body.dark-mode .nav-menu {
+        background-color: var(--dark-mode-bg);
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .nav-menu .search-box {
+        display: none;
+    }
+
+    .nav-buttons {
+        order: initial;
+        width: 100%;
+        flex-direction: column;
+        gap: 10px;
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    .main-nav {
+        display: none;
+    }
+
+    .mobile-nav {
+        display: none;
+    }
+
+    .mobile-nav.active {
+        display: flex;
+    }
+
+    .info-text {
+        font-size: 10px;
+        gap: 10px;
+    }
+
+    .info-text p::after {
+        margin-left: 10px;
+    }
+
+    .header-links {
+        display: none;
+    }
+
+    .mobile-search-container {
+        display: block;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+        height: calc(100vh - 60px);
+        top: 137px;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .sidebar-toggle {
+        display: block;
+    }
+
+    main {
+        margin-left: 0;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        width: 100%;
+    }
+
+    .logo img {
+        height: 60px;
+    }
+
+    .sidebar {
+        width: 80%;
+        max-width: 300px;
+        height: calc(100vh - 60px);
+        top: 106px;
+    }
+
+    .sidebar-toggle {
+        top: 80px;
+        left: 10px;
+        font-size: 20px;
+        padding: 8px 12px;
+    }
+
+    .footer {
+        width: calc(100% - 200px);
+        margin-left: 200px;
+    }
+
+    .copyrightsection {
+        width: calc(100% - 200px);
+        margin-left: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .header-info {
+        height: 25px;
+        font-size: 9px;
+    }
+
+    .logo img {
+        height: 40px;
+    }
+
+    .btn {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+
+    .info-text {
+        gap: 5px;
+    }
+
+    .info-text p::after {
+        margin-left: 5px;
+    }
+
+    .sidebar {
+        width: 85%;
+    }
+
+    .menu li {
+        padding: 8px 10px;
+        font-size: 16px;
+    }
+
+    .menu i {
+        font-size: 16px;
+        margin-right: 10px;
+    }
+
+    .footer {
+        width: 100%;
+        margin-left: 0;
+        padding: 40px 20px;
+    }
+
+    .copyrightsection {
+        width: 100%;
+        margin-left: 0;
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px 20px;
+    }
+
+    footer .left,
+    footer .links-head,
+    footer .links-social {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    footer .left img {
+        width: 280px;
+    }
+
+    footer {
+        flex-direction: column;
+        gap: 40px;
+    }
+}
+
+/* ==================== RESPONSIVE DESIGN (COURSES HATA KAR) ==================== */
+
+/* Large Desktop */
+@media (min-width: 1201px) {
+    .sidebar {
+        width: 250px;
+    }
+    
+    main {
+        margin-left: 250px;
+    }
+}
+
+/* Desktop */
+@media (min-width: 992px) and (max-width: 1200px) {
+    .sidebar {
+        width: 220px;
+    }
+    
+    main {
+        margin-left: 220px;
+    }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 991px) {
+    .sidebar {
+        width: 220px;
+        transform: translateX(-100%);
+    }
+    
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    
+    .sidebar-toggle {
+        display: flex;
+    }
+    
+    main {
+        margin-left: 0;
+        padding: 0 1rem;
+    }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+    .sidebar {
+        width: 280px;
+        transform: translateX(-100%);
+    }
+    
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    
+    .sidebar-toggle {
+        display: flex;
+    }
+    
+    main {
+        margin-left: 0;
+        padding: 0 0.5rem;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    /* No courses CSS left */
+}

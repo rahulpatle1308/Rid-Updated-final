@@ -1,0 +1,256 @@
+
+/* Header Styles - FIXED */
+header {
+    background: linear-gradient(135deg, #2c3e50, #4a6491);
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1100;
+    height: 70px;
+}
+
+.toggle-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-right: 15px;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.toggle-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+}
+
+.logo i {
+    font-size: 2rem;
+    color: #3498db;
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 8px 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3498db, #2ecc71);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+}
+
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.user-avatar i {
+    font-size: 1.2rem;
+    color: white;
+}
+
+/* Main Content Layout */
+.main-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    margin-top: 70px;
+    /* For fixed header */
+    min-height: calc(100vh - 70px);
+}
+
+/* Sidebar Styles - FIXED */
+.sidebar {
+    width: 250px;
+    background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    padding: 20px 0;
+    transition: transform 0.3s ease;
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    overflow-y: auto;
+    flex-shrink: 0;
+    position: fixed;
+    top: 70px;
+    /* Below header */
+    left: 0;
+    bottom: 0;
+    height: calc(100vh - 70px);
+}
+
+.sidebar h3 {
+    padding: 0 20px 15px;
+    color: #bdc3c7;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nav-menu {
+    list-style: none;
+}
+
+.nav-item {
+    margin: 5px 10px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.nav-item.active {
+    background: rgba(52, 152, 219, 0.2);
+    border-left: 4px solid #3498db;
+}
+
+.nav-item.locked {
+    opacity: 0.6;
+    position: relative;
+}
+
+.nav-item a {
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+}
+
+.nav-item i:first-child {
+    width: 20px;
+    text-align: center;
+}
+
+.lock-icon {
+    margin-left: auto;
+    font-size: 0.8rem;
+    color: #e74c3c;
+}
+
+.nav-item:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Content Area */
+.content-area {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    display: flex;
+    flex-direction: column;
+    margin-left: 250px;
+    min-height: calc(100vh - 70px);
+    padding-top: 110px;   /* 70px header + 100px top navbar */
+}
+
+
+/* Top Navbar - FIXED */
+.top-navbar {
+    background: linear-gradient(135deg, #2c3e50, #4a6491);
+    position: fixed;
+    top: 70px;
+    left: 250px;
+    right: 0;
+    z-index: 999;
+
+    display: flex;
+    align-items: center;
+
+    height: 100px;              /* fixed safe height */
+    overflow-x: auto;          /* horizontal scroll */
+    white-space: nowrap;
+}
+
+
+
+.top-navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 0 15px;
+    min-width: max-content;   /* prevents cutting */
+}
+
+
+@media (max-width: 768px) {
+    .top-navbar {
+        left: 0;
+    }
+}
+
+
+.top-navbar li {
+    border-radius: 6px;
+}
+
+.top-navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.top-navbar a:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.top-navbar .active {
+    background: rgba(52, 152, 219, 0.3);
+}
+
+
+/* Fix for mobile scrolling in test services page */
+#test-services-page {
+    overflow-y: auto;
+    padding-bottom: 20px;
+}
+
+.nav-section-title {
+    padding: 12px 15px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #888;
+    letter-spacing: 1px;
+    margin-top: 15px;
+}

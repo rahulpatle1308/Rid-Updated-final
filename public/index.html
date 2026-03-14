@@ -9,7 +9,7 @@
   <!-- Google Fonts + fallback system fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
@@ -2048,26 +2048,30 @@
         </div>
         <div class="menu" id="innerCont">
           <div class="upperNav">
-            <a href="/RTS/public/main.html" class="nav-button" id="onlineTest1">
+            <a href="/rts/dashboard" class="nav-button" id="onlineTest1">
               <i class="fa-brands fa-servicestack"></i> Test Series
             </a>
-            <button class="nav-button"><i class="fa-solid fa-book"></i> Service</button>
+         
+           <a href="/service" <button class="nav-button"><i class="fa-solid fa-book"></i> Service</button></a>
             <div class="certificate">
-              <a href="/Certificate-Verification/verify.html"<button class="nav-button" id="certificate"><i class="fa-solid fa-certificate"></i> Certificate</button></a>
+              <a href="/Certificate-Verification/verify.html" <button class="nav-button" id="certificate"><i
+                  class="fa-solid fa-certificate"></i> Certificate</button></a>
             </div>
             <div class="btn-box">
               <div id="swap-btn"></div>
-              <a href="/login"<button class="toggle-btn" id="logInButton"><i class="fa-solid fa-right-to-bracket"></i> Login</button></a>
-              <a href="/form"<button class="toggle-btn" id="signUpBtn"><i class="fa-solid fa-user-plus"></i> Register</button></a>
+              <a href="/login" <button class="toggle-btn" id="logInButton"><i class="fa-solid fa-right-to-bracket"></i>
+                Login</button></a>
+              <a href="/form" <button class="toggle-btn" id="signUpBtn"><i class="fa-solid fa-user-plus"></i>
+                Register</button></a>
             </div>
           </div>
           <ul class="lowerNav">
             <li><a class="menu-link" href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
-            <li><a class="menu-link" href="#" onclick="window.location.href='about/about.html'"><i
+            <li><a class="menu-link" href="/about"><i
                   class="fa-solid fa-circle-info"></i> About Us</a></li>
-            <li><a class="menu-link" href="#"><i class="fa-solid fa-file-lines"></i> Research Papers</a></li>
-            <li><a class="menu-link" href="#"><i class="fa-solid fa-file-lines"></i> Internship</a></li>
-            <li><a class="menu-link" href="#"><i class="fa-solid fa-file-lines"></i> E-Book</a></li>
+            <li><a class="menu-link" href="/research"><i class="fa-solid fa-file-lines"></i> Research Papers</a></li>
+            <li><a class="menu-link" href="/internship"><i class="fa-solid fa-file-lines"></i> Internship</a></li>
+            <li><a class="menu-link" href="/ebook/?search=&filter=all&sort=newest"><i class="fa-solid fa-file-lines"></i> E-Book</a></li>
             <li><a class="menu-link" href="/contact/contact.html"><i class="fa-solid fa-headset"></i> Tech Interview</a>
             </li>
           </ul>
@@ -2097,20 +2101,23 @@
     <div class="marquee-track">
       <span>
         <button>🔥 Tech Internship</button>
+        <button><a href="/RTS/public/main.html">Test Series </a></button>
         <button type="button" onclick="typingsoftware()">⌨️ Typing Software</button>
-        <button>🎂 Create Birthday Software</button>
-        <button>📝 Create Test</button>
-        <button>📘 E-Book</button>
-        <button>📄 Research Papers</button>
+        <button><a href="/RTS/public/main.html">Test Series </a></button>
+        <button ><a href="/form?role=teacher" >Create Birthday Software </a> </button>
+        <button><a href="/RTS/public/main.html">Test Series </a></button>
+        <button><a href="/form?role=teacher"> Create Test </a></button>
+        <button><a href="/RTS/public/main.html">Test Series </a></button>
+        <button><a href="/ebook/?search=&filter=all&sort=newest"> E-Book </a></button>
+        <button><a href="/RTS/public/main.html">Test Series </a></button>
+        <button><a href="/research"> Research Papers</button></a>
+        <button><a href="/RTS/public/main.html">Test Series </a></button>
         <button>💻 Webinar</button>
         <button onclick="workshop()">🤖 Workshop</button>
-        <button class="btn"> <i class="fas fa-file-word"></i><i class="fas fa-arrow-right"></i><i class="fas fa-file-pdf"></i>Convert Word to PDF</button>
-     
-    </span>
+        <button class="btn"> <i class="fas fa-file-word"></i><i class="fas fa-arrow-right"></i><i
+            class="fas fa-file-pdf"></i>Convert Word to PDF</button>
 
-
-
-
+      </span>
     </div>
     <div class="live-badge"><span class="live-dot"></span>LIVE</div>
   </div>
@@ -2121,15 +2128,15 @@
   <section class="welcome-section section-padding">
     <div class="container">
       <div class="welcome-content">
-        <h1>Used Our Product</h1>
+        <h1>Use Our Product</h1>
         <span>
           <button>Tech Interview</button>
           <button onclick="typingsoftware()">Typing Software</button>
-          <button>Create Birthday Software</button>
-          <button>Create Test</button>
-          <button>E-Book</button>
-          <button>Research Paper</button>
-           
+          <button><a href="/form?role=teacher"> Birthday Software</a></button>
+          <button><a href="/form?role=teacher">Create Test</a></button>
+          <button><a href="/ebook/?search=&filter=all&sort=newest">E-Books </a></button>
+          <button><a href="/research">Research Papers</a></button>
+
         </span>
       </div>
     </div>
@@ -2142,13 +2149,12 @@
         <div class="tools-card">
           <h2>Image Tools</h2>
           <div class="tools-buttons">
-            <button>Reduce Image Size</button>
+             <button>Convert Image to (JPG,PNG,WEBP,BMP,GIF)</button>
+           <button>Image Background Remover</button>
             <button type="button" onclick="compress()">Compress Image</button>
             <button>Resize Image</button>
-            <button>Crop Image</button>
             <button>Convert Image to PDF</button>
-            <button>Convert Image to (JPG,PNG,WEBP,BMP,GIF)</button>  
-            <button>Image Background Remover</button>
+            <button>Crop Image</button>
             <button>Image to Text (OCR)</button>
             <button>Merge Images</button>
           </div>
@@ -2173,7 +2179,7 @@
 
         <!-- CARD 3 -->
         <div class="tools-card">
-          <h2>Document Tools</h2>
+          <h2>Text Utility Tools</h2>
           <div class="tools-buttons">
             <button>Word Counter</button>
             <button>Character Counter</button>
@@ -2257,8 +2263,8 @@
         <div class="footer-links">
           <h3>Quick Links</h3>
           <ul>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> About RID</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Research Papers</a></li>
+            <li><a href="/about"><i class="fas fa-chevron-right"></i> About RID</a></li>
+            <li><a href="/research"><i class="fas fa-chevron-right"></i> Research Papers</a></li>
             <li><a href="#"><i class="fas fa-chevron-right"></i> Innovation Hub</a></li>
             <li><a href="#"><i class="fas fa-chevron-right"></i> Join Community</a></li>
             <li><a href="#"><i class="fas fa-chevron-right"></i> Events & Workshops</a></li>
@@ -2353,15 +2359,64 @@
       loginBtn.style.color = "#000";
     });
 
-    function workshop(){
-    window.open("workshop/form.html", "_self");
-  }
-   function typingsoftware(){
-   window.location.href="/typing-software"
-  }
-  function compress(){
-    window.location.href="/com"
-  }
+    function workshop() {
+      window.open("workshop/form.html", "_self");
+    }
+    function typingsoftware() {
+      window.location.href = "/typing-software"
+    }
+    function compress() {
+      window.location.href = "/com"
+    }
+
+    // Disable Right Click
+document.addEventListener("contextmenu", function(e){
+    e.preventDefault();
+});
+
+// Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+document.addEventListener("keydown", function(e){
+
+    // F12
+    if(e.keyCode == 123){
+        e.preventDefault();
+    }
+
+    // Ctrl+Shift+I
+    if(e.ctrlKey && e.shiftKey && e.keyCode == 73){
+        e.preventDefault();
+    }
+
+    // Ctrl+Shift+J
+    if(e.ctrlKey && e.shiftKey && e.keyCode == 74){
+        e.preventDefault();
+    }
+
+    // Ctrl+U
+    if(e.ctrlKey && e.keyCode == 85){
+        e.preventDefault();
+    }
+
+});
+
+// DevTools Detect
+setInterval(function(){
+
+    const devtools = window.outerWidth - window.innerWidth > 160 ||
+                     window.outerHeight - window.innerHeight > 160;
+
+    if(devtools){
+        document.body.innerHTML = "<h1 style='text-align:center;margin-top:20%;font-family:sans-serif;'>Inspect Not Allowed</h1>";
+    }
+
+},1000);
+
+
+// Disable console
+console.log = function(){};
+console.warn = function(){};
+console.error = function(){};
+console.info = function(){};
   </script>
 </body>
 

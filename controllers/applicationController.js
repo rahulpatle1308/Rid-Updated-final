@@ -721,7 +721,7 @@ async function generateExperienceLetterPDF(app, filePath) {
       }
 
       doc.fontSize(14).font("Helvetica-Bold")
-        .text("Er. Deepak Kumar", safeLeft, signatureY + 75);
+        .text("Er. Rajesh Prasad", safeLeft, signatureY + 75);
 
       doc.fontSize(12)
         .text("CEO & Director", safeLeft, signatureY + 95);

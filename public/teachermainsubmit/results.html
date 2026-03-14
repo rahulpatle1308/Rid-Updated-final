@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Responsive Quiz Dashboard</title>
+
+<!-- CHART JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom right, #0f1b3d, #102a44, #0a3d62);
+    font-family: "Poppins", sans-serif;
+    color: #e6f7ff;
+}
+
+.dashboard {
+    width: 95%;
+    margin: 20px auto;
+}
+
+/* MAIN GRID */
+.top-grid {
+    display: grid;
+    grid-template-columns: 2fr 1.2fr;
+    gap: 20px;
+}
+
+/* CARD */
+.card {
+    background: rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 18px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.3);
+}
+
+/* HEADINGS */
+.card-title {
+    font-size: 18px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #7be8ff;
+}
+
+/* KPI CARD */
+.kpi-box {
+    background: linear-gradient(135deg, #0bb3d9, #0092bd);
+    padding: 22px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    box-shadow: 0px 6px 12px rgba(0,183,255,0.3);
+    color: #fff;
+}
+
+.kpi-label { opacity: 0.8; font-size: 15px; }
+.kpi-value { font-size: 34px; font-weight: bold; margin-top: 5px; }
+
+/* CANVAS */
+canvas {
+    width: 100% !important;
+    height: auto !important;
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    padding: 10px;
+}
+
+/* TABLE */
+.table-wrapper {
+    overflow-x: auto;
+    margin-top: 25px;
+}
+
+table {
+    width: 100%;
+    min-width: 650px;
+    border-collapse: collapse;
+    background: rgba(255,255,255,0.1);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0px 6px 12px rgba(0,0,0,0.3);
+}
+
+th {
+    background: #0092bd;
+    padding: 14px;
+    color: #fff;
+}
+td {
+    padding: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.correct { color: #00ff9d; font-weight: bold; }
+.wrong { color: #ff5656; font-weight: bold; }
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+    .top-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+</head>
+<body>
+
+<div class="dashboard">
+
+    <!-- GRID -->
+    <div class="top-grid">
+
+        <!-- BAR CHART -->
+        <div class="card">
+            <div class="card-title">Quiz Score Overview</div>
+            <canvas id="barChart"></canvas>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div>
+
+            <!-- KPI SCORE -->
+            <div class="kpi-box">
+                <div class="kpi-label">Total Score</div>
+                <div class="kpi-value" id="scoreKPI">0</div>
+            </div>
+
+            <!-- KPI TIME -->
+            <div class="kpi-box" style="background: linear-gradient(135deg, #ff8a00, #ff5e00);">
+                <div class="kpi-label">Time Taken</div>
+                <div class="kpi-value" id="timeKPI">0 sec</div>
+            </div>
+
+            <!-- LINE CHART -->
+            <div class="card">
+                <div class="card-title">Performance Trend</div>
+                <canvas id="lineChart"></canvas>
+            </div>
+
+            <!-- PIE CHART -->
+            <div class="card">
+                <div class="card-title">Attempt Distribution</div>
+                <canvas id="pieChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Q.No</th>
+                    <th>Question</th>
+                    <th>Your Answer</th>
+                    <th>Correct</th>
+                </tr>
+            </thead>
+            <tbody id="resultsTable"></tbody>
+        </table>
+    </div>
+
+</div>
+
+
+<script>
+// LOCAL STORAGE DATA
+const attempted = Number(localStorage.getItem("attempted")) || 0;
+const notAttempted = Number(localStorage.getItem("notAttempted")) || 0;
+const score = Number(localStorage.getItem("score")) || 0;
+const timeTaken = localStorage.getItem("timeTaken") || "0 sec";
+const results = JSON.parse(localStorage.getItem("results")) || [];
+
+// KPI UPDATE
+document.getElementById("scoreKPI").innerText = score;
+document.getElementById("timeKPI").innerText = timeTaken;
+
+// TABLE FILL
+const table = document.getElementById("resultsTable");
+results.forEach((r, i) => {
+    table.innerHTML += `
+    <tr>
+        <td>${i + 1}</td>
+        <td>${r.question}</td>
+        <td class="${r.selected === r.correct ? "correct" : "wrong"}">
+            ${r.selected || "<i>Not Attempted</i>"}
+        </td>
+        <td class="correct">${r.correct}</td>
+    </tr>`;
+});
+
+// BAR CHART
+new Chart(document.getElementById("barChart"), {
+    type: "bar",
+    data: {
+        labels: ["Attempted", "Not Attempted", "Score"],
+        datasets: [{
+            data: [attempted, notAttempted, score],
+            backgroundColor: ["#0092bd", "#ff5e5e", "#00ff9d"]
+        }]
+    }
+});
+
+// LINE CHART
+new Chart(document.getElementById("lineChart"), {
+    type: "line",
+    data: {
+        labels: results.map((_, i) => "Q" + (i + 1)),
+        datasets: [{
+            label: "Correct/Wrong Trend",
+            data: results.map(r => r.selected === r.correct ? 1 : 0),
+            borderColor: "#7be8ff",
+            tension: 0.4,
+            fill: false
+        }]
+    }
+});
+
+// PIE CHART
+new Chart(document.getElementById("pieChart"), {
+    type: "pie",
+    data: {
+        labels: ["Attempted", "Not Attempted"],
+        datasets: [{
+            data: [attempted, notAttempted],
+            backgroundColor: ["#0092bd", "#ff5e5e"]
+        }]
+    }
+});
+</script>
+<script src="/RTS/public/js/time.js"></script>
+</body>
+</html>

@@ -1,135 +1,286 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-  <link rel="stylesheet" type="text/css" href="../css/login.css" />
-  <style>
-    #hiddenImg {
-      height: 700px;
-      width: 700px;
-      display: flex;
-      margin-left: 122px;
-      /* justify-content: space-evenly; */
-    }
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
 
-    @media screen and (max-width: 568px) {
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
-      /* Hide specific elements by setting their display to none */
-      .header,
-      .web-text,
-      .right-text,
-      #onlineTest,
-      #ebookBtn,
-      #hiddenImg {
-        display: none;
-      }
+<style>
 
-    }
-  </style>
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+body{
+display:flex;
+min-height:100vh;
+font-family:'Open Sans',sans-serif;
+background:#f5f5f5;
+}
+
+/* LEFT LOGIN SECTION */
+
+.container{
+flex:1;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:40px;
+background:white;
+margin:50px;
+border-radius:8px;
+}
+
+/* RIGHT IMAGE SECTION */
+
+#hiddenImg{
+flex:1.2;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#f0f4f8;
+padding:20px;
+margin:50px 50px 50px 0;
+border-radius:8px;
+}
+
+#hiddenImg img{
+max-width:100%;
+max-height:85vh;
+object-fit:contain;
+}
+
+.left-content{
+width:100%;
+max-width:500px;
+}
+
+/* TEXT */
+
+h1{
+font-size:30px;
+margin-bottom:5px;
+font-weight:bold;
+}
+
+h2{
+color:#083b5d;
+font-size:24px;
+margin-bottom:20px;
+}
+
+hr{
+border:none;
+border-top:1px solid #ddd;
+margin:20px 0;
+}
+
+label{
+display:block;
+margin-top:15px;
+font-weight:600;
+color:#333;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:5px;
+border:1px solid #ccc;
+border-radius:4px;
+font-size:15px;
+}
+
+.forgot-link{
+display:block;
+margin:10px 0 20px;
+color:#083b5d;
+text-decoration:none;
+font-size:13px;
+text-align:right;
+}
+
+/* BUTTON */
+
+button{
+background:#083b5d;
+color:white;
+border:none;
+padding:12px;
+font-size:15px;
+border-radius:4px;
+cursor:pointer;
+width:100%;
+font-weight:600;
+transition:.3s;
+}
+
+button:hover{
+background:#062d47;
+}
+
+p{
+margin-top:20px;
+font-size:14px;
+}
+
+p a{
+color:#083b5d;
+text-decoration:underline;
+}
+
+/* FOOTER */
+
+.footer{
+margin-top:30px;
+font-size:13px;
+color:#666;
+}
+
+.footer .links{
+margin-top:8px;
+}
+
+.footer a{
+color:#083b5d;
+text-decoration:underline;
+margin:0 3px;
+}
+
+/* TABLET */
+
+@media(max-width:992px){
+
+body{
+flex-direction:column;
+}
+
+#hiddenImg{
+margin:0 50px 50px 50px;
+}
+
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+body{
+flex-direction:column;
+}
+
+#hiddenImg{
+display:none;
+}
+
+.container{
+margin:20px;
+padding:30px 20px;
+}
+
+h1{
+font-size:26px;
+}
+
+h2{
+font-size:20px;
+}
+
+input{
+font-size:16px;
+}
+
+button{
+width:100%;
+}
+
+.footer{
+text-align:center;
+}
+
+}
+
+</style>
 </head>
 
 <body>
-  <div class="container">
-    <div class="left-content animate__animated animate__zoomIn animate__faster">
-      <h1 style="font-family: 'Open Sans', sans-serif; font-size: 30px;">Login</h1>
 
-      <h2 style="color: #083b5d; font-family: sans-serif; font-size: 25px;">Research Innovation & Discovery</h2>
-      <div class="inner-div">
-        <form id="loginForm" action="/auth/login" method="POST" >
-          <label for="loginEmail">Enter Email Address:</label>
-          <input type="text" id="loginEmail" name="email" placeholder="Enter your email address" />
-          <!-- Ankit kumar -->
+<!-- LOGIN FORM -->
 
-          <label for="password">Enter Password:</label>
-          <input type="password" id="password" name="password" placeholder="Enter your password" required
-            oncopy="return false" oncut="return false" onpaste="return false" />
-          <span id="error-message" style="color: red;"></span>
+<div class="container">
 
-          <a href="/forgot-password" style="text-decoration: none;
-       color: #083b5d;
-       text-align: right;
-       font-family: sans-serif;
-       font-size: 13px;
-       ">Forgot Password?</a>
+<div class="left-content animate__animated animate__zoomIn animate__faster">
 
+<h1>Login</h1>
+<h2>Research Innovation & Discovery</h2>
 
-          <button type="submit" style="border-radius: 4px;
-      background-color: #083b5d; 
-      font-size: 13px;
-      font-family: sans-serif;">Login</button>
-        </form>
-       <p>
-  Don't have account please 
-  <a href="/Signup/form.html" style="color: #083b5d; text-decoration: underline;">Create an account</a>
+<hr>
+
+<form id="loginForm" action="/auth/login" method="POST">
+
+<label>Enter Email Address:</label>
+<input type="text" name="email" placeholder="Enter your email address">
+
+<label>Enter Password:</label>
+<input type="password" name="password" placeholder="Enter your password" required
+oncopy="return false" oncut="return false" onpaste="return false">
+
+<span id="error-message" style="color:red;"></span>
+
+<a href="/forgot-password" class="forgot-link">Forgot Password?</a>
+
+<button type="submit">Login</button>
+
+</form>
+
+<p>
+Don't have account please
+<a href="/Signup/form.html">Create an account</a>
 </p>
-      </div>
-      <div class="footer">
-        <p class="text">
-          Copyright ©<span id="currentYear"></span>, RID | TWF (TWKSAA WELFARE FOUNDATION). All Rights
-          Reserved.
-        </p>
-        <div class="links">
-          <a href="#" style="color: #083b5d; text-decoration: underline;">About</a> | <a href="#"
-            style="color: #083b5d; text-decoration: underline;">Terms & Conditions</a> |
-          <a href="#" style="color: #083b5d; text-decoration: underline;">Privacy Policy</a> | <a href="#"
-            style="color: #083b5d; text-decoration: underline;">Feedback</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div id="hiddenImg">
-    <img src="../assets/images/login_image.png" alt="images">
-  </div>
 
+<hr>
 
-  <!-- JavaScript should be placed at the end of the body -->
-  <script>
-    // Set current year
-    document.addEventListener('DOMContentLoaded', function () {
-      var currentYear = new Date().getFullYear();
-      document.getElementById('currentYear').textContent = currentYear;
+<div class="footer">
 
-      // Forgot password button handler
-      const forgotPass = document.getElementById('forgotPass');
-      if (forgotPass) {
-        forgotPass.addEventListener('click', () => {
-          window.location.href = '/forgot-password';
-        });
-      }
+<p>
+Copyright © <span id="currentYear"></span>, RID | TWF (TWKSAA WELFARE FOUNDATION).
+All Rights Reserved.
+</p>
 
-      // Forgot password form submission handler
-      const forgotPasswordForm = document.getElementById('forgotPasswordForm');
-      if (forgotPasswordForm) {
-        forgotPasswordForm.addEventListener('submit', async (event) => {
-          event.preventDefault();
-          const email = document.getElementById('forgotEmail').value;
+<div class="links">
+<a href="#">About</a> |
+<a href="#">Terms & Conditions</a> |
+<a href="#">Privacy Policy</a> |
+<a href="#">Feedback</a>
+</div>
 
-          try {
-            const response = await fetch('/api/auth/forgot-password', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ email })
-            });
-            const result = await response.json();
+</div>
 
-            if (response.ok) {
-              alert(result.message);
-            } else {
-              alert(result.message);
-            }
-          } catch (error) {
-            alert('Error sending reset email.');
-          }
-        });
-      }
-    });
-  </script>
-  <script src="../js/showToast.js"></script>
+</div>
+</div>
+
+<!-- IMAGE -->
+
+<div id="hiddenImg">
+
+<img src="../assets/images/login_image.png"
+alt="Login illustration"
+onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=Image+Not+Found';">
+
+</div>
+
+<script>
+
+document.addEventListener("DOMContentLoaded",function(){
+document.getElementById("currentYear").textContent=new Date().getFullYear();
+})
+
+</script>
+
+<script src="../js/showToast.js"></script>
+
 </body>
-
 </html>

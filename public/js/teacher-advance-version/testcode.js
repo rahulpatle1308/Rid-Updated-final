@@ -144,7 +144,7 @@ if (startTime) {
 
         // ✅ same result page open
         window.location.href =
-            "/RTS/public/Deshbord/category/test/advance-submit-test.html";//
+            "/testsubmitedbyteacher/advance-submit-test.html";//
 
         return;
     }
@@ -166,8 +166,7 @@ if (startTime) {
             localStorage.setItem("notAttempted", notAttempted);
             localStorage.setItem("score", score);
 
-            window.location.href =
-                "/RTS/public/Deshbord/category/test/submit-student-test.html";
+            window.location.href = "/TestSubmitedStudent/submit-student-test.html";
         })
         .catch(err => {
             console.error("Submit Error:", err);

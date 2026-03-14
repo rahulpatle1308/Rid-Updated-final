@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><br><br>
+   <%= typeof title !== 'undefined' ? title : 'Technical & Coding Courses' %>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+    <link rel="stylesheet" href="./css/header.css">
+    <link rel="stylesheet" href="./css/sidebar.css">
+    <link rel="stylesheet" href="./css/technical.css">
+    <link rel="stylesheet" href="./css/footer.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <%- include('../partials/header') %>  
+    
+    <!-- Sidebar -->
+    <%- include('../partials/sidebar') %>
+   
+    <!-- Main Content -->
+    <main>
+       
+       <section class="courses-section">
+    <div class="courses-container">
+        <!-- Course 1: HTML -->
+        <div class="course-card" data-course-id="HTML" data-course-name="HTML">
+            <!-- VISIT COUNT - LEFT SIDE (Without eye icon) -->
+            <div class="visit-count">
+                <span class="count">0</span>
+                <span class="visits-text">visits</span>
+            </div>
+            <!-- BADGE - RIGHT SIDE -->
+            <span class="badge-left update-badge">UPDATED</span>
+            
+            <div class="course-header">
+                <div class="card-icon">
+                    <i class="fa-brands fa-html5"></i>
+                </div>
+                <h3>HTML</h3>
+            </div>
+            <div class="course-content">
+                <div class="marquee">
+                    <p>All Test <span>Series</span></p>
+                </div>
+                <div class="btn-container">
+                   <a href="/rts/html/purchase" class="btn track-visit">Open Now</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course 2:CSS -->
+        <div class="course-card" data-course-id="CSS" data-course-name="CSS">
+            <!-- VISIT COUNT - LEFT SIDE (Without eye icon) -->
+            <div class="visit-count">
+                <span class="count">0</span>
+                <span class="visits-text">visits</span>
+            </div>
+            <!-- BADGE - RIGHT SIDE -->
+            <span class="badge-left new-badge">UPDATED</span>
+            
+            <div class="course-header">
+                <div class="card-icon">
+                    <i class="fa-brands fa-css3-alt"></i>
+                </div>
+                <h3>CSS</h3>
+            </div>
+            <div class="course-content">
+                <div class="marquee">
+                    <p>All Test <span>Series</span></p>
+                </div>
+                <div class="btn-container">
+                    <a href="/rts/css/purchase" class="btn track-visit">Open Now</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course 3: JAVASCRIPT -->
+        <div class="course-card" data-course-id="JAVASCRIPT" data-course-name="JAVASCRIPT">
+            <!-- VISIT COUNT - LEFT SIDE (Without eye icon) -->
+            <div class="visit-count">
+                <span class="count">0</span>
+                <span class="visits-text">visits</span>
+            </div>
+            <!-- BADGE - RIGHT SIDE -->
+            <span class="badge-left hot-badge">UPDATED</span>
+            
+            <div class="course-header">
+                <div class="card-icon">
+                    <i class="fa-brands fa-js"></i>
+                </div>
+                <h3>JAVASCRIPT</h3>
+            </div>
+            <div class="course-content">
+                <div class="marquee">
+                    <p>All Test <span>Series</span></p>
+                </div>
+                <div class="btn-container">
+                    <a href="/rts/js/purchase" class="btn track-visit">Open Now</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course 4: PYTHON -->
+        <div class="course-card" data-course-id="PYTHON" data-course-name="PYTHON">
+            <!-- VISIT COUNT - LEFT SIDE (Without eye icon) -->
+            <div class="visit-count">
+                <span class="count">0</span>
+                <span class="visits-text">visits</span>
+            </div>
+            <!-- BADGE - RIGHT SIDE -->
+            <span class="badge-left update-badge">UPDATED</span>
+            
+            <div class="course-header">
+                <div class="card-icon">
+                    <i class="fa-brands fa-python"></i>
+                </div>
+                <h3>PYTHON</h3>
+            </div>
+            <div class="course-content">
+                <div class="marquee">
+                    <p>All Test <span>Series</span></p>
+                </div>
+                <div class="btn-container">
+                    <a href="/rts/python/purchase" class="btn track-visit">Open Now</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course 5: DJANGO -->
+        <div class="course-card" data-course-id="DJANGO" data-course-name="DJANGO">
+            <!-- VISIT COUNT - LEFT SIDE (Without eye icon) -->
+            <div class="visit-count">
+                <span class="count">0</span>
+                <span class="visits-text">visits</span>
+            </div>
+            <!-- BADGE - RIGHT SIDE -->
+            <span class="badge-left hot-badge">UPDATED</span>
+            
+            <div class="course-header">
+                <div class="card-icon">
+                    <i class="fa-brands fa-python"></i>
+                </div>
+                <h3>DJANGO</h3>
+            </div>
+            <div class="course-content">
+                <div class="marquee">
+                    <p>All Test <span>Series</span></p>
+                </div>
+                <div class="btn-container">
+                    <a href="/rts/DjanGo/purchase" class="btn track-visit">Open Now</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course 6: REACT JS -->
+        <div class="course-card" data-course-id="REACT JS" data-course-name="REACT JS">
+            <!-- VISIT COUNT - LEFT SIDE (Without eye icon) -->
+            <div class="visit-count">
+                <span class="count">0</span>
+                <span class="visits-text">visits</span>
+            </div>
+            <!-- BADGE - RIGHT SIDE -->
+            <span class="badge-left hot-badge">UPDATED</span>
+            
+            <div class="course-header">
+                <div class="card-icon">
+                    <i class="fa-brands fa-react"></i>
+                </div>
+                <h3>REACT JS</h3>
+            </div>
+            <div class="course-content">
+                <div class="marquee">
+                    <p>All Test <span>Series</span></p>
+                </div>
+                <div class="btn-container">
+                    <a href="/rts/Reactjs/purchase" class="btn track-visit">Open Now</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course 7: MongoDB -->
+        <div class="course-card" data-course-id="MongoDB" data-course-name="MongoDB">
+            <!-- VISIT COUNT - LEFT SIDE (Without eye icon) -->
+            <div class="visit-count">
+                <span class="count">0</span>
+                <span class="visits-text">visits</span>
+            </div>
+            <!-- BADGE - RIGHT SIDE -->
+            <span class="badge-left update-badge">UPDATED</span>
+            
+            <div class="course-header">
+                <div class="card-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>MongoDB</h3>
+            </div>
+            <div class="course-content">
+                <div class="marquee">
+                    <p>All Test <span>Series</span></p>
+                </div>
+                <div class="btn-container">
+                    <a href="/rts/MogoDB/purchase" class="btn track-visit">Open Now</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course 8: MySQL -->
+        <div class="course-card" data-course-id="MySQL" data-course-name="MySQL">
+            <!-- VISIT COUNT - LEFT SIDE (Without eye icon) -->
+            <div class="visit-count">
+                <span class="count">0</span>
+                <span class="visits-text">visits</span>
+            </div>
+            <!-- BADGE - RIGHT SIDE -->
+            <span class="badge-left new-badge">UPDATED</span>
+            
+            <div class="course-header">
+                <div class="card-icon">
+                    <i class="fas fa-server"></i>
+                </div>
+                <h3>MySQL</h3>
+            </div>
+            <div class="course-content">
+                <div class="marquee">
+                    <p>All Test <span>Series</span></p>
+                </div>
+                <div class="btn-container">
+                    <a href="/rts/MySql/purchase" class="btn track-visit">Open Now</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Course 9: Node.js (Added for more variety) -->
+        <div class="course-card" data-course-id="NodeJS" data-course-name="NodeJS">
+            <!-- VISIT COUNT - LEFT SIDE (Without eye icon) -->
+            <div class="visit-count">
+                <span class="count">0</span>
+                <span class="visits-text">visits</span>
+            </div>
+            <!-- BADGE - RIGHT SIDE -->
+            <span class="badge-left hot-badge">UPDATED</span>
+            
+            <div class="course-header">
+                <div class="card-icon">
+                    <i class="fa-brands fa-node"></i>
+                </div>
+                <h3>NODE JS</h3>
+            </div>
+            <div class="course-content">
+                <div class="marquee">
+                    <p>All Test <span>Series</span></p>
+                </div>
+                <div class="btn-container">
+                    <a href="/rts/Nodejs/purchase" class="btn track-visit">Open Now</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Course 10: PHP -->
+        <div class="course-card" data-course-id="PHP" data-course-name="PHP">
+            <!-- VISIT COUNT - LEFT SIDE (Without eye icon) -->
+            <div class="visit-count">
+                <span class="count">0</span>
+                <span class="visits-text">visits</span>
+            </div>
+            <!-- BADGE - RIGHT SIDE -->
+            <span class="badge-left update-badge">UPDATED</span>
+            
+            <div class="course-header">
+                <div class="card-icon">
+                    <i class="fa-brands fa-php"></i>
+                </div>
+                <h3>PHP</h3>
+            </div>
+            <div class="course-content">
+                <div class="marquee">
+                    <p>All Test <span>Series</span></p>
+                </div>
+                <div class="btn-container">
+                    <a href="/rts/PHP/purchase" class="btn track-visit">Open Now</a>
+                </div>
+            </div>
+        </div>
+
+         <!-- Course 11: C -->
+        <div class="course-card" data-course-id="C" data-course-name=" C ">
+            <!-- VISIT COUNT - LEFT SIDE (Without eye icon) -->
+            <div class="visit-count">
+                <span class="count">0</span>
+                <span class="visits-text">visits</span>
+            </div>
+            <!-- BADGE - RIGHT SIDE -->
+            <span class="badge-left update-badge">UPDATED</span>
+            
+            <div class="course-header">
+                <div class="card-icon">
+                    <i class="fa-brands fa-php"></i>
+                </div>
+                <h3>C</h3>
+            </div>
+            <div class="course-content">
+                <div class="marquee">
+                    <p>All Test <span>Series</span></p>
+                </div>
+                <div class="btn-container">
+                    <a href="/rts/C/purchase" class="btn track-visit">Open Now</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course 12: C++ -->
+        <div class="course-card" data-course-id="C++" data-course-name="C++">
+            <!-- VISIT COUNT - LEFT SIDE (Without eye icon) -->
+            <div class="visit-count">
+                <span class="count">0</span>
+                <span class="visits-text">visits</span>
+            </div>
+            <!-- BADGE - RIGHT SIDE -->
+            <span class="badge-left update-badge">UPDATED</span>
+            
+            <div class="course-header">
+                <div class="card-icon">
+                    <i class="fa-brands fa-php"></i>
+                </div>
+                <h3>C++</h3>
+            </div>
+            <div class="course-content">
+                <div class="marquee">
+                    <p>All Test <span>Series</span></p>
+                </div>
+                <div class="btn-container">
+                    <a href="/rts/C_plus/purchase" class="btn track-visit">Open Now</a>
+                </div>
+            </div>
+        </div>
+
+
+         <!-- Course 13: GO -->
+        <div class="course-card" data-course-id="GO" data-course-name="GO">
+            <!-- VISIT COUNT - LEFT SIDE (Without eye icon) -->
+            <div class="visit-count">
+                <span class="count">0</span>
+                <span class="visits-text">visits</span>
+            </div>
+            <!-- BADGE - RIGHT SIDE -->
+            <span class="badge-left update-badge">UPDATED</span>
+            
+            <div class="course-header">
+                <div class="card-icon">
+                    <i class="fa-brands fa-php"></i>
+                </div>
+                <h3>GO</h3>
+            </div>
+            <div class="course-content">
+                <div class="marquee">
+                    <p>All Test <span>Series</span></p>
+                </div>
+                <div class="btn-container">
+                    <a href="/rts/GO/purchase" class="btn track-visit">Open Now</a>
+                </div>
+            </div>
+        </div>
+
+
+         <!-- Course 14: JAVA -->
+        <div class="course-card" data-course-id="JAVA" data-course-name="JAVA">
+            <!-- VISIT COUNT - LEFT SIDE (Without eye icon) -->
+            <div class="visit-count">
+                <span class="count">0</span>
+                <span class="visits-text">visits</span>
+            </div>
+            <!-- BADGE - RIGHT SIDE -->
+            <span class="badge-left update-badge">UPDATED</span>
+            
+            <div class="course-header">
+                <div class="card-icon">
+                    <i class="fa-brands fa-php"></i>
+                </div>
+                <h3>JAVA</h3>
+            </div>
+            <div class="course-content">
+                <div class="marquee">
+                    <p>All Test <span>Series</span></p>
+                </div>
+                <div class="btn-container">
+                    <a href="/rts/java/purchase" class="btn track-visit">Open Now</a>
+                </div>
+            </div>
+        </div>
+
+
+         <!-- Course 15: Rust -->
+        <div class="course-card" data-course-id="Rust" data-course-name="Rust">
+            <!-- VISIT COUNT - LEFT SIDE (Without eye icon) -->
+            <div class="visit-count">
+                <span class="count">0</span>
+                <span class="visits-text">visits</span>
+            </div>
+            <!-- BADGE - RIGHT SIDE -->
+            <span class="badge-left update-badge">UPDATED</span>
+            
+            <div class="course-header">
+                <div class="card-icon">
+                    <i class="fa-brands fa-php"></i>
+                </div>
+                <h3>Rust</h3>
+            </div>
+            <div class="course-content">
+                <div class="marquee">
+                    <p>All Test <span>Series</span></p>
+                </div>
+                <div class="btn-container">
+                    <a href="/rts/Rust/purchase" class="btn track-visit">Open Now</a>
+                </div>
+            </div>
+        </div>
+
+
+          <!-- Course 16: Swift -->
+        <div class="course-card" data-course-id="Swift" data-course-name="Swift">
+            <!-- VISIT COUNT - LEFT SIDE (Without eye icon) -->
+            <div class="visit-count">
+                <span class="count">0</span>
+                <span class="visits-text">visits</span>
+            </div>
+            <!-- BADGE - RIGHT SIDE -->
+            <span class="badge-left update-badge">UPDATED</span>
+            
+            <div class="course-header">
+                <div class="card-icon">
+                    <i class="fa-brands fa-php"></i>
+                </div>
+                <h3>Swift</h3>
+            </div>
+            <div class="course-content">
+                <div class="marquee">
+                    <p>All Test <span>Series</span></p>
+                </div>
+                <div class="btn-container">
+                    <a href="/rts/Swift/purchase" class="btn track-visit">Open Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    </main>
+    
+    <!-- Footer -->
+    <%- include('../partials/footer') %>
+
+    
+    <script src="/js/visit-counter.js"></script>
+    <script src="/js/banner-slider.js"></script>
+    <script src="/js/search-filter.js"></script>
+    <script src="/js/ui-handlers.js"></script>
+    <script src="/js/dashboard.js"></script>
+    
+    <!-- Ionicons for footer icons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

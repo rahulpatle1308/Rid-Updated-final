@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes" />
+  <title>NEBULA TEST RESULT · COSMIC ANALYTICS</title>
+
+  <!-- CHART.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- FONT AWESOME 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <!-- GOOGLE FONT POPPINS -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    Chart.defaults.color = '#f0fcff';
+    Chart.defaults.borderColor = 'rgba(120, 230, 255, 0.2)';
+    Chart.defaults.font.family = "'Poppins', sans-serif";
+    Chart.defaults.font.size = 11;
+  </script>
+
+  <style>
+    /* ---------- CREATIVE RESET / VARIABLES / FUTURISTIC GLASS CORE ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle at 20% 30%, #0a142f, #030812);
+      font-family: 'Poppins', sans-serif;
+      color: #e2f3ff;
+      line-height: 1.5;
+      min-height: 100vh;
+      padding: 30px 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* animated neon grid overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-image: 
+        linear-gradient(rgba(0, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* floating orbs */
+    body::after {
+      content: "";
+      position: fixed;
+      top: -20%; left: -10%;
+      width: 140%; height: 140%;
+      background: radial-gradient(circle at 70% 30%, rgba(20, 160, 220, 0.08) 0%, transparent 50%),
+                  radial-gradient(circle at 30% 80%, rgba(200, 80, 255, 0.06) 0%, transparent 50%);
+      animation: orbit 42s infinite alternate ease-in-out;
+      z-index: 0;
+    }
+
+    @keyframes orbit {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-3%, -2%) scale(1.03); }
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ----- GLASS CARD CORE STYLE ----- */
+    .glass-panel {
+      background: rgba(8, 25, 45, 0.65);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 32px;
+      border: 1px solid rgba(0, 230, 255, 0.25);
+      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5), 0 0 0 1px rgba(0, 240, 255, 0.1) inset;
+      transition: all 0.25s ease;
+    }
+
+    .glass-panel:hover {
+      border-color: rgba(0, 240, 255, 0.6);
+      box-shadow: 0 22px 48px -8px rgba(0, 200, 255, 0.3), 0 0 0 1.5px rgba(0, 255, 255, 0.3) inset;
+      background: rgba(10, 35, 60, 0.8);
+    }
+
+    /* ---------- HEADER SECTION ---------- */
+    .header {
+      background: rgba(8, 25, 45, 0.7);
+      backdrop-filter: blur(16px) saturate(180%);
+      border-radius: 32px;
+      border: 1px solid rgba(0, 230, 255, 0.3);
+      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+      padding: 30px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .header h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(to right, #b3f0ff, #8ad4ff, #6ec8ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header h1 i {
+      background: linear-gradient(145deg, #00e0ff, #0066cc);
+      padding: 12px;
+      border-radius: 20px;
+      font-size: 28px;
+      -webkit-text-fill-color: white;
+      box-shadow: 0 12px 24px -8px #00a6ff;
+    }
+
+    .header p {
+      color: #a0e7ff;
+      font-size: 1rem;
+      background: rgba(0,200,255,0.15);
+      padding: 8px 20px;
+      border-radius: 40px;
+      border: 0.5px solid rgba(0, 255, 255, 0.4);
+      display: inline-block;
+    }
+
+    .header strong {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    /* ---------- COSMIC KPI GRID ---------- */
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: radial-gradient(145% 140% at 20% 20%, rgba(0, 180, 255, 0.15), rgba(0, 70, 140, 0.3));
+      backdrop-filter: blur(18px);
+      border-radius: 28px;
+      padding: 28px 24px;
+      border: 1px solid rgba(0, 255, 255, 0.25);
+      box-shadow: 0 15px 30px -10px #00000070, 0 0 0 1px rgba(0, 255, 200, 0.1) inset;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: #00ffe0;
+      box-shadow: 0 25px 40px -12px #00ccff80;
+    }
+
+    .card.score {
+      background: radial-gradient(145% 140% at 20% 20%, rgba(255, 215, 0, 0.25), rgba(200, 100, 0, 0.4));
+      border: 1px solid rgba(255, 215, 0, 0.5);
+    }
+
+    .card-icon {
+      width: 64px;
+      height: 64px;
+      background: rgba(0, 220, 255, 0.15);
+      border-radius: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      color: #aaf0ff;
+      text-shadow: 0 0 12px cyan;
+    }
+
+    .card-content {
+      flex: 1;
+    }
+
+    .value {
+      font-size: 40px;
+      font-weight: 800;
+      line-height: 1;
+      background: linear-gradient(to right, #fff, #c0f5ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -1px;
+      margin-bottom: 4px;
+    }
+
+    .card.score .value {
+      background: linear-gradient(to right, #fff, #ffe082);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .label {
+      font-size: 14px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #b2f3ff;
+      opacity: 0.9;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card.score .label {
+      color: #ffe082;
+    }
+
+    /* ---------- CHARTS GRID ---------- */
+    .charts-section {
+      margin-bottom: 30px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .section-title i {
+      font-size: 30px;
+      color: #00e7ff;
+      text-shadow: 0 0 15px cyan;
+    }
+
+    .section-title h2 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      background: linear-gradient(to right, #c6f5ff, #a6e9ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 26px;
+    }
+
+    .chart-card {
+      background: rgba(6, 21, 40, 0.65);
+      backdrop-filter: blur(20px);
+      border-radius: 34px;
+      padding: 22px 20px;
+      border: 1px solid rgba(0, 230, 255, 0.2);
+      box-shadow: 0 20px 32px -12px black;
+    }
+
+    .chart-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed rgba(0, 255, 255, 0.3);
+    }
+
+    .chart-header i {
+      font-size: 26px;
+      color: #20e8ff;
+      text-shadow: 0 0 10px #00c3ff;
+    }
+
+    .chart-header h3 {
+      font-weight: 600;
+      font-size: 1.2rem;
+      letter-spacing: -0.3px;
+      color: #e2fdff;
+    }
+
+    canvas {
+      width: 100% !important;
+      height: auto !important;
+      max-height: 200px;
+      background: rgba(0, 20, 35, 0.4);
+      border-radius: 22px;
+      padding: 10px 8px;
+    }
+
+    /* ---------- PERFORMANCE METRICS CARD ---------- */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .metric-item {
+      background: rgba(0, 40, 60, 0.3);
+      border-radius: 24px;
+      padding: 20px;
+      border: 1px solid rgba(0, 255, 255, 0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .metric-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #a0f0ff;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 10px;
+      background: rgba(0, 50, 70, 0.6);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 8px 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #00ffaa, #00ccff);
+      border-radius: 10px;
+      box-shadow: 0 0 15px #00ffff;
+      width: 0%;
+    }
+
+    /* ---------- COSMIC FOOTER ---------- */
+    .footer {
+      background: rgba(8, 25, 45, 0.6);
+      backdrop-filter: blur(16px);
+      border-radius: 32px;
+      border: 1px solid rgba(0, 255, 255, 0.25);
+      padding: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .btn {
+      padding: 16px 36px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      color: #fff;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: 0 8px 20px -6px rgba(0,0,0,0.5);
+    }
+
+    .btn i {
+      font-size: 18px;
+    }
+
+    .btn:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0, 255, 255, 0.6);
+      box-shadow: 0 16px 30px -8px #00ccff80;
+    }
+
+    .btn-dashboard {
+      background: linear-gradient(145deg, #3949ab, #1a237e);
+      border: 1px solid #5c6bc0;
+    }
+
+    .btn-home {
+      background: linear-gradient(145deg, #4caf50, #1e5a24);
+      border: 1px solid #81c784;
+    }
+
+    .btn-retake {
+      background: linear-gradient(145deg, #ff9800, #b45f06);
+      border: 1px solid #ffb74d;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media screen and (max-width: 1100px) {
+      .charts-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media screen and (max-width: 900px) {
+      .header h1 { font-size: 1.8rem; }
+      .value { font-size: 34px; }
+      .metrics-grid { grid-template-columns: 1fr; }
+    }
+
+    @media screen and (max-width: 700px) {
+      .charts-grid { grid-template-columns: 1fr; }
+    }
+
+    @media screen and (max-width: 600px) {
+      body { padding: 16px; }
+      .header { flex-direction: column; text-align: center; }
+      .header h1 { font-size: 1.6rem; }
+      .card { padding: 22px 18px; }
+      .value { font-size: 30px; }
+      .btn { width: 100%; justify-content: center; }
+    }
+
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #03141f; border-radius: 20px; }
+    ::-webkit-scrollbar-thumb { background: #00a6c0; border-radius: 20px; box-shadow: inset 0 0 8px #00ffff; }
+
+
+
+    /* ===== REVIEW GLASS PANEL ===== */
+
+.review-wrapper {
+  margin-top: 50px;
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.review-nav {
+  width: 120px;
+  max-height: 500px;
+  overflow-y: auto;
+  padding: 15px;
+  border-radius: 20px;
+  background: rgba(0, 40, 60, 0.5);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0,255,255,0.2);
+}
+
+.review-nav button {
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  border-radius: 50%;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.review-nav button.correct {
+  background: #00ff9d;
+  box-shadow: 0 0 10px #00ff9d80;
+}
+
+.review-nav button.wrong {
+  background: #ff4d4d;
+  box-shadow: 0 0 10px #ff4d4d80;
+}
+
+.review-nav button.unattempted {
+  background: #777;
+  box-shadow: 0 0 8px #77777780;
+}
+
+.review-nav button:hover {
+  transform: scale(1.1);
+}
+
+.review-panel {
+  flex: 1;
+  max-height: 500px;
+  overflow-y: auto;
+  padding: 25px;
+  border-radius: 25px;
+  background: rgba(0, 30, 50, 0.6);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(0,255,255,0.25);
+}
+
+.review-card {
+  margin-bottom: 25px;
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid rgba(0,255,255,0.2);
+  transition: 0.3s;
+}
+
+.review-card.correct {
+  border-color: #00ff9d;
+  box-shadow: 0 0 15px #00ff9d50;
+}
+
+.review-card.wrong {
+  border-color: #ff4d4d;
+  box-shadow: 0 0 15px #ff4d4d50;
+}
+
+.review-card.unattempted {
+  border-color: #888;
+  box-shadow: 0 0 10px #88888840;
+}
+
+.review-option {
+  padding: 6px 10px;
+  border-radius: 8px;
+  margin: 4px 0;
+}
+
+.review-option.correct-answer {
+  background: rgba(0,255,157,0.15);
+  color: #00ff9d;
+  font-weight: 600;
+}
+
+.review-option.user-wrong {
+  background: rgba(255,77,77,0.15);
+  color: #ff4d4d;
+  font-weight: 600;
+}
+
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- ===== COSMIC HEADER ===== -->
+  <div class="header">
+    <div style="display: flex; align-items: center; gap: 20px;">
+       <h1>🎯 Test Result</h1>
+    <p>
+      Subject: <strong><%= result.subject %></strong> |
+      Set No: <strong><%= result.setNo %></strong>
+    </p>
+    </div>
+    <div style="display: flex; align-items: center; gap: 15px;">
+      <div style="background: rgba(255,255,255,0.05); padding: 8px 20px; border-radius: 60px; border: 1px solid rgba(0,255,255,0.2);">
+        <i class="fas fa-user-astronaut" style="color: #6effe8; margin-right: 10px;"></i>
+        <span style="font-weight: 600;">PERFORMANCE ANALYST</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== COSMIC KPI GRID ===== -->
+  <div class="summary">
+    <!-- OVERALL SCORE -->
+    <div class="card score">
+      <div class="card-icon">
+        <i class="fas fa-crown"></i>
+      </div>
+      <div class="card-content">
+        <div class="value"><%= result.percentage %>%</div>
+        <div class="label"><i class="fas fa-star"></i> OVERALL SCORE</div>
+      </div>
+    </div>
+
+    <!-- TOTAL QUESTIONS -->
+    <div class="card">
+      <div class="card-icon">
+        <i class="fas fa-layer-group"></i>
+      </div>
+      <div class="card-content">
+        <div class="value"><%= result.total %></div>
+        <div class="label"><i class="fas fa-list-check"></i> TOTAL QUESTIONS</div>
+      </div>
+    </div>
+
+    <!-- CORRECT ANSWERS -->
+    <div class="card">
+      <div class="card-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <div class="card-content">
+        <div class="value"><%= result.correct %></div>
+        <div class="label"><i class="fas fa-trophy"></i> CORRECT</div>
+      </div>
+    </div>
+
+    <!-- ATTEMPTED -->
+    <div class="card">
+      <div class="card-icon">
+        <i class="fas fa-pen-to-square"></i>
+      </div>
+      <div class="card-content">
+        <div class="value"><%= result.attempted %></div>
+        <div class="label"><i class="fas fa-bolt"></i> ATTEMPTED</div>
+      </div>
+    </div>
+
+    <!-- INCORRECT -->
+    <div class="card">
+      <div class="card-icon">
+        <i class="fas fa-circle-xmark"></i>
+      </div>
+      <div class="card-content">
+        <div class="value"><%= result.incorrect %></div>
+        <div class="label"><i class="fas fa-exclamation-triangle"></i> INCORRECT</div>
+      </div>
+    </div>
+
+    <!-- ACCURACY -->
+    <div class="card">
+      <div class="card-icon">
+        <i class="fas fa-bullseye"></i>
+      </div>
+      <div class="card-content">
+        <div class="value"><%= result.accuracy %>%</div>
+        <div class="label"><i class="fas fa-percent"></i> ACCURACY</div>
+      </div>
+    </div>
+
+    <!-- TIME TAKEN -->
+    <div class="card">
+      <div class="card-icon">
+        <i class="fas fa-hourglass-half"></i>
+      </div>
+      <div class="card-content">
+        <div class="value"><%= result.timeSpent %></div>
+        <div class="label"><i class="fas fa-clock"></i> TIME TAKEN</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CHARTS & PERFORMANCE SECTION ===== -->
+  <div class="charts-section">
+    <div class="section-title">
+      <i class="fas fa-chart-scatter"></i>
+      <h2>PERFORMANCE ANALYTICS</h2>
+    </div>
+
+    <!-- CHARTS GRID -->
+    <div class="charts-grid">
+      <!-- SCORE DISTRIBUTION PIE CHART -->
+      <div class="chart-card glass-panel">
+        <div class="chart-header">
+          <i class="fas fa-chart-pie"></i>
+          <h3>Score Distribution</h3>
+        </div>
+        <canvas id="pieChart"></canvas>
+        <div style="display: flex; justify-content: center; gap: 20px; margin-top: 15px;">
+          <span><i class="fas fa-circle" style="color: #00ff9d;"></i> Correct (<%= result.correct %>)</span>
+          <span><i class="fas fa-circle" style="color: #ff5e5e;"></i> Incorrect (<%= result.incorrect %>)</span>
+        </div>
+      </div>
+
+      <!-- ATTEMPT ANALYSIS BAR CHART -->
+      <div class="chart-card glass-panel">
+        <div class="chart-header">
+          <i class="fas fa-chart-simple"></i>
+          <h3>Attempt Analysis</h3>
+        </div>
+        <canvas id="barChart"></canvas>
+        <div style="display: flex; justify-content: center; gap: 20px; margin-top: 15px;">
+          <span><i class="fas fa-circle" style="color: #0092bd;"></i> Attempted (<%= result.attempted %>)</span>
+          <span><i class="fas fa-circle" style="color: #ff5e5e;"></i> Not Attempted (<%= result.total - result.attempted %>)</span>
+        </div>
+      </div>
+
+      <!-- PERFORMANCE METER GAUGE -->
+      <div class="chart-card glass-panel">
+        <div class="chart-header">
+          <i class="fas fa-gauge-high"></i>
+          <h3>Performance Meter</h3>
+        </div>
+        <canvas id="gaugeChart"></canvas>
+        <div style="text-align: center; margin-top: 15px;">
+          <span style="font-size: 24px; font-weight: 700; background: linear-gradient(to right, #00ffaa, #00ccff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            <%= result.percentage %>%
+          </span>
+          <span style="color: #a0e7ff; display: block;">Performance Score</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DETAILED PERFORMANCE METRICS -->
+    <div class="metrics-grid">
+      <div class="metric-item glass-panel">
+        <div class="metric-header">
+          <i class="fas fa-bolt" style="color: #00ffaa;"></i>
+          <span style="font-weight: 600;">EFFICIENCY RATING</span>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <span>Speed vs Accuracy</span>
+          <span style="color: #00ffaa; font-weight: 700;">
+            <% 
+              let efficiency = Math.round((result.accuracy / 100) * result.total ? (result.attempted / result.total) * 100 : 0);
+            %><%= efficiency %>%
+          </span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: <%= efficiency %>%;"></div>
+        </div>
+      </div>
+
+      <div class="metric-item glass-panel">
+        <div class="metric-header">
+          <i class="fas fa-target" style="color: #ffaa00;"></i>
+          <span style="font-weight: 600;">ACCURACY TREND</span>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <span>Correct/Attempted Ratio</span>
+          <span style="color: #ffaa00; font-weight: 700;"><%= result.accuracy %>%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: <%= result.accuracy %>%; background: linear-gradient(90deg, #ffaa00, #ffdd00);"></div>
+        </div>
+      </div>
+
+      <div class="metric-item glass-panel">
+        <div class="metric-header">
+          <i class="fas fa-clock" style="color: #6effe8;"></i>
+          <span style="font-weight: 600;">TIME MANAGEMENT</span>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <span>Avg Time per Question</span>
+          <span style="color: #6effe8; font-weight: 700;">
+            <% 
+              let avgTime = result.attempted ? result.timeInSeconds / result.attempted : 0;
+            %><%= Math.round(avgTime * 10) / 10 %> sec
+          </span>
+        </div>
+      </div>
+
+      <div class="metric-item glass-panel">
+        <div class="metric-header">
+          <i class="fas fa-flag-checkered" style="color: #ff6b9d;"></i>
+          <span style="font-weight: 600;">COMPLETION RATE</span>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <span>Questions Attempted</span>
+          <span style="color: #ff6b9d; font-weight: 700;">
+            <%= Math.round(result.total ? (result.attempted / result.total) * 100 : 0) %>%
+          </span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: <%= result.total ? (result.attempted / result.total) * 100 : 0 %>%; background: linear-gradient(90deg, #ff6b9d, #ff3366);"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
+
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const reviewData = sessionStorage.getItem("tempReview");
+  if (!reviewData) return;
+
+  const questions = JSON.parse(reviewData);
+
+  const wrapper = document.createElement("div");
+  wrapper.className = "review-wrapper";
+
+  const nav = document.createElement("div");
+  nav.className = "review-nav";
+
+  const panel = document.createElement("div");
+  panel.className = "review-panel";
+
+  questions.forEach((q, index) => {
+
+    let statusClass = "";
+    if (!q.selected) {
+      statusClass = "unattempted";
+    } else if (q.selected === q.answer_en) {
+      statusClass = "correct";
+    } else {
+      statusClass = "wrong";
+    }
+
+    // NAV BUTTON
+    const navBtn = document.createElement("button");
+    navBtn.innerText = index + 1;
+    navBtn.className = statusClass;
+
+    navBtn.onclick = () => {
+      document.getElementById("review-q-" + index)
+        .scrollIntoView({ behavior: "smooth" });
+    };
+
+    nav.appendChild(navBtn);
+
+    // QUESTION CARD
+    const card = document.createElement("div");
+    card.className = `review-card ${statusClass}`;
+    card.id = "review-q-" + index;
+
+    let optionsHTML = "";
+
+    q.options_en.forEach(opt => {
+
+      let optionClass = "";
+
+      if (opt === q.answer_en) {
+        optionClass = "correct-answer";
+      }
+
+      if (opt === q.selected && q.selected !== q.answer_en) {
+        optionClass = "user-wrong";
+      }
+
+      optionsHTML += `
+        <div class="review-option ${optionClass}">
+          ${opt}
+        </div>
+      `;
+    });
+
+    card.innerHTML = `
+      <h4>Q${q.num}: ${q.question_en}</h4>
+      ${optionsHTML}
+    `;
+
+    panel.appendChild(card);
+  });
+
+  wrapper.appendChild(nav);
+  wrapper.appendChild(panel);
+
+  document.querySelector(".container").appendChild(wrapper);
+
+  // 🔥 remove after show
+  sessionStorage.removeItem("tempReview");
+
+});
+</script>
+
+<script>
+  // Initialize charts when page loads
+  document.addEventListener('DOMContentLoaded', function() {
+    
+    // Get data from EJS variables
+    const correct = <%= result.correct %>;
+    const incorrect = <%= result.incorrect %>;
+    const attempted = <%= result.attempted %>;
+    const total = <%= result.total %>;
+    const notAttempted = total - attempted;
+    const percentage = <%= result.percentage %>;
+
+    // ----- PIE CHART (Score Distribution) -----
+    const pieCtx = document.getElementById('pieChart').getContext('2d');
+    new Chart(pieCtx, {
+      type: 'pie',
+      data: {
+        labels: ['Correct', 'Incorrect'],
+        datasets: [{
+          data: [correct, incorrect],
+          backgroundColor: ['#00ff9d', '#ff5e5e'],
+          borderColor: 'rgba(0, 255, 255, 0.3)',
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      }
+    });
+
+    // ----- BAR CHART (Attempt Analysis) -----
+    const barCtx = document.getElementById('barChart').getContext('2d');
+    new Chart(barCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Attempted', 'Not Attempted'],
+        datasets: [{
+          data: [attempted, notAttempted],
+          backgroundColor: ['#0092bd', '#ff5e5e'],
+          borderColor: ['#00ffff', '#ff8888'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: {
+              color: 'rgba(0, 255, 255, 0.1)'
+            }
+          }
+        }
+      }
+    });
+
+    // ----- GAUGE CHART (Performance Meter) -----
+    const gaugeCtx = document.getElementById('gaugeChart').getContext('2d');
+    
+    // Create a doughnut chart for gauge effect
+    new Chart(gaugeCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Score', 'Remaining'],
+        datasets: [{
+          data: [percentage, 100 - percentage],
+          backgroundColor: [
+            'rgba(0, 255, 200, 0.9)',
+            'rgba(0, 50, 70, 0.3)'
+          ],
+          borderColor: [
+            '#00ffff',
+            'rgba(0, 255, 255, 0.1)'
+          ],
+          borderWidth: 2,
+          circumference: 180,
+          rotation: -90
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        cutout: '70%',
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            enabled: false
+          }
+        }
+      }
+    });
+
+    // Add score text in the center of gauge
+    const gaugeCanvas = document.getElementById('gaugeChart');
+    const gaugeParent = gaugeCanvas.parentElement;
+    const scoreDisplay = document.createElement('div');
+    scoreDisplay.style.position = 'absolute';
+    scoreDisplay.style.top = '55%';
+    scoreDisplay.style.left = '50%';
+    scoreDisplay.style.transform = 'translate(-50%, -50%)';
+    scoreDisplay.style.fontSize = '28px';
+    scoreDisplay.style.fontWeight = '800';
+    scoreDisplay.style.background = 'linear-gradient(to right, #00ffaa, #00ccff)';
+    scoreDisplay.style.webkitBackgroundClip = 'text';
+    scoreDisplay.style.webkitTextFillColor = 'transparent';
+    scoreDisplay.innerHTML = percentage + '%';
+    
+    if (gaugeParent.style.position !== 'relative') {
+      gaugeParent.style.position = 'relative';
+    }
+    gaugeParent.appendChild(scoreDisplay);
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Register | RTS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .card {
+            display: grid;
+            grid-template-columns: 1fr;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Left Section - Branding */
+        .left-section {
+            display: none;
+            background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+            background-size: 400% 400%;
+            padding: 40px;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: gradientShift 10s ease infinite;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .left-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .logo-main {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 25px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: white;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .brand-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .brand-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* Right Section - Form */
+        .right-section {
+            padding: 40px 30px;
+            width: 100%;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .form-subtitle {
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #374151;
+            font-size: 0.9rem;
+        }
+
+        .form-label i {
+            margin-right: 6px;
+            color: #4f46e5;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        }
+
+        .form-input.error {
+            border-color: #ef4444;
+        }
+
+        .mobile-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .mobile-group select {
+            width: 120px;
+            flex-shrink: 0;
+        }
+
+        /* Organisation Section */
+        .org-section {
+            background: linear-gradient(135deg, #f3f4f6 0%, #f9fafb 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s;
+        }
+
+        .org-section.active {
+            border-color: #4f46e5;
+            background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 100%);
+        }
+
+        .org-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .org-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .org-btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px 16px;
+            background: white;
+            border: 2px solid #d1d5db;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.2s;
+            color: #4b5563;
+        }
+
+        .org-btn:hover {
+            border-color: #4f46e5;
+            background: #f5f3ff;
+        }
+
+        .org-btn.selected {
+            background: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.8rem;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #6b7280;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin: 25px 0;
+            padding: 12px;
+            background: #f9fafb;
+            border-radius: 12px;
+        }
+
+        .checkbox input {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+        }
+
+        .checkbox label {
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+
+        .checkbox a {
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-loading {
+            position: relative;
+        }
+
+        .btn-loading .btn-text {
+            opacity: 0;
+        }
+
+        .btn-loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            color: #6b7280;
+        }
+
+        .login-link a {
+            color: #4f46e5;
+            font-weight: 600;
+            text-decoration: none;
+            margin-left: 5px;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .card {
+                grid-template-columns: 1fr 1fr;
+                min-height: 600px;
+            }
+            
+            .left-section {
+                display: flex;
+            }
+            
+            .right-section {
+                padding: 50px 40px;
+            }
+            
+            .form-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .mobile-group {
+                flex-direction: column;
+            }
+            
+            .mobile-group select {
+                width: 100%;
+            }
+            
+            .org-buttons {
+                flex-direction: column;
+            }
+            
+            .right-section {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <!-- Left Section - Branding -->
+            <div class="left-section">
+                <div class="logo-main">
+                    <i class="fas fa-flask"></i>
+                </div>
+                <div class="brand-title">RID BHARAT</div>
+                <div class="brand-subtitle">
+                    Research Innovation & Discovery<br>
+                    Empowering India's Future
+                </div>
+            </div>
+
+            <!-- Right Section - Form -->
+            <div class="right-section">
+                <div class="form-header">
+                    <h1 class="form-title">Create Account</h1>
+                    <p class="form-subtitle">Join RID Bharat community</p>
+                </div>
+
+                <form id="registerForm">
+                    <!-- Full Name -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-user"></i> Full Name
+                        </label>
+                        <input 
+                            type="text" 
+                            id="fullName" 
+                            name="fullName"
+                            class="form-input"
+                            placeholder="Enter your full name"
+                            required
+                        >
+                        <div class="error-message" id="nameError"></div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-envelope"></i> Email Address
+                        </label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email"
+                            class="form-input"
+                            placeholder="you@example.com"
+                            required
+                        >
+                        <div class="error-message" id="emailError"></div>
+                    </div>
+
+                    <!-- Mobile with Country Code -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-phone"></i> Mobile Number
+                        </label>
+                        <div class="mobile-group">
+                            <select id="countryCode" name="countryCode" class="form-select">
+                                <option value="+91">🇮🇳 +91</option>
+                                <option value="+1">🇺🇸 +1</option>
+                                <option value="+44">🇬🇧 +44</option>
+                            </select>
+                            <input 
+                                type="tel" 
+                                id="mobile" 
+                                name="mobile"
+                                class="form-input"
+                                placeholder="9876543210"
+                                maxlength="10"
+                                required
+                            >
+                        </div>
+                        <div class="error-message" id="mobileError"></div>
+                    </div>
+
+                    <!-- Register As (Role) -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-user-tag"></i> Register As
+                        </label>
+                        <select id="role" name="role" class="form-select" required>
+                            <option value="student">🎓 Student</option>
+                            <option value="teacher">👨‍🏫 Teacher</option>
+                            <option value="organisation">🏢 Organisation</option>
+                        </select>
+                    </div>
+
+                    <!-- Organisation Selection (Hidden by default) -->
+                    <div id="orgSection" class="org-section" style="display: none;">
+                        <div class="org-title">
+                            <i class="fas fa-building"></i>
+                            <span>Select Organisation Type</span>
+                        </div>
+                        <div class="org-buttons">
+                            <div type="button" class="org-btn" data-org="Library">
+                                <i class="fas fa-book"></i> Library
+                            </div>
+                            <div type="button" class="org-btn" data-org="DCA">
+                                <i class="fas fa-laptop"></i> DCA
+                            </div>
+                            <div type="button" class="org-btn" data-org="Coaching Centre">
+                                <i class="fas fa-chalkboard-teacher"></i> Coaching Centre
+                            </div>
+                        </div>
+                        <div class="error-message" id="orgError">
+                            <i class="fas fa-exclamation-circle"></i>
+                            Please select an organisation type
+                        </div>
+                        <input type="hidden" id="organisationType" name="organisationType">
+                    </div>
+
+                    <!-- Date of Birth & Address (Optional but Professional) -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-calendar"></i> Date of Birth (Optional)
+                        </label>
+                        <input 
+                            type="date" 
+                            id="dob" 
+                            name="dob"
+                            class="form-input"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-map-marker-alt"></i> State (Optional)
+                        </label>
+                        <input 
+                            type="text" 
+                            id="state" 
+                            name="state"
+                            class="form-input"
+                            placeholder="Your state"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-city"></i> District (Optional)
+                        </label>
+                        <input 
+                            type="text" 
+                            id="district" 
+                            name="district"
+                            class="form-input"
+                            placeholder="Your district"
+                        >
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-lock"></i> Password
+                        </label>
+                        <div class="password-container">
+                            <input 
+                                type="password" 
+                                id="password" 
+                                name="password"
+                                class="form-input"
+                                placeholder="Create a strong password"
+                                minlength="6"
+                                required
+                            >
+                            <button type="button" class="toggle-password" id="togglePassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="error-message" id="passwordError"></div>
+                    </div>
+
+                    <!-- Terms -->
+                    <div class="checkbox">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <label for="terms">
+                            I agree to the <a href="/terms">Terms & Conditions</a> and 
+                            <a href="/privacy">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-submit" id="submitBtn" disabled>
+                        <i class="fas fa-user-plus"></i>
+                        <span class="btn-text">Create Account</span>
+                    </button>
+
+                    <!-- Login Link -->
+                    <div class="login-link">
+                        Already have an account? 
+                        <a href="/login">Sign in here</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ========== ELEMENTS ==========
+            const form = document.getElementById('registerForm');
+            const fullName = document.getElementById('fullName');
+            const email = document.getElementById('email');
+            const mobile = document.getElementById('mobile');
+            const password = document.getElementById('password');
+            const role = document.getElementById('role');
+            const orgSection = document.getElementById('orgSection');
+            const orgButtons = document.querySelectorAll('.org-btn');
+            const organisationType = document.getElementById('organisationType');
+            const orgError = document.getElementById('orgError');
+            const submitBtn = document.getElementById('submitBtn');
+            const termsCheck = document.getElementById('terms');
+            const togglePassword = document.getElementById('togglePassword');
+
+            // Error elements
+            const nameError = document.getElementById('nameError');
+            const emailError = document.getElementById('emailError');
+            const mobileError = document.getElementById('mobileError');
+            const passwordError = document.getElementById('passwordError');
+
+            let selectedOrg = '';
+
+            // ========== PASSWORD TOGGLE ==========
+            togglePassword.addEventListener('click', function() {
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+                this.innerHTML = type === 'password' 
+                    ? '<i class="fas fa-eye"></i>'
+                    : '<i class="fas fa-eye-slash"></i>';
+            });
+
+            // ========== MOBILE VALIDATION ==========
+            mobile.addEventListener('input', function() {
+                this.value = this.value.replace(/\D/g, '').slice(0, 10);
+            });
+
+            // ========== ROLE CHANGE ==========
+            role.addEventListener('change', function() {
+                if (this.value === 'organisation') {
+                    orgSection.style.display = 'block';
+                    orgSection.classList.add('active');
+                } else {
+                    orgSection.style.display = 'none';
+                    orgSection.classList.remove('active');
+                    selectedOrg = '';
+                    organisationType.value = '';
+                    orgButtons.forEach(btn => btn.classList.remove('selected'));
+                }
+                validateForm();
+            });
+
+            // ========== ORGANISATION SELECT ==========
+            orgButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove selected from all
+                    orgButtons.forEach(b => b.classList.remove('selected'));
+                    
+                    // Add selected to clicked
+                    this.classList.add('selected');
+                    
+                    // Set value
+                    selectedOrg = this.dataset.org;
+                    organisationType.value = selectedOrg;
+                    
+                    // Hide error
+                    orgError.style.display = 'none';
+                    
+                    validateForm();
+                });
+            });
+
+            // ========== VALIDATION FUNCTIONS ==========
+            function validateName(name) {
+                return name.trim().length >= 2;
+            }
+
+            function validateEmail(email) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            }
+
+            function validateMobile(mobile) {
+                return /^\d{10}$/.test(mobile);
+            }
+
+            function validatePassword(password) {
+                return password.length >= 6;
+            }
+
+            function showError(input, errorEl, message) {
+                input.classList.add('error');
+                errorEl.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+            }
+
+            function clearError(input, errorEl) {
+                input.classList.remove('error');
+                errorEl.innerHTML = '';
+            }
+
+            // ========== REAL-TIME VALIDATION ==========
+            fullName.addEventListener('input', function() {
+                if (this.value.length > 0) {
+                    if (validateName(this.value)) {
+                        clearError(this, nameError);
+                    } else {
+                        showError(this, nameError, 'Name must be at least 2 characters');
+                    }
+                } else {
+                    clearError(this, nameError);
+                }
+                validateForm();
+            });
+
+            email.addEventListener('input', function() {
+                if (this.value.length > 0) {
+                    if (validateEmail(this.value)) {
+                        clearError(this, emailError);
+                    } else {
+                        showError(this, emailError, 'Please enter a valid email');
+                    }
+                } else {
+                    clearError(this, emailError);
+                }
+                validateForm();
+            });
+
+            mobile.addEventListener('input', function() {
+                if (this.value.length > 0) {
+                    if (validateMobile(this.value)) {
+                        clearError(this, mobileError);
+                    } else {
+                        showError(this, mobileError, '10-digit mobile number required');
+                    }
+                } else {
+                    clearError(this, mobileError);
+                }
+                validateForm();
+            });
+
+            password.addEventListener('input', function() {
+                if (this.value.length > 0) {
+                    if (validatePassword(this.value)) {
+                        clearError(this, passwordError);
+                    } else {
+                        showError(this, passwordError, 'Password must be at least 6 characters');
+                    }
+                } else {
+                    clearError(this, passwordError);
+                }
+                validateForm();
+            });
+
+            termsCheck.addEventListener('change', validateForm);
+
+            // ========== MAIN VALIDATION ==========
+            function validateForm() {
+                const isNameValid = validateName(fullName.value);
+                const isEmailValid = validateEmail(email.value);
+                const isMobileValid = validateMobile(mobile.value);
+                const isPasswordValid = validatePassword(password.value);
+                const isTermsAccepted = termsCheck.checked;
+
+                // Organisation validation
+                let isOrgValid = true;
+                if (role.value === 'organisation') {
+                    isOrgValid = selectedOrg.length > 0;
+                    orgError.style.display = isOrgValid ? 'none' : 'block';
+                }
+
+                const isValid = isNameValid && isEmailValid && isMobileValid && 
+                               isPasswordValid && isTermsAccepted && isOrgValid;
+
+                submitBtn.disabled = !isValid;
+                return isValid;
+            }
+
+            // ========== FORM SUBMISSION ==========
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                if (!validateForm()) {
+                    return;
+                }
+
+                // Disable button
+                submitBtn.disabled = true;
+                submitBtn.classList.add('btn-loading');
+
+                try {
+                    // Prepare form data
+                    const formData = {
+                        fullName: fullName.value.trim(),
+                        email: email.value.trim().toLowerCase(),
+                        countryCode: document.getElementById('countryCode').value,
+                        mobile: mobile.value.trim(),
+                        role: role.value,
+                        organisationType: organisationType.value || null,
+                        dob: document.getElementById('dob').value || null,
+                        state: document.getElementById('state').value.trim() || null,
+                        district: document.getElementById('district').value.trim() || null,
+                        password: password.value
+                    };
+
+                    const response = await fetch('/rts/register', {
+
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        alert('Registration successful! Redirecting to login...');
+                       window.location.href = '/rts/login';
+
+                    } else {
+                        alert(result.message || 'Registration failed');
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove('btn-loading');
+                    }
+
+                } catch (error) {
+                    console.error('Registration error:', error);
+                    alert('Network error. Please try again.');
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('btn-loading');
+                }
+            });
+
+            // Initial validation
+            validateForm();
+        });
+    </script>
+</body>
+</html>
