@@ -801,7 +801,10 @@ exports.editForm = async (req, res) => {
       return res.send("Application not found");
     }
 
-    res.render("Admin/applications/edit-application", { app });
+    res.render("Admin/applications/edit-application", { 
+      app,
+      admin: null
+    });
 
   } catch (err) {
     console.error(err);

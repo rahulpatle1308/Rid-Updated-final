@@ -127,4 +127,25 @@ router.get("/count-admins", async (req, res) => {
   }
 });
 
+const Lead = require("../models/Lead");
+
+// GET all leads
+router.get("/leads", async (req, res) => {
+  try {
+
+    const leads = await Lead.find().sort({ createdAt: -1 });
+
+    res.json(leads);
+
+  } catch (err) {
+
+    console.log(err);
+
+    res.status(500).json({
+      success: false,
+      message: "Server error"
+    });
+
+  }
+});
 module.exports = router;
