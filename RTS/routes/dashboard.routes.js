@@ -195,19 +195,15 @@ router.get("/HomeGuard", (req, res) => {
     title: "Home Guard",
   });
 });
-router.get("/HomeGuard/subjects", (req, res) => {
-  res.render("dashboard/HomeGuard/UpHomeGuard/uphomeguard-subject", {
-    title: "Home Guard Subject",
-  });
-});
+
 
 /* UP HomeGuard course main page */
-// router.get('/uphomeguard/purchase', requireAuth, (req, res) => {
-//   res.render('dashboard/HomeGuard/UpHomeGuard/purchase', {
-//     title: 'U.P HomeGuard',
+router.get('/uphomeguard/purchase', (req, res) => {
+  res.render('dashboard/HomeGuard/UpHomeGuard/purchase', {
+    title: 'U.P HomeGuard',
    
-//   });
-// });
+  });
+});
 
 
 
@@ -319,48 +315,28 @@ router.get("/higher-secondary/physics",(req,res)=>{
   });
 });
 
+// router.get("/quiz/:category/:subject/:testNo", (req, res) => {
+//   const { category, subject, testNo } = req.params;
+
+//   res.render(`dashboard/Technical/${subject}/test`, {
+//     category,
+//     subject,
+//     testNo
+//   });
+// });
+
 router.get("/quiz/:category/:subject/:testNo", (req, res) => {
   const { category, subject, testNo } = req.params;
 
-  res.render(`dashboard/Technical/${subject}/test`, {
-    category,
-    subject,
-    testNo
+  res.render(`dashboard/${category}/${subject}/test`, {
+    category: category.toUpperCase(),
+    subject: subject.toUpperCase(),
+    testNo: Number(testNo)
   });
 });
 
 
 
-
-
-
-// router.get("/quiz/:category/:subject/:testNo", async (req, res, next) => {
-//   const { category, subject, testNo } = req.params;
-
-//   // ✅ First test free
-//   if (Number(testNo) === 1) {
-//     return res.render(`dashboard/${category}/${subject}/test`, {
-//       category: category.toUpperCase(),
-//       subject: subject.toUpperCase(),
-//       testNo: Number(testNo)
-//     });
-//   }
-
-//   // 🔒 Other tests require login
-//   if (!req.session || !req.session.userId) {
-//     return res.redirect("/rts/login");
-//   }
-
-//   next();
-// }, (req, res) => {
-//   const { category, subject, testNo } = req.params;
-
-//   res.render(`dashboard/${category}/${subject}/test`, {
-//     category: category.toUpperCase(),
-//     subject: subject.toUpperCase(),
-//     testNo: Number(testNo)
-//   });
-// });
 
 
 
