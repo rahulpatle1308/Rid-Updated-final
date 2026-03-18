@@ -16338,7 +16338,7 @@ const SUBJECT = "<%= subject %>".toLowerCase();
       console.log("Submitting payload:", payload);
 
       try {
-        const res = await fetch(`/quiz/${CATEGORY}/${SUBJECT}/${TEST_NO}/submit`, {
+        const res = await fetch(`/rts/quiz/${CATEGORY}/${SUBJECT}/${TEST_NO}/submit`, {
 
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -16352,7 +16352,7 @@ const SUBJECT = "<%= subject %>".toLowerCase();
 
            sessionStorage.setItem("tempReview", JSON.stringify(questions));
           // 🔥 CHANGE 4: Dynamic redirect based on test number
-        window.location.href = `/quiz/${CATEGORY}/${SUBJECT}/test-${TEST_NO}/result/${data.resultId}`;
+        window.location.href = `/rts/quiz/${CATEGORY}/${SUBJECT}/test-${TEST_NO}/result/${data.resultId}`;
 
 
 

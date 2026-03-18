@@ -141,7 +141,7 @@
             </button>
             <button onclick="showBlogManager()">
                 <i class="fas fa-blog"></i>
-                <span>Blog Posts</span>
+                <span>Service Pages Castomer</span>
             </button>
 
             <h2>Advanced Features</h2>
@@ -1352,9 +1352,50 @@ async function editUser(id,type){
             showToast('Media Library feature coming soon!', 'info');
         }
 
-        function showBlogManager() {
-            showToast('Blog Manager feature coming soon!', 'info');
-        }
+        async function showBlogManager(){
+
+state.currentView = 'leads'
+
+document.getElementById('dashboardContent').style.display='none'
+
+const content = `
+
+<div class="data-table-container slide-up">
+
+<div class="table-header">
+<h3>Service Pages Customers</h3>
+</div>
+
+<div class="table-responsive">
+
+<table class="data-table">
+
+<thead>
+<tr>
+<th>Name</th>
+<th>Phone</th>
+<th>Email</th>
+<th>Company</th>
+<th>Budget</th>
+<th>Page</th>
+<th>Date</th>
+</tr>
+</thead>
+
+<tbody id="leadTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+`
+
+document.getElementById("dynamicContent").innerHTML=content
+
+loadLeads()
+
+}
 
         function showWorkflowManager() {
             showToast('Workflow Manager feature coming soon!', 'info');
@@ -1404,6 +1445,36 @@ async function editUser(id,type){
         }
   function openCertificateList() {
   window.location.href = "/api/admin/list-page";
+}
+//lead show data 
+async function loadLeads(){
+
+const res = await fetch("/admin/leads")
+
+const leads = await res.json()
+
+const tbody = document.getElementById("leadTable")
+
+tbody.innerHTML=""
+
+leads.forEach(lead=>{
+
+const row=document.createElement("tr")
+
+row.innerHTML=`
+
+<td>${lead.name || ""}</td>
+<td>${lead.phone || ""}</td>
+
+<td>${lead.page || ""}</td>
+<td>${new Date(lead.createdAt).toLocaleDateString()}</td>
+
+`
+
+tbody.appendChild(row)
+
+})
+
 }
     </script>
 </body>

@@ -1,66 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
   <title>TWKSAA – Services (with old header & footer)</title>
   <!-- Google Fonts + system fallback -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="css/service/services.css">
-<style>
-  .quick-lead-popup{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.6);
-display:none;
-align-items:center;
-justify-content:center;
-z-index:9999;
-}
+  <link rel="stylesheet" href="css/service/services.css">
+  <style>
+    .quick-lead-popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
 
-.quick-lead-box{
-background:#fff;
-padding:25px;
-width:300px;
-border-radius:10px;
-text-align:center;
-position:relative;
-}
+    .quick-lead-box {
+      background: #fff;
+      padding: 25px;
+      width: 300px;
+      border-radius: 10px;
+      text-align: center;
+      position: relative;
+    }
 
-.quick-lead-box input{
-width:100%;
-padding:10px;
-margin:8px 0;
-border:1px solid #ddd;
-border-radius:6px;
-}
+    .quick-lead-box input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+    }
 
-.quick-lead-box button{
-background:#ff5b2e;
-color:#fff;
-border:none;
-padding:10px;
-width:100%;
-border-radius:6px;
-cursor:pointer;
-}
+    .quick-lead-box button {
+      background: #ff5b2e;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 6px;
+      cursor: pointer;
+    }
 
-.quick-close{
-position:absolute;
-top:10px;
-right:15px;
-cursor:pointer;
-font-size:18px;
-}
-</style>
+    .quick-close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+  </style>
   <!-- ========== OLD STYLES (header, footer, base) ========== -->
 </head>
+
 <body>
   <!-- ========== OLD HEADER (full) ========== -->
   <div class="header-container">
@@ -81,7 +84,8 @@ font-size:18px;
     <div class="main-header">
       <div class="nav">
         <div class="logo">
-          <img src="./assets/final_logo.svg" alt="RID Bharat Logo" onerror="this.src='https://via.placeholder.com/260x70/083d5d/FFFFFF?text=RID+Bharat+Logo'">
+          <img src="./assets/final_logo.svg" alt="RID Bharat Logo"
+            onerror="this.src='https://via.placeholder.com/260x70/083d5d/FFFFFF?text=RID+Bharat+Logo'">
           <div class="menu-icon" id="menuIcon">
             <span></span><span></span><span></span>
           </div>
@@ -93,11 +97,13 @@ font-size:18px;
             </a>
             <a href="/service" class="nav-button"><i class="fa-solid fa-book"></i> Service</a>
             <div class="certificate">
-              <a href="/Certificate-Verification/verify.html" class="nav-button" id="certificate"><i class="fa-solid fa-certificate"></i> Certificate</a>
+              <a href="/Certificate-Verification/verify.html" class="nav-button" id="certificate"><i
+                  class="fa-solid fa-certificate"></i> Certificate</a>
             </div>
             <div class="btn-box">
               <div id="swap-btn"></div>
-              <a href="/login" class="toggle-btn" id="logInButton"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+              <a href="/login" class="toggle-btn" id="logInButton"><i class="fa-solid fa-right-to-bracket"></i>
+                Login</a>
               <a href="/form" class="toggle-btn" id="signUpBtn"><i class="fa-solid fa-user-plus"></i> Register</a>
             </div>
           </div>
@@ -106,8 +112,10 @@ font-size:18px;
             <li><a class="menu-link" href="/about"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
             <li><a class="menu-link" href="/research"><i class="fa-solid fa-file-lines"></i> Research Papers</a></li>
             <li><a class="menu-link" href="/internship"><i class="fa-solid fa-file-lines"></i> Internship</a></li>
-            <li><a class="menu-link" href="/ebook/?search=&filter=all&sort=newest"><i class="fa-solid fa-file-lines"></i> E-Book</a></li>
-            <li><a class="menu-link" href="/contact/contact.html"><i class="fa-solid fa-headset"></i> Tech Interview</a></li>
+            <li><a class="menu-link" href="/ebook/?search=&filter=all&sort=newest"><i
+                  class="fa-solid fa-file-lines"></i> E-Book</a></li>
+            <li><a class="menu-link" href="/contact/contact.html"><i class="fa-solid fa-headset"></i> Tech Interview</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -119,16 +127,31 @@ font-size:18px;
     <div class="hero-inner container">
       <div class="hero-tag"><span></span>TWKSAA Technology Solutions</div>
       <h1>We Build <em>Digital Products</em> That Drive Real Growth</h1>
-      <p class="hero-p">From mobile apps to enterprise software — end-to-end technology solutions that transform your ideas into powerful digital experiences.</p>
+      <p class="hero-p">From mobile apps to enterprise software — end-to-end technology solutions that transform your
+        ideas into powerful digital experiences.</p>
       <div class="hero-btns">
-        <button class="btn-solid" onclick="openSchedule()"><i class="fas fa-calendar-check"></i> Free Consultation</button>
-        <button class="btn-outline" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})"><i class="fas fa-th-large"></i> Explore Services</button>
+        <button class="btn-solid" onclick="openSchedule()"><i class="fas fa-calendar-check"></i> Free
+          Consultation</button>
+        <button class="btn-outline" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})"><i
+            class="fas fa-th-large"></i> Explore Services</button>
       </div>
       <div class="hero-stats">
-        <div class="hstat"><div class="hstat-num">120<span>+</span></div><div class="hstat-label">Projects Delivered</div></div>
-        <div class="hstat"><div class="hstat-num">80<span>+</span></div><div class="hstat-label">Happy Clients</div></div>
-        <div class="hstat"><div class="hstat-num">15<span>+</span></div><div class="hstat-label">Expert Developers</div></div>
-        <div class="hstat"><div class="hstat-num">5<span>yr</span></div><div class="hstat-label">Experience</div></div>
+        <div class="hstat">
+          <div class="hstat-num">120<span>+</span></div>
+          <div class="hstat-label">Projects Delivered</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-num">80<span>+</span></div>
+          <div class="hstat-label">Happy Clients</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-num">15<span>+</span></div>
+          <div class="hstat-label">Expert Developers</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-num">5<span>yr</span></div>
+          <div class="hstat-label">Experience</div>
+        </div>
       </div>
     </div>
   </section>
@@ -136,14 +159,22 @@ font-size:18px;
   <!-- ===== SECTION NAVIGATION BUTTONS ===== -->
   <div class="section-nav">
     <div class="nav-buttons">
-      <button class="nav-btn" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})"><i class="fas fa-cubes"></i> Services</button>
-      <button class="nav-btn" onclick="document.getElementById('why').scrollIntoView({behavior:'smooth'})"><i class="fas fa-question-circle"></i> Why Choose Us</button>
-      <button class="nav-btn" onclick="document.getElementById('domains').scrollIntoView({behavior:'smooth'})"><i class="fas fa-building"></i> Domains</button>
-      <button class="nav-btn" onclick="document.getElementById('clients').scrollIntoView({behavior:'smooth'})"><i class="fas fa-comments"></i> Testimonials</button>
-      <button class="nav-btn" onclick="document.getElementById('cases').scrollIntoView({behavior:'smooth'})"><i class="fas fa-briefcase"></i> Products Built</button>
-      <button class="nav-btn" onclick="document.getElementById('schedule').scrollIntoView({behavior:'smooth'})"><i class="fas fa-calendar-alt"></i> Start Project</button>
-      <button class="nav-btn" onclick="document.getElementById('grow').scrollIntoView({behavior:'smooth'})"><i class="fas fa-chart-line"></i> Grow</button>
-      <button class="nav-btn" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})"><i class="fas fa-users"></i> About Us</button>
+      <button class="nav-btn" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})"><i
+          class="fas fa-cubes"></i> Services</button>
+      <button class="nav-btn" onclick="document.getElementById('why').scrollIntoView({behavior:'smooth'})"><i
+          class="fas fa-question-circle"></i> Why Choose Us</button>
+      <button class="nav-btn" onclick="document.getElementById('domains').scrollIntoView({behavior:'smooth'})"><i
+          class="fas fa-building"></i> Domains</button>
+      <button class="nav-btn" onclick="document.getElementById('clients').scrollIntoView({behavior:'smooth'})"><i
+          class="fas fa-comments"></i> Testimonials</button>
+      <button class="nav-btn" onclick="document.getElementById('cases').scrollIntoView({behavior:'smooth'})"><i
+          class="fas fa-briefcase"></i> Products Built</button>
+      <button class="nav-btn" onclick="document.getElementById('schedule').scrollIntoView({behavior:'smooth'})"><i
+          class="fas fa-calendar-alt"></i> Start Project</button>
+      <button class="nav-btn" onclick="document.getElementById('grow').scrollIntoView({behavior:'smooth'})"><i
+          class="fas fa-chart-line"></i> Grow</button>
+      <button class="nav-btn" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})"><i
+          class="fas fa-users"></i> About Us</button>
     </div>
   </div>
 
@@ -217,14 +248,46 @@ font-size:18px;
         <p>We don't just write code — we build partnerships.</p>
       </div>
       <div class="why-grid">
-        <div class="why-card"><div class="why-icon">📞</div><h3>Dedicated Support</h3><p>Named project manager, daily stand-ups, 24/7 communication channel.</p></div>
-        <div class="why-card"><div class="why-icon">🔐</div><h3>Security First</h3><p>Enterprise-grade security — GDPR compliant, ISO certified, penetration tested.</p></div>
-        <div class="why-card"><div class="why-icon">⚡</div><h3>Lightning Fast Delivery</h3><p>MVPs in as little as 3 weeks. Reduced time to market, no quality compromise.</p></div>
-        <div class="why-card"><div class="why-icon">💰</div><h3>Transparent Pricing</h3><p>Fixed-price or time & materials — zero hidden fees, always transparent.</p></div>
-        <div class="why-card"><div class="why-icon">🌍</div><h3>Global Experience</h3><p>Projects delivered in India, UAE, UK, USA and Southeast Asia.</p></div>
-        <div class="why-card"><div class="why-icon">♻️</div><h3>Post-Launch Care</h3><p>Free 30-day post-launch support and optional long-term maintenance plans.</p></div>
-        <div class="why-card"><div class="why-icon">🎨</div><h3>Design-Led Thinking</h3><p>Every product starts with user research. Beautiful UX is our baseline.</p></div>
-        <div class="why-card"><div class="why-icon">🏆</div><h3>Proven Track Record</h3><p>120+ delivered projects across 12 industries, 96% satisfaction rate.</p></div>
+        <div class="why-card">
+          <div class="why-icon">📞</div>
+          <h3>Dedicated Support</h3>
+          <p>Named project manager, daily stand-ups, 24/7 communication channel.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🔐</div>
+          <h3>Security First</h3>
+          <p>Enterprise-grade security — GDPR compliant, ISO certified, penetration tested.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">⚡</div>
+          <h3>Lightning Fast Delivery</h3>
+          <p>MVPs in as little as 3 weeks. Reduced time to market, no quality compromise.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">💰</div>
+          <h3>Transparent Pricing</h3>
+          <p>Fixed-price or time & materials — zero hidden fees, always transparent.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🌍</div>
+          <h3>Global Experience</h3>
+          <p>Projects delivered in India, UAE, UK, USA and Southeast Asia.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">♻️</div>
+          <h3>Post-Launch Care</h3>
+          <p>Free 30-day post-launch support and optional long-term maintenance plans.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🎨</div>
+          <h3>Design-Led Thinking</h3>
+          <p>Every product starts with user research. Beautiful UX is our baseline.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🏆</div>
+          <h3>Proven Track Record</h3>
+          <p>120+ delivered projects across 12 industries, 96% satisfaction rate.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -275,7 +338,8 @@ font-size:18px;
       <div class="schedule-box">
         <div class="sch-left">
           <h2>Ready to Build a <em>Project?</em></h2>
-          <p>Tell us about your idea and we'll get back with a tailored proposal, timeline and fixed-price estimate within 24 hours. Free consultation, no strings attached.</p>
+          <p>Tell us about your idea and we'll get back with a tailored proposal, timeline and fixed-price estimate
+            within 24 hours. Free consultation, no strings attached.</p>
           <div class="sch-trust">
             <span><i class="fas fa-check-circle"></i> Free Consultation</span>
             <span><i class="fas fa-check-circle"></i> NDA Available</span>
@@ -284,7 +348,8 @@ font-size:18px;
           </div>
         </div>
         <div>
-          <button class="sch-btn" onclick="openSchedule()"><i class="fas fa-calendar-alt"></i> Schedule Discovery Call</button>
+          <button class="sch-btn" onclick="openSchedule()"><i class="fas fa-calendar-alt"></i> Schedule Discovery
+            Call</button>
           <div class="sch-note">Or email us at <strong style="color:#fff">hello@twksaa.com</strong></div>
         </div>
       </div>
@@ -300,25 +365,72 @@ font-size:18px;
             <span class="tag">Growth Partner</span>
             <h2>Start Growing Your<br><span>Business With Us</span></h2>
           </div>
-          <p>TWKSAA is not just a development vendor — we are your long-term technology growth partner. From MVP to enterprise scale, we grow with you every step of the way.</p>
-          <p>Our dedicated teams integrate with your business, understand your goals, and build technology that directly drives revenue and user growth.</p>
+          <p>TWKSAA is not just a development vendor — we are your long-term technology growth partner. From MVP to
+            enterprise scale, we grow with you every step of the way.</p>
+          <p>Our dedicated teams integrate with your business, understand your goals, and build technology that directly
+            drives revenue and user growth.</p>
           <div class="grow-nums">
-            <div class="gnum"><div class="gnum-val">96<span>%</span></div><div class="gnum-label">Client Satisfaction Rate</div></div>
-            <div class="gnum"><div class="gnum-val">3<span>x</span></div><div class="gnum-label">Avg. Conversion Lift</div></div>
-            <div class="gnum"><div class="gnum-val">40<span>%</span></div><div class="gnum-label">Faster Time to Market</div></div>
-            <div class="gnum"><div class="gnum-val">₹0</div><div class="gnum-label">Hidden Charges</div></div>
+            <div class="gnum">
+              <div class="gnum-val">96<span>%</span></div>
+              <div class="gnum-label">Client Satisfaction Rate</div>
+            </div>
+            <div class="gnum">
+              <div class="gnum-val">3<span>x</span></div>
+              <div class="gnum-label">Avg. Conversion Lift</div>
+            </div>
+            <div class="gnum">
+              <div class="gnum-val">40<span>%</span></div>
+              <div class="gnum-label">Faster Time to Market</div>
+            </div>
+            <div class="gnum">
+              <div class="gnum-val">₹0</div>
+              <div class="gnum-label">Hidden Charges</div>
+            </div>
           </div>
-          <button class="btn-solid" style="margin-top:26px;" onclick="openSchedule()"><i class="fas fa-rocket"></i> Start Your Project Today</button>
+          <button class="btn-solid" style="margin-top:26px;" onclick="openSchedule()"><i class="fas fa-rocket"></i>
+            Start Your Project Today</button>
         </div>
         <div class="grow-visual">
           <div class="gv-inner">
-            <div style="color:#fff;font-size:.71rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.58;margin-bottom:16px;">What You Get</div>
+            <div
+              style="color:#fff;font-size:.71rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.58;margin-bottom:16px;">
+              What You Get</div>
             <div class="gv-chips">
-              <div class="gv-chip"><div class="gvc-icon">📱</div><div><div class="gvc-title">Mobile App Development</div><div class="gvc-sub">iOS & Android, React Native & Flutter</div></div><span class="gvc-badge">Popular</span></div>
-              <div class="gv-chip"><div class="gvc-icon">🌐</div><div><div class="gvc-title">Web & SaaS Platforms</div><div class="gvc-sub">Next.js, React, Node.js, Cloud</div></div></div>
-              <div class="gv-chip"><div class="gvc-icon">🤖</div><div><div class="gvc-title">AI & Automation</div><div class="gvc-sub">ML models, chatbots, workflow automation</div></div><span class="gvc-badge">New</span></div>
-              <div class="gv-chip"><div class="gvc-icon">🔧</div><div><div class="gvc-title">DevOps & Cloud</div><div class="gvc-sub">CI/CD, AWS/GCP, Kubernetes</div></div></div>
-              <div class="gv-chip"><div class="gvc-icon">🎨</div><div><div class="gvc-title">UI/UX Design</div><div class="gvc-sub">Figma, prototyping, design systems</div></div></div>
+              <div class="gv-chip">
+                <div class="gvc-icon">📱</div>
+                <div>
+                  <div class="gvc-title">Mobile App Development</div>
+                  <div class="gvc-sub">iOS & Android, React Native & Flutter</div>
+                </div><span class="gvc-badge">Popular</span>
+              </div>
+              <div class="gv-chip">
+                <div class="gvc-icon">🌐</div>
+                <div>
+                  <div class="gvc-title">Web & SaaS Platforms</div>
+                  <div class="gvc-sub">Next.js, React, Node.js, Cloud</div>
+                </div>
+              </div>
+              <div class="gv-chip">
+                <div class="gvc-icon">🤖</div>
+                <div>
+                  <div class="gvc-title">AI & Automation</div>
+                  <div class="gvc-sub">ML models, chatbots, workflow automation</div>
+                </div><span class="gvc-badge">New</span>
+              </div>
+              <div class="gv-chip">
+                <div class="gvc-icon">🔧</div>
+                <div>
+                  <div class="gvc-title">DevOps & Cloud</div>
+                  <div class="gvc-sub">CI/CD, AWS/GCP, Kubernetes</div>
+                </div>
+              </div>
+              <div class="gv-chip">
+                <div class="gvc-icon">🎨</div>
+                <div>
+                  <div class="gvc-title">UI/UX Design</div>
+                  <div class="gvc-sub">Figma, prototyping, design systems</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -335,22 +447,63 @@ font-size:18px;
             <span class="tag">About Us</span>
             <h2>Who is <span>TWKSAA?</span></h2>
           </div>
-          <p>TWKSAA (TWKSAA Welfare Foundation) is a product-focused software studio based in Bhopal, India. Founded in 2019 under the umbrella of TWF, we started with a single belief: world-class software should be accessible to every business — not just Fortune 500 companies.</p>
-          <p>Over five years, we've grown into a team of 15+ passionate engineers, designers, and strategists who have shipped 120+ digital products across India, UAE, UK and Southeast Asia.</p>
-          <p>Whether you're a first-time founder building your MVP or a CTO modernizing legacy systems — TWKSAA is the technology partner that delivers, on time and on budget.</p>
+          <p>TWKSAA (TWKSAA Welfare Foundation) is a product-focused software studio based in Bhopal, India. Founded in
+            2019 under the umbrella of TWF, we started with a single belief: world-class software should be accessible
+            to every business — not just Fortune 500 companies.</p>
+          <p>Over five years, we've grown into a team of 15+ passionate engineers, designers, and strategists who have
+            shipped 120+ digital products across India, UAE, UK and Southeast Asia.</p>
+          <p>Whether you're a first-time founder building your MVP or a CTO modernizing legacy systems — TWKSAA is the
+            technology partner that delivers, on time and on budget.</p>
           <div class="about-vals">
-            <div class="aval"><div class="aval-icon">🎯</div><div><div class="aval-title">Our Mission</div><div class="aval-text">Empower businesses with innovative technology solutions that create real impact and drive measurable growth.</div></div></div>
-            <div class="aval"><div class="aval-icon">👁️</div><div><div class="aval-title">Our Vision</div><div class="aval-text">To be India's most trusted technology partner for startups and enterprises building world-class digital products.</div></div></div>
-            <div class="aval"><div class="aval-icon">💎</div><div><div class="aval-title">Our Values</div><div class="aval-text">Transparency, technical excellence, and long-term client partnerships over short-term transactions.</div></div></div>
+            <div class="aval">
+              <div class="aval-icon">🎯</div>
+              <div>
+                <div class="aval-title">Our Mission</div>
+                <div class="aval-text">Empower businesses with innovative technology solutions that create real impact
+                  and drive measurable growth.</div>
+              </div>
+            </div>
+            <div class="aval">
+              <div class="aval-icon">👁️</div>
+              <div>
+                <div class="aval-title">Our Vision</div>
+                <div class="aval-text">To be India's most trusted technology partner for startups and enterprises
+                  building world-class digital products.</div>
+              </div>
+            </div>
+            <div class="aval">
+              <div class="aval-icon">💎</div>
+              <div>
+                <div class="aval-title">Our Values</div>
+                <div class="aval-text">Transparency, technical excellence, and long-term client partnerships over
+                  short-term transactions.</div>
+              </div>
+            </div>
           </div>
         </div>
         <div>
           <div class="team-title">👥 Meet the Core Team</div>
           <div class="team-grid">
-            <div class="team-card"><div class="team-av tav-t1">PD</div><div class="team-name">Pooja Dhakad</div><div class="team-role">Founder & CEO</div></div>
-            <div class="team-card"><div class="team-av tav-t2">NP</div><div class="team-name">Nisha Prajapati</div><div class="team-role">Lead Engineer</div></div>
-            <div class="team-card"><div class="team-av tav-t3">AS</div><div class="team-name">Anil Sangam</div><div class="team-role">Head of Design</div></div>
-            <div class="team-card"><div class="team-av tav-t4">DK</div><div class="team-name">Deepak Kumar</div><div class="team-role">Mobile Architect</div></div>
+            <div class="team-card">
+              <div class="team-av tav-t1">PD</div>
+              <div class="team-name">Pooja Dhakad</div>
+              <div class="team-role">Founder & CEO</div>
+            </div>
+            <div class="team-card">
+              <div class="team-av tav-t2">NP</div>
+              <div class="team-name">Nisha Prajapati</div>
+              <div class="team-role">Lead Engineer</div>
+            </div>
+            <div class="team-card">
+              <div class="team-av tav-t3">AS</div>
+              <div class="team-name">Anil Sangam</div>
+              <div class="team-role">Head of Design</div>
+            </div>
+            <div class="team-card">
+              <div class="team-av tav-t4">DK</div>
+              <div class="team-name">Deepak Kumar</div>
+              <div class="team-role">Mobile Architect</div>
+            </div>
           </div>
           <div class="team-title" style="margin-top:7px">🏅 Certifications & Recognition</div>
           <div class="cert-row">
@@ -365,7 +518,8 @@ font-size:18px;
 
       <!-- back to top button (new) -->
       <div class="back-to-top-wrapper">
-        <button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i> Back to Top</button>
+        <button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i>
+          Back to Top</button>
       </div>
     </div>
   </section>
@@ -375,7 +529,8 @@ font-size:18px;
     <div class="container">
       <div class="footer-content">
         <div class="footer-logo">
-          <img src="./assets/final_logo.svg" alt="RID Bharat Logo" onerror="this.src='https://via.placeholder.com/260x70/083d5d/FFFFFF?text=RID+Bharat+Logo'">
+          <img src="./assets/final_logo.svg" alt="RID Bharat Logo"
+            onerror="this.src='https://via.placeholder.com/260x70/083d5d/FFFFFF?text=RID+Bharat+Logo'">
           <p>Mig, 72, Rajiv Nagar, A Sector, Aayodhya bypass Bhopal, Madhya Pradesh, India (462022)</p>
           <div class="contact-info">
             <p><i class="fas fa-envelope"></i> <a href="mailto:ridorg.in@gmail.com">ridorg.in@gmail.com</a></p>
@@ -409,7 +564,8 @@ font-size:18px;
           <h3>Follow Us</h3>
           <ul>
             <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
-            <li><a href="https://www.linkedin.com/in/rid-bharat-9a4517324"><i class="fab fa-linkedin-in"></i> LinkedIn</a></li>
+            <li><a href="https://www.linkedin.com/in/rid-bharat-9a4517324"><i class="fab fa-linkedin-in"></i>
+                LinkedIn</a></li>
             <li><a href="https://youtube.com/@ridbharat"><i class="fab fa-youtube"></i> YouTube</a></li>
             <li><a href="https://github.com/RID-bharat25"><i class="fab fa-github"></i> GitHub</a></li>
             <li><a href="https://www.instagram.com/ridbharat"><i class="fab fa-instagram"></i> Instagram</a></li>
@@ -447,34 +603,57 @@ font-size:18px;
         <div class="modal-title">Schedule a Discovery Call</div>
         <div class="modal-sub">Fill in your details and we'll contact you within 24 hours with a free proposal.</div>
         <div class="form-row">
-          <div class="fg"><label>Your Name *</label><input type="text" id="f_name" placeholder="e.g. Rahul Sharma"></div>
-          <div class="fg"><label>Company Name</label><input type="text" id="f_company" placeholder="Your Company Ltd"></div>
+          <div class="fg"><label>Your Name *</label><input type="text" id="f_name" placeholder="e.g. Rahul Sharma">
+          </div>
+          <div class="fg"><label>Company Name</label><input type="text" id="f_company" placeholder="Your Company Ltd">
+          </div>
         </div>
         <div class="form-row">
           <div class="fg"><label>Email *</label><input type="email" id="f_email" placeholder="you@company.com"></div>
           <div class="fg"><label>Phone</label><input type="tel" id="f_phone" placeholder="+91 98765 43210"></div>
         </div>
-        <div class="fg"><label>Services Needed</label><div class="svc-cbs" id="svcCheckboxes"></div></div>
+        <div class="fg"><label>Services Needed</label>
+          <div class="svc-cbs" id="svcCheckboxes"></div>
+        </div>
         <div class="form-row">
           <div class="fg"><label>Budget Range</label>
-            <select id="f_budget"><option value="">Select…</option><option>Under ₹1 Lakh</option><option>₹1–5 Lakh</option><option>₹5–15 Lakh</option><option>₹15–50 Lakh</option><option>₹50 Lakh+</option></select>
+            <select id="f_budget">
+              <option value="">Select…</option>
+              <option>Under ₹1 Lakh</option>
+              <option>₹1–5 Lakh</option>
+              <option>₹5–15 Lakh</option>
+              <option>₹15–50 Lakh</option>
+              <option>₹50 Lakh+</option>
+            </select>
           </div>
           <div class="fg"><label>Timeline</label>
-            <select id="f_timeline"><option value="">Select…</option><option>ASAP (&lt;1 month)</option><option>1–3 Months</option><option>3–6 Months</option><option>Flexible</option></select>
+            <select id="f_timeline">
+              <option value="">Select…</option>
+              <option>ASAP (&lt;1 month)</option>
+              <option>1–3 Months</option>
+              <option>3–6 Months</option>
+              <option>Flexible</option>
+            </select>
           </div>
         </div>
-        <div class="fg"><label>Describe Your Project *</label><textarea id="f_desc" placeholder="Tell us about your idea, features needed, target audience…"></textarea></div>
-        <button class="modal-submit" id="submitBtn" onclick="submitForm()"><i class="fas fa-paper-plane"></i> Submit My Requirements</button>
+        <div class="fg"><label>Describe Your Project *</label><textarea id="f_desc"
+            placeholder="Tell us about your idea, features needed, target audience…"></textarea></div>
+        <button class="modal-submit" id="submitBtn" onclick="submitForm()"><i class="fas fa-paper-plane"></i> Submit My
+          Requirements</button>
       </div>
       <div id="schedSuccess" style="display:none" class="form-success">
-        <div class="succ-ico">✅</div><h3>Request Received!</h3>
+        <div class="succ-ico">✅</div>
+        <h3>Request Received!</h3>
         <p>Thank you! Our team will review your details and reach back within <strong>24 hours</strong>.</p>
       </div>
     </div>
   </div>
   <div class="toast" id="toast">
     <div class="toast-icon" id="toastIcon">✅</div>
-    <div><div class="toast-title" id="toastTitle">Done</div><div class="toast-sub" id="toastSub">We'll be in touch!</div></div>
+    <div>
+      <div class="toast-title" id="toastTitle">Done</div>
+      <div class="toast-sub" id="toastSub">We'll be in touch!</div>
+    </div>
   </div>
 
   <!-- ========== COMBINED SCRIPT (old + new) ========== -->
@@ -548,79 +727,79 @@ font-size:18px;
     }
 
     // Disable Right Click & DevTools (old protection)
-    document.addEventListener("contextmenu", function(e){
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) {
         e.preventDefault();
+      }
     });
-    document.addEventListener("keydown", function(e){
-        if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)){
-            e.preventDefault();
-        }
-    });
-    setInterval(function(){
-        const devtools = window.outerWidth - window.innerWidth > 160 || window.outerHeight - window.innerHeight > 160;
-        if(devtools){
-            document.body.innerHTML = "<h1 style='text-align:center;margin-top:20%;font-family:sans-serif;'>Inspect Not Allowed</h1>";
-        }
-    },1000);
+    setInterval(function () {
+      const devtools = window.outerWidth - window.innerWidth > 160 || window.outerHeight - window.innerHeight > 160;
+      if (devtools) {
+        document.body.innerHTML = "<h1 style='text-align:center;margin-top:20%;font-family:sans-serif;'>Inspect Not Allowed</h1>";
+      }
+    }, 1000);
     // Disable console (optional)
-    console.log = function(){};
-    console.warn = function(){};
-    console.error = function(){};
-    console.info = function(){};
+    console.log = function () { };
+    console.warn = function () { };
+    console.error = function () { };
+    console.info = function () { };
 
     // ---------- NEW SCRIPT (services data & functions) ----------
     const APP_SERVICES = [
-      {icon:'📱',title:'React Native App Development',note:'iOS & Android from one codebase',partTag:'App Dev',price:'₹1.2 Lakh',desc:'Build beautiful, high-performance apps for iOS and Android using a single React Native codebase. Reduce development cost and time without sacrificing native feel.',features:['Cross-platform iOS & Android','Native UI components & animations','Push notifications & deep links','Offline-first architecture','Biometric auth (Face ID / Fingerprint)','App Store & Play Store submission'],chips:['MVP in 3–5 weeks','Social Login','Payment Integration','Analytics'],subServices:[{icon:'📲',label:'iOS Build',note:'App Store ready'},{icon:'🤖',label:'Android Build',note:'Play Store ready'},{icon:'🔔',label:'Push Notifications',note:'FCM & APNs'},{icon:'💳',label:'Payments',note:'Razorpay/UPI'},{icon:'📊',label:'Analytics',note:'Firebase'},{icon:'🔐',label:'Biometric Auth',note:'Face ID/Touch'}]},
-      {icon:'🐦',title:'Flutter App Development',note:'Beautiful native apps — Google Flutter',partTag:'App Dev',price:'₹1.1 Lakh',desc:'Flutter enables pixel-perfect UI on both iOS and Android with a single codebase. Ideal for apps where visual design and animation quality matter most.',features:['Single codebase for iOS, Android & Web','Custom animations & transitions','Material Design & Cupertino widgets','Firebase & REST API integration','Background services & notifications','Hot reload for fast development'],chips:['Smooth Animations','Rich UI','Web Support','Fast Build'],subServices:[{icon:'🎨',label:'Custom UI',note:'Pixel perfect'},{icon:'🔥',label:'Firebase',note:'Backend ready'},{icon:'🌐',label:'Web Support',note:'Same codebase'},{icon:'🔄',label:'State Mgmt',note:'Riverpod/Bloc'},{icon:'📦',label:'Packages',note:'Pub.dev'},{icon:'🧪',label:'Testing',note:'Unit & widget'}]},
-      {icon:'🍎',title:'iOS App Development (Swift)',note:'Native iPhone & iPad apps',partTag:'App Dev',price:'₹1.5 Lakh',desc:'Pure native iOS apps using Swift and SwiftUI — best choice for complex apps demanding maximum performance, deep iOS integration and App Store success.',features:['Swift & SwiftUI development','Core Data & CloudKit storage','HealthKit, ARKit, MapKit integration','Apple Pay & StoreKit','Watch & iPad companion apps','TestFlight beta testing & release'],chips:['SwiftUI','ARKit','HealthKit','Apple Pay'],subServices:[{icon:'⌚',label:'Watch App',note:'WatchOS'},{icon:'📱',label:'iPad App',note:'Universal'},{icon:'🏥',label:'HealthKit',note:'Health data'},{icon:'💰',label:'Apple Pay',note:'StoreKit'},{icon:'🗺️',label:'MapKit',note:'Location'},{icon:'🔬',label:'ARKit',note:'Augmented Reality'}]},
-      {icon:'🤖',title:'Android App Development (Kotlin)',note:'Native Android apps for all devices',partTag:'App Dev',price:'₹1.2 Lakh',desc:'Native Android development with Kotlin — the modern, safer language endorsed by Google. Apps that work across the entire Android ecosystem.',features:['Kotlin & Jetpack Compose','Room database & LiveData','Google Maps & Location services','FCM push notifications','Google Pay & Billing API','Adaptive layouts for all screens'],chips:['Jetpack Compose','Google Pay','Kotlin Coroutines','Play Store'],subServices:[{icon:'🗺️',label:'Google Maps',note:'Location services'},{icon:'💳',label:'Google Pay',note:'Billing API'},{icon:'🔔',label:'FCM',note:'Push notifications'},{icon:'🗄️',label:'Room DB',note:'Local storage'},{icon:'🎨',label:'Compose UI',note:'Modern UI kit'},{icon:'⚡',label:'Coroutines',note:'Async operations'}]},
-      {icon:'📦',title:'MVP App Development',note:'Launch fast, validate your idea',partTag:'App Dev',price:'₹60K',desc:'Build your minimum viable product in 3–5 weeks. Launch lean, get real user feedback, and iterate fast before committing to the full product build.',features:['Core feature development only','Basic UI with clean design','User auth & onboarding flow','Cloud backend (Firebase/Supabase)','Analytics & crash reporting setup','App Store / Play Store submission'],chips:['3–5 Week Delivery','Lean Budget','User Feedback','Iterate Fast'],subServices:[{icon:'🚀',label:'Fast Launch',note:'3–5 weeks'},{icon:'🔑',label:'Auth & Login',note:'Social + email'},{icon:'☁️',label:'Cloud Backend',note:'Firebase'},{icon:'📊',label:'Analytics',note:'Mixpanel/Firebase'},{icon:'🐛',label:'Crash Reports',note:'Sentry'},{icon:'🏪',label:'Store Submit',note:'Both stores'}]},
-      {icon:'🛒',title:'E-Commerce Mobile App',note:'Online store on iOS & Android',partTag:'App Dev',price:'₹1.5 Lakh',desc:'Custom mobile shopping apps with product catalogues, cart, checkout, UPI/card payments and real-time order tracking built for D2C brands and marketplaces.',features:['Product catalogue & search','Shopping cart & wishlist','UPI, Razorpay, PayU payments','Real-time order tracking','Push notification for offers','Admin panel for inventory'],chips:['UPI Payment','Order Tracking','Push Offers','Admin Panel'],subServices:[{icon:'🛍️',label:'Product Catalog',note:'Search & filter'},{icon:'🛒',label:'Cart & Checkout',note:'Smooth UX'},{icon:'💳',label:'UPI & Cards',note:'Razorpay'},{icon:'📦',label:'Order Tracking',note:'Real-time'},{icon:'🔔',label:'Offer Alerts',note:'Push notifications'},{icon:'🖥️',label:'Admin Panel',note:'Inventory'}]},
-      {icon:'🎓',title:'EdTech App',note:'Learning & education platforms',partTag:'App Dev',price:'₹1.3 Lakh',desc:'Mobile learning apps with video courses, live classes, quizzes, progress tracking and certifications — designed to maximize engagement and learning outcomes.',features:['Video player with adaptive streaming','Live class scheduling (Zoom/custom)','Quiz engine with AI scoring','Progress tracking & badges','Instructor & admin panels','Multi-language support'],chips:['Video Courses','Live Classes','AI Quiz','Gamification'],subServices:[{icon:'🎬',label:'Video Player',note:'Adaptive stream'},{icon:'🎥',label:'Live Classes',note:'Zoom/custom'},{icon:'🧠',label:'AI Quiz',note:'Smart scoring'},{icon:'🏆',label:'Badges',note:'Gamification'},{icon:'👩‍🏫',label:'Instructor Panel',note:'Dashboard'},{icon:'🌏',label:'Multi-lang',note:'Hindi & more'}]},
+      { icon: '📱', title: 'React Native App Development', note: 'iOS & Android from one codebase', partTag: 'App Dev', price: '₹1.2 Lakh', desc: 'Build beautiful, high-performance apps for iOS and Android using a single React Native codebase. Reduce development cost and time without sacrificing native feel.', features: ['Cross-platform iOS & Android', 'Native UI components & animations', 'Push notifications & deep links', 'Offline-first architecture', 'Biometric auth (Face ID / Fingerprint)', 'App Store & Play Store submission'], chips: ['MVP in 3–5 weeks', 'Social Login', 'Payment Integration', 'Analytics'], subServices: [{ icon: '📲', label: 'iOS Build', note: 'App Store ready' }, { icon: '🤖', label: 'Android Build', note: 'Play Store ready' }, { icon: '🔔', label: 'Push Notifications', note: 'FCM & APNs' }, { icon: '💳', label: 'Payments', note: 'Razorpay/UPI' }, { icon: '📊', label: 'Analytics', note: 'Firebase' }, { icon: '🔐', label: 'Biometric Auth', note: 'Face ID/Touch' }] },
+      { icon: '🐦', title: 'Flutter App Development', note: 'Beautiful native apps — Google Flutter', partTag: 'App Dev', price: '₹1.1 Lakh', desc: 'Flutter enables pixel-perfect UI on both iOS and Android with a single codebase. Ideal for apps where visual design and animation quality matter most.', features: ['Single codebase for iOS, Android & Web', 'Custom animations & transitions', 'Material Design & Cupertino widgets', 'Firebase & REST API integration', 'Background services & notifications', 'Hot reload for fast development'], chips: ['Smooth Animations', 'Rich UI', 'Web Support', 'Fast Build'], subServices: [{ icon: '🎨', label: 'Custom UI', note: 'Pixel perfect' }, { icon: '🔥', label: 'Firebase', note: 'Backend ready' }, { icon: '🌐', label: 'Web Support', note: 'Same codebase' }, { icon: '🔄', label: 'State Mgmt', note: 'Riverpod/Bloc' }, { icon: '📦', label: 'Packages', note: 'Pub.dev' }, { icon: '🧪', label: 'Testing', note: 'Unit & widget' }] },
+      { icon: '🍎', title: 'iOS App Development (Swift)', note: 'Native iPhone & iPad apps', partTag: 'App Dev', price: '₹1.5 Lakh', desc: 'Pure native iOS apps using Swift and SwiftUI — best choice for complex apps demanding maximum performance, deep iOS integration and App Store success.', features: ['Swift & SwiftUI development', 'Core Data & CloudKit storage', 'HealthKit, ARKit, MapKit integration', 'Apple Pay & StoreKit', 'Watch & iPad companion apps', 'TestFlight beta testing & release'], chips: ['SwiftUI', 'ARKit', 'HealthKit', 'Apple Pay'], subServices: [{ icon: '⌚', label: 'Watch App', note: 'WatchOS' }, { icon: '📱', label: 'iPad App', note: 'Universal' }, { icon: '🏥', label: 'HealthKit', note: 'Health data' }, { icon: '💰', label: 'Apple Pay', note: 'StoreKit' }, { icon: '🗺️', label: 'MapKit', note: 'Location' }, { icon: '🔬', label: 'ARKit', note: 'Augmented Reality' }] },
+      { icon: '🤖', title: 'Android App Development (Kotlin)', note: 'Native Android apps for all devices', partTag: 'App Dev', price: '₹1.2 Lakh', desc: 'Native Android development with Kotlin — the modern, safer language endorsed by Google. Apps that work across the entire Android ecosystem.', features: ['Kotlin & Jetpack Compose', 'Room database & LiveData', 'Google Maps & Location services', 'FCM push notifications', 'Google Pay & Billing API', 'Adaptive layouts for all screens'], chips: ['Jetpack Compose', 'Google Pay', 'Kotlin Coroutines', 'Play Store'], subServices: [{ icon: '🗺️', label: 'Google Maps', note: 'Location services' }, { icon: '💳', label: 'Google Pay', note: 'Billing API' }, { icon: '🔔', label: 'FCM', note: 'Push notifications' }, { icon: '🗄️', label: 'Room DB', note: 'Local storage' }, { icon: '🎨', label: 'Compose UI', note: 'Modern UI kit' }, { icon: '⚡', label: 'Coroutines', note: 'Async operations' }] },
+      { icon: '📦', title: 'MVP App Development', note: 'Launch fast, validate your idea', partTag: 'App Dev', price: '₹60K', desc: 'Build your minimum viable product in 3–5 weeks. Launch lean, get real user feedback, and iterate fast before committing to the full product build.', features: ['Core feature development only', 'Basic UI with clean design', 'User auth & onboarding flow', 'Cloud backend (Firebase/Supabase)', 'Analytics & crash reporting setup', 'App Store / Play Store submission'], chips: ['3–5 Week Delivery', 'Lean Budget', 'User Feedback', 'Iterate Fast'], subServices: [{ icon: '🚀', label: 'Fast Launch', note: '3–5 weeks' }, { icon: '🔑', label: 'Auth & Login', note: 'Social + email' }, { icon: '☁️', label: 'Cloud Backend', note: 'Firebase' }, { icon: '📊', label: 'Analytics', note: 'Mixpanel/Firebase' }, { icon: '🐛', label: 'Crash Reports', note: 'Sentry' }, { icon: '🏪', label: 'Store Submit', note: 'Both stores' }] },
+      { icon: '🛒', title: 'E-Commerce Mobile App', note: 'Online store on iOS & Android', partTag: 'App Dev', price: '₹1.5 Lakh', desc: 'Custom mobile shopping apps with product catalogues, cart, checkout, UPI/card payments and real-time order tracking built for D2C brands and marketplaces.', features: ['Product catalogue & search', 'Shopping cart & wishlist', 'UPI, Razorpay, PayU payments', 'Real-time order tracking', 'Push notification for offers', 'Admin panel for inventory'], chips: ['UPI Payment', 'Order Tracking', 'Push Offers', 'Admin Panel'], subServices: [{ icon: '🛍️', label: 'Product Catalog', note: 'Search & filter' }, { icon: '🛒', label: 'Cart & Checkout', note: 'Smooth UX' }, { icon: '💳', label: 'UPI & Cards', note: 'Razorpay' }, { icon: '📦', label: 'Order Tracking', note: 'Real-time' }, { icon: '🔔', label: 'Offer Alerts', note: 'Push notifications' }, { icon: '🖥️', label: 'Admin Panel', note: 'Inventory' }] },
+      { icon: '🎓', title: 'EdTech App', note: 'Learning & education platforms', partTag: 'App Dev', price: '₹1.3 Lakh', desc: 'Mobile learning apps with video courses, live classes, quizzes, progress tracking and certifications — designed to maximize engagement and learning outcomes.', features: ['Video player with adaptive streaming', 'Live class scheduling (Zoom/custom)', 'Quiz engine with AI scoring', 'Progress tracking & badges', 'Instructor & admin panels', 'Multi-language support'], chips: ['Video Courses', 'Live Classes', 'AI Quiz', 'Gamification'], subServices: [{ icon: '🎬', label: 'Video Player', note: 'Adaptive stream' }, { icon: '🎥', label: 'Live Classes', note: 'Zoom/custom' }, { icon: '🧠', label: 'AI Quiz', note: 'Smart scoring' }, { icon: '🏆', label: 'Badges', note: 'Gamification' }, { icon: '👩‍🏫', label: 'Instructor Panel', note: 'Dashboard' }, { icon: '🌏', label: 'Multi-lang', note: 'Hindi & more' }] },
     ];
     const WEB_SERVICES = [
-      {icon:'🌐',title:'Corporate Website',note:'Professional, fast & SEO-optimised',partTag:'Web Dev',price:'₹40K',desc:'Clean, modern corporate websites built on Next.js or WordPress — SEO-ready, mobile-responsive, and designed to establish credibility and generate leads.',features:['Responsive multi-page design','Blog & news section (CMS)','Contact forms & lead capture','SEO on-page optimisation','Google Analytics integration','Fast loading (Core Web Vitals)'],chips:['SEO Ready','CMS','Lead Forms','Fast Loading'],subServices:[{icon:'📱',label:'Responsive',note:'All devices'},{icon:'✍️',label:'CMS Blog',note:'Easy editing'},{icon:'📊',label:'Analytics',note:'Google Analytics'},{icon:'🔍',label:'SEO',note:'On-page ready'},{icon:'📝',label:'Lead Forms',note:'Contact forms'},{icon:'⚡',label:'Fast Load',note:'Core Web Vitals'}]},
-      {icon:'🛍️',title:'E-Commerce Website',note:'Custom stores, Shopify & headless',partTag:'Web Dev',price:'₹1.2 Lakh',desc:'From Shopify stores to fully custom Next.js storefronts — we build e-commerce sites that are conversion-optimised, fast and deeply integrated with Indian payments.',features:['Custom or headless storefront','Product catalogue & filtering','Cart, checkout & order management','Razorpay, UPI, COD payments','Abandoned cart recovery','Inventory & shipping management'],chips:['Headless Commerce','Razorpay','Inventory','SEO'],subServices:[{icon:'🏪',label:'Storefront',note:'Custom design'},{icon:'🔍',label:'Product Filter',note:'Advanced search'},{icon:'💳',label:'Razorpay',note:'Indian payments'},{icon:'📦',label:'Inventory',note:'Stock management'},{icon:'🛒',label:'Cart Recovery',note:'Abandoned cart'},{icon:'🚚',label:'Shipping',note:'Courier APIs'}]},
-      {icon:'📊',title:'SaaS Platform / Dashboard',note:'Full-stack SaaS applications',partTag:'Web Dev',price:'₹2.5 Lakh',desc:'Build your SaaS product from scratch — multi-tenant architecture, subscription billing, user roles, analytics dashboards and everything needed to run a cloud business.',features:['Multi-tenant architecture','Stripe / Razorpay subscription billing','Role-based access control (RBAC)','Real-time data dashboards','API-first, headless backend','Scalable to 1M+ users'],chips:['Multi-Tenant','Stripe Billing','Real-time','API-First'],subServices:[{icon:'🏢',label:'Multi-tenant',note:'SaaS ready'},{icon:'💰',label:'Billing',note:'Stripe/Razorpay'},{icon:'👥',label:'RBAC',note:'User roles'},{icon:'📈',label:'Dashboards',note:'Real-time charts'},{icon:'🔗',label:'API-First',note:'REST & GraphQL'},{icon:'📧',label:'Email Flows',note:'Transactional'}]},
-      {icon:'🏫',title:'LMS / Learning Portal',note:'Online education & training platforms',partTag:'Web Dev',price:'₹1.5 Lakh',desc:'Custom Learning Management Systems for schools, edtech companies and corporates — video courses, assessments, certifications and instructor dashboards.',features:['Course builder & video hosting','Live class scheduling (Zoom/custom)','Assessment & certificate engine','Student progress dashboards','Instructor & admin panels','Payment gateway for enrollments'],chips:['Video Courses','Certificates','Live Classes','Instructor Panel'],subServices:[{icon:'🎬',label:'Course Builder',note:'Video hosting'},{icon:'📜',label:'Certificates',note:'Auto-generated'},{icon:'📊',label:'Progress',note:'Student tracking'},{icon:'💳',label:'Enrollment Pay',note:'Gateway'},{icon:'👩‍🏫',label:'Instructor',note:'Dashboard'},{icon:'🎥',label:'Live Classes',note:'Zoom integration'}]},
-      {icon:'🏠',title:'Real Estate Portal',note:'Property listing & management sites',partTag:'Web Dev',price:'₹1.2 Lakh',desc:'Property listing portals with advanced search, virtual tours, EMI calculators, agent dashboards and CRM integration — for brokers, builders and PropTech startups.',features:['Advanced property search & filters','Map-based property view','Virtual tour embed (360°)','EMI & affordability calculator','Agent & developer dashboards','Lead management CRM'],chips:['Map View','Virtual Tours','EMI Calc','CRM'],subServices:[{icon:'🗺️',label:'Map View',note:'Google Maps'},{icon:'🔍',label:'Advanced Search',note:'Filters'},{icon:'🏠',label:'Virtual Tours',note:'360° view'},{icon:'🧮',label:'EMI Calc',note:'Affordability'},{icon:'👨‍💼',label:'Agent Panel',note:'Dashboard'},{icon:'📋',label:'Lead CRM',note:'Tracking'}]},
-      {icon:'🚚',title:'Logistics / Delivery Platform',note:'Fleet tracking & dispatch systems',partTag:'Web Dev',price:'₹1.8 Lakh',desc:'Web-based logistics platforms with real-time fleet tracking, driver management, dispatch control rooms, route optimisation and customer delivery portals.',features:['Real-time GPS fleet tracking','Driver app (React Native)','Automated dispatch & routing','Customer delivery status portal','SLA & performance reports','API integration with courier providers'],chips:['Real-Time GPS','Route Optimisation','Driver App','SLA Reports'],subServices:[{icon:'📍',label:'GPS Tracking',note:'Real-time'},{icon:'🚗',label:'Driver App',note:'React Native'},{icon:'🗺️',label:'Route Optim.',note:'Smart routing'},{icon:'📊',label:'SLA Reports',note:'Performance'},{icon:'👥',label:'Customer Portal',note:'Live updates'},{icon:'🔗',label:'Courier APIs',note:'Integration'}]},
-      {icon:'💳',title:'Fintech Web Platform',note:'Payments, wallets & lending',partTag:'Web Dev',price:'₹3 Lakh',desc:'Secure fintech platforms — payment gateways, digital wallets, KYC workflows, NBFC lending portals and financial dashboards built to RBI and compliance standards.',features:['Payment gateway integration','Digital wallet & UPI flow','Video KYC & Aadhaar verification','NBFC loan origination system','Transaction reconciliation','Compliance & audit logs'],chips:['KYC','UPI','Wallet','Compliance'],subServices:[{icon:'💳',label:'Payment GW',note:'Multi-gateway'},{icon:'👛',label:'Digital Wallet',note:'UPI flow'},{icon:'🪪',label:'Video KYC',note:'Aadhaar'},{icon:'🏦',label:'Lending',note:'NBFC portal'},{icon:'📋',label:'Reconciliation',note:'Auto match'},{icon:'🔒',label:'Compliance',note:'Audit logs'}]},
+      { icon: '🌐', title: 'Corporate Website', note: 'Professional, fast & SEO-optimised', partTag: 'Web Dev', price: '₹40K', desc: 'Clean, modern corporate websites built on Next.js or WordPress — SEO-ready, mobile-responsive, and designed to establish credibility and generate leads.', features: ['Responsive multi-page design', 'Blog & news section (CMS)', 'Contact forms & lead capture', 'SEO on-page optimisation', 'Google Analytics integration', 'Fast loading (Core Web Vitals)'], chips: ['SEO Ready', 'CMS', 'Lead Forms', 'Fast Loading'], subServices: [{ icon: '📱', label: 'Responsive', note: 'All devices' }, { icon: '✍️', label: 'CMS Blog', note: 'Easy editing' }, { icon: '📊', label: 'Analytics', note: 'Google Analytics' }, { icon: '🔍', label: 'SEO', note: 'On-page ready' }, { icon: '📝', label: 'Lead Forms', note: 'Contact forms' }, { icon: '⚡', label: 'Fast Load', note: 'Core Web Vitals' }] },
+      { icon: '🛍️', title: 'E-Commerce Website', note: 'Custom stores, Shopify & headless', partTag: 'Web Dev', price: '₹1.2 Lakh', desc: 'From Shopify stores to fully custom Next.js storefronts — we build e-commerce sites that are conversion-optimised, fast and deeply integrated with Indian payments.', features: ['Custom or headless storefront', 'Product catalogue & filtering', 'Cart, checkout & order management', 'Razorpay, UPI, COD payments', 'Abandoned cart recovery', 'Inventory & shipping management'], chips: ['Headless Commerce', 'Razorpay', 'Inventory', 'SEO'], subServices: [{ icon: '🏪', label: 'Storefront', note: 'Custom design' }, { icon: '🔍', label: 'Product Filter', note: 'Advanced search' }, { icon: '💳', label: 'Razorpay', note: 'Indian payments' }, { icon: '📦', label: 'Inventory', note: 'Stock management' }, { icon: '🛒', label: 'Cart Recovery', note: 'Abandoned cart' }, { icon: '🚚', label: 'Shipping', note: 'Courier APIs' }] },
+      { icon: '📊', title: 'SaaS Platform / Dashboard', note: 'Full-stack SaaS applications', partTag: 'Web Dev', price: '₹2.5 Lakh', desc: 'Build your SaaS product from scratch — multi-tenant architecture, subscription billing, user roles, analytics dashboards and everything needed to run a cloud business.', features: ['Multi-tenant architecture', 'Stripe / Razorpay subscription billing', 'Role-based access control (RBAC)', 'Real-time data dashboards', 'API-first, headless backend', 'Scalable to 1M+ users'], chips: ['Multi-Tenant', 'Stripe Billing', 'Real-time', 'API-First'], subServices: [{ icon: '🏢', label: 'Multi-tenant', note: 'SaaS ready' }, { icon: '💰', label: 'Billing', note: 'Stripe/Razorpay' }, { icon: '👥', label: 'RBAC', note: 'User roles' }, { icon: '📈', label: 'Dashboards', note: 'Real-time charts' }, { icon: '🔗', label: 'API-First', note: 'REST & GraphQL' }, { icon: '📧', label: 'Email Flows', note: 'Transactional' }] },
+      { icon: '🏫', title: 'LMS / Learning Portal', note: 'Online education & training platforms', partTag: 'Web Dev', price: '₹1.5 Lakh', desc: 'Custom Learning Management Systems for schools, edtech companies and corporates — video courses, assessments, certifications and instructor dashboards.', features: ['Course builder & video hosting', 'Live class scheduling (Zoom/custom)', 'Assessment & certificate engine', 'Student progress dashboards', 'Instructor & admin panels', 'Payment gateway for enrollments'], chips: ['Video Courses', 'Certificates', 'Live Classes', 'Instructor Panel'], subServices: [{ icon: '🎬', label: 'Course Builder', note: 'Video hosting' }, { icon: '📜', label: 'Certificates', note: 'Auto-generated' }, { icon: '📊', label: 'Progress', note: 'Student tracking' }, { icon: '💳', label: 'Enrollment Pay', note: 'Gateway' }, { icon: '👩‍🏫', label: 'Instructor', note: 'Dashboard' }, { icon: '🎥', label: 'Live Classes', note: 'Zoom integration' }] },
+      { icon: '🏠', title: 'Real Estate Portal', note: 'Property listing & management sites', partTag: 'Web Dev', price: '₹1.2 Lakh', desc: 'Property listing portals with advanced search, virtual tours, EMI calculators, agent dashboards and CRM integration — for brokers, builders and PropTech startups.', features: ['Advanced property search & filters', 'Map-based property view', 'Virtual tour embed (360°)', 'EMI & affordability calculator', 'Agent & developer dashboards', 'Lead management CRM'], chips: ['Map View', 'Virtual Tours', 'EMI Calc', 'CRM'], subServices: [{ icon: '🗺️', label: 'Map View', note: 'Google Maps' }, { icon: '🔍', label: 'Advanced Search', note: 'Filters' }, { icon: '🏠', label: 'Virtual Tours', note: '360° view' }, { icon: '🧮', label: 'EMI Calc', note: 'Affordability' }, { icon: '👨‍💼', label: 'Agent Panel', note: 'Dashboard' }, { icon: '📋', label: 'Lead CRM', note: 'Tracking' }] },
+      { icon: '🚚', title: 'Logistics / Delivery Platform', note: 'Fleet tracking & dispatch systems', partTag: 'Web Dev', price: '₹1.8 Lakh', desc: 'Web-based logistics platforms with real-time fleet tracking, driver management, dispatch control rooms, route optimisation and customer delivery portals.', features: ['Real-time GPS fleet tracking', 'Driver app (React Native)', 'Automated dispatch & routing', 'Customer delivery status portal', 'SLA & performance reports', 'API integration with courier providers'], chips: ['Real-Time GPS', 'Route Optimisation', 'Driver App', 'SLA Reports'], subServices: [{ icon: '📍', label: 'GPS Tracking', note: 'Real-time' }, { icon: '🚗', label: 'Driver App', note: 'React Native' }, { icon: '🗺️', label: 'Route Optim.', note: 'Smart routing' }, { icon: '📊', label: 'SLA Reports', note: 'Performance' }, { icon: '👥', label: 'Customer Portal', note: 'Live updates' }, { icon: '🔗', label: 'Courier APIs', note: 'Integration' }] },
+      { icon: '💳', title: 'Fintech Web Platform', note: 'Payments, wallets & lending', partTag: 'Web Dev', price: '₹3 Lakh', desc: 'Secure fintech platforms — payment gateways, digital wallets, KYC workflows, NBFC lending portals and financial dashboards built to RBI and compliance standards.', features: ['Payment gateway integration', 'Digital wallet & UPI flow', 'Video KYC & Aadhaar verification', 'NBFC loan origination system', 'Transaction reconciliation', 'Compliance & audit logs'], chips: ['KYC', 'UPI', 'Wallet', 'Compliance'], subServices: [{ icon: '💳', label: 'Payment GW', note: 'Multi-gateway' }, { icon: '👛', label: 'Digital Wallet', note: 'UPI flow' }, { icon: '🪪', label: 'Video KYC', note: 'Aadhaar' }, { icon: '🏦', label: 'Lending', note: 'NBFC portal' }, { icon: '📋', label: 'Reconciliation', note: 'Auto match' }, { icon: '🔒', label: 'Compliance', note: 'Audit logs' }] },
     ];
     const OTHER_SERVICES = [
-      {icon:'🎨',title:'UI/UX Design',note:'Research-backed interfaces ',partTag:'Design',price:'₹40K',desc:'Beautiful design is not decoration — it is the difference between a product people love and one they abandon. Our design team starts with user research and delivers pixel-perfect Figma files ready for handoff.',features:['User research & persona creation','Information architecture','Low & high-fidelity wireframes','Interactive Figma prototypes','Usability testing & iteration','Design system & component library','Developer handoff documentation'],chips:['User Research','Wireframing','Figma Prototypes','Design Systems'],subServices:[{icon:'🔍',label:'UX Research',note:'User interviews'},{icon:'📐',label:'Wireframing',note:'Fast ideation'},{icon:'✨',label:'Visual Design',note:'Brand-aligned UI'},{icon:'📱',label:'Mobile UI',note:'iOS & Android'},{icon:'🖥️',label:'Web UI',note:'Responsive'},{icon:'🎭',label:'Design Systems',note:'Component libs'}]},
-      {icon:'⚙️',title:'Backend & API Development',note:'Scalable, secure server infrastructure & APIs',partTag:'Backend',price:'₹60K',desc:'Your product is only as good as the engine running it. Our backend engineers design robust, secure, and horizontally scalable architectures that handle millions of requests.',features:['Node.js, Python, Go, Java','REST & GraphQL API design','PostgreSQL, MongoDB, Redis, Elasticsearch','JWT, OAuth2 & RBAC auth systems','Horizontal scaling & load balancing','CI/CD pipelines (GitHub Actions)','Comprehensive API documentation'],chips:['REST & GraphQL','Microservices','Database Design','Cloud Infrastructure'],subServices:[{icon:'🔗',label:'API Dev',note:'REST & GraphQL'},{icon:'🗄️',label:'Database Design',note:'SQL & NoSQL'},{icon:'☁️',label:'Cloud Setup',note:'AWS/GCP/Azure'},{icon:'🔒',label:'Security Audit',note:'Pen testing'},{icon:'📈',label:'Scaling Infra',note:'1M+ users'},{icon:'🔄',label:'Legacy Migration',note:'Modernise'}]},
-      {icon:'🚀',title:'DevOps & Cloud Services',note:'CI/CD, cloud infra and reliability engineering',partTag:'DevOps',price:'₹50K',desc:'Bring new code and features to your products painlessly. We help you reduce time to market without sacrificing reliability, security, and compliance.',features:['Infrastructure as Code (Terraform)','Kubernetes & Docker','GitHub Actions, Jenkins CI/CD','AWS, GCP, Azure multi-cloud','Monitoring (Prometheus, Grafana)','ELK Stack log management','Disaster recovery & backup'],chips:['Cloud Infrastructure','CI/CD Services','Cost Optimisation','Kubernetes & Docker'],subServices:[{icon:'🐳',label:'Containerisation',note:'Docker & K8s'},{icon:'🔄',label:'CI/CD Pipelines',note:'Automate deploys'},{icon:'☁️',label:'Cloud Migration',note:'Lift & shift'},{icon:'💸',label:'Cost Optimisation',note:'Cut bills 30–60%'},{icon:'📊',label:'Monitoring',note:'Full observability'},{icon:'🛡️',label:'Security & IAM',note:'Zero-trust'}]},
-      {icon:'🤖',title:'AI & Machine Learning',note:'Intelligent features, chatbots & automation',partTag:'AI / ML',price:'₹1 Lakh',desc:'We integrate AI into your products to automate workflows, personalise experiences and unlock data insights. From OpenAI integrations to custom ML models — we make AI practical and profitable.',features:['OpenAI, Gemini & Claude integrations','Custom ML model training','Natural language processing (NLP)','Computer vision & image recognition','Recommendation engines','Robotic process automation (RPA)','MLOps & model monitoring'],chips:['LLM Integration','Computer Vision','Recommendation Engines','RPA Automation'],subServices:[{icon:'💬',label:'AI Chatbots',note:'GPT-powered'},{icon:'👁️',label:'Computer Vision',note:'Image & video AI'},{icon:'🎯',label:'Recommendation',note:'Personalised UX'},{icon:'📊',label:'Predictive Analytics',note:'Forecast'},{icon:'📝',label:'NLP Solutions',note:'Text & speech'},{icon:'🔧',label:'RPA & Automation',note:'Workflow bots'}]},
-      {icon:'👨‍💻',title:'Hire Dedicated Developers',note:'Expert engineers, monthly',partTag:'Hire Dev',price:'₹80K/mo',desc:'Need dedicated engineering talent without the overhead of full-time hiring? Hire our pre-vetted developers on a monthly basis — they work in your tools, your timezone, and your workflow.',features:['Pre-vetted senior engineers (3–8 yr exp)','Daily stand-ups & sprint participation','Work in your tools (Jira, Slack, GitHub)','Flexible engagement','Dedicated project manager','Weekly progress reports','Replace or scale anytime — no lock-ins'],chips:['Full-Time Developers','Part-Time Developers','Team Augmentation','CTO as a Service'],subServices:[{icon:'📱',label:'React Native Dev',note:'iOS & Android'},{icon:'⚛️',label:'React / Next.js',note:'Frontend'},{icon:'🐍',label:'Python / Django',note:'Backend & ML'},{icon:'🟩',label:'Node.js Dev',note:'APIs & services'},{icon:'🐳',label:'DevOps Engineer',note:'CI/CD & cloud'},{icon:'🗄️',label:'Database Engineer',note:'SQL & NoSQL'}]},
-      {icon:'📰',title:'News & Media Website',note:'High-traffic CMS & media portals',partTag:'Web Dev',price:'₹60K',desc:'News portals, magazine sites and media platforms built to handle high traffic, fast delivery, editorial workflows, SEO and ad monetisation.',features:['Headless CMS (Sanity/Contentful)','Breaking news real-time feed','SEO-optimised article pages','Ad network integration (Google AdSense)','Email subscription system','Multi-author editorial workflow'],chips:['Headless CMS','SEO','Ad Monetisation','High Traffic'],subServices:[{icon:'📝',label:'Headless CMS',note:'Sanity/Contentful'},{icon:'⚡',label:'Breaking News',note:'Real-time feed'},{icon:'🔍',label:'SEO Articles',note:'Optimised'},{icon:'💰',label:'Ad Network',note:'AdSense'},{icon:'📧',label:'Newsletter',note:'Subscriptions'},{icon:'✍️',label:'Multi-author',note:'Editorial flow'}]},
-      {icon:'🔧',title:'Maintenance & Support',note:'Post-launch care, updates and 24/7 monitoring',partTag:'Support',price:'₹15K/mo',desc:"Launching is not the end — it's the beginning. Our maintenance plans ensure your product stays fast, secure and bug-free so you can focus on your business.",features:['24/7 uptime monitoring & alerts','Critical bug fixes (4-hr response SLA)','Security patches & dependency updates','Monthly performance reports','Feature additions & enhancements','Database optimisation & cleanup','Quarterly security audits'],chips:['Bug Fixing','Security Patches','Performance Monitoring','Feature Additions'],subServices:[{icon:'🐛',label:'Bug Fixing',note:'Fast turnaround'},{icon:'🔒',label:'Security Updates',note:'Patch & harden'},{icon:'📊',label:'Performance Tune',note:'Speed optim.'},{icon:'📈',label:'Feature Dev',note:'Post-launch adds'},{icon:'☁️',label:'Cloud Monitoring',note:'24/7 alerting'},{icon:'📋',label:'Monthly Reports',note:'Full transparency'}]},
+      { icon: '🎨', title: 'UI/UX Design', note: 'Research-backed interfaces ', partTag: 'Design', price: '₹40K', desc: 'Beautiful design is not decoration — it is the difference between a product people love and one they abandon. Our design team starts with user research and delivers pixel-perfect Figma files ready for handoff.', features: ['User research & persona creation', 'Information architecture', 'Low & high-fidelity wireframes', 'Interactive Figma prototypes', 'Usability testing & iteration', 'Design system & component library', 'Developer handoff documentation'], chips: ['User Research', 'Wireframing', 'Figma Prototypes', 'Design Systems'], subServices: [{ icon: '🔍', label: 'UX Research', note: 'User interviews' }, { icon: '📐', label: 'Wireframing', note: 'Fast ideation' }, { icon: '✨', label: 'Visual Design', note: 'Brand-aligned UI' }, { icon: '📱', label: 'Mobile UI', note: 'iOS & Android' }, { icon: '🖥️', label: 'Web UI', note: 'Responsive' }, { icon: '🎭', label: 'Design Systems', note: 'Component libs' }] },
+      { icon: '⚙️', title: 'Backend & API Development', note: 'Scalable, secure server infrastructure & APIs', partTag: 'Backend', price: '₹60K', desc: 'Your product is only as good as the engine running it. Our backend engineers design robust, secure, and horizontally scalable architectures that handle millions of requests.', features: ['Node.js, Python, Go, Java', 'REST & GraphQL API design', 'PostgreSQL, MongoDB, Redis, Elasticsearch', 'JWT, OAuth2 & RBAC auth systems', 'Horizontal scaling & load balancing', 'CI/CD pipelines (GitHub Actions)', 'Comprehensive API documentation'], chips: ['REST & GraphQL', 'Microservices', 'Database Design', 'Cloud Infrastructure'], subServices: [{ icon: '🔗', label: 'API Dev', note: 'REST & GraphQL' }, { icon: '🗄️', label: 'Database Design', note: 'SQL & NoSQL' }, { icon: '☁️', label: 'Cloud Setup', note: 'AWS/GCP/Azure' }, { icon: '🔒', label: 'Security Audit', note: 'Pen testing' }, { icon: '📈', label: 'Scaling Infra', note: '1M+ users' }, { icon: '🔄', label: 'Legacy Migration', note: 'Modernise' }] },
+      { icon: '🚀', title: 'DevOps & Cloud Services', note: 'CI/CD, cloud infra and reliability engineering', partTag: 'DevOps', price: '₹50K', desc: 'Bring new code and features to your products painlessly. We help you reduce time to market without sacrificing reliability, security, and compliance.', features: ['Infrastructure as Code (Terraform)', 'Kubernetes & Docker', 'GitHub Actions, Jenkins CI/CD', 'AWS, GCP, Azure multi-cloud', 'Monitoring (Prometheus, Grafana)', 'ELK Stack log management', 'Disaster recovery & backup'], chips: ['Cloud Infrastructure', 'CI/CD Services', 'Cost Optimisation', 'Kubernetes & Docker'], subServices: [{ icon: '🐳', label: 'Containerisation', note: 'Docker & K8s' }, { icon: '🔄', label: 'CI/CD Pipelines', note: 'Automate deploys' }, { icon: '☁️', label: 'Cloud Migration', note: 'Lift & shift' }, { icon: '💸', label: 'Cost Optimisation', note: 'Cut bills 30–60%' }, { icon: '📊', label: 'Monitoring', note: 'Full observability' }, { icon: '🛡️', label: 'Security & IAM', note: 'Zero-trust' }] },
+      { icon: '🤖', title: 'AI & Machine Learning', note: 'Intelligent features, chatbots & automation', partTag: 'AI / ML', price: '₹1 Lakh', desc: 'We integrate AI into your products to automate workflows, personalise experiences and unlock data insights. From OpenAI integrations to custom ML models — we make AI practical and profitable.', features: ['OpenAI, Gemini & Claude integrations', 'Custom ML model training', 'Natural language processing (NLP)', 'Computer vision & image recognition', 'Recommendation engines', 'Robotic process automation (RPA)', 'MLOps & model monitoring'], chips: ['LLM Integration', 'Computer Vision', 'Recommendation Engines', 'RPA Automation'], subServices: [{ icon: '💬', label: 'AI Chatbots', note: 'GPT-powered' }, { icon: '👁️', label: 'Computer Vision', note: 'Image & video AI' }, { icon: '🎯', label: 'Recommendation', note: 'Personalised UX' }, { icon: '📊', label: 'Predictive Analytics', note: 'Forecast' }, { icon: '📝', label: 'NLP Solutions', note: 'Text & speech' }, { icon: '🔧', label: 'RPA & Automation', note: 'Workflow bots' }] },
+      { icon: '👨‍💻', title: 'Hire Dedicated Developers', note: 'Expert engineers, monthly', partTag: 'Hire Dev', price: '₹80K/mo', desc: 'Need dedicated engineering talent without the overhead of full-time hiring? Hire our pre-vetted developers on a monthly basis — they work in your tools, your timezone, and your workflow.', features: ['Pre-vetted senior engineers (3–8 yr exp)', 'Daily stand-ups & sprint participation', 'Work in your tools (Jira, Slack, GitHub)', 'Flexible engagement', 'Dedicated project manager', 'Weekly progress reports', 'Replace or scale anytime — no lock-ins'], chips: ['Full-Time Developers', 'Part-Time Developers', 'Team Augmentation', 'CTO as a Service'], subServices: [{ icon: '📱', label: 'React Native Dev', note: 'iOS & Android' }, { icon: '⚛️', label: 'React / Next.js', note: 'Frontend' }, { icon: '🐍', label: 'Python / Django', note: 'Backend & ML' }, { icon: '🟩', label: 'Node.js Dev', note: 'APIs & services' }, { icon: '🐳', label: 'DevOps Engineer', note: 'CI/CD & cloud' }, { icon: '🗄️', label: 'Database Engineer', note: 'SQL & NoSQL' }] },
+      { icon: '📰', title: 'News & Media Website', note: 'High-traffic CMS & media portals', partTag: 'Web Dev', price: '₹60K', desc: 'News portals, magazine sites and media platforms built to handle high traffic, fast delivery, editorial workflows, SEO and ad monetisation.', features: ['Headless CMS (Sanity/Contentful)', 'Breaking news real-time feed', 'SEO-optimised article pages', 'Ad network integration (Google AdSense)', 'Email subscription system', 'Multi-author editorial workflow'], chips: ['Headless CMS', 'SEO', 'Ad Monetisation', 'High Traffic'], subServices: [{ icon: '📝', label: 'Headless CMS', note: 'Sanity/Contentful' }, { icon: '⚡', label: 'Breaking News', note: 'Real-time feed' }, { icon: '🔍', label: 'SEO Articles', note: 'Optimised' }, { icon: '💰', label: 'Ad Network', note: 'AdSense' }, { icon: '📧', label: 'Newsletter', note: 'Subscriptions' }, { icon: '✍️', label: 'Multi-author', note: 'Editorial flow' }] },
+      { icon: '🔧', title: 'Maintenance & Support', note: 'Post-launch care, updates and 24/7 monitoring', partTag: 'Support', price: '₹15K/mo', desc: "Launching is not the end — it's the beginning. Our maintenance plans ensure your product stays fast, secure and bug-free so you can focus on your business.", features: ['24/7 uptime monitoring & alerts', 'Critical bug fixes (4-hr response SLA)', 'Security patches & dependency updates', 'Monthly performance reports', 'Feature additions & enhancements', 'Database optimisation & cleanup', 'Quarterly security audits'], chips: ['Bug Fixing', 'Security Patches', 'Performance Monitoring', 'Feature Additions'], subServices: [{ icon: '🐛', label: 'Bug Fixing', note: 'Fast turnaround' }, { icon: '🔒', label: 'Security Updates', note: 'Patch & harden' }, { icon: '📊', label: 'Performance Tune', note: 'Speed optim.' }, { icon: '📈', label: 'Feature Dev', note: 'Post-launch adds' }, { icon: '☁️', label: 'Cloud Monitoring', note: '24/7 alerting' }, { icon: '📋', label: 'Monthly Reports', note: 'Full transparency' }] },
     ];
     const DOMAINS = [
-      {icon:'🏥',title:'Healthcare & HealthTech',desc:'Telemedicine, EHR, patient apps and hospital management.',count:'18 Projects'},
-      {icon:'🎓',title:'Education & EdTech',desc:'LMS platforms, quiz apps, video courses and portals.',count:'22 Projects'},
-      {icon:'💳',title:'Fintech & Banking',desc:'Payment gateways, wallets, KYC, lending platforms.',count:'15 Projects'},
-      {icon:'🛒',title:'E-Commerce & Retail',desc:'D2C stores, marketplaces and order management.',count:'26 Projects'},
-      {icon:'🏠',title:'Real Estate & PropTech',desc:'Property portals, virtual tours, CRM and EMI calculators.',count:'11 Projects'},
-      {icon:'🚚',title:'Logistics & Supply Chain',desc:'Fleet tracking, route optimisation, warehouse management.',count:'13 Projects'},
-      {icon:'🌾',title:'AgriTech',desc:'Farmer apps, crop monitoring, multilingual offline mode.',count:'6 Projects'},
-      {icon:'🎮',title:'Gaming & Entertainment',desc:'Casual games, streaming platforms and content tools.',count:'9 Projects'},
+      { icon: '🏥', title: 'Healthcare & HealthTech', desc: 'Telemedicine, EHR, patient apps and hospital management.', count: '18 Projects' },
+      { icon: '🎓', title: 'Education & EdTech', desc: 'LMS platforms, quiz apps, video courses and portals.', count: '22 Projects' },
+      { icon: '💳', title: 'Fintech & Banking', desc: 'Payment gateways, wallets, KYC, lending platforms.', count: '15 Projects' },
+      { icon: '🛒', title: 'E-Commerce & Retail', desc: 'D2C stores, marketplaces and order management.', count: '26 Projects' },
+      { icon: '🏠', title: 'Real Estate & PropTech', desc: 'Property portals, virtual tours, CRM and EMI calculators.', count: '11 Projects' },
+      { icon: '🚚', title: 'Logistics & Supply Chain', desc: 'Fleet tracking, route optimisation, warehouse management.', count: '13 Projects' },
+      { icon: '🌾', title: 'AgriTech', desc: 'Farmer apps, crop monitoring, multilingual offline mode.', count: '6 Projects' },
+      { icon: '🎮', title: 'Gaming & Entertainment', desc: 'Casual games, streaming platforms and content tools.', count: '9 Projects' },
     ];
     const TESTIMONIALS = [
-      {av:'AK',ac:'tav-1',name:'Arjun Kapoor',company:'Zenith Markets, Mumbai',project:'Mobile App',rating:5,review:'TWKSAA built our e-commerce app in 45 days. The quality was outstanding — our conversion rate jumped 3x after launch. Their team is responsive, professional and genuinely cares about the product.'},
-      {av:'SR',ac:'tav-2',name:'Sneha Reddy',company:'NovaSpark Tech, Bangalore',project:'Web Platform',rating:5,review:"We hired TWKSAA to redesign our SaaS platform from scratch. The new design improved our user retention by 60%. The team's attention to UX details was absolutely unmatched."},
-      {av:'RP',ac:'tav-3',name:'Ramesh Patil',company:'AgroRise India, Pune',project:'Mobile App',rating:4,review:'Our farmer app needed Hindi/Marathi support and offline mode — TWKSAA delivered both perfectly. Rural users found it incredibly easy to use, which was the real win.'},
-      {av:'MS',ac:'tav-4',name:'Dr. Meera Singh',company:'PulseHealth, Delhi',project:'Web + App',rating:5,review:'HIPAA-compliant telemedicine is not easy to build. TWKSAA delivered a rock-solid platform with video calls, EMR integration and insurance APIs. Top-tier engineering throughout.'},
-      {av:'KJ',ac:'tav-5',name:'Kiran Joshi',company:'RedLine Logistics, Hyderabad',project:'Mobile App',rating:5,review:'Fleet tracking for 200+ vehicles in real-time — TWKSAA nailed it. The route optimisation feature alone saves us ₹2L per month in fuel costs. Incredible ROI.'},
-      {av:'DM',ac:'tav-6',name:'Divya Menon',company:'SkillKraft, Chennai',project:'Web Platform',rating:4,review:'Our learning marketplace handles 30K+ concurrent users without breaking a sweat. TWKSAA built it to scale and they were always a Slack message away for support.'},
+      { av: 'AK', ac: 'tav-1', name: 'Arjun Kapoor', company: 'Zenith Markets, Mumbai', project: 'Mobile App', rating: 5, review: 'TWKSAA built our e-commerce app in 45 days. The quality was outstanding — our conversion rate jumped 3x after launch. Their team is responsive, professional and genuinely cares about the product.' },
+      { av: 'SR', ac: 'tav-2', name: 'Sneha Reddy', company: 'NovaSpark Tech, Bangalore', project: 'Web Platform', rating: 5, review: "We hired TWKSAA to redesign our SaaS platform from scratch. The new design improved our user retention by 60%. The team's attention to UX details was absolutely unmatched." },
+      { av: 'RP', ac: 'tav-3', name: 'Ramesh Patil', company: 'AgroRise India, Pune', project: 'Mobile App', rating: 4, review: 'Our farmer app needed Hindi/Marathi support and offline mode — TWKSAA delivered both perfectly. Rural users found it incredibly easy to use, which was the real win.' },
+      { av: 'MS', ac: 'tav-4', name: 'Dr. Meera Singh', company: 'PulseHealth, Delhi', project: 'Web + App', rating: 5, review: 'HIPAA-compliant telemedicine is not easy to build. TWKSAA delivered a rock-solid platform with video calls, EMR integration and insurance APIs. Top-tier engineering throughout.' },
+      { av: 'KJ', ac: 'tav-5', name: 'Kiran Joshi', company: 'RedLine Logistics, Hyderabad', project: 'Mobile App', rating: 5, review: 'Fleet tracking for 200+ vehicles in real-time — TWKSAA nailed it. The route optimisation feature alone saves us ₹2L per month in fuel costs. Incredible ROI.' },
+      { av: 'DM', ac: 'tav-6', name: 'Divya Menon', company: 'SkillKraft, Chennai', project: 'Web Platform', rating: 4, review: 'Our learning marketplace handles 30K+ concurrent users without breaking a sweat. TWKSAA built it to scale and they were always a Slack message away for support.' },
     ];
     const CASES = [
-      {emoji:'🛒',thumb:'ct-blue',badge:'50K+ Downloads',type:'Mobile App',typeClass:'ctype-app',title:'ShopNow – E-Commerce App',desc:'React Native shopping app with AI recommendations, UPI payments and real-time inventory.',metrics:['4.8★ Rating','₹2Cr+ Revenue','50K Downloads']},
-      {emoji:'📊',thumb:'ct-teal',badge:'8K+ Users',type:'SaaS Platform',typeClass:'ctype-saas',title:'DataBridge – Analytics SaaS',desc:'Marketing analytics dashboard with live charts, team collaboration and custom report exports.',metrics:['1M+ Queries/day','99.9% Uptime','8K Users']},
-      {emoji:'🏥',thumb:'ct-purple',badge:'25K Patients',type:'Web + App',typeClass:'ctype-web',title:'MedTrack – Health Platform',desc:'Telemedicine app with HIPAA-aware video calls, EMR integration and appointment booking.',metrics:['12 Hospitals','5K+ Calls/mo','25K Patients']},
-      {emoji:'🏦',thumb:'ct-orange',badge:'₹50Cr+ Processed',type:'Web Platform',typeClass:'ctype-web',title:'PayFlow – Fintech Platform',desc:'Cross-border payment processing with multi-currency wallets, KYC and fraud detection.',metrics:['8 Countries','300+ Merchants','₹50Cr+ Processed']},
-      {emoji:'🎓',thumb:'ct-navy',badge:'30K Students',type:'Mobile App',typeClass:'ctype-app',title:'EduLeap – Learning App',desc:'AI-powered learning with video courses, adaptive quizzes and progress tracking.',metrics:['500+ Courses','78% Completion','30K Students']},
-      {emoji:'🚚',thumb:'ct-red',badge:'200+ Vehicles',type:'Mobile App',typeClass:'ctype-app',title:'FleetMate – Logistics App',desc:'Real-time fleet tracking, route optimisation and driver management.',metrics:['₹2L/mo Savings','200+ Vehicles','98% On-time']},
+      { emoji: '🛒', thumb: 'ct-blue', badge: '50K+ Downloads', type: 'Mobile App', typeClass: 'ctype-app', title: 'ShopNow – E-Commerce App', desc: 'React Native shopping app with AI recommendations, UPI payments and real-time inventory.', metrics: ['4.8★ Rating', '₹2Cr+ Revenue', '50K Downloads'] },
+      { emoji: '📊', thumb: 'ct-teal', badge: '8K+ Users', type: 'SaaS Platform', typeClass: 'ctype-saas', title: 'DataBridge – Analytics SaaS', desc: 'Marketing analytics dashboard with live charts, team collaboration and custom report exports.', metrics: ['1M+ Queries/day', '99.9% Uptime', '8K Users'] },
+      { emoji: '🏥', thumb: 'ct-purple', badge: '25K Patients', type: 'Web + App', typeClass: 'ctype-web', title: 'MedTrack – Health Platform', desc: 'Telemedicine app with HIPAA-aware video calls, EMR integration and appointment booking.', metrics: ['12 Hospitals', '5K+ Calls/mo', '25K Patients'] },
+      { emoji: '🏦', thumb: 'ct-orange', badge: '₹50Cr+ Processed', type: 'Web Platform', typeClass: 'ctype-web', title: 'PayFlow – Fintech Platform', desc: 'Cross-border payment processing with multi-currency wallets, KYC and fraud detection.', metrics: ['8 Countries', '300+ Merchants', '₹50Cr+ Processed'] },
+      { emoji: '🎓', thumb: 'ct-navy', badge: '30K Students', type: 'Mobile App', typeClass: 'ctype-app', title: 'EduLeap – Learning App', desc: 'AI-powered learning with video courses, adaptive quizzes and progress tracking.', metrics: ['500+ Courses', '78% Completion', '30K Students'] },
+      { emoji: '🚚', thumb: 'ct-red', badge: '200+ Vehicles', type: 'Mobile App', typeClass: 'ctype-app', title: 'FleetMate – Logistics App', desc: 'Real-time fleet tracking, route optimisation and driver management.', metrics: ['₹2L/mo Savings', '200+ Vehicles', '98% On-time'] },
     ];
 
     // state
@@ -756,61 +935,61 @@ font-size:18px;
       if (pre) document.querySelectorAll('.scb').forEach(b => { if (b.textContent.toLowerCase().includes((pre || '').toLowerCase().slice(0, 5))) b.classList.add('on'); });
       openModal('schedModal');
     }
- 
-function openQuickLead(){
- document.getElementById("quickLeadPopup").style.display="flex";
-}
 
-function closeQuickLead(){
- document.getElementById("quickLeadPopup").style.display="none";
-}
+    function openQuickLead() {
+      document.getElementById("quickLeadPopup").style.display = "flex";
+    }
 
-async function submitQuickLead(){
+    function closeQuickLead() {
+      document.getElementById("quickLeadPopup").style.display = "none";
+    }
 
-const data={
- name:document.getElementById("ql_name").value,
- phone:document.getElementById("ql_phone").value,
- page:window.location.href
-}
+    async function submitQuickLead() {
 
-const res=await fetch("/api/save-lead",{
- method:"POST",
- headers:{
-  "Content-Type":"application/json"
- },
- body:JSON.stringify(data)
-})
+      const data = {
+        name: document.getElementById("ql_name").value,
+        phone: document.getElementById("ql_phone").value,
+        page: window.location.href
+      }
 
-const result=await res.json()
+      const res = await fetch("/api/save-lead", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
 
-if(result.success){
+      const result = await res.json()
 
-alert("Thanks! We will contact you.");
+      if (result.success) {
 
-closeQuickLead();
+        alert("Thanks! We will contact you.");
 
-}
+        closeQuickLead();
 
-}
-setTimeout(()=>{
- openQuickLead();
-},6000);
-function showToast(icon, title, sub) {
-  clearTimeout(toastTm);
-  document.getElementById('toastIcon').textContent = icon;
-  document.getElementById('toastTitle').textContent = title;
-  document.getElementById('toastSub').textContent = sub;
-  const t = document.getElementById('toast'); 
-  t.classList.add('show');
-  toastTm = setTimeout(() => t.classList.remove('show'), 3500);
-}
-let userLocation="";
+      }
 
-fetch("https://ipapi.co/json/")
-.then(res=>res.json())
-.then(data=>{
- userLocation=data.city+", "+data.region
-})
+    }
+    setTimeout(() => {
+      openQuickLead();
+    }, 6000);
+    function showToast(icon, title, sub) {
+      clearTimeout(toastTm);
+      document.getElementById('toastIcon').textContent = icon;
+      document.getElementById('toastTitle').textContent = title;
+      document.getElementById('toastSub').textContent = sub;
+      const t = document.getElementById('toast');
+      t.classList.add('show');
+      toastTm = setTimeout(() => t.classList.remove('show'), 3500);
+    }
+    let userLocation = "";
+
+    fetch("https://ipapi.co/json/")
+      .then(res => res.json())
+      .then(data => {
+        userLocation = data.city + ", " + data.region
+      })
 
     // COUNTERS
     function initCounters() {
@@ -859,20 +1038,21 @@ fetch("https://ipapi.co/json/")
 
   </script>
   <!-- QUICK LEAD POPUP -->
-<div class="quick-lead-popup" id="quickLeadPopup">
-  <div class="quick-lead-box">
+  <div class="quick-lead-popup" id="quickLeadPopup">
+    <div class="quick-lead-box">
 
-    <span class="quick-close" onclick="closeQuickLead()">✕</span>
+      <span class="quick-close" onclick="closeQuickLead()">✕</span>
 
-    <h3>Get Free Call</h3>
-    <p>Enter your name & phone</p>
+      <!-- <h3>Get Free Call</h3> -->
+      <p>Enter your name & phone</p>
 
-    <input type="text" id="ql_name" placeholder="Your Name">
-    <input type="tel" id="ql_phone" placeholder="Phone Number">
+      <input type="text" id="ql_name" placeholder="Your Name" required>
+      <input type="tel" id="ql_phone" placeholder="Phone Number" required>
 
-    <button onclick="submitQuickLead()">Submit</button>
+      <button onclick="submitQuickLead()">Submit</button>
 
+    </div>
   </div>
-</div>
 </body>
+
 </html>

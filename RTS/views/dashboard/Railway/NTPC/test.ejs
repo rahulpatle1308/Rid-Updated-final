@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>U.P HomeGuard Quiz</title>
+  <title>UpBoard Quiz</title>
   <style>
     * {
       box-sizing: border-box;
@@ -680,8 +680,76 @@ const SUBJECT = "<%= subject %>".toLowerCase();
     // 🔥 CHANGE 1: QUESTION_BANK को GLOBAL SCOPE में रखें
     const QUESTION_BANK = {
       1: [
-        
-      
+        {
+          num: 1,
+          question_en: "What does HTML stand for?",
+          question_hi: "HTML का पूरा नाम क्या है?",
+          options_en: [
+            "Hyper Text Markup Language",
+            "High Text Machine Language",
+            "Hyper Tool Markup Language",
+            "Home Text Markup Language"
+          ],
+          options_hi: [
+            "Hyper Text Markup Language",
+            "High Text Machine Language",
+            "Hyper Tool Markup Language",
+            "Home Text Markup Language"
+          ],
+          answer_en: "Hyper Text Markup Language",
+          answer_hi: "Hyper Text Markup Language",
+          attempted: false,
+          selected: "",
+          visited: false
+        },
+        {
+          num: 2,
+          question_en: "Which tag defines the HTML document?",
+          question_hi: "HTML डॉक्यूमेंट को परिभाषित करने वाला टैग कौन सा है?",
+          options_en: ["&lt;html&gt;", "&lt;body&gt;", "&lt;head&gt;", "&lt;doc&gt;"],
+          options_hi: ["&lt;html&gt;", "&lt;body&gt;", "&lt;head&gt;", "&lt;doc&gt;"],
+          answer_en: "&lt;html&gt;",
+          answer_hi: "&lt;html&gt;",
+          attempted: false,
+          selected: "",
+          visited: false
+        },
+        {
+          num: 3,
+          question_en: "Which tag contains meta information?",
+          question_hi: "मेटा जानकारी किस टैग में होती है?",
+          options_en: ["&lt;head&gt;", "&lt;meta&gt;", "&lt;title&gt;", "&lt;body&gt;"],
+          options_hi: ["&lt;head&gt;", "&lt;meta&gt;", "&lt;title&gt;", "&lt;body&gt;"],
+          answer_en: "&lt;head&gt;",
+          answer_hi: "&lt;head&gt;",
+          attempted: false,
+          selected: "",
+          visited: false
+        },
+        {
+          num: 4,
+          question_en: "Which tag is used for page title?",
+          question_hi: "पेज का टाइटल किस टैग से लिखा जाता है?",
+          options_en: ["&lt;title&gt;", "&lt;head&gt;", "&lt;h1&gt;", "&lt;meta&gt;"],
+          options_hi: ["&lt;title&gt;", "&lt;head&gt;", "&lt;h1&gt;", "&lt;meta&gt;"],
+          answer_en: "&lt;title&gt;",
+          answer_hi: "&lt;title&gt;",
+          attempted: false,
+          selected: "",
+          visited: false
+        },
+        {
+          num: 5,
+          question_en: "Which tag displays page content?",
+          question_hi: "पेज का कंटेंट किस टैग में दिखता है?",
+          options_en: ["&lt;body&gt;", "&lt;head&gt;", "&lt;html&gt;", "&lt;main&gt;"],
+          options_hi: ["&lt;body&gt;", "&lt;head&gt;", "&lt;html&gt;", "&lt;main&gt;"],
+          answer_en: "&lt;body&gt;",
+          answer_hi: "&lt;body&gt;",
+          attempted: false,
+          selected: "",
+          visited: false
+        }
       ],
 
       2: [

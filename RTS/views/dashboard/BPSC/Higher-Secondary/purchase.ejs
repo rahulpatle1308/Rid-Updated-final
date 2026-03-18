@@ -760,12 +760,12 @@
                 <button class="tab-btn" data-subject="science" onclick="filterTests('science')">General Science</button>
                 <button class="tab-btn" data-subject="geography" onclick="filterTests('geography')">Geography of India</button>
                 <button class="tab-btn" data-subject="history" onclick="filterTests('history')">History of India</button>
-                <!-- <button class="tab-btn" data-subject="important" onclick="filterTests('important')">Important Test</button> -->
+                <button class="tab-btn" data-subject="important" onclick="filterTests('important')">Important Test</button>
             </div>
 
             <!-- Test Cards Grid -->
             <div class="test-grid" id="testGrid">
-                <% const totalTests = 50; %>
+                <% const totalTests = 60; %>
                 <% for(let i = 1; i <= totalTests; i++) { 
                     let subject = '';
                     let subjectClass = '';
@@ -789,8 +789,12 @@
                     } else if(i <= 50) { 
                         subject = 'history';
                         subjectClass = 'his-text';
-                            subjectName = 'History-of-India';
-                    }
+                        subjectName = 'History-of-India';
+                    } else if(i <= 60) { 
+                        subject = 'important';
+                        subjectClass = 'imp-text';
+                        subjectName = 'Important-Test';
+                    } 
                 %>
                     <div class="test-item" data-subject="<%= subject %>">
                         <div class="test-header">
@@ -798,7 +802,7 @@
                         </div>
 
                         <div class="test-action">
-                            <a href="/rts/quiz/HomeGuard/UpHomeGuard/<%= i %>">
+                            <a href="/rts/quiz/BPSC/Higher-Secondary/<%= i %>">
                                 <button class="start-button">Start Test</button>
                             </a>
                             <div class="special-text <%= subjectClass %>"><%= subjectName %></div>

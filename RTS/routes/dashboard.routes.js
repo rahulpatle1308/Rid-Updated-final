@@ -197,6 +197,14 @@ router.get("/HomeGuard", (req, res) => {
 });
 
 
+
+router.get("/HomeGuard/subjects", (req, res) => {
+  res.render("dashboard/HomeGuard/UpHomeGuard/purchase", {
+    title: "Home Guard Tests",
+  });
+});
+
+
 /* UP HomeGuard course main page */
 router.get('/uphomeguard/purchase', (req, res) => {
   res.render('dashboard/HomeGuard/UpHomeGuard/purchase', {
@@ -210,7 +218,15 @@ router.get('/uphomeguard/purchase', (req, res) => {
 // Railway Guard page
 router.get("/railway",(req, res) => {
   res.render("dashboard/Railway/railway",{
-    title: "Home Guard",
+    title: "Railway",
+  });
+});
+
+//RRB NTPC
+router.get('/ntpc/purchase', (req, res) => {
+  res.render('dashboard/Railway/NTPC/purchase', {
+    title: 'RRB NTPC ',
+   
   });
 });
 
@@ -221,99 +237,22 @@ router.get("/bpsc",(req,res)=>{
     title:"BPSC"
   });
 });
-router.get("/primary-teacher",(req,res)=>{
-  res.render("dashboard/BPSC/Primary-Teacher/subpart-primary",{
-    title:"Primary Teacher Parts"
+router.get("/bpsc/higher-secondary",(req,res)=>{
+  res.render("dashboard/BPSC/Higher-Secondary/purchase",{
+    title:"BPSC Higher-Secondary"
   });
 });
-router.get("/primary-teacher/child-development",(req,res)=>{
-  res.render("dashboard/BPSC/Primary-Teacher/Child-Development-Pedagogy/purchase",{
-    title:"Child Development"
+router.get("/bpsc/middle-school-teacher",(req,res)=>{
+  res.render("dashboard/BPSC/Middle-School-Teacher/purchase",{
+    title:"BPSC Middle-School-Teacher"
   });
 });
-router.get("/primary-teacher/english",(req,res)=>{
-  res.render("dashboard/BPSC/Primary-Teacher/English/purchase",{
-    title:"English"
-  });
-});
-router.get("/primary-teacher/environmental-studies",(req,res)=>{
-  res.render("dashboard/BPSC/Primary-Teacher/Environmental-Studies/purchase",{
-    title:"Environmental Studies"
-  });
-});
-router.get("/primary-teacher/hindi",(req,res)=>{
-  res.render("dashboard/BPSC/Primary-Teacher/Hindi/purchase",{
-    title:"Hindi"
-  });
-});
-router.get("/primary-teacher/mathematics",(req,res)=>{
-  res.render("dashboard/BPSC/Primary-Teacher/Mathematics/purchase",{
-    title:"Mathematics"
-  });
-});
-router.get("/middle-secondary-teacher",(req,res)=>{
-  res.render("dashboard/BPSC/Middle-School-Teacher/subpart-middle",{
-    title:"middle-secondary-teacher-parts"
-  });
-});
-//purchase
-router.get("/middle-secondary/english",(req,res)=>{
-  res.render("dashboard/BPSC/Middle-School-Teacher/English/purchase.ejs",{
-    title:"English"
-  });
-});
-router.get("/middle-secondary/hindi",(req,res)=>{
-  res.render("dashboard/BPSC/Middle-School-Teacher/Hindi/purchase",{
-    title:"Hindi"
-  });
-});
-router.get("/middle-secondary/mathematics",(req,res)=>{
-  res.render("dashboard/BPSC/Middle-School-Teacher/Mathematics/purchase",{
-    title:"Mathematics"
-  });
-});
-router.get("/middle-secondary/social-science",(req,res)=>{
-  res.render("dashboard/BPSC/Middle-School-Teacher/Social-Science/purchase",{
-    title:"Social-Science"
-  });
-});
-router.get("/middle-secondary/science",(req,res)=>{
-  res.render("dashboard/BPSC/Middle-School-Teacher/Science/purchase",{
-    title:"Science"
+router.get("/bpsc/primary-teacher",(req,res)=>{
+  res.render("dashboard/BPSC/Primary-Teacher/purchase",{
+    title:"BPSC Primary-Teacher"
   });
 });
 
-router.get("/higher-secondary",(req,res)=>{
-  res.render("dashboard/BPSC/Higher-Secondary/subpart-higher-secondary",{
-    title:"higher-secondary-parts"
-  });
-});
-//purchase
-router.get("/higher-secondary/biology",(req,res)=>{
-  res.render("dashboard/BPSC/Higher-Secondary/Biology/purchase",{
-    title:"Biology"
-  });
-});
-router.get("/higher-secondary/chemistry",(req,res)=>{
-  res.render("dashboard/BPSC/Higher-Secondary/Chemistry/purchase",{
-    title:"Chemistry"
-  });
-});
-router.get("/higher-secondary/computer-science",(req,res)=>{
-  res.render("dashboard/BPSC/Higher-Secondary/Computer-Science/purchase",{
-    title:"Computer Science"
-  });
-});
-router.get("/higher-secondary/mathematics",(req,res)=>{
-  res.render("dashboard/BPSC/Higher-Secondary/Mathematics/purchase",{
-    title:"Mathematics"
-  });
-});
-router.get("/higher-secondary/physics",(req,res)=>{
-  res.render("dashboard/BPSC/Higher-Secondary/Physics/purchase",{
-    title:"Physics"
-  });
-});
 
 // router.get("/quiz/:category/:subject/:testNo", (req, res) => {
 //   const { category, subject, testNo } = req.params;
@@ -326,16 +265,22 @@ router.get("/higher-secondary/physics",(req,res)=>{
 // });
 
 router.get("/quiz/:category/:subject/:testNo", (req, res) => {
-  const { category, subject, testNo } = req.params;
+
+  const category = req.params.category;
+  const subject = req.params.subject;
+  const testNo = parseInt(req.params.testNo);
+
+  // console.log("CATEGORY:", category);
+  // console.log("SUBJECT:", subject);
+  // console.log("TEST NO:", testNo);
 
   res.render(`dashboard/${category}/${subject}/test`, {
-    category: category.toUpperCase(),
-    subject: subject.toUpperCase(),
-    testNo: Number(testNo)
+    category: category,
+    subject: subject,
+    testNo: testNo
   });
+
 });
-
-
 
 
 
