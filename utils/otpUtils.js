@@ -1,33 +1,74 @@
 const User = require("../models/user");
+const Teacher = require("../models/Teacher");
+const Organisation = require("../models/Organisation");
 
-// Store OTP and its expiry in the database
-exports.storeOTP = async (email, otp) => {
+// 🔹 Find user in all collections
+const findUserByEmail = async (email) => {
+  let user = await User.findOne({ email });
+  if (user) return user;
+
+  user = await Teacher.findOne({ email });
+  if (user) return user;
+
+  user = await Organisation.findOne({ email });
+  if (user) return user;
+
+  return null;
+};
+
+// 🔹 Store OTP
+const storeOTP = async (email, otp) => {
   try {
-    const otpExpiry = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes from now
-    await User.findOneAndUpdate({ email }, { otp, otpExpiry }, { new: true });
+    const otpExpiry = new Date(Date.now() + 10 * 60 * 1000);
+
+    const user = await findUserByEmail(email);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    user.otp = otp.toString();
+    user.otpExpiry = otpExpiry;
+
+    await user.save();
+
+    console.log("Stored OTP:", otp, "for", email);
   } catch (error) {
     console.error("Error storing OTP:", error.message);
     throw error;
   }
 };
 
-// Validate the OTP
-exports.validateOTP = async (email, otp) => {
+// 🔹 Validate OTP
+const validateOTP = async (email, otp) => {
   try {
-    const user = await User.findOne({ email });
+    const user = await findUserByEmail(email);
 
     if (!user) {
-      return false; // User not found
-    }
-
-    // Check if the OTP matches and is not expired
-    if (user.otp === otp && user.otpExpiry > new Date()) {
-      return true;
-    } else {
+      console.log("User not found:", email);
       return false;
     }
+
+    console.log("DB OTP:", user.otp);
+    console.log("User OTP:", otp);
+
+    if (user.otp !== otp.toString()) {
+      return false;
+    }
+
+    if (user.otpExpiry < new Date()) {
+      return false;
+    }
+
+    return true;
   } catch (error) {
     console.error("Error validating OTP:", error.message);
     return false;
   }
+};
+
+module.exports = {
+  storeOTP,
+  validateOTP,
+  findUserByEmail
 };

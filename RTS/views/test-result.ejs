@@ -534,7 +534,16 @@
 </head>
 
 <body>
+<script>
+  const result = JSON.parse(sessionStorage.getItem("resultData") || "{}");
 
+  if (!result || !result.total) {
+    alert("No result found!");
+    window.location.href = "/rts/dashboard";
+  }
+
+  console.log("Result Loaded:", result);
+</script>
 <div class="container">
 
   <!-- ===== COSMIC HEADER ===== -->
@@ -542,8 +551,8 @@
     <div style="display: flex; align-items: center; gap: 20px;">
        <h1>🎯 Test Result</h1>
     <p>
-      Subject: <strong><%= result.subject %></strong> |
-      Set No: <strong><%= result.setNo %></strong>
+     Subject: <strong id="subject"></strong>
+Set No: <strong id="setNo"></strong>
     </p>
     </div>
     <div style="display: flex; align-items: center; gap: 15px;">
@@ -562,7 +571,7 @@
         <i class="fas fa-crown"></i>
       </div>
       <div class="card-content">
-        <div class="value"><%= result.percentage %>%</div>
+       <div class="value" id="percentage"></div>
         <div class="label"><i class="fas fa-star"></i> OVERALL SCORE</div>
       </div>
     </div>
@@ -573,7 +582,7 @@
         <i class="fas fa-layer-group"></i>
       </div>
       <div class="card-content">
-        <div class="value"><%= result.total %></div>
+        <div class="value" id="total"></div>
         <div class="label"><i class="fas fa-list-check"></i> TOTAL QUESTIONS</div>
       </div>
     </div>
@@ -584,7 +593,7 @@
         <i class="fas fa-check-circle"></i>
       </div>
       <div class="card-content">
-        <div class="value"><%= result.correct %></div>
+       <div class="value" id="correct"></div>
         <div class="label"><i class="fas fa-trophy"></i> CORRECT</div>
       </div>
     </div>
@@ -595,7 +604,7 @@
         <i class="fas fa-pen-to-square"></i>
       </div>
       <div class="card-content">
-        <div class="value"><%= result.attempted %></div>
+       <div class="value" id="attempted"></div>
         <div class="label"><i class="fas fa-bolt"></i> ATTEMPTED</div>
       </div>
     </div>
@@ -606,7 +615,7 @@
         <i class="fas fa-circle-xmark"></i>
       </div>
       <div class="card-content">
-        <div class="value"><%= result.incorrect %></div>
+        <div class="value" id="incorrect"></div>
         <div class="label"><i class="fas fa-exclamation-triangle"></i> INCORRECT</div>
       </div>
     </div>
@@ -617,7 +626,7 @@
         <i class="fas fa-bullseye"></i>
       </div>
       <div class="card-content">
-        <div class="value"><%= result.accuracy %>%</div>
+       <div class="value" id="accuracy"></div>
         <div class="label"><i class="fas fa-percent"></i> ACCURACY</div>
       </div>
     </div>
@@ -628,7 +637,7 @@
         <i class="fas fa-hourglass-half"></i>
       </div>
       <div class="card-content">
-        <div class="value"><%= result.timeSpent %></div>
+        <div class="value" id="timeSpent"></div>
         <div class="label"><i class="fas fa-clock"></i> TIME TAKEN</div>
       </div>
     </div>
@@ -651,8 +660,8 @@
         </div>
         <canvas id="pieChart"></canvas>
         <div style="display: flex; justify-content: center; gap: 20px; margin-top: 15px;">
-          <span><i class="fas fa-circle" style="color: #00ff9d;"></i> Correct (<%= result.correct %>)</span>
-          <span><i class="fas fa-circle" style="color: #ff5e5e;"></i> Incorrect (<%= result.incorrect %>)</span>
+          <span><i class="fas fa-circle" style="color: #00ff9d;"></i>Correct (<span id="correctLabel"></span>)</span>
+          <span><i class="fas fa-circle" style="color: #ff5e5e;"></i> Incorrect (<span id="incorrectLabel"></span>)</span>
         </div>
       </div>
 
@@ -664,8 +673,8 @@
         </div>
         <canvas id="barChart"></canvas>
         <div style="display: flex; justify-content: center; gap: 20px; margin-top: 15px;">
-          <span><i class="fas fa-circle" style="color: #0092bd;"></i> Attempted (<%= result.attempted %>)</span>
-          <span><i class="fas fa-circle" style="color: #ff5e5e;"></i> Not Attempted (<%= result.total - result.attempted %>)</span>
+          <span><i class="fas fa-circle" style="color: #0092bd;"></i> Attempted (<span id="attemptedLabel"></span>)</span>
+          <span><i class="fas fa-circle" style="color: #ff5e5e;"></i> Not Attempted (<span id="notAttemptedLabel"></span>)</span>
         </div>
       </div>
 
@@ -678,7 +687,7 @@
         <canvas id="gaugeChart"></canvas>
         <div style="text-align: center; margin-top: 15px;">
           <span style="font-size: 24px; font-weight: 700; background: linear-gradient(to right, #00ffaa, #00ccff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-            <%= result.percentage %>%
+          <span id="percentageText"></span>
           </span>
           <span style="color: #a0e7ff; display: block;">Performance Score</span>
         </div>
@@ -686,70 +695,7 @@
     </div>
 
     <!-- DETAILED PERFORMANCE METRICS -->
-    <div class="metrics-grid">
-      <div class="metric-item glass-panel">
-        <div class="metric-header">
-          <i class="fas fa-bolt" style="color: #00ffaa;"></i>
-          <span style="font-weight: 600;">EFFICIENCY RATING</span>
-        </div>
-        <div style="display: flex; justify-content: space-between;">
-          <span>Speed vs Accuracy</span>
-          <span style="color: #00ffaa; font-weight: 700;">
-            <% 
-              let efficiency = Math.round((result.accuracy / 100) * result.total ? (result.attempted / result.total) * 100 : 0);
-            %><%= efficiency %>%
-          </span>
-        </div>
-        <div class="progress-bar">
-          <div class="progress-fill" style="width: <%= efficiency %>%;"></div>
-        </div>
-      </div>
-
-      <div class="metric-item glass-panel">
-        <div class="metric-header">
-          <i class="fas fa-target" style="color: #ffaa00;"></i>
-          <span style="font-weight: 600;">ACCURACY TREND</span>
-        </div>
-        <div style="display: flex; justify-content: space-between;">
-          <span>Correct/Attempted Ratio</span>
-          <span style="color: #ffaa00; font-weight: 700;"><%= result.accuracy %>%</span>
-        </div>
-        <div class="progress-bar">
-          <div class="progress-fill" style="width: <%= result.accuracy %>%; background: linear-gradient(90deg, #ffaa00, #ffdd00);"></div>
-        </div>
-      </div>
-
-      <div class="metric-item glass-panel">
-        <div class="metric-header">
-          <i class="fas fa-clock" style="color: #6effe8;"></i>
-          <span style="font-weight: 600;">TIME MANAGEMENT</span>
-        </div>
-        <div style="display: flex; justify-content: space-between;">
-          <span>Avg Time per Question</span>
-          <span style="color: #6effe8; font-weight: 700;">
-            <% 
-              let avgTime = result.attempted ? result.timeInSeconds / result.attempted : 0;
-            %><%= Math.round(avgTime * 10) / 10 %> sec
-          </span>
-        </div>
-      </div>
-
-      <div class="metric-item glass-panel">
-        <div class="metric-header">
-          <i class="fas fa-flag-checkered" style="color: #ff6b9d;"></i>
-          <span style="font-weight: 600;">COMPLETION RATE</span>
-        </div>
-        <div style="display: flex; justify-content: space-between;">
-          <span>Questions Attempted</span>
-          <span style="color: #ff6b9d; font-weight: 700;">
-            <%= Math.round(result.total ? (result.attempted / result.total) * 100 : 0) %>%
-          </span>
-        </div>
-        <div class="progress-bar">
-          <div class="progress-fill" style="width: <%= result.total ? (result.attempted / result.total) * 100 : 0 %>%; background: linear-gradient(90deg, #ff6b9d, #ff3366);"></div>
-        </div>
-      </div>
-    </div>
+   
   </div>
 
  
@@ -845,12 +791,12 @@ document.addEventListener("DOMContentLoaded", function () {
   document.addEventListener('DOMContentLoaded', function() {
     
     // Get data from EJS variables
-    const correct = <%= result.correct %>;
-    const incorrect = <%= result.incorrect %>;
-    const attempted = <%= result.attempted %>;
-    const total = <%= result.total %>;
-    const notAttempted = total - attempted;
-    const percentage = <%= result.percentage %>;
+   const correct = result.correct;
+const incorrect = result.incorrect;
+const attempted = result.attempted;
+const total = result.total;
+const notAttempted = total - attempted;
+const percentage = result.percentage;
 
     // ----- PIE CHART (Score Distribution) -----
     const pieCtx = document.getElementById('pieChart').getContext('2d');
@@ -966,6 +912,26 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     gaugeParent.appendChild(scoreDisplay);
   });
+
+  document.getElementById("percentage").innerText = result.percentage + "%";
+  document.getElementById("percentageText").innerText = result.percentage + "%";
+
+  document.getElementById("total").innerText = result.total;
+  document.getElementById("correct").innerText = result.correct;
+  document.getElementById("attempted").innerText = result.attempted;
+  document.getElementById("incorrect").innerText = result.incorrect;
+  document.getElementById("accuracy").innerText = result.accuracy + "%";
+  document.getElementById("timeSpent").innerText = result.timeSpent;
+
+  document.getElementById("subject").innerText = result.subject;
+  document.getElementById("setNo").innerText = result.setNo;
+
+  // chart labels
+  document.getElementById("correctLabel").innerText = result.correct;
+  document.getElementById("incorrectLabel").innerText = result.incorrect;
+  document.getElementById("attemptedLabel").innerText = result.attempted;
+  document.getElementById("notAttemptedLabel").innerText = result.total - result.attempted;
+
 </script>
 
 </body>

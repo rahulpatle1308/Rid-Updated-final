@@ -2,16 +2,20 @@ const mongoose = require("mongoose");
 
 const teacherSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    phone: { type: String, required: true },
-    role: { type: String, required: true },
+    name: String,
+    email: String,
+    password: String,
+    phone: String,
+    role: String,
 
     profileImage: {
       type: String,
       default: ""
-    }
+    },
+
+    // 🔥 ADD THIS
+    otp: { type: String },
+    otpExpiry: { type: Date }
   },
   { timestamps: true }
 );

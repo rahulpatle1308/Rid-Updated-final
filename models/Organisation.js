@@ -2,12 +2,16 @@ const mongoose = require("mongoose");
 
 const organisationSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    phone: { type: String, required: true },
-    role: { type: String, required: true },
-    organisationType: { type: String } // Library, DCA, etc.
+    name: String,
+    email: String,
+    password: String,
+    phone: String,
+    role: String,
+    organisationType: String,
+
+    // 🔥 ADD THIS
+    otp: { type: String },
+    otpExpiry: { type: Date }
   },
   { timestamps: true }
 );

@@ -36,7 +36,32 @@ router.get("/html/purchase", (req, res) => {
   });
 });
 
-
+// JEE routes all 
+router.get("/jee/subparts", (req, res) => {
+  res.render("dashboard/JEE/jeesub-parts", {
+    category: "jee",
+    subject: "JEE"
+  });
+});
+router.get("/jee/mains", (req, res) => {
+  res.render("dashboard/JEE/jeemeans/purchase", {
+    category: "jee",
+    subject: "JEE"
+  });
+});
+router.get("/jee/advance", (req, res) => {
+  res.render("dashboard/JEE/jeeadvance/purchase", {
+    category: "jee",
+    subject: "JEE"
+  });
+});
+// NEET ROUTES
+router.get("/neet", (req, res) => {
+  res.render("dashboard/NEET/purchase", {
+    category: "neet",
+    subject: "NEET"
+  });
+});
 
 
 
@@ -260,9 +285,40 @@ router.get("/quiz/:category/:subject/:testNo", (req, res) => {
 
 });
 
+router.post("/quiz/:category/:subject/:testNo/submit", (req, res) => {
+  try {
+    const { category, subject, testNo } = req.params;
 
+    const resultData = {
+      subject: subject,
+      setNo: testNo,
+      total: req.body.totalQuestions,
+      attempted: req.body.attempted,
+      correct: req.body.correct,
+      incorrect: req.body.attempted - req.body.correct,
+      percentage: req.body.percentage,
+      accuracy: req.body.accuracy,
+      timeSpent: req.body.timeSpent,
+      timeInSeconds: 3600 // optional (timer से भी भेज सकते हो)
+    };
 
+    console.log("🔥 Final Result:", resultData);
 
+    res.json({
+      success: true,
+      resultId: Date.now(),
+      result: resultData   // 🔥 IMPORTANT
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.json({ success: false });
+  }
+});
+
+router.get("/quiz/:category/:subject/test-:testNo/result/:resultId", (req, res) => {
+  res.render("test-result");   // 🔥 सिर्फ page open करो
+});
 
 // router.get("/quiz/:category/:subject/:testNo", async (req, res, next) => {
 //   const { category, subject, testNo } = req.params;
