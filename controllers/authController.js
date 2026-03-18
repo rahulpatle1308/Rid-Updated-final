@@ -5,10 +5,8 @@ const cookieParser = require("cookie-parser");
 
 // const {jwtAuthMiddleware, generateToken} = require("../utils/jwt")
 const jwt = require("jsonwebtoken");
-
-const { storeOTP, validateOTP } = require("../utils/otpUtils");
 const { sendEmail } = require("../utils/sendEmail");
-
+const { storeOTP, validateOTP, findUserByEmail } = require("../utils/otpUtils");
 // authController.js
 exports.login = async (req, res) => {
   let { email, password } = req.body;
@@ -107,19 +105,30 @@ exports.verifyOTP = async (req, res) => {
   const { email, otp } = req.body;
 
   try {
+    const user = await findUserByEmail(email);
+
     const isValidOTP = await validateOTP(email, otp);
+
     if (!isValidOTP) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Invalid or expired OTP" });
+      return res.status(400).json({
+        success: false,
+        message: "Invalid or expired OTP",
+      });
     }
 
-    res
-      .status(200)
-      .json({ success: true, message: "OTP verified successfully" });
+    // 🔥 OTP clear karo
+    user.otp = null;
+    user.otpExpiry = null;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "OTP verified successfully",
+    });
+
   } catch (error) {
     console.error("Error verifying OTP:", error);
-    res.status(500).json({ success: false, message: "Internal Server Error" });
+    res.status(500).json({ success: false });
   }
 };
 
@@ -144,33 +153,33 @@ exports.forgotPassword = async (req, res) => {
   }
 };
 exports.resetPassword = async (req, res) => {
-  const { email, otp, newPassword } = req.body;
+  const { email, newPassword } = req.body;
 
-  const isValidOTP = await validateOTP(email, otp);  // ✅ await added
+  try {
+    let user = await User.findOne({ email });
 
-  if (!isValidOTP) {
-    return res.status(400).json({ success: false, message: "Invalid or expired OTP" });
+    if (!user) {
+      const Teacher = require("../models/Teacher");
+      user = await Teacher.findOne({ email });
+    }
+
+    if (!user) {
+      const Organisation = require("../models/Organisation");
+      user = await Organisation.findOne({ email });
+    }
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
+    await user.save();
+
+    res.json({ success: true, message: "Password reset successful" });
+
+  } catch (error) {
+    console.error("Reset error:", error);
+    res.status(500).json({ success: false });
   }
-
-  let user = await User.findOne({ email });
-
-  if (!user) {
-    const Teacher = require("../models/Teacher");
-    user = await Teacher.findOne({ email });
-  }
-
-  if (!user) {
-    const Organisation = require("../models/Organisation");
-    user = await Organisation.findOne({ email });
-  }
-
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
-  }
-
-  const hashedPassword = await bcrypt.hash(newPassword, 10); // ✅ hash password
-  user.password = hashedPassword;
-  await user.save();
-
-  res.json({ success: true, message: "Password reset successful" });
 };
