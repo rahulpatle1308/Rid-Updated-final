@@ -584,7 +584,41 @@ configureRoutes();
 
 
 // ========== START SERVER ==========
-app.listen(port, () => {
-  console.log(`\n✅ Server is running on http://localhost:${port}`);
+// ================== DB + SERVER START ==================
+async function startServer() {
+  try {
+    console.log("🔗 Connecting MongoDB...");
+
+    await mongoose.connect(process.env.MONGODB_URI);
+
+    console.log("✅ MongoDB Connected Successfully");
+
+    app.listen(port, () => {
+      console.log(`🚀 Server running on http://localhost:${port}`);
+    });
+
+  } catch (err) {
+    console.error("❌ MongoDB Error:", err);
+    process.exit(1);
+  }
+}
+
+startServer();
+
+
+// ✅ SOCKET.IO AFTER SERVER
+const { Server } = require("socket.io");
+const io = new Server(server);
+
+let onlineUsers = 0;
+
+io.on("connection", (socket) => {
+  onlineUsers++;
+  io.emit("onlineUsers", onlineUsers);
+
+  socket.on("disconnect", () => {
+    onlineUsers--;
+    io.emit("onlineUsers", onlineUsers);
+  });
 });
 

@@ -116,31 +116,6 @@ router.get("/logout", (req, res) => {
   res.clearCookie("token");
   res.redirect("/admin/login");
 });
-// =============================
-// TEMP: Create Default Admin (One Time Use)
-// =============================
-router.get("/create-admin", async (req, res) => {
-  try {
-    const existing = await Admin.findOne({ email: "deepak232a@gmail.com" });
-    if (existing) {
-      return res.send("Admin already exists");
-    }
 
-    const hashed = await bcrypt.hash("Deepak@9279554156engi", 10);
-
-    await Admin.create({
-      name: "Super Admin",
-      email: "deepak232a@gmail.com",
-      password: hashed,
-      role: "admin"
-    });
-
-    res.send("Default Admin Created Successfully");
-
-  } catch (error) {
-    console.log(error);
-    res.send("Error creating admin");
-  }
-});
 
 module.exports = router;
