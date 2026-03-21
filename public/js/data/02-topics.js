@@ -1,0 +1,179 @@
+QuizData.topics.push(
+
+  /* =========================
+     PYTHON TOPICS
+  ========================== */
+
+  
+  { id: 'py_var', name: 'Variables', langId: 'py' },
+  // { id: 'py_datatypes"', name: 'Data Types', langId: 'py' },
+  { id: 'py_operators', name: 'Operators', langId: 'py' },
+  { id: 'py_input_output', name: 'Input & Output', langId: 'py' },
+  { id: 'py_conditional', name: 'Conditional Statements', langId: 'py' },
+  { id: 'py_loop', name: 'Loops', langId: 'py' },
+  { id: 'py_functions', name: 'Functions', langId: 'py' },
+  { id: 'py_lambda', name: 'Lambda Functions', langId: 'py' },
+  { id: 'py_lists', name: 'Lists', langId: 'py' },
+  { id: 'py_tuple', name: 'Tuples', langId: 'py' },
+  { id: 'py_sets', name: 'Sets', langId: 'py' },
+  { id: 'py_dict', name: 'Dictionaries', langId: 'py' },
+  { id: 'py_strings', name: 'Strings', langId: 'py' },
+  { id: 'py_list_comprehension', name: 'List Comprehension', langId: 'py' },
+  { id: 'py_exceptional_handling', name: 'Exception Handling', langId: 'py' },
+  { id: 'py_file_handling', name: 'File Handling', langId: 'py' },
+  { id: 'py_oop', name: 'Object Oriented Programming', langId: 'py' },
+  { id: 'py_modules_packages', name: 'Modules & Packages', langId: 'py' },
+  { id: 'py_datetime', name: 'Date & Time', langId: 'py' },
+  { id: 'py_regex', name: 'Regular Expressions', langId: 'py' },
+  { id: 'py_recursion', name: 'Recursion', langId: 'py' },
+  { id: 'py_decorators', name: 'Decorators', langId: 'py' },
+  { id: 'py_generators', name: 'Generators', langId: 'py' },
+  { id: 'py_multithreading', name: 'Multithreading', langId: 'py' },
+  { id: 'py_async', name: 'Async Programming', langId: 'py' }, 
+  { id: 'py_dsa_basic', name: 'DSA Basics', langId: 'py' },
+
+
+
+  /* =========================
+     JAVASCRIPT TOPICS
+  ========================== */
+
+//   { id: 'js_intro', name: 'Introduction', langId: 'js' },
+//   { id: 'js_var', name: 'Variables (var, let, const)', langId: 'js' },
+//   { id: 'js_datatypes', name: 'Data Types', langId: 'js' },
+//   { id: 'js_operators', name: 'Operators', langId: 'js' },
+//   { id: 'js_conditionals', name: 'Conditional Statements', langId: 'js' },
+//   { id: 'js_loop', name: 'Loops', langId: 'js' },
+//   { id: 'js_functions', name: 'Functions', langId: 'js' },
+//   { id: 'js_arrow', name: 'Arrow Functions', langId: 'js' },
+//   { id: 'js_scope', name: 'Scope & Hoisting', langId: 'js' },
+//   { id: 'js_arrays', name: 'Arrays', langId: 'js' },
+//   { id: 'js_objects', name: 'Objects', langId: 'js' },
+//   { id: 'js_strings', name: 'Strings', langId: 'js' },
+//   { id: 'js_array_methods', name: 'Array Methods', langId: 'js' },
+//   { id: 'js_dom', name: 'DOM Manipulation', langId: 'js' },
+//   { id: 'js_events', name: 'Events', langId: 'js' },
+//   { id: 'js_promises', name: 'Promises', langId: 'js' },
+//   { id: 'js_async', name: 'Async / Await', langId: 'js' },
+//   { id: 'js_fetch', name: 'Fetch API', langId: 'js' },
+//   { id: 'js_json', name: 'JSON Handling', langId: 'js' },
+//   { id: 'js_error', name: 'Error Handling', langId: 'js' },
+//   { id: 'js_closure', name: 'Closures', langId: 'js' },
+//   { id: 'js_oop', name: 'OOP in JavaScript', langId: 'js' },
+//   { id: 'js_modules', name: 'Modules', langId: 'js' },
+//   { id: 'js_es6', name: 'ES6 Features', langId: 'js' },
+//   { id: 'js_recursion', name: 'Recursion', langId: 'js' },
+//   { id: 'js_dsa', name: 'DSA Basics', langId: 'js' },
+
+
+
+
+   /* =========================
+     JAVA TOPICS
+  ========================== */
+
+  { id: "introduction", name: "Introduction to Java", langId: "java" },
+  { id: "variable", name: "Variables", langId: "java" },
+  { id: "datatype", name: "Data Types", langId: "java" },
+  { id: "java_op", name: "Operators", langId: "java" },
+  { id: "inputoutput", name: "Input & Output (Scanner)", langId: "java" },
+  { id: "contState", name: "Conditional Statements", langId: "java" },
+  { id: "java_loop", name: "Loops", langId: "java" },
+  { id: "java_array", name: "Arrays", langId: "java" },
+  { id: "java_string", name: "Strings", langId: "java" },
+  { id: "java_method", name: "Methods", langId: "java" },
+  { id: "java_oop", name: "Object Oriented Programming", langId: "java" },
+  { id: "constructor", name: "Constructors", langId: "java" },
+  { id: "inheritance", name: "Inheritance", langId: "java" },
+  { id: "polymorphism", name: "Polymorphism", langId: "java" },
+  { id: "abstraction", name: "Abstraction", langId: "java" },
+  { id: "encapsulation", name: "Encapsulation", langId: "java" },
+  { id: "interface", name: "Interfaces", langId: "java" },
+  { id: "package", name: "Packages", langId: "java" },
+  { id: "exception", name: "Exception Handling", langId: "java" },
+  { id: "collection", name: "Collections Framework", langId: "java" },
+  { id: "generics", name: "Generics", langId: "java" },
+  { id: "file", name: "File Handling", langId: "java" },
+  { id: "multithreading", name: "Multithreading", langId: "java" },
+  { id: "stream", name: "Streams API", langId: "java" },
+  { id: "lambda", name: "Lambda Expressions", langId: "java" },
+  { id: "java_dsa", name: "DSA Basics", langId: "java" },
+
+
+
+//            Cpp
+
+ /* =========================
+     C++  TOPICS
+  ========================== */
+
+  { id: "cpp_intro", name: "Introduction to C++", langId: "cpp" },
+  { id: "cpp_variables", name: "Variables", langId: "cpp" },
+  { id: "cpp_datatypes", name: "Data Types", langId: "cpp" },
+  { id: "cpp_operators", name: "Operators", langId: "cpp" },
+  { id: "cpp_io", name: "Input & Output (cin/cout)", langId: "cpp" },
+  { id: "cpp_conditionals", name: "Conditional Statements", langId: "cpp" },
+  { id: "cpp_loops", name: "Loops", langId: "cpp" },
+  { id: "cpp_arrays", name: "Arrays", langId: "cpp" },
+  { id: "cpp_strings", name: "Strings", langId: "cpp" },
+  { id: "cpp_functions", name: "Functions", langId: "cpp" },
+  { id: "cpp_oop", name: "Object Oriented Programming", langId: "cpp" },
+  { id: "cpp_constructors", name: "Constructors", langId: "cpp" },
+  { id: "cpp_inheritance", name: "Inheritance", langId: "cpp" },
+  { id: "cpp_polymorphism", name: "Polymorphism", langId: "cpp" },
+  { id: "cpp_abstraction", name: "Abstraction", langId: "cpp" },
+  { id: "cpp_encapsulation", name: "Encapsulation", langId: "cpp" },
+  { id: "cpp_interfaces", name: "Interfaces", langId: "cpp" },
+  { id: "cpp_exceptions", name: "Exception Handling", langId: "cpp" },
+  { id: "cpp_stl_containers", name: "STL Containers", langId: "cpp" },
+  { id: "cpp_templates", name: "Templates", langId: "cpp" },
+  { id: "cpp_filehandling", name: "File Handling", langId: "cpp" },
+  { id: "cpp_multithreading", name: "Multithreading", langId: "cpp" },
+  { id: "cpp_stl_algorithms", name: "STL Algorithms", langId: "cpp" },
+  { id: "cpp_lambdas", name: "Lambda Expressions", langId: "cpp" },
+  { id: "cpp_dsa", name: "DSA Basics", langId: "cpp" },
+
+
+
+
+
+
+/* =========================
+     C TOPICS
+========================== */
+
+{ id: 'c_intro', name: 'Introduction to C', langId: 'c' },
+{ id: 'c_structure', name: 'Structure of C Program', langId: 'c' },
+{ id: 'c_variables', name: 'Variables', langId: 'c' },
+{ id: 'c_datatypes', name: 'Data Types', langId: 'c' },
+{ id: 'c_constants', name: 'Constants', langId: 'c' },
+{ id: 'c_operators', name: 'Operators', langId: 'c' },
+{ id: 'c_input_output', name: 'Input & Output (printf, scanf)', langId: 'c' },
+{ id: 'c_conditional', name: 'Conditional Statements', langId: 'c' },
+{ id: 'c_loop', name: 'Loops', langId: 'c' },
+{ id: 'c_break_continue', name: 'Break & Continue', langId: 'c' },
+{ id: 'c_goto', name: 'Goto Statement', langId: 'c' },
+{ id: 'c_functions', name: 'Functions', langId: 'c' },
+{ id: 'c_recursion', name: 'Recursion', langId: 'c' },
+{ id: 'c_arrays', name: 'Arrays', langId: 'c' },
+{ id: 'c_strings', name: 'Strings', langId: 'c' },
+{ id: 'c_pointers', name: 'Pointers', langId: 'c' },
+{ id: 'c_pointer_array', name: 'Pointers & Arrays', langId: 'c' },
+{ id: 'c_unions', name: 'Unions', langId: 'c' },
+{ id: 'c_enum', name: 'Enumeration (enum)', langId: 'c' },
+{ id: 'c_typedef', name: 'Typedef', langId: 'c' },
+{ id: 'c_storage_classes', name: 'Storage Classes', langId: 'c' },
+{ id: 'c_dynamic_memory', name: 'Dynamic Memory Allocation', langId: 'c' },
+{ id: 'c_file_handling', name: 'File Handling', langId: 'c' },
+{ id: 'c_preprocessor', name: 'Preprocessor Directives', langId: 'c' },
+{ id: 'c_command_line', name: 'Command Line Arguments', langId: 'c' },
+{ id: 'c_dsa_basic', name: 'DSA Basics in C', langId: 'c' }
+
+
+
+
+);
+
+
+
+

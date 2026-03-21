@@ -9,8 +9,8 @@ router.get('/dashboard', dashboardController.getDashboard);
 
 
 // Dashboard API routes
-router.get('/api/dashboard/stats', requireAuth, dashboardController.getStats);
-router.put('/api/dashboard/profile', requireAuth, dashboardController.updateProfile);
+// router.get('/api/dashboard/stats', requireAuth, dashboardController.getStats);
+// router.put('/api/dashboard/profile', requireAuth, dashboardController.updateProfile);
 router.post('/api/dashboard/change-password', requireAuth, dashboardController.changePassword);
 
 // router.get('/technical-coding', requireAuth, (req, res) => {
@@ -285,36 +285,36 @@ router.get("/quiz/:category/:subject/:testNo", (req, res) => {
 
 });
 
-router.post("/quiz/:category/:subject/:testNo/submit", (req, res) => {
-  try {
-    const { category, subject, testNo } = req.params;
+// router.post("/quiz/:category/:subject/:testNo/submit", (req, res) => {
+//   try {
+//     const { category, subject, testNo } = req.params;
 
-    const resultData = {
-      subject: subject,
-      setNo: testNo,
-      total: req.body.totalQuestions,
-      attempted: req.body.attempted,
-      correct: req.body.correct,
-      incorrect: req.body.attempted - req.body.correct,
-      percentage: req.body.percentage,
-      accuracy: req.body.accuracy,
-      timeSpent: req.body.timeSpent,
-      timeInSeconds: 3600 // optional (timer से भी भेज सकते हो)
-    };
+//     const resultData = {
+//       subject: subject,
+//       setNo: testNo,
+//       total: req.body.totalQuestions,
+//       attempted: req.body.attempted,
+//       correct: req.body.correct,
+//       incorrect: req.body.attempted - req.body.correct,
+//       percentage: req.body.percentage,
+//       accuracy: req.body.accuracy,
+//       timeSpent: req.body.timeSpent,
+//       timeInSeconds: 3600 // optional (timer से भी भेज सकते हो)
+//     };
 
-    console.log("🔥 Final Result:", resultData);
+//     console.log("🔥 Final Result:", resultData);
 
-    res.json({
-      success: true,
-      resultId: Date.now(),
-      result: resultData   // 🔥 IMPORTANT
-    });
+//     res.json({
+//       success: true,
+//       resultId: Date.now(),
+//       result: resultData   // 🔥 IMPORTANT
+//     });
 
-  } catch (err) {
-    console.error(err);
-    res.json({ success: false });
-  }
-});
+//   } catch (err) {
+//     console.error(err);
+//     res.json({ success: false });
+//   }
+// });
 
 router.get("/quiz/:category/:subject/test-:testNo/result/:resultId", (req, res) => {
   res.render("test-result");   // 🔥 सिर्फ page open करो
@@ -348,6 +348,18 @@ router.get("/quiz/:category/:subject/test-:testNo/result/:resultId", (req, res) 
 //   });
 // });
 
+
+// ✅ Dashboard Stats
+
+
+
+
+
+// ✅ Edit Profile Page
+router.get("/profile/edit", dashboardController.getEditProfilePage);
+
+// ✅ Update Profile
+router.put("/profile", dashboardController.updateProfile);
 
 
 

@@ -1,5 +1,5 @@
 const TestResult = require("../models/TestResult");
-const User = require("../models/User");
+const User = require('../../models/user');
 
 exports.submitTest = async (req, res) => {
   try {
@@ -23,8 +23,6 @@ exports.submitTest = async (req, res) => {
       timeSpent
     } = req.body;
 
-    const wrong = attempted - correct;
-
     // ✅ Save in TestResult collection
     const result = await TestResult.create({
       user: user._id,
@@ -38,9 +36,12 @@ exports.submitTest = async (req, res) => {
       timeSpent
     });
 
-    // ✅ Push into user history
+    // ❌ REMOVE THIS BLOCK (problem yahi tha)
+    /*
+    const wrong = attempted - correct;
+
     user.testHistory.push({
-      resultId: result._id,   // ⭐⭐⭐ MOST IMPORTANT
+      resultId: result._id,
       subject,
       setNo: testNo,
       score: correct,
@@ -61,7 +62,9 @@ exports.submitTest = async (req, res) => {
     );
 
     await user.save();
+    */
 
+    // ✅ Only send response
     res.json({
       success: true,
       resultId: result._id

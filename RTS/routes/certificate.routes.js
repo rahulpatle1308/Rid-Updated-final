@@ -3,7 +3,7 @@ const router = express.Router();
 const PDFDocument = require("pdfkit");
 const { requireAuth } = require("../middleware/auth");
 const TestResult = require("../models/TestResult");
-const User = require("../models/User");
+const User = require('../../models/user');
 
 
 
@@ -14,7 +14,7 @@ router.get("/certificate/final", requireAuth, async (req, res) => {
   try {
     const user = await User.findById(req.session.userId);
 
-    if (!user || user.totalTestsAttempted < 50) {
+    if (!user || user.totalTestsAttempted < 30) {
       return res.redirect("/profile");
     }
 
@@ -41,7 +41,7 @@ router.get("/certificate/final", requireAuth, async (req, res) => {
     doc.moveDown();
 
     doc.fontSize(30).fillColor("#3949ab")
-      .text(user.fullName, { align: "center", underline: true });
+      .text(user.name, { align: "center", underline: true });
 
     doc.moveDown();
 

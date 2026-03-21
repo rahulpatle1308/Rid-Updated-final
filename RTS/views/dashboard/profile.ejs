@@ -1387,12 +1387,12 @@
                 <div class="profile-photo-section">
                     <% if (user?.profilePhoto) { %>
                         <img src="<%= user.profilePhoto %>" 
-                             alt="<%= user.fullName %>" 
+                             alt="<%= user?.name || 'User' %>" 
                              class="avatar-mega"
                              loading="lazy">
                     <% } else { %>
                         <div class="avatar-mega">
-                            <%= user?.initials || (user?.fullName ? user.fullName.charAt(0).toUpperCase() : 'U') %>
+                            <%= user?.initials || (user?.name ? user.name.charAt(0).toUpperCase() : 'U') %>
                         </div>
                     <% } %>
                     <span class="online-indicator-large"></span>
@@ -1403,7 +1403,7 @@
 
                 <!-- User Name & Role -->
                 <div class="user-title">
-                    <h1><%= user?.fullName || 'User' %></h1>
+                   <h1><%= user?.name || 'User' %></h1>
                     <div class="badge-wrapper">
                         <span class="role-badge">
                             <% if (user?.role === 'student') { %>
@@ -1539,13 +1539,19 @@
                 </div>
 
                 <!-- Edit Profile Button (Full Width) -->
-                <a href="/profile/edit" style="display: block; margin-top: 25px; text-decoration: none;">
+                <a href="/rts/profile/edit" style="display: block; margin-top: 25px; text-decoration: none;">
                     <button class="edit-profile-btn">
                         <i class="fas fa-edit"></i>
                         Edit Profile
                         <i class="fas fa-arrow-right"></i>
                     </button>
                 </a>
+
+               <form action="/logout" method="POST">
+    <button type="submit" class="edit-profile-btn" style="background:#ef4444; margin-top:10px;">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+</form>
             </div>
 
             <!-- ========== RIGHT COLUMN - PERFORMANCE & HISTORY WITH RANK TOP ========== -->
@@ -1556,7 +1562,7 @@
                     <!-- Welcome Banner -->
                     <div class="welcome-banner">
                         <div class="welcome-text">
-                            <h2>Welcome back, <%= user?.fullName?.split(' ')[0] || 'User' %>! 👋</h2>
+                            <h2>Welcome back, <%= user?.name?.split(' ')[0] || 'User' %>! 👋</h2>
                             <p>
                                 <i class="fas fa-chart-line" style="color: #2563eb;"></i>
                                 <% if (avgScore >= 75) { %>
@@ -2009,7 +2015,7 @@
                                 </td>
                                 <td>
                                     <% if (t.resultId?._id) { %>
-                                        <a href=<a href="/quiz/<%= t.category || 'technical' %>/<%= subject %>/<%= setNo %>/result/<%= t.resultId._id %>"
+                                      <a href="/quiz/<%= t.category || 'technical' %>/<%= subject %>/<%= setNo %>/result/<%= t.resultId._id %>"></a>
  
                                            style="display: inline-flex; align-items: center; gap: 6px; background: #2563eb; color: white; padding: 8px 16px; border-radius: 30px; text-decoration: none; font-size: 0.8rem; font-weight: 600; transition: all 0.3s ease;"
                                            onmouseover="this.style.background='#1d4ed8'; this.style.transform='translateY(-2px)';"
