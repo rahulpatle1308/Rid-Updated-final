@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const dashboardController = require('../controllers/dashboard.controller');
 const { requireAuth } = require('../middleware/auth');
+const { route } = require('./quiz.routes');
 
 
 // Dashboard page
@@ -55,18 +56,53 @@ router.get("/jee/advance", (req, res) => {
     subject: "JEE"
   });
 });
-// NEET ROUTES
-router.get("/neet", (req, res) => {
-  res.render("dashboard/NEET/purchase", {
-    category: "neet",
-    subject: "NEET"
+
+// SSC routes all 
+router.get("/ssc/subparts", (req, res) => {
+  res.render("dashboard/SSC/ssc", {
+    category: "ssc",
+    subject: "SSC"
+  });
+});
+router.get("/Group-B/purchase", (req, res) => {
+  res.render("dashboard/SSC/Group-B/purchase", {
+    category: "ssc",
+    subject: "SSC"
+  });
+});
+router.get("/Group-D/purchase", (req, res) => {
+  res.render("dashboard/SSC/Group-C/purchase", {
+    category: "ssc",
+    subject: "SSC"
   });
 });
 
 
+// NEET ROUTES
+router.get("/neet", (req, res) => {
+  res.render("dashboard/NEET/neet", {
+    category: "neet",
+    subject: "NEET"
+  });
+});
+router.get("/neet/biology",(req,res)=>{
+  res.render("dashboard/NEET/biology/purchase",{
+     category: "neet",
+    subject: "NEET"
+  })
+ 
+})
+
+router.get("/neet/chemistry",(req,res)=>{
+  res.render("dashboard/NEET/Chemistry/purchase")
+})
+
+router.get("/neet/Physics",(req,res)=>{
+  res.render("dashboard/NEET/Physics/purchase")
+})
 
 /* Python course main page */
-router.get('/python/purchase', requireAuth, (req, res) => {
+router.get('/python/purchase', (req, res) => {
   res.render('dashboard/Technical/python/purchase', {
     title: 'Python Test Series',
     description: 'Python programming test series'
@@ -93,7 +129,7 @@ router.get('/js/purchase',(req, res) => {
 
 
 /* C course main page */
-router.get('/C/purchase', requireAuth, (req, res) => {
+router.get('/C/purchase', (req, res) => {
   res.render('dashboard/Technical/C/purchase', {
     title: 'C Test Series',
     description: 'C test series'
@@ -102,7 +138,7 @@ router.get('/C/purchase', requireAuth, (req, res) => {
 
 
 /* C++ course main page */
-router.get('/C_plus/purchase', requireAuth, (req, res) => {
+router.get('/C_plus/purchase', (req, res) => {
   res.render('dashboard/Technical/C++/purchase', {
     title: 'C Test Series',
     description: 'C test series'
@@ -111,7 +147,7 @@ router.get('/C_plus/purchase', requireAuth, (req, res) => {
 
 
 /* GO course main page */
-router.get('/GO/purchase', requireAuth, (req, res) => {
+router.get('/GO/purchase', (req, res) => {
   res.render('dashboard/Technical/GO/purchase', {
     title: 'GO Test Series',
     description: 'GO test series'
@@ -120,7 +156,7 @@ router.get('/GO/purchase', requireAuth, (req, res) => {
 
 
 /* PHP course main page */
-router.get('/PHP/purchase', requireAuth, (req, res) => {
+router.get('/PHP/purchase', (req, res) => {
   res.render('dashboard/Technical/PHP/purchase', {
     title: 'PHP Test Series',
     description: 'PHP test series'
@@ -128,7 +164,7 @@ router.get('/PHP/purchase', requireAuth, (req, res) => {
 });
 
 /* JAVA course main page */
-router.get('/java/purchase', requireAuth, (req, res) => {
+router.get('/java/purchase', (req, res) => {
   res.render('dashboard/Technical/JAVA/purchase', {
     title: 'JAVA Test Series',
     description: 'JAVA test series'
@@ -136,7 +172,7 @@ router.get('/java/purchase', requireAuth, (req, res) => {
 });
 
 /* MogoDB course main page */
-router.get('/MogoDB/purchase', requireAuth, (req, res) => {
+router.get('/MogoDB/purchase', (req, res) => {
   res.render('dashboard/Technical/mongoDB/purchase', {
     title: 'MogoDB Test Series',
     description: 'MogoDB test series'
@@ -145,7 +181,7 @@ router.get('/MogoDB/purchase', requireAuth, (req, res) => {
 
 
 /* MySql course main page */
-router.get('/MySql/purchase', requireAuth, (req, res) => {
+router.get('/MySql/purchase', (req, res) => {
   res.render('dashboard/Technical/mysql/purchase', {
     title: 'MogoDB Test Series',
     description: 'MogoDB test series'
@@ -154,7 +190,7 @@ router.get('/MySql/purchase', requireAuth, (req, res) => {
 
 
 /* nodejs course main page */
-router.get('/Nodejs/purchase', requireAuth, (req, res) => {
+router.get('/Nodejs/purchase', (req, res) => {
   res.render('dashboard/Technical/nodejs/purchase', {
     title: 'Nodejs Test Series',
     description: 'Nodejs test series'
@@ -162,7 +198,7 @@ router.get('/Nodejs/purchase', requireAuth, (req, res) => {
 });
 
 /* Rust course main page */
-router.get('/Rust/purchase', requireAuth, (req, res) => {
+router.get('/Rust/purchase', (req, res) => {
   res.render('dashboard/Technical/Rust/purchase', {
     title: 'Rust Test Series',
     description: 'Rust test series'
@@ -171,7 +207,7 @@ router.get('/Rust/purchase', requireAuth, (req, res) => {
 
 
 /* Swift course main page */
-router.get('/Swift/purchase', requireAuth, (req, res) => {
+router.get('/Swift/purchase', (req, res) => {
   res.render('dashboard/Technical/Swift/purchase', {
     title: 'Rust Test Series',
     description: 'Rust test series'
@@ -180,7 +216,7 @@ router.get('/Swift/purchase', requireAuth, (req, res) => {
 
 
 /* Reactjs course main page */
-router.get('/Reactjs/purchase', requireAuth, (req, res) => {
+router.get('/Reactjs/purchase', (req, res) => {
   res.render('dashboard/Technical/Reactjs/purchase', {
     title: 'Reactjs Test Series',
     description: 'Reactjs test series'
@@ -190,14 +226,16 @@ router.get('/Reactjs/purchase', requireAuth, (req, res) => {
 
 
 /* DjanGo course main page */
-router.get('/DjanGo/purchase', requireAuth, (req, res) => {
+router.get('/DjanGo/purchase', (req, res) => {
   res.render('dashboard/Technical/DjanGo/purchase', {
     title: 'DjanGo Test Series',
     description: 'DjanGo test series'
   });
 });
+
+
 // Main boards page
-router.get("/state-boards", requireAuth, (req, res) => {
+router.get("/state-boards", (req, res) => {
   res.render("dashboard/StateBoard/stateboard", {
     title: "State Boards",
   });
@@ -205,14 +243,27 @@ router.get("/state-boards", requireAuth, (req, res) => {
 
 
 /* UpBoard course main page */
-router.get('/upboard/purchase', requireAuth, (req, res) => {
+router.get('/upboard/purchase', (req, res) => {
   res.render('dashboard/StateBoard/UpBoard/purchase', {
     title: 'UpBoard Test Series',
    
   });
 });
 
-
+/* MP course main page */
+router.get('/mpboard/purchase', (req, res) => {
+  res.render('dashboard/StateBoard/MP Board/purchase', {
+    title: 'MP Board Test Series',
+   
+  });
+});
+/* Punjab course main page */
+router.get('/mpboard/purchase', (req, res) => {
+  res.render('dashboard/StateBoard/MP Board/purchase', {
+    title: 'MP Board Test Series',
+   
+  });
+});
 
 // Home Guard page
 router.get("/HomeGuard", (req, res) => {

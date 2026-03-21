@@ -1303,7 +1303,7 @@ const SUBJECT = "<%= subject %>".toLowerCase();
     }
 
     // 🔥 CHANGE 5: Submit Quiz function सही करें
-    async function submitQuiz() {
+   async function submitQuiz() {
       if (!confirm("Are you sure you want to submit the test?")) return;
 
       let attempted = 0;
@@ -1324,21 +1324,21 @@ const SUBJECT = "<%= subject %>".toLowerCase();
       const timeSpent = timerElement.innerText;
 
       const payload = {
-        
-  testNo: TEST_NO,
-  totalQuestions: questions.length,
-  attempted,
-  correct,
-  percentage,
-  accuracy,
-  timeSpent,
-       
+
+        testNo: TEST_NO,
+        totalQuestions: questions.length,
+        attempted,
+        correct,
+        percentage,
+        accuracy,
+        timeSpent,
+
       };
 
       console.log("Submitting payload:", payload);
 
       try {
-        const res = await fetch(`/quiz/${CATEGORY}/${SUBJECT}/${TEST_NO}/submit`, {
+        const res = await fetch(`/rts/quiz/${CATEGORY}/${SUBJECT}/${TEST_NO}/submit`, {
 
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -1347,15 +1347,14 @@ const SUBJECT = "<%= subject %>".toLowerCase();
 
         const data = await res.json();
 
-        if (data.success) {
-          localStorage.removeItem("quizProgress");
-          // 🔥 CHANGE 4: Dynamic redirect based on test number
-        window.location.href = `/quiz/${CATEGORY}/${SUBJECT}/test-${TEST_NO}/result/${data.resultId}`;
+       if (data.success) {
 
+  // 🔥 RESULT save (important)
+  sessionStorage.setItem("resultData", JSON.stringify(data.result));
+  sessionStorage.setItem("tempReview", JSON.stringify(questions));
 
-
-
-        } else {
+  window.location.href = `/rts/quiz/${CATEGORY}/${SUBJECT}/test-${TEST_NO}/result/${data.resultId}`;
+} else {
           alert("Submit failed: " + (data.message || "Unknown error"));
         }
       } catch (error) {

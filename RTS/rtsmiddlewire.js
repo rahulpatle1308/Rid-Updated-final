@@ -76,6 +76,10 @@ app.use("/", require("./routes/profile.routes"));
 // Visit API
 app.use("/api", require("./routes/visit.routes"));
 
+// demo route
+app.get("/", (req, res) => {
+  res.send("RTS Home Working");
+});
 
 /* ==============================
    404 HANDLER (OPTIONAL)

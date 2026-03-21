@@ -5,7 +5,7 @@ const CourseVisit = require("../models/CourseVisit");
 // increase visit
 router.post("/visit/:id", async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = decodeURIComponent(req.params.id);
 
     const course = await CourseVisit.findOneAndUpdate(
       { courseId: id },
@@ -13,15 +13,15 @@ router.post("/visit/:id", async (req, res) => {
       { new: true, upsert: true }
     );
 
-
     res.json({ visits: course.visits });
+
   } catch (err) {
     console.error("Visit Error:", err);
     res.status(500).json({ error: "Server error" });
   }
 });
 
-// get all
+// get all visits
 router.get("/visits", async (req, res) => {
   try {
     const data = await CourseVisit.find();
