@@ -12,6 +12,8 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+
+
 // Static Files (RTS public folder)
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -60,6 +62,12 @@ app.use("/", require("./routes/test.routes"));
 app.use("/", require("./routes/certificate.routes"));
 app.use("/", require("./routes/profile.routes"));
 app.use("/api", require("./routes/visit.routes"));
+
+
+// demo route
+app.get("/", (req, res) => {
+  res.send("RTS Home Working");
+});
 
 /* ==============================
    404 HANDLER (OPTIONAL)

@@ -23,7 +23,7 @@ exports.submitTest = async (req, res) => {
       timeSpent
     } = req.body;
 
-    // ✅ Save in TestResult collection
+    // ✅ STEP 1: Save result
     const result = await TestResult.create({
       user: user._id,
       subject,
@@ -33,38 +33,40 @@ exports.submitTest = async (req, res) => {
       correct,
       percentage,
       accuracy,
-      timeSpent
+      timeSpent,
+      category: req.params.category || "general"
     });
 
-    // ❌ REMOVE THIS BLOCK (problem yahi tha)
-    /*
-    const wrong = attempted - correct;
+    // ✅ STEP 2: Update user (IMPORTANT 🔥)
+    const dbUser = await User.findById(user._id);
 
-    user.testHistory.push({
-      resultId: result._id,
-      subject,
-      setNo: testNo,
-      score: correct,
-      percentage,
-      totalQuestions: total,
-      incorrect: wrong
-    });
+   dbUser.testHistory.push({
+  resultId: result._id,
+  subject,
+  setNo: testNo,
+  score: correct,
+  totalQuestions: total,
+  percentage,
+  date: new Date()   // ✅ YE ADD KARNA HAI
+});
 
-    user.totalTestsAttempted += 1;
+    
 
-    const totalScore = user.testHistory.reduce(
+    // ✅ STEP 3: Total tests
+    dbUser.totalTestsAttempted = dbUser.testHistory.length;
+
+    // ✅ STEP 4: Average
+    const totalScore = dbUser.testHistory.reduce(
       (sum, t) => sum + (t.percentage || 0),
       0
     );
 
-    user.averageScore = Math.round(
-      totalScore / user.totalTestsAttempted
+    dbUser.averageScore = Math.round(
+      totalScore / dbUser.totalTestsAttempted
     );
 
-    await user.save();
-    */
+    await dbUser.save();
 
-    // ✅ Only send response
     res.json({
       success: true,
       resultId: result._id

@@ -1,4 +1,4 @@
- :root {
+:root {
         --primary-color: #4a6fa5;
         --secondary-color: #166088;
         --accent-color: #4fc3a1;
@@ -7,7 +7,7 @@
         --danger-color: #dc3545;
         --dark-color: #2c3e50;
         --light-color: #f8f9fa;
-        --sidebar-width: 280px;
+        --sidebar-width: 240px;    
         --header-height: 70px;
     }
 
@@ -21,14 +21,16 @@
     body {
         background-color: #f5f7fa;
         color: #333;
-       
+        /* display: flex; */
         min-height: 100vh;
         overflow-x: hidden;
     }
 
     /* Sidebar Styles */
     .sidebar {
-        width: var(--sidebar-width);
+       width: var(--sidebar-width) !important;
+    min-width: var(--sidebar-width) !important;
+    max-width: var(--sidebar-width) !important;
         background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
         color: white;
         height: 100vh;
@@ -39,6 +41,9 @@
         box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
         z-index: 1000;
         transition: all 0.3s ease;
+        padding-top: 0;  /* नया - top padding हटाएं */
+         padding-left: 0 !important;
+    
     }
 
     .sidebar.collapsed {
@@ -76,80 +81,87 @@
     }
 
     .sidebar-header {
-        padding: 25px 20px;
+        padding: 10px 5px;
         text-align: center;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         position: relative;
+       
     }
 
     .logo {
         display: flex;
         align-items: center;
-        gap: 10px;
-        margin-bottom: 10px;
+        gap: 5px;
+        margin-bottom: 5px;
         justify-content: flex-start;
     }
 
     .logo h2 {
-        font-size: 22px;
+        font-size: 16px;
         font-weight: 700;
         transition: opacity 0.3s;
     }
 
     .logo-text {
-        font-size: 14px;
+        font-size: 12px;
         opacity: 0.8;
     }
 
     .user-profile {
         display: flex;
         align-items: center;
-        gap: 10px;
-        padding: 15px 20px;
+        gap: 6px;
+        padding: 4px 8px;
         background: rgba(255, 255, 255, 0.1);
         border-radius: 10px;
-        margin: 15px;
+        margin: 5px;
         transition: all 0.3s;
     }
 
     .user-avatar {
-        width: 40px;
-        height: 40px;
+        width: 28px;
+        height: 28px;
         border-radius: 50%;
         background: linear-gradient(135deg, var(--accent-color), #4a6fa5);
         display: flex;
         align-items: center;
         justify-content: center;
         font-weight: bold;
-        font-size: 18px;
+        font-size: 12px;
     }
 
     .user-info h4 {
-        font-size: 16px;
-        margin-bottom: 2px;
+        font-size: 11px;
+        margin-bottom: 1px;
     }
 
     .user-info p {
-        font-size: 12px;
+        font-size: 9px;
         opacity: 0.8;
     }
 
     .nav-menu {
-        padding: 20px 0;
+          padding-left: 5px;
+          margin-left: 0px;
+
     }
 
     .nav-item {
-        padding: 12px 25px;
+        padding: 3px 0px 3px 2px;
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 5px;
         color: rgba(255, 255, 255, 0.9);
         text-decoration: none;
         transition: all 0.3s;
         border-left: 3px solid transparent;
         cursor: pointer;
         position: relative;
+        margin:0px 0; 
+         line-height: 1;
     }
+
+
 
     .nav-item:hover,
     .nav-item.active {
@@ -159,14 +171,15 @@
     }
 
     .nav-item i {
-        font-size: 18px;
-        width: 24px;
+        font-size: 14px;
+        width: 12px;
         text-align: center;
+         margin-left: 0;
     }
 
     .message-badge {
         position: absolute;
-        right: 25px;
+        right: 20px;
         background: var(--danger-color);
         color: white;
         font-size: 10px;
@@ -221,11 +234,11 @@
     /* Main Content */
     .main-content {
         flex: 1;
-        margin-left: var(--sidebar-width);
+        margin-left: var(--sidebar-width) !important;
         padding: 20px;
         min-height: 100vh;
         transition: margin-left 0.3s ease;
-        width: calc(100% - var(--sidebar-width));
+        width: calc(100% - var(--sidebar-width))!important;
         max-width: 100%;
     }
 
@@ -2393,9 +2406,3 @@
             transform: scale(1);
         }
     }
-
-
-
-
-
-

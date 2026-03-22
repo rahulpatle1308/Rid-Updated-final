@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= typeof title !== 'undefined' ? title : 'U.P HomeGuard Test Series' %></title>
+    <title><%= typeof title !== 'undefined' ? title : 'JEE Advance Test Series' %></title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
@@ -40,14 +40,6 @@
             --line-height-tight: 1.2;
             --line-height-normal: 1.5;
             --line-height-loose: 1.8;
-            
-            /* Tab Colors */
-            --tab-economy: #d32f2f;
-            --tab-polity: #1976d2;
-            --tab-science: #2e7d32;
-            --tab-geography: #ed6c02;
-            --tab-history: #9c27b0;
-            --tab-important: #d32f2f;
         }
 
         /* Dark Mode Colors */
@@ -237,7 +229,7 @@
             font-family: var(--font-family-primary);
         }
 
-        /* ==================== PROFESSIONAL CARD STYLING ==================== */
+        /* ==================== CARD STYLING - NO SUBJECT BADGES ==================== */
 
         .description-section {
             max-width: 1400px;
@@ -268,94 +260,11 @@
             border-radius: 2px;
         }
 
-        /* ==================== SUBJECT TABS STYLING ==================== */
-        .subject-tabs {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 40px;
-            padding: 10px;
-        }
-
-        .tab-btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 50px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: white;
-            color: var(--text-primary);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            font-family: var(--font-family-primary);
-            letter-spacing: 0.3px;
-            border: 2px solid transparent;
-        }
-
-        .tab-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .tab-btn.active {
-            border-color: currentColor;
-            transform: scale(1.05);
-        }
-
-        .tab-btn[data-subject="all"] {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-        }
-
-        .tab-btn[data-subject="economy"] {
-            background: rgba(211, 47, 47, 0.1);
-            color: var(--tab-economy);
-            border-color: var(--tab-economy);
-        }
-
-        .tab-btn[data-subject="polity"] {
-            background: rgba(25, 118, 210, 0.1);
-            color: var(--tab-polity);
-            border-color: var(--tab-polity);
-        }
-
-        .tab-btn[data-subject="science"] {
-            background: rgba(46, 125, 50, 0.1);
-            color: var(--tab-science);
-            border-color: var(--tab-science);
-        }
-
-        .tab-btn[data-subject="geography"] {
-            background: rgba(237, 108, 2, 0.1);
-            color: var(--tab-geography);
-            border-color: var(--tab-geography);
-        }
-
-        .tab-btn[data-subject="history"] {
-            background: rgba(156, 39, 176, 0.1);
-            color: var(--tab-history);
-            border-color: var(--tab-history);
-        }
-
-        .tab-btn[data-subject="important"] {
-            background: rgba(211, 47, 47, 0.1);
-            color: var(--tab-important);
-            border-color: var(--tab-important);
-        }
-
         .test-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 25px;
             margin-top: 30px;
-            transition: opacity 0.3s ease;
-        }
-
-        .test-grid.loading {
-            opacity: 0.5;
-            pointer-events: none;
         }
 
         .test-item {
@@ -367,7 +276,6 @@
             border: 1px solid rgba(0, 0, 0, 0.05);
             display: flex;
             flex-direction: column;
-            position: relative;
             animation: fadeIn 0.5s ease;
         }
 
@@ -389,7 +297,7 @@
         }
 
         .test-header {
-            padding: 20px 20px 15px;
+            padding: 24px 20px 20px;
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
             background: linear-gradient(135deg, #f8faff, #ffffff);
         }
@@ -405,10 +313,7 @@
         }
 
         .test-action {
-            padding: 15px 20px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            padding: 20px;
             background: white;
         }
 
@@ -427,110 +332,28 @@
             letter-spacing: 0.5px;
             box-shadow: 0 4px 12px rgba(10, 102, 194, 0.2);
             font-family: var(--font-family-primary);
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
         }
 
         .start-button:hover {
             background: linear-gradient(135deg, #084e94, var(--text-link));
             transform: scale(1.02);
             box-shadow: 0 6px 16px rgba(10, 102, 194, 0.3);
+            text-decoration: none;
+            color: white;
         }
 
         .start-button:active {
             transform: scale(0.98);
         }
 
-        .special-text {
-            text-align: center;
-            font-size: 13px;
-            font-weight: 600;
-            padding: 6px 12px;
-            border-radius: 30px;
-            background: #f8f9fa;
-            display: inline-block;
-            margin: 5px auto 0;
-            letter-spacing: 0.3px;
-            font-family: var(--font-family-primary);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-        }
-
-        /* Category specific colors */
-        .s-text {
-            color: #d32f2f;
-            background: rgba(211, 47, 47, 0.08);
-            border-left: 3px solid #d32f2f;
-        }
-
-        .d-text {
-            color: #1976d2;
-            background: rgba(25, 118, 210, 0.08);
-            border-left: 3px solid #1976d2;
-        }
-
-        .g-text {
-            color: #2e7d32;
-            background: rgba(46, 125, 50, 0.08);
-            border-left: 3px solid #2e7d32;
-        }
-
-        .geo-text {
-            color: #ed6c02;
-            background: rgba(237, 108, 2, 0.08);
-            border-left: 3px solid #ed6c02;
-        }
-
-        .his-text {
-            color: #9c27b0;
-            background: rgba(156, 39, 176, 0.08);
-            border-left: 3px solid #9c27b0;
-        }
-
-        .imp-text {
-            color: #d32f2f;
-            background: rgba(211, 47, 47, 0.08);
-            border-left: 3px solid #d32f2f;
-            animation: pulse 2s infinite;
-        }
-
-        /* Add a subtle pulse animation for Important Test */
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.4);
-            }
-            70% {
-                box-shadow: 0 0 0 6px rgba(211, 47, 47, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(211, 47, 47, 0);
-            }
-        }
-
-        /* No results message */
-        .no-results {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 60px 20px;
-            font-size: 18px;
-            color: var(--text-secondary);
-            background: #f8f9fa;
-            border-radius: 16px;
-            animation: fadeIn 0.5s ease;
-        }
-
-        /* Responsive adjustments for tabs and cards */
+        /* Responsive adjustments */
         @media screen and (max-width: 767px) {
             .section-title {
                 font-size: 26px;
                 margin-bottom: 30px;
-            }
-
-            .subject-tabs {
-                gap: 8px;
-                padding: 5px;
-            }
-
-            .tab-btn {
-                padding: 8px 16px;
-                font-size: 13px;
             }
 
             .test-grid {
@@ -540,6 +363,14 @@
 
             .test-header h3 {
                 font-size: 16px;
+            }
+
+            .test-header {
+                padding: 20px 16px 16px;
+            }
+
+            .test-action {
+                padding: 16px;
             }
 
             .start-button {
@@ -559,24 +390,6 @@
 
             .section-title {
                 font-size: 24px;
-            }
-
-            .subject-tabs {
-                flex-direction: row;
-                overflow-x: auto;
-                padding: 10px 5px;
-                justify-content: flex-start;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none;
-            }
-
-            .subject-tabs::-webkit-scrollbar {
-                display: none;
-            }
-
-            .tab-btn {
-                white-space: nowrap;
-                flex-shrink: 0;
             }
         }
 
@@ -598,51 +411,6 @@
 
         body.dark-mode .test-action {
             background: #2d2d2d;
-        }
-
-        body.dark-mode .special-text {
-            background: #3d3d3d;
-            color: #e0e0e0;
-        }
-
-        body.dark-mode .tab-btn {
-            background: #2d2d2d;
-            color: #ffffff;
-        }
-
-        body.dark-mode .no-results {
-            background: #2d2d2d;
-            color: #e0e0e0;
-        }
-
-        body.dark-mode .s-text {
-            background: rgba(211, 47, 47, 0.15);
-            color: #ff6b6b;
-        }
-
-        body.dark-mode .d-text {
-            background: rgba(25, 118, 210, 0.15);
-            color: #6ea8fe;
-        }
-
-        body.dark-mode .g-text {
-            background: rgba(46, 125, 50, 0.15);
-            color: #81c784;
-        }
-
-        body.dark-mode .geo-text {
-            background: rgba(237, 108, 2, 0.15);
-            color: #ffb74d;
-        }
-
-        body.dark-mode .his-text {
-            background: rgba(156, 39, 176, 0.15);
-            color: #ce93d8;
-        }
-
-        body.dark-mode .imp-text {
-            background: rgba(211, 47, 47, 0.15);
-            color: #ff6b6b;
         }
 
         /* High Resolution Screens */
@@ -748,54 +516,20 @@
     <%- include('../../partials/header') %><br>
 
     <main>
-        <!-- Subject Tabs Section -->
+        <!-- Test Cards Section - No Subject Tabs, No Subject Badges on Cards -->
         <section class="description-section" aria-labelledby="tests-title">
-            <h2 class="section-title" id="tests-title">JEE ADVANCE TEST's</h2>
+            <h2 class="section-title" id="tests-title">JEE ADVANCE TEST SERIES</h2>
             
-            <!-- Subject Tabs -->
-            <div class="subject-tabs">
-                <button class="tab-btn active" data-subject="all" onclick="filterTests('all')">All Tests</button>
-                <button class="tab-btn" data-subject="economy" onclick="filterTests('economy')">Physics</button>
-                <button class="tab-btn" data-subject="polity" onclick="filterTests('polity')">Chemistry</button>
-                <button class="tab-btn" data-subject="science" onclick="filterTests('science')">Mathematics</button>
-                <button class="tab-btn" data-subject="important" onclick="filterTests('important')">Important Test</button>
-            </div>
-
-            <!-- Test Cards Grid -->
+            <!-- Test Cards Grid - Clean cards without subject badges -->
             <div class="test-grid" id="testGrid">
                 <% const totalTests = 40; %>
-                <% for(let i = 1; i <= totalTests; i++) { 
-                    let subject = '';
-                    let subjectClass = '';
-                    
-                    if(i <= 10) { 
-                        subject = 'Physics';
-                        subjectClass = 's-text';
-                        subjectName = 'Physics';
-                    } else if(i <= 20) { 
-                        subject = 'Chemistry';
-                        subjectClass = 'd-text';
-                        subjectName = 'Chemistry';
-                    } else if(i <= 30) { 
-                        subject = 'Mathematics';
-                        subjectClass = 'g-text';
-                        subjectName = 'Mathematics';
-                    } else if(i <= 40) { 
-                        subject = 'important';
-                        subjectClass = 'imp-text';
-                        subjectName = 'Important-Test';
-                    } 
-                %>
-                    <div class="test-item" data-subject="<%= subject %>">
+                <% for(let i = 1; i <= totalTests; i++) { %>
+                    <div class="test-item">
                         <div class="test-header">
-                            <h3>U.P HomeGuard Test : <%= i %></h3>
+                            <h3>JEE ADVANCE Test : <%= i %></h3>
                         </div>
-
                         <div class="test-action">
-                            <a href="/rts/quiz/BPSC/Higher-Secondary/<%= i %>">
-                                <button class="start-button">Start Test</button>
-                            </a>
-                            <div class="special-text <%= subjectClass %>"><%= subjectName %></div>
+                            <a href="/rts/quiz/JEE/jeeadvance/<%= i %>" class="start-button">Start Test</a>
                         </div>
                     </div>
                 <% } %>
@@ -807,7 +541,7 @@
     <section class="footer">
         <footer>
             <div class="left">
-                <img src="/img/desbord_logo.png" alt="RID Bharat Logo">
+                <img src="/rts/img/desbord_logo.png" alt="RID Bharat Logo">
                 <p>Mig, 72, Rajiv Nagar, A Sector, Aayodhya Bypass Bhopal, Madhya Pradesh, India (462022)</p>
                 <div>
                     <a href="mailto:ridorg.in@gmail.com">
@@ -887,57 +621,6 @@
     </section>
 
     <script>
-        // ==================== FILTER TESTS BY SUBJECT ====================
-        function filterTests(subject) {
-            const testGrid = document.getElementById('testGrid');
-            const testItems = document.querySelectorAll('.test-item');
-            const tabButtons = document.querySelectorAll('.tab-btn');
-            
-            // Add loading class
-            testGrid.classList.add('loading');
-            
-            // Update active tab
-            tabButtons.forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.getAttribute('data-subject') === subject) {
-                    btn.classList.add('active');
-                }
-            });
-
-            // Filter tests
-            let visibleCount = 0;
-            testItems.forEach(item => {
-                const itemSubject = item.getAttribute('data-subject');
-                
-                if (subject === 'all' || itemSubject === subject) {
-                    item.style.display = 'flex';
-                    visibleCount++;
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-
-            // Check if no results
-            const existingNoResults = document.querySelector('.no-results');
-            if (visibleCount === 0) {
-                if (!existingNoResults) {
-                    const noResults = document.createElement('div');
-                    noResults.className = 'no-results';
-                    noResults.innerHTML = '<i class="fas fa-search" style="font-size: 48px; margin-bottom: 20px; opacity: 0.5;"></i><br>No tests found for this subject.';
-                    testGrid.appendChild(noResults);
-                }
-            } else {
-                if (existingNoResults) {
-                    existingNoResults.remove();
-                }
-            }
-
-            // Remove loading class after a short delay
-            setTimeout(() => {
-                testGrid.classList.remove('loading');
-            }, 300);
-        }
-
         // ==================== MOBILE MENU TOGGLE FUNCTIONALITY ====================
         document.addEventListener('DOMContentLoaded', function() {
             // Get all required elements
@@ -949,90 +632,81 @@
             const body = document.body;
 
             // Check if elements exist
-            if (!menuToggle || !mobileNav || !overlay) {
-                console.error('Mobile menu elements not found!');
-                return;
-            }
-
-            // Function to open menu
-            function openMenu() {
-                mobileNav.classList.add('active');
-                overlay.classList.add('active');
-                menuToggle.classList.add('active');
-                header.classList.add('menu-open');
-                body.classList.add('menu-open');
-                menuToggle.setAttribute('aria-expanded', 'true');
-                menuToggle.innerHTML = '<i class="fas fa-times"></i>'; // Change to close icon
-                
-                // Prevent body scroll
-                body.style.overflow = 'hidden';
-            }
-
-            // Function to close menu
-            function closeMenu() {
-                mobileNav.classList.remove('active');
-                overlay.classList.remove('active');
-                menuToggle.classList.remove('active');
-                header.classList.remove('menu-open');
-                body.classList.remove('menu-open');
-                menuToggle.setAttribute('aria-expanded', 'false');
-                menuToggle.innerHTML = '<i class="fas fa-bars"></i>'; // Change back to hamburger
-                
-                // Restore body scroll
-                body.style.overflow = '';
-            }
-
-            // Toggle menu on button click
-            menuToggle.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const isOpen = mobileNav.classList.contains('active');
-                
-                if (isOpen) {
-                    closeMenu();
-                } else {
-                    openMenu();
+            if (menuToggle && mobileNav && overlay) {
+                // Function to open menu
+                function openMenu() {
+                    mobileNav.classList.add('active');
+                    overlay.classList.add('active');
+                    menuToggle.classList.add('active');
+                    if (header) header.classList.add('menu-open');
+                    body.classList.add('menu-open');
+                    menuToggle.setAttribute('aria-expanded', 'true');
+                    menuToggle.innerHTML = '<i class="fas fa-times"></i>';
+                    body.style.overflow = 'hidden';
                 }
-            });
 
-            // Close menu when clicking overlay
-            overlay.addEventListener('click', closeMenu);
+                // Function to close menu
+                function closeMenu() {
+                    mobileNav.classList.remove('active');
+                    overlay.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                    if (header) header.classList.remove('menu-open');
+                    body.classList.remove('menu-open');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                    body.style.overflow = '';
+                }
 
-            // Close menu when clicking close button (if exists)
-            if (closeBtn) {
-                closeBtn.addEventListener('click', closeMenu);
+                // Toggle menu on button click
+                menuToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const isOpen = mobileNav.classList.contains('active');
+                    if (isOpen) {
+                        closeMenu();
+                    } else {
+                        openMenu();
+                    }
+                });
+
+                // Close menu when clicking overlay
+                overlay.addEventListener('click', closeMenu);
+
+                // Close menu when clicking close button (if exists)
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', closeMenu);
+                }
+
+                // Close menu on escape key press
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+                        closeMenu();
+                    }
+                });
+
+                // Prevent menu from closing when clicking inside mobile nav
+                mobileNav.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+
+                // Handle window resize - close menu on desktop
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 992 && mobileNav.classList.contains('active')) {
+                        closeMenu();
+                    }
+                });
             }
-
-            // Close menu on escape key press
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
-                    closeMenu();
-                }
-            });
-
-            // Prevent menu from closing when clicking inside mobile nav
-            mobileNav.addEventListener('click', function(e) {
-                e.stopPropagation();
-            });
-
-            // Handle window resize - close menu on desktop
-            window.addEventListener('resize', function() {
-                if (window.innerWidth > 992 && mobileNav.classList.contains('active')) {
-                    closeMenu();
-                }
-            });
 
             // ==================== FONT SIZE CONTROLS ====================
             const increaseBtn = document.getElementById('increaseFont');
             const resetBtn = document.getElementById('resetFont');
             const decreaseBtn = document.getElementById('decreaseFont');
             
-            let currentFontSize = 16; // base font size in pixels
+            let currentFontSize = 16;
             const minFontSize = 12;
             const maxFontSize = 24;
 
             function setBodyFontSize(size) {
                 document.body.style.fontSize = size + 'px';
-                // Store in localStorage for persistence
                 localStorage.setItem('preferredFontSize', size);
             }
 
@@ -1058,7 +732,6 @@
                 });
             }
 
-            // Load saved font size preference
             const savedFontSize = localStorage.getItem('preferredFontSize');
             if (savedFontSize) {
                 currentFontSize = parseInt(savedFontSize);
@@ -1068,56 +741,59 @@
             // ==================== ACTIVE LINK HIGHLIGHTING ====================
             const currentPath = window.location.pathname;
 
-            // Desktop menu active link
             document.querySelectorAll('.desktop-menu-link').forEach(link => {
                 const href = link.getAttribute('href');
                 if (href === currentPath) {
                     link.classList.add('active');
-                    // Optional: Add active state styling
-                    link.style.backgroundColor = '#e6f0ff';
-                    link.style.color = 'var(--maintheme)';
+                    if (link.style) {
+                        link.style.backgroundColor = '#e6f0ff';
+                        link.style.color = 'var(--maintheme)';
+                    }
                 }
             });
 
-            // Mobile menu active link
             document.querySelectorAll('.mobile-menu-link').forEach(link => {
                 const href = link.getAttribute('href');
                 if (href === currentPath) {
                     link.classList.add('active');
-                    // Optional: Add active state styling
-                    link.style.backgroundColor = '#f0f7ff';
-                    link.style.borderLeft = '3px solid var(--maintheme)';
+                    if (link.style) {
+                        link.style.backgroundColor = '#f0f7ff';
+                        link.style.borderLeft = '3px solid var(--maintheme)';
+                    }
                 }
             });
 
-            // ==================== TOUCH EVENT HANDLING (for mobile) ====================
-            let touchStartX = 0;
-            let touchEndX = 0;
-
-            // Swipe to close menu on mobile
-            if ('ontouchstart' in window) {
+            // Simple swipe support if elements exist
+            if (mobileNav && 'ontouchstart' in window) {
+                let touchStartX = 0;
+                let touchEndX = 0;
+                
                 mobileNav.addEventListener('touchstart', function(e) {
                     touchStartX = e.changedTouches[0].screenX;
                 }, { passive: true });
                 
                 mobileNav.addEventListener('touchend', function(e) {
                     touchEndX = e.changedTouches[0].screenX;
-                    handleSwipe();
+                    const swipeThreshold = 100;
+                    const swipeDistance = touchEndX - touchStartX;
+                    
+                    if (swipeDistance < -swipeThreshold && mobileNav.classList.contains('active')) {
+                        const closeMenuFn = () => {
+                            mobileNav.classList.remove('active');
+                            if (overlay) overlay.classList.remove('active');
+                            if (menuToggle) {
+                                menuToggle.classList.remove('active');
+                                menuToggle.setAttribute('aria-expanded', 'false');
+                                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                            }
+                            if (header) header.classList.remove('menu-open');
+                            document.body.classList.remove('menu-open');
+                            document.body.style.overflow = '';
+                        };
+                        closeMenuFn();
+                    }
                 }, { passive: true });
             }
-
-            function handleSwipe() {
-                const swipeThreshold = 100;
-                const swipeDistance = touchEndX - touchStartX;
-                
-                // If swipe left more than threshold, close menu
-                if (swipeDistance < -swipeThreshold && mobileNav.classList.contains('active')) {
-                    closeMenu();
-                }
-            }
-
-            // Initialize with "all" filter
-            filterTests('all');
         });
     </script>
     <!-- Ionicons for social icons -->

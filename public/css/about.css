@@ -265,6 +265,7 @@
       align-items: center;
       gap: 8px;
       margin-bottom: 10px;
+      margin-top: 6px;
     }
 
     .nav-button {
@@ -1808,9 +1809,7 @@
       text-align: center;
       margin-top: 50px;
     }
-  </style>
-  <!-- ========== FINAL RESPONSIVE & CREATIVE FIXES (added without removing any code) ========== -->
-  <style>
+
     /* ensure container spacing does not break header */
     .container {
       margin-top: 0;
@@ -2008,9 +2007,7 @@
       }
 
     }
-  </style>
-  <!-- ========== ADDITIONAL STYLES FOR ABOUT SECTIONS (FULLY RESPONSIVE) ========== -->
-  <style>
+
     /* About section (from TechMentor) */
     .about {
       background: var(--white);

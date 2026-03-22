@@ -19566,6 +19566,7 @@
 
   // 🔥 RESULT save (important)
   sessionStorage.setItem("resultData", JSON.stringify(data.result));
+  sessionStorage.setItem("tempReview", JSON.stringify(questions));
 
   window.location.href = `/rts/quiz/${CATEGORY}/${SUBJECT}/test-${TEST_NO}/result/${data.resultId}`;
 } else {

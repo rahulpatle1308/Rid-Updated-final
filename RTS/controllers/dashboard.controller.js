@@ -230,8 +230,9 @@ exports.getProfilePage = async (req, res) => {
   try {
     if (!req.session.userId) return res.redirect("/login");
 
-    // ✅ Get user (NO populate)
+    // ✅ Get user WITH testHistory
     const user = await User.findById(req.session.userId)
+      .populate("testHistory.resultId")
       .select("-password");
 
     if (!user) {
@@ -239,18 +240,18 @@ exports.getProfilePage = async (req, res) => {
       return res.redirect("/login");
     }
 
-    // ✅ Get test results separately
-    const results = await TestResult.find({ user: user._id });
+    // ✅ TOTAL TESTS (FIXED 🔥)
+    const totalTests = user.testHistory.length;
 
-    const totalTests = results.length;
-
+    // ✅ BEST SCORE
     const bestScore = totalTests > 0
-      ? Math.max(...results.map(r => r.percentage || 0))
+      ? Math.max(...user.testHistory.map(t => t.percentage || 0))
       : 0;
 
+    // ✅ AVERAGE SCORE
     const averageScore = totalTests > 0
       ? Math.round(
-          results.reduce((sum, r) => sum + (r.percentage || 0), 0) /
+          user.testHistory.reduce((sum, t) => sum + (t.percentage || 0), 0) /
           totalTests
         )
       : 0;
@@ -268,8 +269,7 @@ exports.getProfilePage = async (req, res) => {
       totalTests,
       bestScore,
       averageScore,
-      rank,
-      results   // optional: agar UI me show karna ho
+      rank
     });
 
   } catch (err) {

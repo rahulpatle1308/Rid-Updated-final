@@ -67,7 +67,7 @@ delete req.session.redirectTo;
 
 // 🔹 Role-based redirect
 if (user.role === "student") {
-  return res.redirect(redirectUrl);
+  return res.redirect("/rts/dashboard");
 }
 
     if (user.role === "teacher") {

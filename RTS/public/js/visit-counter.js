@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // load existing counts
-  fetch("/api/visits")
+  fetch("/rts/api/visits")
     .then(res => res.json())
     .then(data => {
       data.forEach(item => {
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const card = this.closest(".course-card");
       const id = card.dataset.courseId;
 
-      fetch(`/api/visit/${id}`, { method: "POST" })
+      fetch(`/rts/api/visit/${id}`, { method: "POST" })
         .then(res => res.json())
         .then(data => {
           const countEl = card.querySelector(".count");
