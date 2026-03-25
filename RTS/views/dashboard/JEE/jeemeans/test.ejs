@@ -8039,10 +8039,7 @@
   </div>
 
   <div class="main-container">
-    <header>
-      <%= subject %>
-        <%= testNo %> QUIZ
-    </header>
+    <header><%= subject %> QUIZ and TEST <%= testNo %> </header>
 
     <div class="quiz-header">
       <div class="header-left">
@@ -8146,7 +8143,7 @@
     // Global variables
     let questions = [];
     let currentQuestion = 0;
-    let language = "en";
+    let language = "hi";
     let timeLeft = 60 * 60; // 60 minutes in seconds
     let timerInterval;
     let markedQuestions = new Set();
@@ -8172,6 +8169,9 @@
     // 🔥 CHANGE 3: Initialize - हमेशा Question 1 से start करें
     document.addEventListener('DOMContentLoaded', async function () {
       showLoader();
+
+       // Default Hindi select karo
+  languageSelect.value = "hi";
 
       // हमेशा fresh start (clear any previous progress)
       localStorage.removeItem("quizProgress");
@@ -8228,38 +8228,31 @@
     }
 
     // Initialize quiz
-    function initializeQuiz() {
-      if (questions.length === 0) {
-        alert('No questions available.');
-        return;
-      }
+   function initializeQuiz() {
+  if (questions.length === 0) {
+    alert('No questions available.');
+    return;
+  }
 
-      quizStarted = true;
-      startTime = new Date();
+  quizStarted = true;
+  startTime = new Date();
 
-      // Enable buttons
-      prevBtn.disabled = false;
-      nextBtn.disabled = false;
-      markBtn.disabled = false;
-      submitBtn.disabled = false;
+  // 🔥 Dynamic Timer
+  timeLeft = questions.length * 60;
 
-      // Update total questions count
-      totalQuestionsElement.textContent = `Questions (${questions.length})`;
+  // Enable buttons
+  prevBtn.disabled = false;
+  nextBtn.disabled = false;
+  markBtn.disabled = false;
+  submitBtn.disabled = false;
 
-      // Load first question
-      loadQuestion(currentQuestion);
+  totalQuestionsElement.textContent = `Questions (${questions.length})`;
 
-      // Start timer
-      startTimer();
-
-      // Update navigation circles
-      updateNavigationCircles();
-
-
-
-      // Enable auto-save
-      enableAutoSave();
-    }
+  loadQuestion(currentQuestion);
+  startTimer();
+  updateNavigationCircles();
+  enableAutoSave();
+}
 
     // Load Question
     function loadQuestion(index) {

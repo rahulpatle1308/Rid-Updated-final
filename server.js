@@ -553,6 +553,7 @@ const intership=require("./routes/intanships/intanshippage.js")
 app.use("/",intership)
 
 
+
 // service pages auto diteated logic routes
 const Lead = require("./models/Lead.js");
 
@@ -581,6 +582,7 @@ app.post("/api/save-lead", async (req,res)=>{
 })
 
 configureRoutes();
+
 
 
 // ========== START SERVER ==========

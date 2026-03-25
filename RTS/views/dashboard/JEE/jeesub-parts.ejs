@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><br><br>
-   <%= typeof title !== 'undefined' ? title : 'Technical & Coding Courses' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= typeof title !== 'undefined' ? title : 'JEE Mains & Advance Courses' %></title>
     
     <!-- External CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -24,68 +24,77 @@
    
     <!-- Main Content -->
     <main>
-       
-       <section class="courses-section">
-    <div class="courses-container">
-        <!-- Course 1: RRB NTPC -->
-        <div class="course-card" data-course-id="RRB NTPC" data-course-name="RRB NTPC">
-            <!-- VISIT COUNT - LEFT SIDE (Without eye icon) -->
-            <div class="visit-count">
-                <span class="count">0</span>
-                <span class="visits-text">visits</span>
-            </div>
-            <!-- BADGE - RIGHT SIDE -->
-            <span class="badge-left update-badge">UPDATED</span>
-            
-            <div class="course-header">
-                <div class="card-icon">
-                    <i class="fa-brands fa-html5"></i>
+        <section class="courses-section">
+            <div class="courses-container">
+                
+                <!-- Course 1: JEE MAINS -->
+                <div class="course-card" data-course-id="JEE MAINS" data-course-name="JEE MAINS">
+                    <!-- VISIT COUNT - LEFT SIDE -->
+                    <div class="visit-count">
+                        <span class="count">0</span>
+                        <span class="visits-text">visits</span>
+                    </div>
+                    <!-- BADGE - RIGHT SIDE -->
+                    <span class="badge-left update-badge">UPDATED</span>
+                    
+                    <div class="course-header">
+                        <div class="card-icon">
+                            <i class="fas fa-chalkboard-user"></i>
+                        </div>
+                        <h3>JEE MAINS</h3>
+                    </div>
+                    <div class="course-content">
+                        <div class="marquee">
+                            <p>All Test <span>Series</span></p>
+                        </div>
+                        <div class="btn-container">
+                            <a href="/rts/jee/mains" class="btn track-visit">Open Now</a>
+                        </div>
+                    </div>
                 </div>
-                <h3>JEE MAINS</h3>
-            </div>
-            <div class="course-content">
-                <div class="marquee">
-                    <p>All Test <span>Series</span></p>
+                
+                <!-- Course 2: JEE ADVANCE -->
+                <div class="course-card" data-course-id="JEE ADVANCE" data-course-name="JEE ADVANCE">
+                    <!-- VISIT COUNT - LEFT SIDE -->
+                    <div class="visit-count">
+                        <span class="count">0</span>
+                        <span class="visits-text">visits</span>
+                    </div>
+                    <!-- BADGE - RIGHT SIDE -->
+                    <span class="badge-left hot-badge">UPDATED</span>
+                    
+                    <div class="course-header">
+                        <div class="card-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3>JEE ADVANCE</h3>
+                    </div>
+                    <div class="course-content">
+                        <div class="marquee">
+                            <p>All Test <span>Series</span></p>
+                        </div>
+                        <div class="btn-container">
+                            <a href="/rts/jee/advance" class="btn track-visit">Open Now</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="btn-container">
-                   <a href="/rts/jee/mains" class="btn track-visit">Open Now</a>
-                </div>
+
+              
+                
             </div>
-        </div>
-      <!-- Course 2: RRB Group D -->
-        <div class="course-card" data-course-id="RRB Group D" data-course-name="RRB Group D">
-            <!-- VISIT COUNT - LEFT SIDE (Without eye icon) -->
-            <div class="visit-count">
-                <span class="count">0</span>
-                <span class="visits-text">visits</span>
-            </div>
-            <!-- BADGE - RIGHT SIDE -->
-            <span class="badge-left update-badge">UPDATED</span>
-            
-            <div class="course-header">
-                <div class="card-icon">
-                    <i class="fa-brands fa-html5"></i>
-                </div>
-                <h3>JEE ADVANCE</h3>
-            </div>
-            <div class="course-content">
-                <div class="marquee">
-                    <p>All Test <span>Series</span></p>
-                </div>
-                <div class="btn-container">
-                   <a href="/rts/jee/advance" class="btn track-visit">Open Now</a>
-                </div>
-            </div>
-        </div>
-    
-    </div>
-</section>
+        </section>
     </main>
     
     <!-- Footer -->
     <%- include('../partials/footer') %>
-
     
+    <!-- JavaScript -->
+    <script>
+        window.API_BASE_URL = "<%= typeof apiBaseUrl !== 'undefined' ? apiBaseUrl : '' %>";
+        window.USER_DATA = <%- JSON.stringify(user || {}) %>;
+    </script>
+    
+    <script src="/rts/js/config.js"></script>
     <script src="/rts/js/visit-counter.js"></script>
     <script src="/rts/js/banner-slider.js"></script>
     <script src="/rts/js/search-filter.js"></script>

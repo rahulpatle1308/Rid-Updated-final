@@ -718,47 +718,37 @@
     <main>
         <!-- Subject Tabs Section -->
         <section class="description-section" aria-labelledby="tests-title">
-            <h2 class="section-title" id="tests-title">middle-school-teacher TEST's</h2>
+            <h2 class="section-title" id="tests-title">Middle-School-Teacher TEST's</h2>
             
             <!-- Subject Tabs -->
             <div class="subject-tabs">
                 <button class="tab-btn active" data-subject="all" onclick="filterTests('all')">All Tests</button>
-                <button class="tab-btn" data-subject="cdp" onclick="filterTests('cdp')">CD&P</button>
-                <button class="tab-btn" data-subject="english" onclick="filterTests('english')">English</button>
-                <button class="tab-btn" data-subject="hindi" onclick="filterTests('hindi')">Hindi</button>
+                <button class="tab-btn" data-subject="cdp" onclick="filterTests('cdp')">Child & Dev</button>
                 <button class="tab-btn" data-subject="math" onclick="filterTests('math')">Math</button>
                 <button class="tab-btn" data-subject="science" onclick="filterTests('science')">Science</button>
             </div>
 
             <!-- Test Cards Grid -->
             <div class="test-grid" id="testGrid">
-                <% const totalTests = 50; %>
+                <% const totalTests = 10; %>
                 <% for(let i = 1; i <= totalTests; i++) { 
                     let subject = '';
                     let subjectClass = '';
                     let subjectName = '';
                     
-                    if(i <= 10) { 
+                    if(i <= 4) { 
                         subject = 'cdp';
                         subjectClass = 'cdp-text';
                         subjectName = 'CD&P';
-                    } else if(i <= 20) { 
+                    } else if(i <= 7) { 
                         subject = 'english';
                         subjectClass = 'english-text';
                         subjectName = 'English';
-                    } else if(i <= 30) { 
+                    } else if(i <= 10) { 
                         subject = 'hindi';
                         subjectClass = 'hindi-text';
                         subjectName = 'Hindi';
-                    } else if(i <= 40) { 
-                        subject = 'math';
-                        subjectClass = 'math-text';
-                        subjectName = 'Math';
-                    } else if(i <= 50) { 
-                        subject = 'science';
-                        subjectClass = 'science-text';
-                        subjectName = 'Science';
-                    }
+                    } 
                 %>
                     <div class="test-item" data-subject="<%= subject %>">
                         <div class="test-header">
