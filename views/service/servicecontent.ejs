@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Service Detail</title>
+
+  <link rel="stylesheet" href="/css/service/services.css">
+</head>
+<body>
+
+<div class="container">
+
+  <div class="card">
+
+    <h2 class="title"><%= service.title %></h2>
+
+    <p class="desc"><%= service.desc %></p>
+
+    <p class="price"><b>Price:</b> <%= service.price %></p>
+
+    <% if (service.features && service.features.length) { %>
+      <h3>Features</h3>
+      <ul class="list">
+        <% service.features.forEach(f => { %>
+          <li><%= f %></li>
+        <% }) %>
+      </ul>
+    <% } %>
+
+    <% if (service.chips && service.chips.length) { %>
+      <h3>Chips</h3>
+      <div class="chips">
+        <% service.chips.forEach(c => { %>
+          <span><%= c %></span>
+        <% }) %>
+      </div>
+    <% } %>
+
+    <% if (service.subServices && service.subServices.length) { %>
+      <h3>Sub Services</h3>
+      <ul class="list">
+        <% service.subServices.forEach(s => { %>
+          <li>
+            <%= s.icon %> <b><%= s.label %></b> - <%= s.note %>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+
+  </div>
+
+</div>
+<a href="/service" class="btn-link">
+  <button type="button" class="dashboard-btn">GoTo Dashboard</button>
+</a>
+
+</body>
+</html>
