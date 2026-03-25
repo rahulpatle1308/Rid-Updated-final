@@ -118,7 +118,7 @@ exports.getEditProfilePage = async (req, res) => {
 // ✅ UPDATE PROFILE INFO
 exports.updateProfile = async (req, res) => {
     try {
-        const { fullName, mobile, dob, state, district } = req.body;
+        const { fullName, mobile, dob, state, district, city } = req.body;
 
         const user = await User.findById(req.session.userId);
 
@@ -138,13 +138,13 @@ exports.updateProfile = async (req, res) => {
                     message: 'Invalid mobile number'
                 });
             }
-            user.phone = mobile;   // 🔥 CHANGE
+           user.mobile = mobile;    // 🔥 CHANGE
         }
 
         if (dob) user.dob = dob;
         if (state) user.state = state.trim();
         if (district) user.district = district.trim();
-
+        if (city) user.city = city.trim();
         await user.save();
 
         res.json({
