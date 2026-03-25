@@ -64,6 +64,11 @@ app.use("/", require("./routes/profile.routes"));
 app.use("/api", require("./routes/visit.routes"));
 
 
+<<<<<<< main
+
+
+=======
+>>>>>>> main
 // demo route
 app.get("/", (req, res) => {
   res.send("RTS Home Working");

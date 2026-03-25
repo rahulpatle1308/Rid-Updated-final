@@ -756,40 +756,30 @@
             <div class="subject-tabs">
                 <button class="tab-btn active" data-subject="all" onclick="filterTests('all')">All Tests</button>
                 <button class="tab-btn" data-subject="economy" onclick="filterTests('math')">Math</button>
-                <button class="tab-btn" data-subject="polity" onclick="filterTests('gs')">GS</button>
-                <button class="tab-btn" data-subject="science" onclick="filterTests('science')">General Science</button>
-                <button class="tab-btn" data-subject="geography" onclick="filterTests('geography')">Geography of India</button>
-                <button class="tab-btn" data-subject="history" onclick="filterTests('history')">History of India</button>
-                <!-- <button class="tab-btn" data-subject="important" onclick="filterTests('important')">Important Test</button> -->
+                <button class="tab-btn" data-subject="polity" onclick="filterTests('gs')">(Science,GK,Physics,Chemistry)</button>
+                <button class="tab-btn" data-subject="science" onclick="filterTests('science')">(India Constitution,History,Gk)</button>
+                
             </div>
 
             <!-- Test Cards Grid -->
             <div class="test-grid" id="testGrid">
-                <% const totalTests = 50; %>
+                <% const totalTests = 51; %>
                 <% for(let i = 1; i <= totalTests; i++) { 
                     let subject = '';
                     let subjectClass = '';
                     
-                    if(i <= 10) { 
-                        subject = 'economy';
+                    if(i <= 11) { 
+                        subject = 'math';
                         subjectClass = 's-text';
-                        subjectName = 'Indian-Economy';
-                    } else if(i <= 20) { 
-                        subject = 'polity';
+                        subjectName = 'Math';
+                    } else if(i <= 45) { 
+                        subject = 'gs';
                         subjectClass = 'd-text';
-                        subjectName = 'Indian-Polity';
-                    } else if(i <= 30) { 
+                        subjectName = '(Science,GK,Physics,Chemistry)';
+                    } else if(i <= 51) { 
                         subject = 'science';
                         subjectClass = 'g-text';
-                        subjectName = 'General-Science';
-                    } else if(i <= 40) { 
-                        subject = 'geography';
-                        subjectClass = 'geo-text';
-                        subjectName = 'Geography-of-India';
-                    } else if(i <= 50) { 
-                        subject = 'history';
-                        subjectClass = 'his-text';
-                            subjectName = 'History-of-India';
+                        subjectName = '(India Constitution,History,Gk)';
                     }
                 %>
                     <div class="test-item" data-subject="<%= subject %>">
