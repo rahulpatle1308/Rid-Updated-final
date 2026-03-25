@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// ✅ TEST HISTORY SCHEMA (NO techInterviewCount here)
 const testHistorySchema = new mongoose.Schema({
   resultId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -16,6 +17,7 @@ const testHistorySchema = new mongoose.Schema({
   }
 });
 
+// ✅ MAIN USER SCHEMA
 const userSchema = new mongoose.Schema(
   {
     name: String,
@@ -24,7 +26,17 @@ const userSchema = new mongoose.Schema(
     phone: String,
     role: String,
 
-    // ✅ ADD THIS (VERY IMPORTANT)
+    state: String,
+    district: String,
+    city: String,
+
+    // 🔥 ✅ TECH INTERVIEW COUNT (FIXED HERE)
+    techInterviewCount: {
+      type: Number,
+      default: 0
+    },
+
+    // ✅ TEST HISTORY
     testHistory: [testHistorySchema],
 
     totalTestsAttempted: {

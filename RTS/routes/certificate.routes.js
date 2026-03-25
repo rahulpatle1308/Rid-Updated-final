@@ -259,13 +259,14 @@ router.get("/certificate/level/:level", requireAuth, async (req, res) => {
 // ==============================
 // TEST CERTIFICATE (SINGLE PAGE FIX)
 // ==============================
-router.get("/certificate/:resultId", requireAuth, async (req, res) => {
+// Platinum Certificate – for completing 50 tests
+router.get("/certificate/platinum", requireAuth, async (req, res) => {
   try {
-    const resultId = req.params.resultId;
-    if (resultId === "final") return res.redirect("/certificate/final");
+    const user = await User.findById(req.session.userId);
+    if (!user) return res.redirect("/profile?error=user-not-found");
 
-    const result = await TestResult.findById(resultId).populate("user");
-    if (!result) return res.redirect("/profile?error=certificate-not-found");
+    const totalTests = user.totalTestsAttempted || user.testHistory?.length || 0;
+    if (totalTests < 50) return res.redirect("/profile?error=not-eligible");
 
     const doc = new PDFDocument({
       size: "A4",
@@ -276,84 +277,69 @@ router.get("/certificate/:resultId", requireAuth, async (req, res) => {
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
       "Content-Disposition",
-      `inline; filename=test-certificate-${resultId}.pdf`
+      `inline; filename=platinum-certificate-${user._id}.pdf`
     );
     doc.pipe(res);
 
+    // Use creative background (gold borders, corners)
     addCreativeBackground(doc);
 
-    // --- Header ---
+    // Header
     doc.font("Helvetica-Bold")
        .fontSize(34)
        .fillColor("#000000")
-       doc.text("RID BHARAT", 0, 100, { align: "center" });
+       .text("RID BHARAT", { align: "center" });
     doc.font("Helvetica")
        .fontSize(14)
        .fillColor("#555555")
        .text("ISO 9001:2015 Certified Organization", { align: "center" });
     doc.moveDown(0.4);
+    doc.y = 90;  // fixed start Y after header
 
-    // Fixed starting point after header
-    doc.y = 90;
-
-    // --- Title ---
-    const title = "CERTIFICATE OF ACHIEVEMENT";
+    // Title
+    const title = "PLATINUM CERTIFICATE OF EXCELLENCE";
     doc.font("Helvetica-Bold")
        .fontSize(38)
-       .fillColor("#000000")
+       .fillColor("#0b6623")    // platinum greenish
        .text(title, { align: "center" });
     doc.moveDown(0.3);
 
-    // --- Subtitle ---
+    // Subtitle
     doc.font("Helvetica")
        .fontSize(16)
        .fillColor("#333333")
-       .text("This certificate is proudly presented to", { align: "center" })
+       .text("This prestigious certificate is awarded to", { align: "center" })
        .moveDown(0.3);
 
-    // --- Recipient name ---
+    // Recipient name
     doc.font("Helvetica-Bold")
        .fontSize(26)
        .fillColor("#0b6623")
-       .text(result.user.fullName, { align: "center" });
-    underlineLastLine(doc, result.user.fullName);
+       .text(user.name, { align: "center" });
+    underlineLastLine(doc, user.name);
     doc.moveDown(0.3);
 
-    // --- Achievement description ---
-    const percentage = result.percentage;
-    let grade = "";
-    if (percentage >= 90) grade = "Distinction";
-    else if (percentage >= 75) grade = "First Class";
-    else if (percentage >= 60) grade = "Second Class";
-    else grade = "Pass";
-
+    // Achievement description
     doc.font("Helvetica")
        .fontSize(12)
        .fillColor("#444444")
        .text(
-         `for outstanding performance in the ${result.subject} Test (Set ${result.setNo}) ` +
-         `achieving ${percentage}% — ${grade} grade.`,
+         `in recognition of completing 50 tests and achieving Platinum level mastery.`,
          { align: "center", width: doc.page.width - 180 }
        )
        .moveDown(0.2);
 
-    // --- Stars ---
-    let starRating = 0;
-    if (percentage >= 90) starRating = 5;
-    else if (percentage >= 75) starRating = 4;
-    else if (percentage >= 60) starRating = 3;
-    else if (percentage >= 45) starRating = 2;
-    else starRating = 1;
-    addStarRating(doc, starRating);
+    // Star rating – full 5 stars for platinum
+    addStarRating(doc, 5);
     doc.moveDown(0.2);
 
-    // --- Quote ---
-    addQuote(doc, percentage, 'test');
+    // Inspirational quote (based on average score or just a platinum quote)
+    addQuote(doc, 90, 'test');  // high score equivalent
     doc.moveDown(0.2);
 
-    // --- Certificate metadata ---
-    const certId = result._id.toString().slice(-8).toUpperCase();
-    const issueDate = new Date(result.createdAt).toLocaleDateString('en-US', {
+    // Certificate ID & Date
+    const certId = crypto.randomBytes(6).toString('hex').toUpperCase();
+    const issueDate = new Date().toLocaleDateString('en-US', {
       year: 'numeric', month: 'long', day: 'numeric'
     });
     const bottomY = doc.page.height - 70;
@@ -362,7 +348,7 @@ router.get("/certificate/:resultId", requireAuth, async (req, res) => {
        .text(`Certificate ID: ${certId}`, 50, bottomY - 20, { align: "left" })
        .text(`Issued on: ${issueDate}`, doc.page.width - 220, bottomY - 20, { align: "right" });
 
-    // --- Score seal ---
+    // Platinum seal
     const sealX = doc.page.width - 100;
     const sealY = doc.page.height - 95;
     doc.circle(sealX, sealY, 32)
@@ -371,12 +357,12 @@ router.get("/certificate/:resultId", requireAuth, async (req, res) => {
        .stroke();
     doc.fontSize(12)
        .fillColor("#d4af37")
-       .text("SCORE", sealX - 22, sealY - 10, { width: 44, align: "center" });
+       .text("PLATINUM", sealX - 26, sealY - 10, { width: 52, align: "center" });
     doc.fontSize(22)
        .fillColor("#d4af37")
-       .text(`${percentage}%`, sealX - 15, sealY + 6, { width: 30, align: "center" });
+       .text("⭐", sealX - 12, sealY + 6, { width: 30, align: "center" });
 
-    // --- Signatures ---
+    // Signatures
     const signY = bottomY;
     const leftSignX = 70;
     const rightSignX = doc.page.width - 220;
@@ -395,7 +381,7 @@ router.get("/certificate/:resultId", requireAuth, async (req, res) => {
        .fillColor("#555555")
        .text("Program Director", rightSignX, signY + 15, { width: 140, align: "center" });
 
-    // --- Footer ---
+    // Footer
     doc.fontSize(10)
        .fillColor("#555555")
        .text(
@@ -407,9 +393,150 @@ router.get("/certificate/:resultId", requireAuth, async (req, res) => {
 
     doc.end();
   } catch (err) {
-    console.error("Certificate generation error:", err);
-    res.redirect("/profile?error=certificate-failed");
+    console.error("Platinum certificate error:", err);
+    res.redirect("/profile?error=server-error");
   }
 });
 
+router.get("/certificate/technical", requireAuth, async (req, res) => {
+  try {
+    const user = await User.findById(req.session.userId);
+    if (!user) return res.redirect("/profile?error=user-not-found");
+
+    const techTestsCompleted = user.techInterviewCount || 0;
+    const requiredTechTests = 50;
+    if (techTestsCompleted < requiredTechTests) {
+      return res.redirect("/profile?error=not-eligible");
+    }
+
+    const doc = new PDFDocument({
+      size: "A4",
+      layout: "landscape",
+      margins: { top: 30, left: 30, right: 30, bottom: 40 }
+    });
+
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `inline; filename=technical-certificate-${user._id}.pdf`
+    );
+    doc.pipe(res);
+
+    addCreativeBackground(doc);  // gold borders still look professional
+
+    // Header
+    doc.font("Helvetica-Bold")
+       .fontSize(34)
+       .fillColor("#000000")
+       .text("RID BHARAT", { align: "center" });
+    doc.font("Helvetica")
+       .fontSize(14)
+       .fillColor("#555555")
+       .text("ISO 9001:2015 Certified Organization", { align: "center" });
+    doc.moveDown(0.4);
+    doc.y = 90;
+
+    // Title with technical flavour
+    const title = "TECHNICAL INTERVIEW CERTIFICATE";
+    doc.font("Helvetica-Bold")
+       .fontSize(38)
+       .fillColor("#2563eb")   // blue accent
+       .text(title, { align: "center" });
+    doc.moveDown(0.3);
+
+    doc.font("Helvetica")
+       .fontSize(16)
+       .fillColor("#333333")
+       .text("This certificate is proudly presented to", { align: "center" })
+       .moveDown(0.3);
+
+    doc.font("Helvetica-Bold")
+       .fontSize(26)
+       .fillColor("#2563eb")
+       .text(user.name, { align: "center" });
+    underlineLastLine(doc, user.name);
+    doc.moveDown(0.3);
+
+    doc.font("Helvetica")
+       .fontSize(12)
+       .fillColor("#444444")
+       .text(
+         `for successfully completing ${requiredTechTests} technical interview tests ` +
+         `and demonstrating proficiency in coding, problem-solving, and modern technologies.`,
+         { align: "center", width: doc.page.width - 180 }
+       )
+       .moveDown(0.2);
+
+    // Star rating – based on average tech score (if you store it)
+    // For now, give 5 stars for completing all 50
+    addStarRating(doc, 5);
+    doc.moveDown(0.2);
+
+    // Technical quote
+    doc.font("Helvetica-Oblique")
+       .fontSize(10)
+       .fillColor("#444444")
+       .text(`“Code is like humor. When you have to explain it, it’s bad.” – Cory House`, { align: "center" })
+       .moveDown(0.2);
+
+    // Certificate ID & Date
+    const certId = crypto.randomBytes(6).toString('hex').toUpperCase();
+    const issueDate = new Date().toLocaleDateString('en-US', {
+      year: 'numeric', month: 'long', day: 'numeric'
+    });
+    const bottomY = doc.page.height - 70;
+    doc.fontSize(9)
+       .fillColor("#555555")
+       .text(`Certificate ID: ${certId}`, 50, bottomY - 20, { align: "left" })
+       .text(`Issued on: ${issueDate}`, doc.page.width - 220, bottomY - 20, { align: "right" });
+
+    // Technical seal – use a gear icon
+    const sealX = doc.page.width - 100;
+    const sealY = doc.page.height - 95;
+    doc.circle(sealX, sealY, 32)
+       .lineWidth(1.5)
+       .strokeColor("#2563eb")
+       .stroke();
+    doc.fontSize(12)
+       .fillColor("#2563eb")
+       .text("TECH", sealX - 16, sealY - 10, { width: 32, align: "center" });
+    doc.fontSize(22)
+       .fillColor("#2563eb")
+       .text("⚙️", sealX - 12, sealY + 6, { width: 30, align: "center" });
+
+    // Signatures
+    const signY = bottomY;
+    const leftSignX = 70;
+    const rightSignX = doc.page.width - 220;
+
+    doc.fontSize(10)
+       .fillColor("#333333")
+       .text("Dr. R. K. Sharma", leftSignX, signY, { width: 140, align: "center" });
+    doc.fontSize(8)
+       .fillColor("#555555")
+       .text("Authorized Signatory", leftSignX, signY + 15, { width: 140, align: "center" });
+
+    doc.fontSize(10)
+       .fillColor("#333333")
+       .text("Prof. A. Verma", rightSignX, signY, { width: 140, align: "center" });
+    doc.fontSize(8)
+       .fillColor("#555555")
+       .text("Program Director", rightSignX, signY + 15, { width: 140, align: "center" });
+
+    // Footer
+    doc.fontSize(10)
+       .fillColor("#555555")
+       .text(
+         "www.ridbharat.com | Verify Certificate Online",
+         doc.page.width / 2 - 150,
+         doc.page.height - 38,
+         { width: 300, align: "center" }
+       );
+
+    doc.end();
+  } catch (err) {
+    console.error("Technical certificate error:", err);
+    res.redirect("/profile?error=server-error");
+  }
+});
 module.exports = router;

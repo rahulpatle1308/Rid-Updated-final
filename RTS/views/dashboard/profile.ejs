@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title><%= title || 'My Profile' %> | RID Bharat</title>
-    
+    <title>
+        <%= title || 'My Profile' %> | RID Bharat
+    </title>
+
     <!-- Fonts & Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-    
+
     <style>
         /* ===== RESET & GLOBAL ===== */
         * {
@@ -1032,6 +1036,7 @@
         }
     </style>
 </head>
+
 <body>
     <button class="toggle-btn" id="toggleSidebar" onclick="toggleSidebar()">
         <i class="fas fa-chevron-right"></i>
@@ -1039,342 +1044,488 @@
 
     <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
-    <%
-        const testsCount = typeof totalTests !== 'undefined' ? totalTests : 
-                          (user?.totalTestsAttempted || user?.testHistory?.length || 0);
-        
-        const certificateTarget = 50;
-        const avgScore = typeof averageScore !== 'undefined' ? averageScore : 
-                        (user?.averageScore || 0);
-        
-        let bestScore = 0;
-        if (user?.testHistory?.length > 0) {
-            const scores = user.testHistory
-                .filter(t => t.percentage || t.resultId?.percentage)
-                .map(t => t.percentage || t.resultId?.percentage || 0);
-            if (scores.length > 0) {
-                bestScore = Math.max(...scores);
-            }
+    <% const testsCount=typeof totalTests !=='undefined' ? totalTests : (user?.totalTestsAttempted ||
+        user?.testHistory?.length || 0); const certificateTarget=50; const avgScore=typeof averageScore !=='undefined' ?
+        averageScore : (user?.averageScore || 0); let bestScore=0; if (user?.testHistory?.length> 0) {
+        const scores = user.testHistory
+        .filter(t => t.percentage || t.resultId?.percentage)
+        .map(t => t.percentage || t.resultId?.percentage || 0);
+        if (scores.length > 0) {
+        bestScore = Math.max(...scores);
+        }
         }
 
         let totalCorrect = 0;
         let totalQuestions = 0;
         if (user?.testHistory?.length > 0) {
-            user.testHistory.forEach(t => {
-                const score = t.score || t.resultId?.correct || 0;
-                const total = t.totalQuestions || t.resultId?.totalQuestions || 0;
-                totalCorrect += score;
-                totalQuestions += total;
-            });
+        user.testHistory.forEach(t => {
+        const score = t.score || t.resultId?.correct || 0;
+        const total = t.totalQuestions || t.resultId?.totalQuestions || 0;
+        totalCorrect += score;
+        totalQuestions += total;
+        });
         }
-        
+
         const achievementsUnlocked = [testsCount >= 10, testsCount >= 25, testsCount >= 50].filter(Boolean).length;
         const userRank = typeof rank !== 'undefined' ? rank : 1;
         const isEligibleForCertificate = testsCount >= certificateTarget;
         const testsRemainingForCertificate = Math.max(certificateTarget - testsCount, 0);
-        
-        let nextTarget = testsCount < 50 ? 50 : testsCount < 25 ? 25 : 50;
-        let nextAchievementName = testsCount < 10 ? "Bronze" : testsCount < 25 ? "Silver" : "Gold";
-        const nextProgress = Math.min(Math.round((testsCount / nextTarget) * 100), 100);
-        
-        const technicalTestsCompleted = 3;
-        const technicalTestsTotal = 5;
-        const technicalProgress = Math.round((technicalTestsCompleted / technicalTestsTotal) * 100);
-    %>
 
-    <div class="container">
-        <div class="dashboard-grid">
-            
-            <!-- LEFT COLUMN -->
-            <div class="user-sidebar" id="sidebar">
-                <div class="profile-photo-section">
-                    <% if (user?.profilePhoto) { %>
-                        <img src="<%= user.profilePhoto %>" alt="<%= user.fullName %>" class="avatar-mega" loading="lazy">
-                    <% } else { %>
-                        <div class="avatar-mega">
-                            <%= user?.initials || (user?.name ? user.name.charAt(0).toUpperCase() : 'U') %>
-                        </div>
-                    <% } %>
-                    <span class="online-indicator-large"></span>
-                    <a href="/profile/edit" class="edit-photo-btn-large">
-                        <i class="fas fa-camera"></i>
-                    </a>
-                </div>
+        let nextTarget = testsCount < 50 ? 50 : testsCount < 25 ? 25 : 50; let nextAchievementName=testsCount < 10
+            ? "Bronze" : testsCount < 25 ? "Silver" : "Gold" ; const nextProgress=Math.min(Math.round((testsCount /
+            nextTarget) * 100), 100); const technicalTestsCompleted=typeof techCount !=='undefined' ? techCount : 0;
+            const technicalTestsTotal=50; const technicalProgress=Math.round( (technicalTestsCompleted /
+            technicalTestsTotal) * 100 ); const isTechUnlocked=technicalTestsCompleted>= technicalTestsTotal;
+            const techRemaining = technicalTestsTotal - technicalTestsCompleted;
 
-                <div class="user-title">
-                     <h1><%= user?.name || 'User' %></h1>
-                    <div class="badge-wrapper">
-                        <span class="role-badge">
-                            <i class="fas fa-graduation-cap"></i> 
-                            <%= user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : 'Student' %>
-                        </span>
-                        <span class="verified-badge-large">
-                            <i class="fas fa-check-circle"></i> Verified
-                        </span>
-                    </div>
-                </div>
+            %>
 
-                <div class="user-info-grid">
-                    <div class="info-row">
-                        <div class="info-icon"><i class="fas fa-envelope"></i></div>
-                        <div class="info-content">
-                            <div class="info-label">Email</div>
-                            <div class="info-value"><%= user?.email || 'email@example.com' %></div>
-                        </div>
-                    </div>
-                    <div class="info-row">
-                        <div class="info-icon"><i class="fas fa-phone-alt"></i></div>
-                        <div class="info-content">
-                            <div class="info-label">Mobile</div>
-                            <div class="info-value"><%= user?.countryCode || '+91' %> <%= user?.mobile || '9876543210' %></div>
-                        </div>
-                    </div>
-                    <div class="info-row">
-                        <div class="info-icon"><i class="fas fa-cake-candles"></i></div>
-                        <div class="info-content">
-                            <div class="info-label">DOB</div>
-                            <div class="info-value">
-                                <% if (user?.dob) { %>
-                                    <%= new Date(user.dob).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) %>
-                                <% } else { %>15 Jan 2000<% } %>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="info-row">
-                        <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
-                        <div class="info-content">
-                            <div class="info-label">Location</div>
-                            <div class="info-value">
-                                <%= user?.district || 'Mumbai' %>, <%= user?.state || 'Maharashtra' %>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="info-row">
-                        <div class="info-icon"><i class="fas fa-calendar-alt"></i></div>
-                        <div class="info-content">
-                            <div class="info-label">Joined</div>
-                            <div class="info-value">
-                                <% if (user?.createdAt) { %>
-                                    <%= new Date(user.createdAt).toLocaleDateString('en-IN', { month: 'short', year: 'numeric' }) %>
-                                <% } else { %>Mar 2024<% } %>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="container">
+                <div class="dashboard-grid">
 
-                <a href="/profile/edit" style="text-decoration: none;">
-                    <button class="edit-profile-btn">
-                        <i class="fas fa-edit"></i> Edit Profile 
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </a>
-            </div>
-
-            <!-- RIGHT COLUMN -->
-            <div class="main-content">
-                
-                <!-- Welcome + Rank -->
-                <div class="welcome-rank-wrapper">
-                    <div class="welcome-banner">
-                        <div class="welcome-text">
-                            <h2>
-                                <span class="welcome-part">Welcome back,</span> 
-                                <%= user?.fullName?.split(' ')[0] || 'User' %>! 👋
-                            </h2>
-                            <p>
-                                <i class="fas fa-chart-line" style="color: #2563eb;"></i> 
-                                <% if (avgScore >= 75) { %>
-                                    Excellent performance! 🌟
-                                <% } else if (avgScore >= 50) { %>
-                                    Good progress! 📈
+                    <!-- LEFT COLUMN -->
+                    <div class="user-sidebar" id="sidebar">
+                        <div class="profile-photo-section">
+                            <% if (user?.profilePhoto) { %>
+                                <img src="<%= user.profilePhoto %>" alt="<%= user.fullName %>" class="avatar-mega"
+                                    loading="lazy">
                                 <% } else { %>
-                                    Start your journey! 🚀
-                                <% } %>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="rank-top-card">
-                        <div class="rank-header">
-                            <i class="fas fa-crown"></i>
-                            <h3>Your Rank</h3>
-                        </div>
-                        <div class="rank-number-large">#<%= userRank %></div>
-                        <div class="rank-label">
-                            <i class="fas fa-trophy"></i> 
-                            <% if (userRank <= 10) { %>
-                                Top 1% Performer
-                            <% } else if (userRank <= 50) { %>
-                                Top 5% Performer
-                            <% } else if (userRank <= 100) { %>
-                                Top 10% Performer
-                            <% } else { %>
-                                Keep climbing! 🧗
-                            <% } %>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Stats Strip -->
-                <div class="stats-strip">
-                    <div class="stat-horizontal-card">
-                        <div class="stat-horizontal-icon"><i class="fas fa-file-alt"></i></div>
-                        <div class="stat-horizontal-content">
-                            <h3><%= testsCount %></h3>
-                            <p>Total Tests</p>
-                        </div>
-                    </div>
-                    <div class="stat-horizontal-card">
-                        <div class="stat-horizontal-icon"><i class="fas fa-star"></i></div>
-                        <div class="stat-horizontal-content">
-                            <h3><%= bestScore %>%</h3>
-                            <p>Best Score</p>
-                        </div>
-                    </div>
-                    <div class="stat-horizontal-card">
-                        <div class="stat-horizontal-icon"><i class="fas fa-chart-line"></i></div>
-                        <div class="stat-horizontal-content">
-                            <h3><%= avgScore %>%</h3>
-                            <p>Avg. Score</p>
-                        </div>
-                    </div>
-                    <div class="stat-horizontal-card">
-                        <div class="stat-horizontal-icon"><i class="fas fa-medal"></i></div>
-                        <div class="stat-horizontal-content">
-                            <h3><%= achievementsUnlocked %></h3>
-                            <p>Achievements</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ACHIEVEMENTS ROW - FIXED -->
-                <div class="achievements-row">
-                    
-                    <!-- LEFT CARD - ACHIEVEMENTS -->
-                    <div class="achievements-full-card">
-                        <div class="achievements-header">
-                            <h2><i class="fas fa-medal"></i> Achievements</h2>
-                            <span>Level <%= Math.floor(testsCount / 10) + 1 %></span>
+                                    <div class="avatar-mega">
+                                        <%= user?.initials || (user?.name ? user.name.charAt(0).toUpperCase() : 'U' ) %>
+                                    </div>
+                                    <% } %>
+                                        <span class="online-indicator-large"></span>
+                                        <a href="/profile/edit" class="edit-photo-btn-large">
+                                            <i class="fas fa-camera"></i>
+                                        </a>
                         </div>
 
-                        <% if (testsCount < 50) { %>
-                            <div class="achievement-progress">
-                                <div class="progress-label">
-                                    <span>Progress to <%= nextAchievementName %></span>
-                                    <span><%= testsCount %> / <%= nextTarget %></span>
-                                </div>
-                                <div class="progress-bar-container">
-                                    <div class="progress-fill" style="width: <%= nextProgress %>%;">
-                                        <%= nextProgress %>%
+                        <div class="user-title">
+                            <h1>
+                                <%= user?.name || 'User' %>
+                            </h1>
+                            <div class="badge-wrapper">
+                                <span class="role-badge">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <%= user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : 'Student'
+                                        %>
+                                </span>
+                                <span class="verified-badge-large">
+                                    <i class="fas fa-check-circle"></i> Verified
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="user-info-grid">
+                            <div class="info-row">
+                                <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                                <div class="info-content">
+                                    <div class="info-label">Email</div>
+                                    <div class="info-value">
+                                        <%= user?.email || 'email@example.com' %>
                                     </div>
                                 </div>
                             </div>
-                        <% } %>
-
-                        <div class="certificate-download-card">
-                            <div class="certificate-info">
-                                <div class="certificate-icon">
-                                    <i class="fas fa-certificate"></i>
-                                </div>
-                                <div class="certificate-text">
-                                    <h4>Platinum Certificate</h4>
-                                    <p>
-                                        <% if (isEligibleForCertificate) { %>
-                                            🎉 Completed 50 tests!
-                                        <% } else { %>
-                                            <%= testsRemainingForCertificate %> tests to go
-                                        <% } %>
-                                    </p>
+                            <div class="info-row">
+                                <div class="info-icon"><i class="fas fa-phone-alt"></i></div>
+                                <div class="info-content">
+                                    <div class="info-label">Mobile</div>
+                                    <div class="info-value">
+                                        <%= user.phone || 'Not Provided' %>
+                                    </div>
                                 </div>
                             </div>
-                            <% if (isEligibleForCertificate) { %>
-                                <a href="/certificate/final" class="certificate-download-btn">
-                                    <i class="fas fa-download"></i> Download
-                                </a>
-                            <% } else { %>
-                                <button class="certificate-download-btn locked" disabled>
-                                    <i class="fas fa-lock"></i> Locked
-                                </button>
-                            <% } %>
-                        </div>
-                    </div>
-
-                    <!-- RIGHT CARD - TECHNICAL CERTIFICATE -->
-                    <div class="achievements-full-card technical-card">
-                        <div class="achievements-header">
-                            <h2><i class="fas fa-code"></i> Tech-Interview</h2>
-                            <span>Certificate</span>
-                        </div>
-
-                      
-                        <div class="achievement-progress">
-                            <div class="progress-label">
-                                <span style="color: #cbd5e1;">Progress</span>
-                                <span style="color: #fbbf24;"><%= technicalTestsCompleted %> / <%= technicalTestsTotal %></span>
+                            <div class="info-row">
+                                <div class="info-icon"><i class="fas fa-cake-candles"></i></div>
+                                <div class="info-content">
+                                    <div class="info-label">DOB</div>
+                                    <div class="info-value">
+                                        <% if (user?.dob) { %>
+                                            <%= new Date(user.dob).toLocaleDateString('en-IN', { day: 'numeric' ,
+                                                month: 'short' , year: 'numeric' }) %>
+                                                <% } else { %>15 Jan 2000<% } %>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="progress-bar-container" style="background: rgba(255,255,255,0.2);">
-                                <div class="progress-fill" style="width: <%= technicalProgress %>%; background: linear-gradient(90deg, #fbbf24, #f59e0b);">
-                                    <%= technicalProgress %>%
+                            <div class="info-row">
+                                <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                                <div class="info-content">
+                                    <div class="info-label">Location</div>
+                                    <div class="info-value">
+                                        <%= user?.district || 'Mumbai' %>, <%= user?.state || 'Maharashtra' %>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-icon"><i class="fas fa-calendar-alt"></i></div>
+                                <div class="info-content">
+                                    <div class="info-label">Joined</div>
+                                    <div class="info-value">
+                                        <% if (user?.createdAt) { %>
+                                            <%= new Date(user.createdAt).toLocaleDateString('en-IN', { month: 'short' ,
+                                                year: 'numeric' }) %>
+                                                <% } else { %>Mar 2024<% } %>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="certificate-download-card" style="background: linear-gradient(135deg, #1e293b, #0f172a);">
-                            <div class="certificate-info">
-                                <div class="certificate-icon" style="background: rgba(251, 191, 36, 0.2);">
-                                    <i class="fas fa-certificate" style="color: #fbbf24;"></i>
-                                </div>
-                                <div class="certificate-text">
-                                    <h4 style="color: white;">Certificate</h4>
-                                    <p style="color: #94a3b8;">
-                                        <% if (technicalTestsCompleted >= technicalTestsTotal) { %>
-                                            🎉 Certificate ready!
-                                        <% } else { %>
-                                            <%= technicalTestsTotal - technicalTestsCompleted %> tests left
-                                        <% } %>
-                                    </p>
-                                </div>
-                            </div>
-                            <% if (technicalTestsCompleted >= technicalTestsTotal) { %>
-                                <a href="/certificate/technical" class="certificate-download-btn">
-                                    <i class="fas fa-download"></i> Download
-                                </a>
-                            <% } else { %>
-                                <button class="certificate-download-btn locked" disabled>
-                                    <i class="fas fa-lock"></i> Locked
-                                </button>
-                            <% } %>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Performance Chart -->
-                <div class="content-card">
-                    <div class="card-header">
-                        <h2><i class="fas fa-chart-area"></i> Performance Trend</h2>
-                        <div class="filter-buttons">
-                            <button class="filter-btn active">All</button>
-                            <button class="filter-btn">Recent</button>
-                            <button class="filter-btn">Best</button>
-                        </div>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="performanceChart"></canvas>
-                    </div>
-                </div>
-
-                <!-- Test History -->
-                <div class="content-card">
-                    <div class="card-header">
-                        <h2><i class="fas fa-clock-rotate-left"></i> Recent Tests</h2>
-                        <a href="javascript:void(0)" onclick="openTestHistoryModal()">
-                            View All <i class="fas fa-arrow-right"></i>
+                        <a href="/rts/profile/edit" style="text-decoration: none;">
+                            <button class="edit-profile-btn">
+                                <i class="fas fa-edit"></i> Edit Profile
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
                         </a>
+                    </div>
+
+                    <!-- RIGHT COLUMN -->
+                    <div class="main-content">
+
+                        <!-- Welcome + Rank -->
+                        <div class="welcome-rank-wrapper">
+                            <div class="welcome-banner">
+                                <div class="welcome-text">
+                                    <h2>
+                                        <span class="welcome-part">Welcome </span>
+                                        <%= user?.name || 'User' %>  👋
+                                    </h2>
+                                    <p>
+                                        <i class="fas fa-chart-line" style="color: #2563eb;"></i>
+                                        <% if (avgScore>= 75) { %>
+                                            Excellent performance! 🌟
+                                            <% } else if (avgScore>= 50) { %>
+                                                Good progress! 📈
+                                                <% } else { %>
+                                                    Start your journey! 🚀
+                                                    <% } %>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="rank-top-card">
+                                <div class="rank-header">
+                                    <i class="fas fa-crown"></i>
+                                    <h3>Your Rank</h3>
+                                </div>
+                                <div class="rank-number-large">
+                                    <%= userRank %>
+                                </div>
+                                <div class="rank-label">
+                                    <i class="fas fa-trophy"></i>
+                                    <% if (userRank <=10) { %>
+                                        Top 1% Performer
+                                        <% } else if (userRank <=50) { %>
+                                            Top 5% Performer
+                                            <% } else if (userRank <=100) { %>
+                                                Top 10% Performer
+                                                <% } else { %>
+                                                    Keep climbing! 🧗
+                                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stats Strip -->
+                        <div class="stats-strip">
+                            <div class="stat-horizontal-card">
+                                <div class="stat-horizontal-icon"><i class="fas fa-file-alt"></i></div>
+                                <div class="stat-horizontal-content">
+                                    <h3>
+                                        <%= testsCount %>
+                                    </h3>
+                                    <p>Total Tests</p>
+                                </div>
+                            </div>
+                            <div class="stat-horizontal-card">
+                                <div class="stat-horizontal-icon"><i class="fas fa-star"></i></div>
+                                <div class="stat-horizontal-content">
+                                    <h3>
+                                        <%= bestScore %>%
+                                    </h3>
+                                    <p>Best Score</p>
+                                </div>
+                            </div>
+                            <div class="stat-horizontal-card">
+                                <div class="stat-horizontal-icon"><i class="fas fa-chart-line"></i></div>
+                                <div class="stat-horizontal-content">
+                                    <h3>
+                                        <%= avgScore %>%
+                                    </h3>
+                                    <p>Avg. Score</p>
+                                </div>
+                            </div>
+                            <div class="stat-horizontal-card">
+                                <div class="stat-horizontal-icon"><i class="fas fa-medal"></i></div>
+                                <div class="stat-horizontal-content">
+                                    <h3>
+                                        <%= achievementsUnlocked %>
+                                    </h3>
+                                    <p>Achievements</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ACHIEVEMENTS ROW - FIXED -->
+                        <div class="achievements-row">
+
+                            <!-- LEFT CARD - ACHIEVEMENTS -->
+                            <div class="achievements-full-card">
+                                <div class="achievements-header">
+                                    <h2><i class="fas fa-medal"></i> Achievements</h2>
+                                    <span>Level <%= Math.floor(testsCount / 10) + 1 %></span>
+                                </div>
+
+                                <% if (testsCount < 50) { %>
+                                    <div class="achievement-progress">
+                                        <div class="progress-label">
+                                            <span>Progress to <%= nextAchievementName %></span>
+                                            <span>
+                                                <%= testsCount %> / <%= nextTarget %>
+                                            </span>
+                                        </div>
+                                        <div class="progress-bar-container">
+                                            <div class="progress-fill" style="width: <%= nextProgress %>%;">
+                                                <%= nextProgress %>%
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+
+                                        <div class="certificate-download-card">
+    <div class="certificate-info">
+        <div class="certificate-icon">
+            <i class="fas fa-certificate"></i>
+        </div>
+        <div class="certificate-text">
+            <h4>Platinum Certificate</h4>
+            <p>
+                <% if (isEligibleForCertificate) { %>
+                    🎉 Completed 50 tests!
+                <% } else { %>
+                    <%= testsRemainingForCertificate %> tests to go
+                <% } %>
+            </p>
+        </div>
+    </div>
+    <% if (isEligibleForCertificate) { %>
+        <a href="/rts/certificate/platinum" class="certificate-download-btn">
+            Download Certificate
+        </a>
+    <% } else { %>
+        <button class="certificate-download-btn locked">
+            Complete 50 Tests to Unlock
+        </button>
+    <% } %>
+</div>
+                            </div>
+
+                            <!-- RIGHT CARD - TECHNICAL CERTIFICATE -->
+                            <div class="achievements-full-card technical-card">
+                                <div class="achievements-header">
+                                    <h2><i class="fas fa-code"></i> Tech-Interview</h2>
+                                    <span>Certificate</span>
+                                </div>
+
+
+                                <div class="achievement-progress">
+                                    <div class="progress-label">
+                                        <span style="color: #cbd5e1;">Progress</span>
+                                        <span style="color: #fbbf24;">
+                                            <%= technicalTestsCompleted %> / <%= technicalTestsTotal %>
+                                        </span>
+                                    </div>
+                                    <div class="progress-bar-container" style="background: rgba(255,255,255,0.2);">
+                                        <div class="progress-fill"
+                                            style="width: <%= technicalProgress %>%; background: linear-gradient(90deg, #fbbf24, #f59e0b);">
+                                            <%= technicalProgress %>%
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="certificate-download-card"
+                                    style="background: linear-gradient(135deg, #1e293b, #0f172a);">
+                                    <div class="certificate-info">
+                                        <div class="certificate-icon" style="background: rgba(251, 191, 36, 0.2);">
+                                            <i class="fas fa-certificate" style="color: #fbbf24;"></i>
+                                        </div>
+                                        <div class="certificate-text">
+                                            <h4 style="color: white;">Certificate</h4>
+                                            <p style="color: #94a3b8;">
+                                                <% if (technicalTestsCompleted>= technicalTestsTotal) { %>
+                                                    🎉 Certificate ready!
+                                                    <% } else { %>
+                                                        <%= techRemaining %> tests left
+                                                            <% } %>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <% if (isTechUnlocked) { %>
+                                        <a href="/rts/certificate/technical" class="certificate-download-btn">
+                                            Download
+                                        </a>
+                                        <% } else { %>
+                                            <button class="certificate-download-btn locked">
+                                                Locked
+                                            </button>
+                                            <% } %>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Performance Chart -->
+                        <div class="content-card">
+                            <div class="card-header">
+                                <h2><i class="fas fa-chart-area"></i> Performance Trend</h2>
+                                <div class="filter-buttons">
+                                    <button class="filter-btn active">All</button>
+                                    <button class="filter-btn">Recent</button>
+                                    <button class="filter-btn">Best</button>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="performanceChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Test History -->
+                        <div class="content-card">
+                            <div class="card-header">
+                                <h2><i class="fas fa-clock-rotate-left"></i> Recent Tests</h2>
+                                <a href="javascript:void(0)" onclick="openTestHistoryModal()">
+                                    View All <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Subject</th>
+                                            <th>Set</th>
+                                            <th>Score</th>
+                                            <th>%</th>
+                                            <th>Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if (user?.testHistory && user.testHistory.length> 0) {
+                                            const recentTests = [...user.testHistory]
+                                            .filter(t => t.resultId || t.percentage)
+                                            .sort((a, b) => new Date(b.date || b.createdAt || 0) - new Date(a.date ||
+                                            a.createdAt || 0))
+                                            .slice(0, 5);
+                                            recentTests.forEach(t => {
+                                            const res = t.resultId || {};
+                                            %>
+                                            <tr>
+                                                <td>
+                                                    <span class="subject-tag">
+                                                        <i class="fas fa-code"></i>
+                                                        <%= t.subject || res.subject || 'HTML' %>
+                                                    </span>
+                                                </td>
+                                                <td><strong>Set <%= t.setNo || res.setNo || 1 %></strong></td>
+                                                <td>
+                                                    <%= t.score || res.correct || 0 %>/<%= t.totalQuestions ||
+                                                            res.totalQuestions || 0 %>
+                                                </td>
+                                                <td><span class="score-badge">
+                                                        <i class="fas fa-percent"></i>
+                                                        <%= Math.round(t.percentage || res.percentage || 0) %>%
+                                                    </span></td>
+                                                <td>
+                                                    <%= t.date || res.createdAt ? new Date(t.date ||
+                                                        res.createdAt).toLocaleDateString('en-IN', { day: 'numeric' ,
+                                                        month: 'short' }) : 'N/A' %>
+                                                </td>
+                                                <td>
+                                                    <% if (t.resultId?._id) { %>
+                                                        <a href="/rts/quiz/<%= t.category || 'technical' %>/<%= t.subject || res.subject %>/<%= t.setNo || res.setNo %>/result/<%= t.resultId._id %>"
+                                                            style="background:#2563eb; color:white; padding:6px 16px; border-radius:100px; text-decoration:none; font-size:0.7rem;">
+                                                            <i class="fas fa-eye"></i> View
+                                                        </a>
+                                                        <% } else { %>—<% } %>
+                                                </td>
+                                            </tr>
+                                            <% }); } else { %>
+                                                <tr>
+                                                    <td colspan="6" style="text-align:center; padding:40px;">
+                                                        <i class="fas fa-clipboard-list"
+                                                            style="font-size:2.5rem; color:#cbd5e1;"></i>
+                                                        <h3>No Tests Yet</h3>
+                                                        <a href="/technical-coding" class="start-test-btn">
+                                                            <i class="fas fa-play"></i> Start First Test
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Logout -->
+                        <div style="display: flex; justify-content: flex-end;">
+                            <a href="/login" onclick="return confirm('Are you sure?')" class="logout-btn">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODAL -->
+            <div id="testHistoryModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Complete Test History</h2>
+                        <span class="close-modal" onclick="closeTestHistoryModal()">&times;</span>
+                    </div>
+
+                    <div class="test-stats-summary">
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="fas fa-file-alt"></i></div>
+                            <div class="stat-details">
+                                <h4>Total Tests</h4>
+                                <p>
+                                    <%= testsCount %>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="fas fa-star"></i></div>
+                            <div class="stat-details">
+                                <h4>Best Score</h4>
+                                <p>
+                                    <%= bestScore %>%
+                                </p>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                            <div class="stat-details">
+                                <h4>Avg. Score</h4>
+                                <p>
+                                    <%= avgScore %>%
+                                </p>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                            <div class="stat-details">
+                                <h4>Correct</h4>
+                                <p>
+                                    <%= totalCorrect %>/<%= totalQuestions %>
+                                </p>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="table-responsive">
                         <table>
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Subject</th>
                                     <th>Set</th>
                                     <th>Score</th>
@@ -1384,260 +1535,156 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <% if (user?.testHistory && user.testHistory.length > 0) { 
-                                    const recentTests = [...user.testHistory]
-                                        .filter(t => t.resultId || t.percentage)
-                                        .sort((a, b) => new Date(b.date || b.createdAt || 0) - new Date(a.date || a.createdAt || 0))
-                                        .slice(0, 5);
-                                    recentTests.forEach(t => { 
-                                        const res = t.resultId || {}; 
-                                %>
+                                <% if (user?.testHistory && user.testHistory.length> 0) {
+                                    const allTests = [...user.testHistory]
+                                    .filter(t => t.resultId || t.percentage)
+                                    .sort((a, b) => new Date(b.date || b.createdAt || 0) - new Date(a.date ||
+                                    a.createdAt || 0));
+                                    allTests.forEach((t, idx) => {
+                                    const res = t.resultId || {};
+                                    %>
                                     <tr>
-                                        <td>
-                                            <span class="subject-tag">
-                                                <i class="fas fa-code"></i> 
-                                                <%= t.subject || res.subject || 'HTML' %>
-                                            </span>
+                                        <td>#<%= idx + 1 %>
                                         </td>
-                                        <td><strong>Set <%= t.setNo || res.setNo || 1 %></strong></td>
-                                        <td><%= t.score || res.correct || 0 %>/<%= t.totalQuestions || res.totalQuestions || 0 %></td>
-                                        <td><span class="score-badge">
-                                            <i class="fas fa-percent"></i> 
+                                        <td>
+                                            <%= t.subject || res.subject || 'HTML' %>
+                                        </td>
+                                        <td>Set <%= t.setNo || res.setNo || 1 %>
+                                        </td>
+                                        <td>
+                                            <%= t.score || res.correct || 0 %>/<%= t.totalQuestions ||
+                                                    res.totalQuestions || 0 %>
+                                        </td>
+                                        <td>
                                             <%= Math.round(t.percentage || res.percentage || 0) %>%
-                                        </span></td>
-                                        <td><%= t.date || res.createdAt ? 
-                                            new Date(t.date || res.createdAt).toLocaleDateString('en-IN', {
-                                                day: 'numeric', 
-                                                month: 'short'
-                                            }) : 'N/A' %></td>
-                                        <td>
-                                            <% if (t.resultId?._id) { %>
-                                                <a href="/quiz/<%= t.category || 'technical' %>/<%= t.subject || res.subject %>/<%= t.setNo || res.setNo %>/result/<%= t.resultId._id %>" 
-                                                   style="background:#2563eb; color:white; padding:6px 16px; border-radius:100px; text-decoration:none; font-size:0.7rem;">
-                                                    <i class="fas fa-eye"></i> View
-                                                </a>
-                                            <% } else { %>—<% } %>
                                         </td>
-                                    </tr>
-                                <% }); } else { %>
-                                    <tr>
-                                        <td colspan="6" style="text-align:center; padding:40px;">
-                                            <i class="fas fa-clipboard-list" style="font-size:2.5rem; color:#cbd5e1;"></i>
-                                            <h3>No Tests Yet</h3>
-                                            <a href="/technical-coding" class="start-test-btn">
-                                                <i class="fas fa-play"></i> Start First Test
+                                        <td>
+                                            <%= t.date || res.createdAt ? new Date(t.date ||
+                                                res.createdAt).toLocaleDateString('en-IN', { day: 'numeric' ,
+                                                month: 'short' }) : 'N/A' %>
+                                        </td>
+                                        <td>
+                                            <a
+                                                href="/quiz/<%= t.category || 'technical' %>/<%= (t.subject || 'HTML') %>/test-<%= t.setNo || 1 %>/result/<%= t.resultId?._id || t.resultId %>">
+                                                View
                                             </a>
                                         </td>
                                     </tr>
-                                <% } %>
+                                    <% }); } else { %>
+                                        <tr>
+                                            <td colspan="7" style="text-align:center;">No History Found</td>
+                                        </tr>
+                                        <% } %>
                             </tbody>
                         </table>
                     </div>
                 </div>
-
-                <!-- Logout -->
-                <div style="display: flex; justify-content: flex-end;">
-                    <a href="/login" 
-                       onclick="return confirm('Are you sure?')" 
-                       class="logout-btn">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </a>
-                </div>
             </div>
-        </div>
-    </div>
 
-    <!-- MODAL -->
-    <div id="testHistoryModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Complete Test History</h2>
-                <span class="close-modal" onclick="closeTestHistoryModal()">&times;</span>
-            </div>
+            <script>
+                // Chart
+                document.addEventListener('DOMContentLoaded', function () {
+                    const ctx = document.getElementById('performanceChart').getContext('2d');
+                    let labels = [], scores = [];
             
-            <div class="test-stats-summary">
-                <div class="stat-item">
-                    <div class="stat-icon"><i class="fas fa-file-alt"></i></div>
-                    <div class="stat-details">
-                        <h4>Total Tests</h4>
-                        <p><%= testsCount %></p>
-                    </div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon"><i class="fas fa-star"></i></div>
-                    <div class="stat-details">
-                        <h4>Best Score</h4>
-                        <p><%= bestScore %>%</p>
-                    </div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
-                    <div class="stat-details">
-                        <h4>Avg. Score</h4>
-                        <p><%= avgScore %>%</p>
-                    </div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
-                    <div class="stat-details">
-                        <h4>Correct</h4>
-                        <p><%= totalCorrect %>/<%= totalQuestions %></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Subject</th>
-                            <th>Set</th>
-                            <th>Score</th>
-                            <th>%</th>
-                            <th>Date</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% if (user?.testHistory && user.testHistory.length > 0) {
-                            const allTests = [...user.testHistory]
-                                .filter(t => t.resultId || t.percentage)
-                                .sort((a, b) => new Date(b.date || b.createdAt || 0) - new Date(a.date || a.createdAt || 0));
-                            allTests.forEach((t, idx) => { 
-                                const res = t.resultId || {}; 
-                        %>
-                            <tr>
-                                <td>#<%= idx + 1 %></td>
-                                <td><%= t.subject || res.subject || 'HTML' %></td>
-                                <td>Set <%= t.setNo || res.setNo || 1 %></td>
-                                <td><%= t.score || res.correct || 0 %>/<%= t.totalQuestions || res.totalQuestions || 0 %></td>
-                                <td><%= Math.round(t.percentage || res.percentage || 0) %>%</td>
-                                <td><%= t.date || res.createdAt ? 
-                                    new Date(t.date || res.createdAt).toLocaleDateString('en-IN', {
-                                        day: 'numeric', 
-                                        month: 'short'
-                                    }) : 'N/A' %></td>
-                               <td>
-  <a href="/quiz/<%= t.category || 'technical' %>/<%= (t.subject || 'HTML') %>/test-<%= t.setNo || 1 %>/result/<%= t.resultId?._id || t.resultId %>">
-    View
-  </a>
-</td>
-                            </tr>
-                        <% }); } else { %>
-                            <tr>
-                                <td colspan="7" style="text-align:center;">No History Found</td>
-                            </tr>
-                        <% } %>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Chart
-        document.addEventListener('DOMContentLoaded', function() {
-            const ctx = document.getElementById('performanceChart').getContext('2d');
-            let labels = [], scores = [];
-            
-            <% if (user?.testHistory && user.testHistory.length > 0) { 
-                const last7Tests = [...user.testHistory]
-                    .filter(t => t.percentage || t.resultId?.percentage)
-                    .sort((a, b) => new Date(a.date || a.createdAt || 0) - new Date(b.date || b.createdAt || 0))
-                    .slice(-7); 
+            <% if (user?.testHistory && user.testHistory.length > 0) {
+                        const last7Tests = [...user.testHistory]
+                            .filter(t => t.percentage || t.resultId?.percentage)
+                            .sort((a, b) => new Date(a.date || a.createdAt || 0) - new Date(b.date || b.createdAt || 0))
+                            .slice(-7); 
             %>
-                labels = <%- JSON.stringify(last7Tests.map((t, i) => `Test ${i + 1}`)) %>;
-                scores = <%- JSON.stringify(last7Tests.map(t => Math.round(t.percentage || t.resultId?.percentage || 0))) %>;
+                            labels = <% - JSON.stringify(last7Tests.map((t, i) => `Test ${i + 1}`)) %>;
+                        scores = <% - JSON.stringify(last7Tests.map(t => Math.round(t.percentage || t.resultId?.percentage || 0))) %>;
             <% } else { %>
-                labels = ['No Data']; 
-                scores = [0];
+                        labels =['No Data'];
+                        scores = [0];
             <% } %>
 
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        data: scores,
-                        borderColor: '#2563eb',
-                        backgroundColor: 'rgba(37, 99, 235, 0.1)',
-                        borderWidth: 3,
-                        tension: 0.3,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: { y: { beginAtZero: true, max: 100 } }
+                        new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    data: scores,
+                                    borderColor: '#2563eb',
+                                    backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                                    borderWidth: 3,
+                                    tension: 0.3,
+                                    fill: true
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: { legend: { display: false } },
+                                scales: { y: { beginAtZero: true, max: 100 } }
+                            }
+                        });
+                });
+
+                // Toggle
+                function toggleSidebar() {
+                    const sidebar = document.getElementById('sidebar');
+                    const overlay = document.getElementById('overlay');
+                    const toggleBtn = document.getElementById('toggleSidebar');
+
+                    sidebar.classList.toggle('active');
+                    overlay.classList.toggle('active');
+                    toggleBtn.classList.toggle('active');
+
+                    const icon = toggleBtn.querySelector('i');
+                    if (sidebar.classList.contains('active')) {
+                        icon.classList.remove('fa-chevron-right');
+                        icon.classList.add('fa-chevron-left');
+                    } else {
+                        icon.classList.remove('fa-chevron-left');
+                        icon.classList.add('fa-chevron-right');
+                    }
                 }
-            });
-        });
 
-        // Toggle
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
-            const toggleBtn = document.getElementById('toggleSidebar');
-            
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
-            toggleBtn.classList.toggle('active');
-            
-            const icon = toggleBtn.querySelector('i');
-            if (sidebar.classList.contains('active')) {
-                icon.classList.remove('fa-chevron-right');
-                icon.classList.add('fa-chevron-left');
-            } else {
-                icon.classList.remove('fa-chevron-left');
-                icon.classList.add('fa-chevron-right');
-            }
-        }
+                function closeSidebar() {
+                    const sidebar = document.getElementById('sidebar');
+                    const overlay = document.getElementById('overlay');
+                    const toggleBtn = document.getElementById('toggleSidebar');
 
-        function closeSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
-            const toggleBtn = document.getElementById('toggleSidebar');
-            
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-            toggleBtn.classList.remove('active');
-            
-            toggleBtn.querySelector('i').className = 'fas fa-chevron-right';
-        }
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                    toggleBtn.classList.remove('active');
 
-        // Modal
-        function openTestHistoryModal() { 
-            document.getElementById('testHistoryModal').style.display = 'block'; 
-            document.body.style.overflow = 'hidden'; 
-        }
-        
-        function closeTestHistoryModal() { 
-            document.getElementById('testHistoryModal').style.display = 'none'; 
-            document.body.style.overflow = 'auto'; 
-        }
+                    toggleBtn.querySelector('i').className = 'fas fa-chevron-right';
+                }
 
-        window.onclick = function(e) { 
-            const modal = document.getElementById('testHistoryModal'); 
-            if (e.target == modal) closeTestHistoryModal(); 
-        }
+                // Modal
+                function openTestHistoryModal() {
+                    document.getElementById('testHistoryModal').style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                }
 
-        document.addEventListener('keydown', function(e) { 
-            if (e.key === 'Escape') {
-                closeTestHistoryModal();
-                closeSidebar();
-            }
-        });
+                function closeTestHistoryModal() {
+                    document.getElementById('testHistoryModal').style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
 
-        // Filter buttons
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
-    </script>
+                window.onclick = function (e) {
+                    const modal = document.getElementById('testHistoryModal');
+                    if (e.target == modal) closeTestHistoryModal();
+                }
+
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') {
+                        closeTestHistoryModal();
+                        closeSidebar();
+                    }
+                });
+
+                // Filter buttons
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.addEventListener('click', function () {
+                        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                    });
+                });
+            </script>
 </body>
+
 </html>

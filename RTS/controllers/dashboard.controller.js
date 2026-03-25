@@ -118,7 +118,7 @@ exports.getEditProfilePage = async (req, res) => {
 // ✅ UPDATE PROFILE INFO
 exports.updateProfile = async (req, res) => {
     try {
-        const { fullName, mobile, dob, state, district, city } = req.body;
+        const { fullName, mobile, phone, dob, state, district, city } = req.body;
 
         const user = await User.findById(req.session.userId);
 
@@ -131,15 +131,19 @@ exports.updateProfile = async (req, res) => {
 
         // ✅ FIXED FIELD MAPPING
         if (fullName) user.name = fullName.trim();   // 🔥 CHANGE
-        if (mobile) {
-            if (!/^\d{10}$/.test(mobile)) {
-                return res.status(400).json({
-                    success: false,
-                    message: 'Invalid mobile number'
-                });
-            }
-           user.mobile = mobile;    // 🔥 CHANGE
-        }
+       
+
+const finalMobile = mobile || phone;
+
+if (finalMobile) {
+    if (!/^\d{10}$/.test(finalMobile)) {
+        return res.status(400).json({
+            success: false,
+            message: 'Invalid mobile number'
+        });
+    }
+    user.phone = finalMobile;   // ✅ FIXED
+}
 
         if (dob) user.dob = dob;
         if (state) user.state = state.trim();
@@ -241,37 +245,38 @@ exports.getProfilePage = async (req, res) => {
     }
 
     // ✅ TOTAL TESTS (FIXED 🔥)
-    const totalTests = user.testHistory.length;
+const totalTests = user.testHistory?.length || 0;
 
-    // ✅ BEST SCORE
-    const bestScore = totalTests > 0
-      ? Math.max(...user.testHistory.map(t => t.percentage || 0))
-      : 0;
+const bestScore = totalTests > 0
+  ? Math.max(...user.testHistory.map(t => t.percentage || 0))
+  : 0;
 
-    // ✅ AVERAGE SCORE
-    const averageScore = totalTests > 0
-      ? Math.round(
-          user.testHistory.reduce((sum, t) => sum + (t.percentage || 0), 0) /
-          totalTests
-        )
-      : 0;
+const averageScore = totalTests > 0
+  ? Math.round(
+      user.testHistory.reduce((sum, t) => sum + (t.percentage || 0), 0) /
+      totalTests
+    )
+  : 0;
 
-    // ⭐ Rank calculation
-    const betterUsers = await User.countDocuments({
-      averageScore: { $gt: averageScore }
-    });
+const betterUsers = await User.countDocuments({
+  averageScore: { $gt: averageScore }
+});
 
-    const rank = betterUsers + 1;
+const rank = betterUsers + 1;
 
-    res.render("dashboard/profile", {
-      title: "My Profile",
-      user,
-      totalTests,
-      bestScore,
-      averageScore,
-      rank
-    });
-
+// ✅ ADD THIS
+const certificateUnlocked = totalTests >= 30;
+const techCount = user.techInterviewCount || 0;
+res.render("dashboard/profile", {
+  title: "My Profile",
+  user,
+  totalTests,
+  bestScore,
+  averageScore,
+  rank,
+  certificateUnlocked,
+  techCount   // ✅ ADD THIS
+});
   } catch (err) {
     console.error("❌ PROFILE ERROR:", err);
     res.status(500).render("error", {

@@ -4,14 +4,12 @@ const { exec } = require("child_process");
 const fs = require("fs");
 const crypto = require("crypto");
 
-const app = express();
-const PORT = 3000;
+// const app = express();
 
-app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
+const router = express.Router();   // ✅ ADD THIS
 
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+
+
 
 const TEMP_DIR = path.join(__dirname, "temp");
 if (!fs.existsSync(TEMP_DIR)) fs.mkdirSync(TEMP_DIR);
@@ -105,57 +103,75 @@ function wrapCppCode(code) {
 // ----------------------------------------------------------------
 
 // ---------- EXECUTE ENDPOINT ----------
-app.post("/execute", (req, res) => {
+router.post("/execute", async (req, res) => {
+  const User = require("../models/user");
+
   const { language, files, stdin = "" } = req.body;
 
-  if (!language || !files?.[0]?.content)
+  if (!language || !files?.[0]?.content) {
     return res.status(400).json({ error: "Invalid request" });
+  }
 
   const config = LANGUAGE_CONFIG[language];
-  if (!config) return res.status(400).json({ error: "Unsupported language" });
+  if (!config) {
+    return res.status(400).json({ error: "Unsupported language" });
+  }
 
   let code = files[0].content;
 
-  // Language‑specific wrapping
+  // Wrapping
   if (language === "c") code = wrapCCode(code);
   else if (language === "cpp") code = wrapCppCode(code);
   else if (language === "java") {
-    const hasClass = /(^|\n)\s*(public\s+)?class\s+/.test(code);
-    const hasMain = /public\s+static\s+void\s+main\s*\(/.test(code);
+    const hasClass = /class\s+/.test(code);
+    const hasMain = /main\s*\(/.test(code);
     if (!hasClass || !hasMain) {
-      const indented = code.split('\n').map(line => '        ' + line).join('\n');
+      const indented = code.split('\n').map(l => '        ' + l).join('\n');
       code = `public class Main {\n    public static void main(String[] args) {\n${indented}\n    }\n}`;
     }
   } else if (language === "csharp" && config.wrap) {
     code = config.wrap(code);
   }
-  // Python, JavaScript run as‑is
 
-  const filename = language === "java" ? "Main.java" : crypto.randomBytes(6).toString("hex") + config.ext;
+  const filename = language === "java"
+    ? "Main.java"
+    : crypto.randomBytes(6).toString("hex") + config.ext;
+
   const filepath = path.join(TEMP_DIR, filename);
   fs.writeFileSync(filepath, code);
 
   const mountPath = TEMP_DIR.replace(/\\/g, "/");
-  const dockerCmd = `docker run --rm --memory=256m --cpus=0.5 --network none -v ${mountPath}:/app:ro -w /app ${config.image} ${config.cmd(filename)}`;
+
+  // ✅ FIRST define dockerCmd
+  const dockerCmd = `echo "${stdin.replace(/"/g, '\\"')}" | docker run -i --rm --memory=256m --cpus=0.5 --network none -v ${mountPath}:/app:ro -w /app ${config.image} ${config.cmd(filename)}`;
 
   console.log("Running:", dockerCmd);
 
-  exec(dockerCmd, { timeout: 10000, maxBuffer: 10 * 1024 * 1024, input: stdin }, (err, stdout, stderr) => {
-    fs.unlink(filepath, () => {}); // cleanup
+  // ✅ THEN use exec
+ exec(dockerCmd, { timeout: 10000, maxBuffer: 10 * 1024 * 1024 }, async (err, stdout, stderr) => {
+
+    fs.unlink(filepath, () => {});
+
+    // count update
+    if (!err) {
+      try {
+        const userId = req.session?.userId;
+        if (userId) {
+          await User.findByIdAndUpdate(userId, {
+            $inc: { techInterviewCount: 1 }
+          });
+        }
+      } catch (e) {
+        console.log("Tech count error:", e);
+      }
+    }
 
     if (err) {
-      console.error("Docker Error:", err);
       let errorMessage = stderr || err.message;
-      if (err.code === 'ENOENT' || /docker.*not found/i.test(err.message))
-        errorMessage = "Docker is not installed or not accessible.";
-      else if (err.code === 'EACCES' || /permission denied/i.test(err.message))
-        errorMessage = "Permission denied. Add user to docker group.";
-      else if (/Unable to find image/i.test(stderr))
-        errorMessage = "Required Docker image not found.";
-      else if (err.signal === 'SIGKILL' || /killed/i.test(err.message))
-        errorMessage = "Execution timed out or used too much memory.";
-      else if (err.message.includes('stdout maxBuffer'))
-        errorMessage = "Program output too large.";
+
+      if (err.code === 'ENOENT') errorMessage = "Docker not installed";
+      else if (err.signal === 'SIGKILL') errorMessage = "Timeout / Memory limit";
+
       return res.json({ run: { stdout: "", stderr: errorMessage } });
     }
 
@@ -163,8 +179,5 @@ app.post("/execute", (req, res) => {
   });
 });
 
-app.get("/", (req, res) => {
-  res.render("index");
-});
 
-module.exports = app;
+module.exports = router;
