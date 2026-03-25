@@ -580,6 +580,14 @@ app.post("/api/save-lead", async (req,res)=>{
  }
 
 })
+const myteam=require("./routes/myteampages/myteam.js")
+app.use("/",myteam)
+// ===== TECH INTERVIEW SERVER CONNECT =====
+const techInterviewApp = require("./code/server");
+
+// middleware mount
+app.use("/tech-interview", techInterviewApp);
+
 
 configureRoutes();
 

@@ -52,33 +52,23 @@ app.set("views", path.join(__dirname, "views"));
    ROUTES
 ============================== */
 
-// Auth
-app.use("/", require("./routes/auth.routes"));
+
 
 // Dashboard
 app.use("/", require("./routes/dashboard.routes"));
-
-// Quiz
 app.use("/", require("./routes/quiz.routes"));
-
-// Result
 app.use("/", require("./routes/result.routes"));
-
-// Test
 app.use("/", require("./routes/test.routes"));
-
-// Certificate
 app.use("/", require("./routes/certificate.routes"));
-
-// Profile
 app.use("/", require("./routes/profile.routes"));
-
-// Visit API
 app.use("/api", require("./routes/visit.routes"));
 
 
+<<<<<<< main
 
 
+=======
+>>>>>>> main
 // demo route
 app.get("/", (req, res) => {
   res.send("RTS Home Working");

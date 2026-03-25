@@ -3,15 +3,15 @@ const router = express.Router();
 const dashboardController = require('../controllers/dashboard.controller');
 const { requireAuth } = require('../middleware/auth');
 const { route } = require('./quiz.routes');
-
+const TestResult = require("../models/TestResult");
 
 // Dashboard page
 router.get('/dashboard', dashboardController.getDashboard);
 
 
 // Dashboard API routes
-router.get('/api/dashboard/stats', requireAuth, dashboardController.getStats);
-router.put('/api/dashboard/profile', requireAuth, dashboardController.updateProfile);
+// router.get('/api/dashboard/stats', requireAuth, dashboardController.getStats);
+// router.put('/api/dashboard/profile', requireAuth, dashboardController.updateProfile);
 router.post('/api/dashboard/change-password', requireAuth, dashboardController.changePassword);
 
 // router.get('/technical-coding', requireAuth, (req, res) => {
@@ -377,40 +377,126 @@ router.get("/quiz/:category/:subject/:testNo", (req, res) => {
 
 });
 
-router.post("/quiz/:category/:subject/:testNo/submit", (req, res) => {
+// router.post("/quiz/:category/:subject/:testNo/submit", (req, res) => {
+//   try {
+//     const { category, subject, testNo } = req.params;
+
+//     const resultData = {
+//       subject: subject,
+//       setNo: testNo,
+//       total: req.body.totalQuestions,
+//       attempted: req.body.attempted,
+//       correct: req.body.correct,
+//       incorrect: req.body.attempted - req.body.correct,
+//       percentage: req.body.percentage,
+//       accuracy: req.body.accuracy,
+//       timeSpent: req.body.timeSpent,
+//       timeInSeconds: 3600 // optional (timer से भी भेज सकते हो)
+//     };
+
+//     console.log("🔥 Final Result:", resultData);
+
+//     res.json({
+//       success: true,
+//       resultId: Date.now(),
+//       result: resultData   // 🔥 IMPORTANT
+//     });
+
+//   } catch (err) {
+//     console.error(err);
+//     res.json({ success: false });
+//   }
+// });
+
+const mongoose = require("mongoose");
+
+router.get("/quiz/:category/:subject/:testNo/result/:resultId", async (req, res) => {
   try {
-    const { category, subject, testNo } = req.params;
+    const { resultId } = req.params;
 
-    const resultData = {
-      subject: subject,
-      setNo: testNo,
-      total: req.body.totalQuestions,
-      attempted: req.body.attempted,
-      correct: req.body.correct,
-      incorrect: req.body.attempted - req.body.correct,
-      percentage: req.body.percentage,
-      accuracy: req.body.accuracy,
-      timeSpent: req.body.timeSpent,
-      timeInSeconds: 3600 // optional (timer से भी भेज सकते हो)
-    };
+    // 🛑 crash रोकने के लिए
+    if (!resultId || resultId === "undefined" || !mongoose.Types.ObjectId.isValid(resultId)) {
+      console.log("❌ Invalid resultId:", resultId);
+      return res.redirect("/dashboard");
+    }
 
-    console.log("🔥 Final Result:", resultData);
+    const resultData = await TestResult.findById(resultId);
 
-    res.json({
-      success: true,
-      resultId: Date.now(),
-      result: resultData   // 🔥 IMPORTANT
+    if (!resultData) {
+      return res.redirect("/dashboard");
+    }
+
+    res.render("test-result", {
+      result: resultData
     });
 
   } catch (err) {
-    console.error(err);
-    res.json({ success: false });
+    console.error("❌ RESULT PAGE ERROR:", err);
+    res.redirect("/dashboard");
   }
 });
 
-router.get("/quiz/:category/:subject/test-:testNo/result/:resultId", (req, res) => {
-  res.render("test-result");   // 🔥 सिर्फ page open करो
-});
+// router.get("/quiz/:category/:subject/test-:testNo/result/:resultId", async (req, res) => {
+//   try {
+//     const { resultId } = req.params;
+
+//     const resultData = await TestResult.findById(resultId);
+
+//     if (!resultData) {
+//       return res.send("Result not found");
+//     }
+
+//     res.render("test-result", {
+//       result: resultData
+//     });
+
+//   } catch (err) {
+//     console.error("❌ RESULT PAGE ERROR:", err);
+//     res.send("Server Error");
+//   }
+// });
+
+// router.get("/quiz/:category/:subject/:testNo", async (req, res, next) => {
+//   const { category, subject, testNo } = req.params;
+
+//   // ✅ First test free
+//   if (Number(testNo) === 1) {
+//     return res.render(`dashboard/${category}/${subject}/test`, {
+//       category: category.toUpperCase(),
+//       subject: subject.toUpperCase(),
+//       testNo: Number(testNo)
+//     });
+//   }
+
+//   // 🔒 Other tests require login
+//   if (!req.session || !req.session.userId) {
+//     return res.redirect("/rts/login");
+//   }
+
+//   next();
+// }, (req, res) => {
+//   const { category, subject, testNo } = req.params;
+
+//   res.render(`dashboard/${category}/${subject}/test`, {
+//     category: category.toUpperCase(),
+//     subject: subject.toUpperCase(),
+//     testNo: Number(testNo)
+//   });
+// });
+
+
+// ✅ Dashboard Stats
+
+
+
+
+
+// ✅ Edit Profile Page
+router.get("/profile/edit", dashboardController.getEditProfilePage);
+
+// ✅ Update Profile
+router.put("/profile", dashboardController.updateProfile);
+
 
 router.get('/profile', requireAuth, dashboardController.getProfilePage);
 

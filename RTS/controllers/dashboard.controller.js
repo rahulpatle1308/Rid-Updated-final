@@ -1,5 +1,6 @@
-const User = require('../models/User');
-const TestResult = require('../models/TestResult');
+// const User = require('../models/User');
+const User = require("../../models/user");
+const TestResult = require("../../models/TestResult");
 
 
 const fs = require('fs');
@@ -117,7 +118,8 @@ exports.getEditProfilePage = async (req, res) => {
 // ✅ UPDATE PROFILE INFO
 exports.updateProfile = async (req, res) => {
     try {
-        const { fullName, mobile, dob, state, district } = req.body;
+        const { fullName, mobile, dob, state, district, city } = req.body;
+
         const user = await User.findById(req.session.userId);
 
         if (!user) {
@@ -127,8 +129,8 @@ exports.updateProfile = async (req, res) => {
             });
         }
 
-        // Update fields
-        if (fullName) user.fullName = fullName.trim();
+        // ✅ FIXED FIELD MAPPING
+        if (fullName) user.name = fullName.trim();   // 🔥 CHANGE
         if (mobile) {
             if (!/^\d{10}$/.test(mobile)) {
                 return res.status(400).json({
@@ -136,17 +138,14 @@ exports.updateProfile = async (req, res) => {
                     message: 'Invalid mobile number'
                 });
             }
-            user.mobile = mobile;
+           user.mobile = mobile;    // 🔥 CHANGE
         }
+
         if (dob) user.dob = dob;
         if (state) user.state = state.trim();
         if (district) user.district = district.trim();
-
+        if (city) user.city = city.trim();
         await user.save();
-
-        // Update session
-        req.session.userName = user.fullName;
-        req.session.userMobile = user.mobile;
 
         res.json({
             success: true,
@@ -162,159 +161,78 @@ exports.updateProfile = async (req, res) => {
     }
 };
 
-/**
- * Change password
- */
-exports.changePassword = async (req, res) => {
-  try {
-    if (!req.session.userId) {
-      return res.status(401).json({ 
-        success: false, 
-        message: 'Not authenticated' 
-      });
-    }
-    
-    const { currentPassword, newPassword, confirmPassword } = req.body;
-    
-    // Validation
-    if (!currentPassword || !newPassword || !confirmPassword) {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'All password fields are required' 
-      });
-    }
-    
-    if (newPassword !== confirmPassword) {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'New passwords do not match' 
-      });
-    }
-    
-    if (newPassword.length < 6) {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'New password must be at least 6 characters' 
-      });
-    }
-    
-    // Get user
-    const user = await User.findById(req.session.userId);
-    
-    // Verify current password
-    const bcrypt = require('bcryptjs');
-    const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
-    if (!isPasswordValid) {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'Current password is incorrect' 
-      });
-    }
-    
-    // Hash new password
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(newPassword, salt);
-    await user.save();
-    
-    return res.json({
-      success: true,
-      message: 'Password changed successfully'
-    });
-    
-  } catch (error) {
-    console.error('❌ CHANGE PASSWORD ERROR:', error);
-    return res.status(500).json({ 
-      success: false, 
-      message: 'Server error' 
-    });
-  }
+
+
+exports.getDashboard = async (req, res) => {
+  res.render("dashboard/Dashboard", {
+    title: "Dashboard",
+    user: req.user,   // 🔥 IMPORTANT
+    apiBaseUrl: "http://localhost:9191/api/course"
+  });
 };
 
-/**
- * Get dashboard statistics (example)
- */
-exports.getStats = async (req, res) => {
-  try {
-    if (!req.session.userId) {
-      return res.status(401).json({ 
-        success: false, 
-        message: 'Not authenticated' 
-      });
-    }
-    
-    // Example: Count total users (for admin dashboard)
-    const totalUsers = await User.countDocuments();
-    
-    // Get recent users
-    const recentUsers = await User.find()
-      .sort({ createdAt: -1 })
-      .limit(5)
-      .select('fullName email createdAt');
-    
-    return res.json({
-      success: true,
-      stats: {
-        totalUsers,
-        recentUsers
-      }
-    });
-    
-  } catch (error) {
-    console.error('❌ GET STATS ERROR:', error);
-    return res.status(500).json({ 
-      success: false, 
-      message: 'Server error' 
-    });
-  }
-};
-
-
-// exports.getDashboard = async (req, res) => {
+// exports.getProfilePage = async (req, res) => {
 //   try {
-//     if (!req.session.userId) {
-//       return res.redirect("/login");
-//     }
+//     if (!req.session.userId) return res.redirect("/login");
 
-//     const user = await User.findById(req.session.userId).select("-password");
+//     const user = await User.findById(req.session.userId)
+//       .populate({
+//         path: "testHistory.resultId",
+//         select: "percentage correct totalQuestions"
+//       })
+//       .select("-password");
 
 //     if (!user) {
 //       req.session.destroy();
 //       return res.redirect("/login");
 //     }
 
-//    exports.getDashboard = (req, res) => {
-//   res.render("dashboard/Dashboard", {
-//     title: "Dashboard",
-//     user: null,
-//     apiBaseUrl: "http://localhost:9191/api/course"
-//   });
-// };
-//   } catch (error) {
-//     console.error("❌ DASHBOARD ERROR:", error);
+//     const totalTests = user.testHistory?.length || 0;
+
+//     const bestScore = totalTests > 0
+//       ? Math.max(...user.testHistory.map(t => t.percentage || 0))
+//       : 0;
+
+//     const averageScore = totalTests > 0
+//       ? Math.round(
+//           user.testHistory.reduce((sum, t) => sum + (t.percentage || 0), 0) /
+//           totalTests
+//         )
+//       : 0;
+
+//     // ⭐ Rank calculation
+//     const betterUsers = await User.countDocuments({
+//       averageScore: { $gt: averageScore }
+//     });
+
+//     const rank = betterUsers + 1;
+
+//     res.render("dashboard/profile", {
+//       title: "My Profile",
+//       user,
+//       totalTests,
+//       bestScore,
+//       averageScore,
+//       rank
+//     });
+
+//   } catch (err) {
+//     console.error("❌ PROFILE ERROR:", err);
 //     res.status(500).render("error", {
-//       title: "Server Error",
-//       message: "Something went wrong"
+//       title: "Error",
+//       message: "Could not load profile"
 //     });
 //   }
 // };
-
-exports.getDashboard = (req, res) => {
-  res.render("dashboard/Dashboard", {
-    title: "Dashboard",
-    user: null,
-    apiBaseUrl: "http://localhost:9191/api/course"
-  });
-};
+// ✅ Dashboard Stats
 
 exports.getProfilePage = async (req, res) => {
   try {
     if (!req.session.userId) return res.redirect("/login");
 
+    // ✅ Get user WITH testHistory
     const user = await User.findById(req.session.userId)
-      .populate({
-        path: "testHistory.resultId",
-        select: "percentage correct totalQuestions"
-      })
+      .populate("testHistory.resultId")
       .select("-password");
 
     if (!user) {
@@ -322,12 +240,15 @@ exports.getProfilePage = async (req, res) => {
       return res.redirect("/login");
     }
 
-    const totalTests = user.testHistory?.length || 0;
+    // ✅ TOTAL TESTS (FIXED 🔥)
+    const totalTests = user.testHistory.length;
 
+    // ✅ BEST SCORE
     const bestScore = totalTests > 0
       ? Math.max(...user.testHistory.map(t => t.percentage || 0))
       : 0;
 
+    // ✅ AVERAGE SCORE
     const averageScore = totalTests > 0
       ? Math.round(
           user.testHistory.reduce((sum, t) => sum + (t.percentage || 0), 0) /
@@ -357,5 +278,41 @@ exports.getProfilePage = async (req, res) => {
       title: "Error",
       message: "Could not load profile"
     });
+  }
+};
+exports.getStats = async (req, res) => {
+  try {
+    const count = await TestResult.countDocuments({
+      user: req.session.userId
+    });
+
+    res.json({
+      success: true,
+      tests: count
+    });
+  } catch (err) {
+    res.status(500).json({ success: false });
+  }
+};
+
+// ✅ Change Password
+exports.changePassword = async (req, res) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+
+    const user = await User.findById(req.session.userId);
+    if (!user) return res.status(404).json({ success: false });
+
+    const isMatch = await require("bcryptjs").compare(oldPassword, user.password);
+    if (!isMatch) {
+      return res.json({ success: false, message: "Wrong old password" });
+    }
+
+    user.password = await require("bcryptjs").hash(newPassword, 10);
+    await user.save();
+
+    res.json({ success: true, message: "Password changed" });
+  } catch (err) {
+    res.status(500).json({ success: false });
   }
 };
