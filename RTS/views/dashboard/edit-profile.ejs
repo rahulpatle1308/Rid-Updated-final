@@ -312,7 +312,7 @@
                         type="text" 
                         class="form-input" 
                         name="fullName" 
-                        value="<%= user.fullName || '' %>"
+                        value="<%= user.name || '' %>"
                         placeholder="Enter your full name"
                         required
                     >
@@ -377,10 +377,23 @@
                             placeholder="Your district"
                         >
                     </div>
+                    <div class="form-group">
+    <label class="form-label">
+        <i class="fas fa-city"></i>
+        City
+    </label>
+    <input 
+        type="text" 
+        class="form-input" 
+        name="city" 
+        value="<%= user.city || '' %>"
+        placeholder="Your city"
+    >
+</div>
                 </div>
 
                 <div class="form-actions">
-                    <a href="/profile" class="btn btn-outline">
+                    <a href="/rts/profile" class="btn btn-outline">
                         <i class="fas fa-times"></i>
                         Cancel
                     </a>
@@ -491,39 +504,40 @@
 
             // ===== UPDATE PROFILE INFO =====
             profileForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
+    e.preventDefault();
 
-                const formData = new FormData(profileForm);
-                const data = Object.fromEntries(formData.entries());
+    const formData = new FormData(profileForm);
+    const data = Object.fromEntries(formData.entries());
 
-                try {
-                    saveBtn.disabled = true;
-                    saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+    try {
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = 'Saving...';
 
-                    const response = await fetch('/profile', {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
-                    });
+        const response = await fetch('/rts/profile', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
 
-                    const result = await response.json();
+        const result = await response.json();
 
-                    if (result.success) {
-                        showAlert('success', 'Profile updated successfully!');
-                        setTimeout(() => window.location.href = '/profile', 1500);
-                    } else {
-                        throw new Error(result.message);
-                    }
-                } catch (error) {
-                    showAlert('error', error.message || 'Failed to update profile');
-                    console.error(error);
-                } finally {
-                    saveBtn.disabled = false;
-                    saveBtn.innerHTML = '<i class="fas fa-save"></i> Save Changes';
-                }
-            });
+        if (result.success) {
+            alert("Profile updated successfully");
+            window.location.href = "/rts/profile";
+        } else {
+            alert(result.message || "Update failed");
+        }
+
+    } catch (error) {
+        console.error(error);
+        alert("Error updating profile");
+    } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = 'Save Changes';
+    }
+});
 
             // ===== HELPER FUNCTION =====
             function showAlert(type, message) {

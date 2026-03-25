@@ -11071,7 +11071,7 @@ const SUBJECT = "<%= subject %>".toLowerCase();
     }
 
     // 🔥 CHANGE 5: Submit Quiz function सही करें
-   async function submitQuiz() {
+  async function submitQuiz() {
       if (!confirm("Are you sure you want to submit the test?")) return;
 
       let attempted = 0;
@@ -11094,7 +11094,7 @@ const SUBJECT = "<%= subject %>".toLowerCase();
       const payload = {
 
         testNo: TEST_NO,
-        totalQuestions: questions.length,
+        totalQuestions: Array.isArray(questions) ? questions.length : 0,
         attempted,
         correct,
         percentage,
@@ -11121,23 +11121,22 @@ const SUBJECT = "<%= subject %>".toLowerCase();
   sessionStorage.setItem("resultData", JSON.stringify(data.result));
   sessionStorage.setItem("tempReview", JSON.stringify(questions));
 
-  window.location.href = `/rts/quiz/${CATEGORY}/${SUBJECT}/test-${TEST_NO}/result/${data.resultId}`;
+ window.location.href = `/rts/quiz/${CATEGORY}/${SUBJECT}/${TEST_NO}/result/${data.resultId}`;
 } else {
           alert("Submit failed: " + (data.message || "Unknown error"));
         }
       } catch (error) {
         console.error("Submit error:", error);
-        alert("Network error. Please try again.");
+        alert("Please login first, then submit the test.");
       }
     }
-
-    // Format time
-    function formatTime(seconds) {
-      const mins = Math.floor(seconds / 60);
-      const secs = seconds % 60;
-      return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-    }
-  </script>
+      // Format time
+      function formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+      }
+    </script>
 
   <script src="/socket.io/socket.io.js"></script>
 

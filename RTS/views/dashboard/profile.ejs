@@ -31,6 +31,7 @@
             max-width: 1600px;
             margin: 0 auto;
             width: 100%;
+           
         }
 
         /* ===== ANIMATIONS ===== */
@@ -1318,9 +1319,16 @@
                           (user?.totalTestsAttempted || user?.testHistory?.length || 0);
         
         // Target for platinum certificate
-        const certificateTarget = 50;
-        const progressPercent = Math.min(Math.round((testsCount / certificateTarget) * 100), 100);
-        
+        const certificateStep = 30;
+
+// kitne certificate unlock hue
+const certificateCount = Math.floor(testsCount / certificateStep);
+
+// next target
+const nextCertificateTarget = (certificateCount + 1) * certificateStep;
+
+// remaining
+const remainingTests = nextCertificateTarget - testsCount;
         // Average score
         const avgScore = typeof averageScore !== 'undefined' ? averageScore : 
                         (user?.averageScore || 0);
@@ -1357,9 +1365,7 @@
         // Rank
         const userRank = typeof rank !== 'undefined' ? rank : 1;
         
-        // Certificate eligibility
-        const isEligibleForCertificate = testsCount >= certificateTarget;
-        const testsRemainingForCertificate = Math.max(certificateTarget - testsCount, 0);
+      
         
         // Next achievement target
         let nextTarget = 50;
@@ -1387,23 +1393,23 @@
                 <div class="profile-photo-section">
                     <% if (user?.profilePhoto) { %>
                         <img src="<%= user.profilePhoto %>" 
-                             alt="<%= user.fullName %>" 
+                             alt="<%= user?.name || 'User' %>" 
                              class="avatar-mega"
                              loading="lazy">
                     <% } else { %>
                         <div class="avatar-mega">
-                            <%= user?.initials || (user?.fullName ? user.fullName.charAt(0).toUpperCase() : 'U') %>
+                            <%= user?.initials || (user?.name ? user.name.charAt(0).toUpperCase() : 'U') %>
                         </div>
                     <% } %>
                     <span class="online-indicator-large"></span>
-                    <a href="/profile/edit" class="edit-photo-btn-large" title="Edit Profile Photo">
+                    <a href="profile/edit" class="edit-photo-btn-large" title="Edit Profile Photo">
                         <i class="fas fa-camera"></i>
                     </a>
                 </div>
 
                 <!-- User Name & Role -->
                 <div class="user-title">
-                    <h1><%= user?.fullName || 'User' %></h1>
+                   <h1><%= user?.name || 'User' %></h1>
                     <div class="badge-wrapper">
                         <span class="role-badge">
                             <% if (user?.role === 'student') { %>
@@ -1539,13 +1545,19 @@
                 </div>
 
                 <!-- Edit Profile Button (Full Width) -->
-                <a href="/profile/edit" style="display: block; margin-top: 25px; text-decoration: none;">
+                <a href="/rts/profile/edit" style="display: block; margin-top: 25px; text-decoration: none;">
                     <button class="edit-profile-btn">
                         <i class="fas fa-edit"></i>
                         Edit Profile
                         <i class="fas fa-arrow-right"></i>
                     </button>
                 </a>
+
+               <form action="/logout" method="POST">
+    <button type="submit" class="edit-profile-btn" style="background:#ef4444; margin-top:10px;">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+</form>
             </div>
 
             <!-- ========== RIGHT COLUMN - PERFORMANCE & HISTORY WITH RANK TOP ========== -->
@@ -1556,7 +1568,7 @@
                     <!-- Welcome Banner -->
                     <div class="welcome-banner">
                         <div class="welcome-text">
-                            <h2>Welcome back, <%= user?.fullName?.split(' ')[0] || 'User' %>! 👋</h2>
+                            <h2>Welcome back, <%= user?.name?.split(' ')[0] || 'User' %>! 👋</h2>
                             <p>
                                 <i class="fas fa-chart-line" style="color: #2563eb;"></i>
                                 <% if (avgScore >= 75) { %>
@@ -1667,36 +1679,7 @@
                     <% } %>
 
                     <!-- Certificate Download Section -->
-                    <div class="certificate-download-card">
-                        <div class="certificate-info">
-                            <div class="certificate-icon">
-                                <i class="fas fa-certificate"></i>
-                            </div>
-                            <div class="certificate-text">
-                                <h4>Platinum Certificate of Excellence</h4>
-                                <p>
-                                    <% if (isEligibleForCertificate) { %>
-                                        🎉 Congratulations! You've completed 50 tests.
-                                    <% } else { %>
-                                        Complete 50 tests to unlock your Platinum Certificate.
-                                        <%= testsRemainingForCertificate %> tests remaining.
-                                    <% } %>
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <% if (isEligibleForCertificate) { %>
-                            <a href="/certificate/final" class="certificate-download-btn">
-                                <i class="fas fa-download"></i>
-                                Download Certificate
-                            </a>
-                        <% } else { %>
-                            <button class="certificate-download-btn locked" disabled>
-                                <i class="fas fa-lock"></i>
-                                Locked
-                            </button>
-                        <% } %>
-                    </div>
+
                      <div class="achievements-header">
                         <h2>
                             <i class="fas fa-medal"></i>
@@ -1723,36 +1706,58 @@
                     <% } %>
 
                     <!-- Certificate Download Section -->
-                    <div class="certificate-download-card">
-                        <div class="certificate-info">
-                            <div class="certificate-icon">
-                                <i class="fas fa-certificate"></i>
-                            </div>
-                            <div class="certificate-text">
-                                <h4>Platinum Certificate of Excellence</h4>
-                                <p>
-                                    <% if (isEligibleForCertificate) { %>
-                                        🎉 Congratulations! You've completed 50 tests.
-                                    <% } else { %>
-                                        Complete 50 tests to unlock your Platinum Certificate.
-                                        <%= testsRemainingForCertificate %> tests remaining.
-                                    <% } %>
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <% if (isEligibleForCertificate) { %>
-                            <a href="/certificate/final" class="certificate-download-btn">
-                                <i class="fas fa-download"></i>
-                                Download Certificate
-                            </a>
-                        <% } else { %>
-                            <button class="certificate-download-btn locked" disabled>
-                                <i class="fas fa-lock"></i>
-                                Locked
-                            </button>
-                        <% } %>
-                    </div>
+
+<% for(let i = 1; i <= certificateCount; i++) { %>
+
+<div class="certificate-download-card">
+  <div class="certificate-info">
+    <div class="certificate-icon">
+      <i class="fas fa-certificate"></i>
+    </div>
+
+    <div class="certificate-text">
+      <h4>
+        Certificate Level <%= i %>
+        <span style="color:#fbbf24;">
+          <%= "⭐".repeat(i) %>
+        </span>
+      </h4>
+
+      <p>🎉 Completed <%= i * 30 %> tests</p>
+    </div>
+  </div>
+
+  <a href="/rts/certificate/level/<%= i %>" class="certificate-download-btn">
+    <i class="fas fa-download"></i>
+    Download
+  </a>
+</div>
+
+<% } %>
+
+
+<!-- NEXT LOCKED CERTIFICATE -->
+
+<div class="certificate-download-card">
+  <div class="certificate-info">
+    <div class="certificate-icon">
+      <i class="fas fa-lock"></i>
+    </div>
+
+    <div class="certificate-text">
+      <h4>Next Certificate</h4>
+      <p>
+        Complete <%= remainingTests %> more tests 
+        (<%= nextCertificateTarget %>)
+      </p>
+    </div>
+  </div>
+
+  <button class="certificate-download-btn locked">
+    <i class="fas fa-lock"></i>
+    Locked
+  </button>
+</div>
                 </div>
                 </div>
                 
@@ -1846,7 +1851,7 @@
                                         </td>
                                         <td>
                                             <% if (t.resultId?._id) { %>
-                                                <a href="/quiz/<%= t.category || 'technical' %>/<%= subject %>/<%= setNo %>/result/<%= t.resultId._id %>" 
+                                                <a href="/rts/quiz/<%= t.category || 'technical' %>/<%= subject %>/<%= setNo %>/result/<%= t.resultId._id %>" 
    style="display: inline-flex; align-items: center; gap: 6px; background: #2563eb; color: white; padding: 8px 16px; border-radius: 30px; text-decoration: none; font-size: 0.8rem; font-weight: 600;">
    <i class="fas fa-eye"></i> View Result
 </a>
@@ -2009,13 +2014,10 @@
                                 </td>
                                 <td>
                                     <% if (t.resultId?._id) { %>
-                                        <a href=<a href="/quiz/<%= t.category || 'technical' %>/<%= subject %>/<%= setNo %>/result/<%= t.resultId._id %>"
- 
-                                           style="display: inline-flex; align-items: center; gap: 6px; background: #2563eb; color: white; padding: 8px 16px; border-radius: 30px; text-decoration: none; font-size: 0.8rem; font-weight: 600; transition: all 0.3s ease;"
-                                           onmouseover="this.style.background='#1d4ed8'; this.style.transform='translateY(-2px)';"
-                                           onmouseout="this.style.background='#2563eb'; this.style.transform='translateY(0)';">
-                                            <i class="fas fa-eye"></i> View Result
-                                        </a>
+                                     <a href="/quiz/<%= t.category || 'technical' %>/<%= subject %>/<%= setNo %>/result/<%= t.resultId._id %>" 
+   style="display: inline-flex; align-items: center; gap: 6px; background: #2563eb; color: white; padding: 8px 16px; border-radius: 30px; text-decoration: none; font-size: 0.8rem; font-weight: 600;">
+   <i class="fas fa-eye"></i> View Result
+</a>
                                     <% } else { %>
                                         <span style="color: #94a3b8; padding: 8px 16px; background: #f1f5f9; border-radius: 30px; font-size: 0.8rem;">
                                             <i class="fas fa-ban"></i> No Result

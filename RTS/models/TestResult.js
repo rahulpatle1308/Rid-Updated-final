@@ -4,10 +4,10 @@ const TestResultSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: true
+    required: false   // ✅ GUEST FIX
   },
 
-  category: {          // ⭐ ADD THIS
+  category: {
     type: String,
     required: true
   },
@@ -33,6 +33,11 @@ const TestResultSchema = new mongoose.Schema({
   },
 
   correct: {
+    type: Number,
+    default: 0
+  },
+
+  incorrect: {   // ✅ ADD
     type: Number,
     default: 0
   },

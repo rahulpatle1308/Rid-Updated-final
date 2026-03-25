@@ -1,5 +1,5 @@
 const TestResult = require("../models/TestResult");
-const User = require("../models/User");
+const User = require('../../models/user');
 
 exports.submitTest = async (req, res) => {
   try {
@@ -23,9 +23,7 @@ exports.submitTest = async (req, res) => {
       timeSpent
     } = req.body;
 
-    const wrong = attempted - correct;
-
-    // ✅ Save in TestResult collection
+    // ✅ STEP 1: Save result
     const result = await TestResult.create({
       user: user._id,
       subject,
@@ -35,32 +33,39 @@ exports.submitTest = async (req, res) => {
       correct,
       percentage,
       accuracy,
-      timeSpent
+      timeSpent,
+      category: req.params.category || "general"
     });
 
-    // ✅ Push into user history
-    user.testHistory.push({
-      resultId: result._id,   // ⭐⭐⭐ MOST IMPORTANT
-      subject,
-      setNo: testNo,
-      score: correct,
-      percentage,
-      totalQuestions: total,
-      incorrect: wrong
-    });
+    // ✅ STEP 2: Update user (IMPORTANT 🔥)
+    const dbUser = await User.findById(user._id);
 
-    user.totalTestsAttempted += 1;
+   dbUser.testHistory.push({
+  resultId: result._id,
+  subject,
+  setNo: testNo,
+  score: correct,
+  totalQuestions: total,
+  percentage,
+  date: new Date()   // ✅ YE ADD KARNA HAI
+});
 
-    const totalScore = user.testHistory.reduce(
+    
+
+    // ✅ STEP 3: Total tests
+    dbUser.totalTestsAttempted = dbUser.testHistory.length;
+
+    // ✅ STEP 4: Average
+    const totalScore = dbUser.testHistory.reduce(
       (sum, t) => sum + (t.percentage || 0),
       0
     );
 
-    user.averageScore = Math.round(
-      totalScore / user.totalTestsAttempted
+    dbUser.averageScore = Math.round(
+      totalScore / dbUser.totalTestsAttempted
     );
 
-    await user.save();
+    await dbUser.save();
 
     res.json({
       success: true,

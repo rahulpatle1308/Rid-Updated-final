@@ -1,0 +1,2062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>RID Tech Master code · Paginated</title>
+    <!-- Google Fonts & Prism.js -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- Font Awesome for footer icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+   
+    <!-- CodeMirror for syntax highlighting in editor -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+    <!-- Choose a theme (dracula looks good in dark mode) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/dracula.min.css">
+
+    <style>
+        /* ---------- RESET & GLOBAL ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-primary);
+            line-height: 1.5;
+            transition: background-color 0.4s ease, color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Custom scrollbar (for rest of page) */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--border-light);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-light);
+            border-radius: 10px;
+            transition: background 0.2s;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        /* ---------- THEME VARIABLES ---------- */
+        body {
+            --bg-gradient: radial-gradient(circle at 10% 30%, #f1f5ff 0%, #e6ecf8 100%);
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --card-bg-solid: #ffffff;
+            --text-primary: #0f182e;
+            --text-secondary: #2a3a5e;
+            --border-light: rgba(0, 20, 50, 0.08);
+            --chip-bg: rgba(240, 245, 255, 0.7);
+            --chip-hover: rgba(220, 235, 255, 0.9);
+            --accent: #2b3b6b;
+            --accent-light: #4f6f8f;
+            --shadow-sm: 0 8px 20px -6px rgba(0, 20, 40, 0.12);
+            --shadow-md: 0 16px 30px -8px rgba(0, 30, 60, 0.2);
+            --shadow-lg: 0 30px 50px -12px rgba(0, 40, 80, 0.25);
+            --header-bg: rgba(255, 255, 255, 0.6);
+            --glow: 0 0 0 2px rgba(75, 130, 200, 0.3);
+        }
+
+        body.dark {
+            --bg-gradient: radial-gradient(circle at 20% 30%, #1a253b 0%, #0f172a 100%);
+            --card-bg: rgba(25, 35, 55, 0.8);
+            --card-bg-solid: #1e293b;
+            --text-primary: #edf2f9;
+            --text-secondary: #b0c4de;
+            --border-light: rgba(255, 255, 255, 0.06);
+            --chip-bg: rgba(40, 55, 80, 0.6);
+            --chip-hover: rgba(55, 75, 105, 0.8);
+            --accent: #7aa2f7;
+            --accent-light: #9bb9ff;
+            --shadow-sm: 0 8px 20px -6px #030614;
+            --shadow-md: 0 16px 30px -8px #020617;
+            --shadow-lg: 0 30px 50px -12px #010313;
+            --header-bg: rgba(20, 30, 45, 0.7);
+            --glow: 0 0 0 2px rgba(120, 170, 250, 0.4);
+        }
+
+        /* ---------- FULL‑WIDTH NAVBAR (W3SCHOOLS STYLE) ---------- */
+        .navbar-wrapper {
+            width: 100%;
+            background: var(--header-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            box-shadow: var(--shadow-md);
+        }
+
+        .navbar-container {
+            width: 100%;
+            padding: 0.6rem 2rem;
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Scrollable language buttons – scrollbar hidden */
+        .lang-buttons {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            -webkit-overflow-scrolling: touch;
+            flex: 1;
+        }
+
+        .lang-buttons::-webkit-scrollbar {
+            display: none;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .lang-btn:hover {
+            background: var(--chip-hover);
+            color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .lang-btn.active {
+            background: var(--chip-bg);
+            color: var(--accent);
+            font-weight: 600;
+            box-shadow: inset 0 -2px 0 var(--accent);
+        }
+
+        /* Disabled language button style */
+        .lang-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: auto; /* so we can still show alert on click */
+        }
+        .lang-btn.disabled:hover {
+            background: transparent;
+            color: var(--text-secondary);
+            transform: none;
+        }
+
+        .dark-toggle {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 40px;
+            padding: 0.5rem 1.4rem;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--text-secondary);
+            box-shadow: var(--shadow-sm);
+            backdrop-filter: blur(4px);
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .dark-toggle:hover {
+            background: var(--chip-hover);
+            transform: scale(0.98);
+        }
+
+        /* Menu toggle button (mobile) */
+        .menu-toggle {
+            display: none;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .menu-toggle:hover {
+            background: var(--accent-light);
+        }
+
+        /* ---------- FULL‑WIDTH MAIN CONTAINER ---------- */
+        .main-container {
+            width: 100%;
+            padding: 2rem 2rem;
+            display: flex;
+            gap: 2rem;
+            flex: 1;
+        }
+
+        /* Sidebar – fixed width */
+        .sidebar {
+            flex: 0 0 280px;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 1.8rem 1rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-light);
+            height: fit-content;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+            position: sticky;
+            top: 90px;
+            align-self: flex-start;
+            transition: left 0.3s ease;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 5px;
+        }
+        .sidebar::-webkit-scrollbar-track {
+            background: var(--border-light);
+            border-radius: 10px;
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--accent-light);
+            border-radius: 10px;
+        }
+
+        .topic-section {
+            background: transparent;
+            padding: 0;
+        }
+
+        .sidebar-heading {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--accent-light);
+            letter-spacing: -0.3px;
+        }
+
+        /* Search bar – compact */
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            background: var(--card-bg-solid);
+            border-radius: 60px;
+            padding: 0.2rem 0.2rem 0.2rem 0.2rem;
+            margin-bottom: 1.8rem;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            transition: box-shadow 0.2s, border-color 0.2s;
+            overflow: hidden;
+        }
+
+        .search-wrapper:focus-within {
+            box-shadow: 0 0 0 3px rgba(100, 150, 255, 0.25);
+            border-color: var(--accent);
+        }
+
+        .search-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-left: 1rem;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            opacity: 0.7;
+        }
+
+        .search-wrapper input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 0.7rem 0.5rem;
+            font-size: 0.95rem;
+            outline: none;
+            color: var(--text-primary);
+            min-width: 0;
+        }
+
+        .search-wrapper input::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.7;
+            font-weight: 400;
+        }
+
+        .search-wrapper button {
+            background: var(--accent);
+            border: none;
+            color: white;
+            padding: 0.5rem 1.6rem;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            letter-spacing: 0.3px;
+            box-shadow: 0 4px 10px -4px var(--accent);
+            white-space: nowrap;
+            margin-left: 0.2rem;
+        }
+
+        .search-wrapper button:hover {
+            background: var(--accent-light);
+            transform: scale(0.96);
+            box-shadow: 0 8px 14px -6px var(--accent);
+        }
+
+        /* Topics list – vertical menu */
+        .topics-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .topic-chip {
+            background: transparent;
+            padding: 0.7rem 1rem 0.7rem 1.5rem;
+            border-radius: 0;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            border: none;
+            width: 100%;
+            text-align: left;
+            word-break: break-word;
+            line-height: 1.4;
+            position: relative;
+            border-left: 3px solid transparent;
+        }
+
+        .topic-chip:hover {
+            background: var(--chip-hover);
+            border-left-color: var(--accent-light);
+            color: var(--accent);
+        }
+
+        .topic-chip.active {
+            background: rgba(100, 150, 255, 0.15);
+            border-left-color: var(--accent);
+            color: var(--accent);
+            font-weight: 600;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .topic-chip::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-light);
+            opacity: 0.7;
+            transition: all 0.2s ease;
+        }
+
+        .topic-chip:hover::before {
+            background: var(--accent);
+            opacity: 1;
+            transform: translateY(-50%) scale(1.2);
+        }
+
+        .topic-chip.active::before {
+            background: var(--accent);
+            opacity: 1;
+            box-shadow: 0 0 5px var(--accent);
+            width: 10px;
+            height: 10px;
+        }
+
+        .show-all-btn {
+            background: transparent;
+            color: var(--accent);
+            border: 1px dashed var(--accent-light);
+            padding: 0.7rem 1rem;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+            letter-spacing: 0.2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+        }
+
+        .show-all-btn:hover {
+            background: var(--chip-hover);
+            border-color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .empty-message {
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 1.5rem 1rem;
+            font-size: 0.9rem;
+            background: var(--chip-bg);
+            border-radius: 16px;
+            border: 1px dashed var(--border-light);
+            margin: 1rem 0;
+        }
+
+        /* Books button style */
+        .books-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 1rem;
+        }
+        .books-btn:hover {
+            background: var(--accent-light);
+            transform: scale(0.98);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Main content area – takes remaining width */
+        .content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .questions-area {
+            animation: fadeInUp 0.6s ease;
+        }
+
+        /* topic group heading */
+        .topic-group {
+            margin-bottom: 2rem;
+        }
+        .topic-group h3 {
+            font-size: 1.6rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-light);
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 1.8rem 2.2rem;
+            margin-bottom: 1.8rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-light);
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            border-left: 6px solid var(--accent);
+            animation: cardEntrance 0.5s ease-out;
+            animation-fill-mode: both;
+            scroll-margin-top: 100px;
+        }
+
+        @keyframes cardEntrance {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: var(--shadow-lg), var(--glow);
+        }
+
+        .question-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-btn,
+        .toggle-solution,
+        .run-code-btn,
+        .hint-btn {
+            background: transparent;
+            border: 1.5px solid var(--accent);
+            color: var(--accent);
+            padding: 0.6rem 1.4rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            backdrop-filter: blur(4px);
+            letter-spacing: 0.2px;
+        }
+
+        .run-code-btn {
+            background: var(--accent-light);
+            border-color: var(--accent-light);
+            color: white;
+            box-shadow: 0 6px 14px -6px var(--accent);
+        }
+
+        .nav-btn:hover,
+        .toggle-solution:hover,
+        .hint-btn:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 18px -8px var(--accent);
+        }
+
+        .run-code-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02) translateY(-2px);
+            box-shadow: 0 14px 22px -8px var(--accent);
+        }
+
+        .solution-panel,
+        .code-runner-panel,
+        .hint-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), margin 0.3s;
+            background: transparent;
+            border-radius: 24px;
+            margin-top: 0;
+        }
+
+        .solution-panel.show,
+        .code-runner-panel.show,
+        .hint-panel.show {
+            max-height: 1000px;
+            margin-top: 1.8rem;
+            overflow-y: auto;
+        }
+
+        .solution-content,
+        .code-runner-content,
+        .hint-content {
+            padding: 1.8rem 2rem;
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            background: var(--card-bg-solid);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .math-solution {
+            background: var(--chip-bg);
+            padding: 1.2rem 1.6rem;
+            border-radius: 20px;
+            margin-bottom: 1.8rem;
+            font-style: italic;
+            color: var(--text-secondary);
+            border-left: 5px solid var(--accent-light);
+            font-size: 1.05rem;
+        }
+
+        .code-solution {
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .rating {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--border-light);
+        }
+
+        .rating-btn {
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.15s;
+            padding: 0.3rem 0.8rem;
+            border-radius: 40px;
+            background: var(--chip-bg);
+        }
+
+        .rating-btn:hover {
+            transform: scale(1.15);
+            color: var(--accent);
+            background: var(--chip-hover);
+        }
+
+        .rating-btn:active {
+            transform: scale(0.95);
+        }
+
+        .rating-btn.voted {
+            background: var(--accent);
+            color: white;
+        }
+
+        .rating-count {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        /* CodeMirror editor styling */
+        .CodeMirror {
+            height: auto;
+            min-height: 140px;
+            border-radius: 20px;
+            border: 1px solid var(--border-light);
+            background: var(--chip-bg);
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+
+        .code-editor {
+            display: none;
+        }
+
+        .execute-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.7rem 2.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            margin: 1.2rem 0;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 8px 16px -8px var(--accent);
+            letter-spacing: 0.3px;
+        }
+
+        .execute-btn:hover {
+            opacity: 0.9;
+            transform: scale(0.98);
+            box-shadow: 0 12px 22px -8px var(--accent);
+        }
+
+        .execute-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .output-area {
+            background: var(--chip-bg);
+            border-radius: 20px;
+            padding: 1.2rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            white-space: pre-wrap;
+            max-height: 250px;
+            overflow-y: auto;
+            border: 1px solid var(--border-light);
+        }
+
+        .error-output {
+            color: #f87171;
+        }
+
+        .description {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 48px;
+            padding: 2.5rem;
+            margin: 2rem 0 2.5rem 0;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            border-left: 8px solid var(--accent-light);
+            border-right: 1px solid var(--border-light);
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .features-section {
+            margin-top: 2.5rem;
+            text-align: center;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .features-section h2 {
+            font-size: 2.3rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 2.5rem;
+            position: relative;
+            display: inline-block;
+            letter-spacing: -0.5px;
+        }
+
+        .features-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 4px;
+            background: var(--accent-light);
+            border-radius: 4px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 2.5rem 1.8rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            cursor: default;
+            border: 1px solid var(--border-light);
+            animation: float 6s infinite ease-in-out;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: var(--shadow-lg), var(--glow);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.2rem;
+            display: inline-block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        /* ---------- PAGINATION CONTROLS (new) ---------- */
+        .pagination-controls {
+            margin: 2rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .pagination-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
+            padding: 0.6rem 1.5rem;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            backdrop-filter: blur(4px);
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ---------- PROFESSIONAL FOOTER ---------- */
+        .footer {
+            margin-top: 5rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid var(--border-light);
+            padding: 3rem 1.5rem 1.5rem;
+            width: 100%;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 1.2rem;
+            letter-spacing: 0.3px;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--accent-light);
+            border-radius: 2px;
+        }
+
+        .footer-col p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.6rem;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s, transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .footer-col ul li i {
+            width: 20px;
+            color: var(--accent-light);
+        }
+
+        .contact-info li {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .contact-info i {
+            width: 20px;
+            color: var(--accent-light);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: var(--chip-bg);
+            border-radius: 50%;
+            color: var(--accent);
+            font-size: 1.1rem;
+            transition: all 0.2s;
+            border: 1px solid var(--border-light);
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-bottom a:hover {
+            color: var(--accent-light);
+        }
+
+        /* ---------- MOBILE RESPONSIVE STYLES ---------- */
+        @media (max-width: 900px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .main-container {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .sidebar {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                width: 80%;
+                max-width: 300px;
+                height: calc(100vh - 70px);
+                z-index: 1000;
+                border-radius: 0 20px 20px 0;
+                box-shadow: var(--shadow-lg);
+                background: var(--card-bg-solid);
+                backdrop-filter: blur(10px);
+                transition: left 0.3s ease;
+            }
+
+            .sidebar.show {
+                left: 0;
+            }
+
+            .content {
+                width: 100%;
+            }
+
+            .question-card {
+                padding: 1.2rem;
+                border-radius: 24px;
+            }
+
+            .button-group {
+                flex-direction: column;
+                gap: 0.6rem;
+            }
+
+            .nav-btn,
+            .toggle-solution,
+            .run-code-btn,
+            .hint-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .description {
+                padding: 1.5rem;
+                border-radius: 24px;
+                font-size: 1rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .lang-buttons {
+                gap: 0.2rem;
+            }
+
+            .lang-btn {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .dark-toggle {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+
+            body {
+                font-size: 14px;
+            }
+
+            .sidebar-heading {
+                font-size: 1.2rem;
+            }
+
+            .search-wrapper input {
+                font-size: 0.85rem;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Enhanced mobile responsiveness for phones (new breakpoint) */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 10px;
+            }
+            .sidebar {
+                top: 70px;
+                width: 85%;
+                max-width: 280px;
+                background: var(--card-bg-solid);
+            }
+            .question-card {
+                padding: 16px;
+                border-radius: 18px;
+            }
+            .question-text {
+                font-size: 16px;
+                line-height: 1.4;
+            }
+            .button-group {
+                flex-direction: column;
+            }
+            .button-group button {
+                width: 100%;
+                justify-content: center;
+            }
+            .CodeMirror {
+                font-size: 13px;
+                min-height: 120px;
+            }
+            .lang-buttons {
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            .lang-btn {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .social-links {
+                justify-content: center;
+            }
+            .pagination-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .pagination-btn {
+                width: 100%;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Full-width navbar -->
+    <div class="navbar-wrapper">
+        <div class="navbar-container">
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+            <div class="lang-buttons" id="langHeader"></div>
+            <button class="dark-toggle" id="darkToggle">🌙 Dark</button>
+        </div>
+    </div>
+
+    <!-- Full-width main container -->
+    <div class="main-container">
+        <!-- Fixed sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="topic-section">
+                <div id="sidebarHeading" class="sidebar-heading">Loading...</div>
+                <div class="search-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="Topics..." />
+                    <button id="searchBtn">Search</button>
+                </div>
+                <div id="topicsContainer" class="topics-grid"></div>
+                <button id="showAllBtn" class="show-all-btn" style="display: none;">📚 Show all questions</button>
+            </div>
+        </aside>
+
+        <!-- Main content -->
+        <main class="content">
+            <!-- Questions area (cards + pagination) -->
+            <div id="questionsArea" class="questions-area"></div>
+
+            <div class="description">
+                <p>✨ <strong>Master Code</strong> by <strong>RID Tech</strong> is a next-generation learning platform built exclusively for students and aspiring developers. RID Tech works towards bridging the gap between academic learning and real-world industry requirements by providing structured programming practice, smart solutions, and an interactive code runner. Our mission is to empower every student with practical coding skills and confidence.</p>
+            </div>
+
+            <div class="features-section">
+                <h2>🚀 What's New</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Code Runner</h3>
+                        <p>Execute code instantly in the browser – see output or errors in real time.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📈</div>
+                        <h3>Progress Tracker</h3>
+                        <p>Track which questions you've solved (coming soon).</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🤖</div>
+                        <h3>AI Hints</h3>
+                        <p>Get smart hints for difficult questions (coming soon).</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Mobile App</h3>
+                        <p>Study on the go – Android & iOS apps (coming soon).</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Professional Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>About CodeQues Pro</h3>
+                <p>We provide high‑quality, topic‑wise programming questions with detailed solutions and an interactive code runner. Learn at your own pace, track progress, and master coding.</p>
+                <p>Empowering developers since 2025.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> All Tutorials</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Code Runner</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Blog</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <ul class="contact-info">
+                    <li><i class="fas fa-map-marker-alt"></i> 51-C, Indrapuri, Raisen Road, Bhopal</li>
+                    <li><i class="fas fa-envelope"></i> info@ridbharat.com</li>
+                    <li><i class="fas fa-phone-alt"></i> +91 9202707903</li>
+                    <li><i class="fas fa-clock"></i> Monday - Saturday: 10:00 AM - 8:00 PM</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Follow Us</h3>
+                <p>Stay connected through social media</p>
+                <div class="social-links">
+                    <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.youtube.com/@RidBharat" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                    <a href="https://www.instagram.com/ridtech.in/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Master code RID. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            <p>Made with <i class="fas fa-heart" style="color: #f87171;"></i> by the RID Team</p>
+        </div>
+    </footer>
+
+    <!-- Prism.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
+
+    <!-- CodeMirror -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/clike/clike.min.js"></script>
+
+    <!-- Data files (ensure paths are correct) -->
+    <script src="js/data/00-init.js"></script>
+    <script src="js/data/01-languages.js"></script>
+    <script src="js/data/02-topics.js"></script>
+
+    <script src="js/data/python/variables.js"></script>
+    <script src="js/data/python/loops.js"></script>
+
+    <script src="js/data/javascript/variables.js"></script>
+    <script src="js/data/javascript/loops.js"></script>
+
+    <!-- java  -->
+
+    <script src="js/data/java/introductions.js"></script>
+    <script src="js/data/java/loops.js"></script>
+    <script src="js/data/java/arrays.js"></script>
+    <script src="js/data/java/dsa.js"></script>
+    <script src="js/data/java/method.js"></script>
+    <script src="js/data/java/oops.js"></script>
+    <script src="js/data/java/multithreding.js"></script>
+    <script src="js/data/java/variables.js"></script>
+    <script src="js\data\java\operators.js"></script>
+    <script src="js/data/java/datatypes.js"></script>
+    <script src="js/data/java/loops.js"></script>
+    <script src="js/data/java/InOp.js"></script>
+    <script src="js/data/java/conditionalStatement.js"></script>
+    <script src="js/data/java/strings.js"></script>
+    <script src="js/data/java/constructors.js"></script>
+    <script src="js/data/java/inheritence.js"></script>
+    <script src="js/data/java/polymorphism.js"></script>
+    <script src="js/data/java/abstract.js"></script>
+    <script src="js/data/java/encapsulation.js"></script>
+    <script src="js/data/java/interface.js"></script>
+    <script src="js/data/java/packages.js"></script>
+    <script src="js/data/java/exception.js"></script>
+    <script src="js/data/java/collectionsF.js"></script>
+    <script src="js/data/java/generics.js"></script>
+    <script src="js/data/java/fileHandling.js"></script>
+    <script src="js\data\java\streamAPI.js"></script>
+    <script src="js/data/java/lambda.js"></script>
+
+   
+  <!-- c++  -->
+  <script src="js/data/C++/loops.js"></script>
+  <script src="js/data/C++/introductions.js"></script>
+  <script src="js/data/C++/variables.js"></script>
+  <script src="js/data/C++/dataType.js"></script>
+  <script src="js/data/C++/operators.js"></script>
+  <script src="js/data/C++/inOp.js"></script>
+  <script src="js/data/C++/conditional.js"></script>
+  <script src="js/data/C++/arrays.js"></script>
+  <script src="js/data/C++/string.js"></script>
+  <script src="js/data/C++/functions.js"></script>
+  <script src="js/data/C++/oop.js"></script>
+  <script src="js/data/C++/constructor.js"></script>
+  <script src="js/data/C++/inheritence.js"></script>
+ <script src="js/data/C++/polymorphism.js"></script>
+ <script src="js/data/C++/abstract.js"></script>
+ <script src="js/data/C++/encapsulation.js"></script>
+ <script src="js/data/C++/interface.js"></script>
+ <script src="js/data/C++/exception.js"></script>
+ <script src="js/data/C++/containers.js"></script>
+ <script src="js/data/C++/templates.js"></script>
+ <script src="js/data/C++/filehandling.js"></script>
+ <script src="js/data/C++/multithreading.js"></script>
+ <script src="js/data/C++/stlAlgorithm.js"></script>
+ <script src="js/data/C++/lambda.js"></script>
+ <script src="js/data/C++/dsa.js"></script>
+    
+<!-- c -->
+<script src="js/data/c/loop.js"></script>
+<script src="js/data/c/break_continue.js"></script>
+<script src="js/data/c/intro.js"></script>
+<script src="js/data/c/structure.js"></script>
+<script src="js/data/c/variables.js"></script>
+<script src="js/data/c/datatypes.js"></script>
+<script src="js/data/c/constants.js"></script>
+<script src="js/data/c/operators.js"></script>
+<script src="js/data/c/input_output.js"></script>
+<script src="js/data/c/conditional.js"></script>
+<script src="js/data/c/goto.js"></script>
+<script src="js/data/c/functions.js"></script>
+<script src="js/data/c/recursion.js"></script> 
+<script src="js/data/c/arrays.js"></script>
+<script src="js/data/c/strings.js"></script>
+<script src="js/data/c/pointers.js"></script>
+<script src="js/data/c/pointer_array.js"></script>
+<script src="js/data/c/structures.js"></script>
+<script src="js/data/c/unions.js"></script>
+<script src="js/data/c/enum.js"></script>
+<script src="js/data/c/typedef.js"></script>
+<script src="js/data/c/storage_classes.js"></script>
+<script src="js/data/c/dynamic_memory.js"></script>
+<script src="js/data/c/file_handling.js"></script>
+<script src="js/data/c/preprocessor.js"></script>
+<script src="js/data/c/command_line.js"></script> 
+<script src="js/data/c/dsa_basic.js"></script>
+
+
+
+
+<!-- Python  -->
+<script src="js/data/python/AsyncProgramming.js"></script>
+<script src="js/data/python/ConditionalStatements.js"></script>
+   <script src="js/data/python/variables.js"></script>
+   <script src="js/data/python/loops.js"></script>
+   <script src="js/data/python/DataTypes.js"></script>
+   <script src="js/data/python/Date&Time.js"></script>
+   <script src="js/data/python/Decorators.js"></script>
+   <script src="js/data/python/Dictionaries.js"></script>
+   <script src="js/data/python/DSABasics.js"></script>
+   <script src="js/data/python/Recursion.js"></script>
+   <script src="js/data/python/Sets.js"></script>
+   <script src="js/data/python/ExceptionHandling.js"></script>
+   <script src="js/data/python/FileHandling.js"></script>
+   <script src="js/data/python/Functions.js"></script>
+   <script src="js/data/python/Generators.js"></script>
+   <script src="js/data/python/Input&Output.js"></script>
+   <script src="js/data/python/LambdaFunctions.js"></script>
+   <script src="js/data/python/ListComprehension.js"></script>
+   <script src="js/data/python/Lists.js"></script>
+   <script src="js/data/python/Modules&Packages.js"></script>
+   <script src="js/data/python/Multithreading.js"></script>
+   <script src="js/data/python/ObjectOrientedProgramming.js"></script>
+   <script src="js/data/python/Operators.js"></script>
+   <script src="js/data/python/RegularExpressions.js"></script>
+   <script src="js/data/python/Strings.js"></script>
+   <script src="js/data/python/Tuples.js"></script>
+
+
+
+<!-- C# scripts -->
+<script src="js/data/csharp/loops.js"></script>
+
+    <!-- Main application logic with PAGINATION (10 per page) and LIVE FILTERING (no datalist) -->
+    <script>
+    (function() {
+        const appData = window.QuizData;
+
+        const STORAGE_LANG = 'codeques_lang';
+        const STORAGE_TOPIC = 'codeques_topic';
+        const STORAGE_DARK = 'codeques_dark';
+        const RATINGS_KEY = 'codeques_ratings';
+        const USER_VOTES_KEY = 'codeques_user_votes';
+
+        // Supported languages (only these are active)
+        const supportedLanguages = ['py', 'java', 'cpp', 'c','js','cs'];
+
+        let currentLanguage = localStorage.getItem(STORAGE_LANG) || 'py';
+        // If stored language is not supported, fallback to first supported
+        if (!supportedLanguages.includes(currentLanguage)) {
+            currentLanguage = 'py';
+        }
+
+        let currentTopic = localStorage.getItem(STORAGE_TOPIC) || null;
+        let searchTerm = '';
+        // Default to showing all questions if no topic stored
+        let showAllMode = currentTopic ? false : true;
+        let ratings = JSON.parse(localStorage.getItem(RATINGS_KEY)) || {};
+        let userVotes = JSON.parse(localStorage.getItem(USER_VOTES_KEY)) || {};
+
+        // CodeMirror instances
+        const codeMirrorEditors = {};
+
+        // Navigation state (within page)
+        let questionsList = [];
+        let currentQuestionIdx = 0;
+
+        // ---------- PAGINATION STATE ----------
+        let currentPage = 1;
+        const ITEMS_PER_PAGE = 20;
+
+        const body = document.body;
+        if (localStorage.getItem(STORAGE_DARK) === 'true') {
+            body.classList.add('dark');
+        }
+
+        const langHeader = document.getElementById('langHeader');
+        const topicsContainer = document.getElementById('topicsContainer');
+        const questionsArea = document.getElementById('questionsArea');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const darkToggle = document.getElementById('darkToggle');
+        const showAllBtn = document.getElementById('showAllBtn');
+        const sidebarHeading = document.getElementById('sidebarHeading');
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        // Mobile sidebar toggle
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('show');
+            });
+        }
+
+        // Close sidebar when clicking outside (optional - improves UX)
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 900 &&
+                sidebar.classList.contains('show') &&
+                !sidebar.contains(e.target) &&
+                !menuToggle.contains(e.target)) {
+                sidebar.classList.remove('show');
+            }
+        });
+
+        function updateDarkToggle() {
+            darkToggle.textContent = body.classList.contains('dark') ? '☀️ Light' : '🌙 Dark';
+        }
+        updateDarkToggle();
+
+        darkToggle.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            localStorage.setItem(STORAGE_DARK, body.classList.contains('dark'));
+            updateDarkToggle();
+        });
+
+        function renderLanguages() {
+            langHeader.innerHTML = '';
+            appData.languages.forEach(lang => {
+                const isSupported = supportedLanguages.includes(lang.id);
+                const btn = document.createElement('button');
+                btn.className = `lang-btn ${currentLanguage === lang.id ? 'active' : ''} ${!isSupported ? 'disabled' : ''}`;
+                btn.textContent = lang.name + (isSupported ? '' : ' (Coming Soon)');
+                btn.dataset.lang = lang.id;
+
+                if (isSupported) {
+                    btn.addEventListener('click', () => {
+                        currentLanguage = lang.id;
+                        currentTopic = null;
+                        showAllMode = true;  // Show all questions for this language
+                        searchTerm = '';
+                        searchInput.value = '';
+                        currentPage = 1; // reset pagination
+                        localStorage.setItem(STORAGE_LANG, currentLanguage);
+                        localStorage.removeItem(STORAGE_TOPIC);
+                        renderLanguages();
+                        renderTopics();
+                        renderQuestions();
+                    });
+                } else {
+                    // Disabled language – show alert on click
+                    btn.addEventListener('click', () => {
+                        alert('🚧 This language is coming soon!');
+                    });
+                }
+
+                langHeader.appendChild(btn);
+            });
+            const activeBtn = langHeader.querySelector('.lang-btn.active');
+            if (activeBtn) {
+                activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+        }
+
+        function renderTopics() {
+            const langName = appData.languages.find(l => l.id === currentLanguage)?.name || 'Unknown';
+            sidebarHeading.textContent = `${langName} Topic`;
+
+            const filteredTopics = appData.topics.filter(t =>
+                t.langId === currentLanguage &&
+                t.name.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+
+            topicsContainer.innerHTML = '';
+            if (filteredTopics.length === 0) {
+                topicsContainer.innerHTML = '<div class="empty-message">✨ No matching topics</div>';
+                showAllBtn.style.display = 'none';
+                return;
+            }
+
+            filteredTopics.forEach(topic => {
+                const chip = document.createElement('span');
+                chip.className = `topic-chip ${currentTopic === topic.id && !showAllMode ? 'active' : ''}`;
+                chip.textContent = topic.name;
+                chip.dataset.topicId = topic.id;
+                chip.addEventListener('click', () => {
+                    currentTopic = topic.id;
+                    showAllMode = false;
+                    currentPage = 1; // reset pagination
+                    searchTerm = ''; // clear search term when topic selected
+                    searchInput.value = ''; // clear input
+                    localStorage.setItem(STORAGE_TOPIC, currentTopic);
+                    renderTopics(); // re-render topics to reflect active state
+                    renderQuestions();
+                    // Auto-close sidebar on mobile after topic selection
+                    if (window.innerWidth <= 900) {
+                        sidebar.classList.remove('show');
+                    }
+                });
+                topicsContainer.appendChild(chip);
+            });
+
+            showAllBtn.style.display = showAllMode ? 'none' : 'inline-block';
+        }
+
+        function closeAllPanels() {
+            document.querySelectorAll('.solution-panel, .code-runner-panel, .hint-panel').forEach(panel => {
+                panel.classList.remove('show');
+            });
+            document.querySelectorAll('.toggle-solution').forEach(btn => {
+                btn.textContent = '🔍 Solution';
+            });
+            document.querySelectorAll('.run-code-btn').forEach(btn => {
+                btn.textContent = '▶ Run Code';
+            });
+            document.querySelectorAll('.hint-btn').forEach(btn => {
+                btn.textContent = '💡 Hint';
+            });
+        }
+
+        function scrollToCurrentQuestion() {
+            if (questionsList.length === 0) return;
+            closeAllPanels();
+            const card = questionsList[currentQuestionIdx];
+            if (card) {
+                const yOffset = -80;
+                const y = card.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                window.scrollTo({ top: y, behavior: 'smooth' });
+            }
+        }
+
+        // ---------- MAIN RENDER WITH PAGINATION ----------
+        function renderQuestions() {
+            // Clear any previous CodeMirror instances
+            for (let id in codeMirrorEditors) {
+                delete codeMirrorEditors[id];
+            }
+
+            // 1. Build flat array of questions based on mode
+            let allQuestions = [];
+            if (showAllMode) {
+                const topicIdsForLang = appData.topics.filter(t => t.langId === currentLanguage).map(t => t.id);
+                allQuestions = appData.questions.filter(q => topicIdsForLang.includes(q.topicId));
+                // sort by topicId to keep groups together
+                allQuestions.sort((a,b) => a.topicId.localeCompare(b.topicId));
+            } else if (currentTopic) {
+                allQuestions = appData.questions.filter(q => q.topicId === currentTopic);
+            } else {
+                // fallback: show nothing (should not happen)
+                allQuestions = [];
+            }
+
+            // 2. Pagination calculations
+            const totalPages = Math.ceil(allQuestions.length / ITEMS_PER_PAGE) || 1;
+            if (currentPage < 1) currentPage = 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+
+            const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+            const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, allQuestions.length);
+            const pageQuestions = allQuestions.slice(startIndex, endIndex);
+
+            // 3. Generate HTML for questions on this page
+            let questionsHTML = '';
+            if (allQuestions.length === 0) {
+                questionsHTML = '<div class="empty-message">📭 No questions for this topic/language</div>';
+            } else {
+                if (showAllMode) {
+                    // Grouped rendering with topic headings
+                    let prevTopicId = null;
+                    let tempHTML = '';
+                    pageQuestions.forEach((q, idx) => {
+                        if (q.topicId !== prevTopicId) {
+                            if (prevTopicId !== null) tempHTML += '</div>'; // close previous group
+                            const topic = appData.topics.find(t => t.id === q.topicId);
+                            tempHTML += `<div class="topic-group"><h3>📘 ${topic ? topic.name : 'Unknown'}</h3>`;
+                            prevTopicId = q.topicId;
+                        }
+                        // global numbering: startIndex + idx + 1
+                        tempHTML += renderQuestionCard(q, startIndex + idx + 1);
+                    });
+                    if (prevTopicId !== null) tempHTML += '</div>'; // close last group
+                    questionsHTML = tempHTML;
+                } else {
+                    // Topic mode (flat, no group headings)
+                    pageQuestions.forEach((q, idx) => {
+                        questionsHTML += renderQuestionCard(q, startIndex + idx + 1);
+                    });
+                }
+            }
+
+            // 4. Pagination controls
+            const rangeText = allQuestions.length > 0 ? `Questions ${startIndex+1}–${endIndex}` : '';
+            const paginationHTML = `
+                <div class="pagination-controls">
+                    <button class="pagination-btn" id="prevPageBtn" ${currentPage === 1 ? 'disabled' : ''}>← Previous</button>
+                    <span>Page ${currentPage} of ${totalPages} ${rangeText}</span>
+                    <button class="pagination-btn" id="nextPageBtn" ${currentPage === totalPages ? 'disabled' : ''}>Next →</button>
+                </div>
+            `;
+
+            // Dynamic Books button with language name
+            const langName = appData.languages.find(l => l.id === currentLanguage)?.name || 'Programming';
+            const booksButtonHTML = `<div style="margin-bottom: 1rem;"><button id="booksButton" class="books-btn">📚 ${langName} Books</button></div>`;
+
+            questionsArea.innerHTML = booksButtonHTML + questionsHTML + (allQuestions.length > 0 ? paginationHTML : '');
+
+            // 5. Attach pagination events
+            document.getElementById('prevPageBtn')?.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderQuestions();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+            document.getElementById('nextPageBtn')?.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderQuestions();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+
+            // 6. Books button with dynamic language name
+            document.getElementById('booksButton')?.addEventListener('click', () => {
+                alert(`${langName} books coming soon!`);
+            });
+
+            // 7. Update questionsList for intra‑page navigation
+            questionsList = Array.from(document.querySelectorAll('.question-card'));
+            currentQuestionIdx = 0; // reset to first on page
+
+            // 8. Attach all other event handlers
+            attachSolutionEvents();
+            attachRatingEvents();
+            attachCodeRunnerEvents();
+            attachHintEvents();
+            attachNavigationEvents();
+            Prism.highlightAll();
+        }
+
+        function renderQuestionCard(q, number) {
+            const rating = ratings[q.id] || { up: 0, down: 0 };
+            const language = getLanguageFromTopic(q.topicId);
+            const upVoted = userVotes[q.id] === 'up' ? 'voted' : '';
+            const downVoted = userVotes[q.id] === 'down' ? 'voted' : '';
+            const hintText = q.hint || 'No hint available yet.';
+            return `
+                <div class="question-card" data-qid="${q.id}" data-lang="en">
+                    <div class="question-text" id="question-text-${q.id}">${number}. ${q.question}</div>
+                    <div class="button-group">
+                        <button class="nav-btn back-btn" data-qid="${q.id}" aria-label="Previous question">←</button>
+                        <button class="toggle-solution" data-target="sol-${q.id}">🔍 Solution</button>
+                        <button class="hint-btn" data-target="hint-${q.id}">💡 Hint</button>
+                        <button class="run-code-btn" data-target="run-${q.id}">▶ Run Code</button>
+                        <button class="nav-btn next-btn" data-qid="${q.id}" aria-label="Next question">→</button>
+                    </div>
+                   
+                    <div id="sol-${q.id}" class="solution-panel">
+                        <div class="solution-content">
+                            <div class="math-solution" id="math-${q.id}">📐 ${q.mathSolution}</div>
+                            <pre class="code-solution" id="code-pre-${q.id}"><code class="language-${getLanguageClass(q)}" id="code-${q.id}">${escapeHtml(q.codeSolution)}</code></pre>
+                            <div class="rating">
+                                <button class="rating-btn up ${upVoted}" data-qid="${q.id}">👍 <span class="rating-count">${rating.up}</span></button>
+                                <button class="rating-btn down ${downVoted}" data-qid="${q.id}">👎 <span class="rating-count">${rating.down}</span></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="hint-${q.id}" class="hint-panel">
+                        <div class="hint-content">${hintText}</div>
+                    </div>
+
+                    <div id="run-${q.id}" class="code-runner-panel">
+                        <div class="code-runner-content">
+                            <textarea id="editor-${q.id}" class="code-editor" placeholder="Write your code here...">${escapeHtml(q.codeSolution)}</textarea>
+                            <button type="button" class="execute-btn" data-qid="${q.id}" data-lang="${language}">⚡ Submit</button>
+                            <div id="output-${q.id}" class="output-area">Output will appear here...</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getLanguageFromTopic(topicId) {
+            const topic = appData.topics.find(t => t.id === topicId);
+            return topic ? topic.langId : 'py';
+        }
+
+        function escapeHtml(unsafe) {
+            return unsafe.replace(/[&<>"]/g, function(m) {
+                if(m === '&') return '&amp;';
+                if(m === '<') return '&lt;';
+                if(m === '>') return '&gt;';
+                if(m === '"') return '&quot;';
+                return m;
+            });
+        }
+
+        function getCodeMirrorMode(langId) {
+            const map = {
+                py: 'python',
+                js: 'javascript',
+                cpp: 'text/x-c++src',
+                java: 'text/x-java',
+                c: 'text/x-csrc',
+            };
+            return map[langId] || 'python';
+        }
+
+        function getLanguageClass(q) {
+            const topic = appData.topics.find(t => t.id === q.topicId);
+            if (!topic) return 'plaintext';
+            const lang = topic.langId;
+            if (lang === 'py') return 'python';
+            if (lang === 'js') return 'javascript';
+            if (lang === 'cpp') return 'cpp';
+            if (lang === 'java') return 'java';
+            if (lang === 'c') return 'c';
+            return 'plaintext';
+        }
+
+        function attachNavigationEvents() {
+            document.querySelectorAll('.back-btn').forEach(btn => {
+                btn.removeEventListener('click', backHandler);
+                btn.addEventListener('click', backHandler);
+            });
+            document.querySelectorAll('.next-btn').forEach(btn => {
+                btn.removeEventListener('click', nextHandler);
+                btn.addEventListener('click', nextHandler);
+            });
+        }
+
+        function backHandler(e) {
+            e.preventDefault();
+            const btn = e.currentTarget;
+            const card = btn.closest('.question-card');
+            const index = questionsList.indexOf(card);
+            if (index > 0) {
+                currentQuestionIdx = index - 1;
+                scrollToCurrentQuestion();
+            }
+        }
+
+        function nextHandler(e) {
+            e.preventDefault();
+            const btn = e.currentTarget;
+            const card = btn.closest('.question-card');
+            const index = questionsList.indexOf(card);
+            if (index < questionsList.length - 1) {
+                currentQuestionIdx = index + 1;
+                scrollToCurrentQuestion();
+            }
+        }
+
+        function attachCodeRunnerEvents() {
+            document.querySelectorAll('.run-code-btn').forEach(btn => {
+                btn.removeEventListener('click', toggleCodeRunner);
+                btn.addEventListener('click', toggleCodeRunner);
+            });
+            document.querySelectorAll('.execute-btn').forEach(btn => {
+                btn.removeEventListener('click', executeCode);
+                btn.addEventListener('click', executeCode);
+            });
+        }
+
+        function toggleCodeRunner(e) {
+            const btn = e.currentTarget;
+            const targetId = btn.dataset.target;
+            const panel = document.getElementById(targetId);
+
+            if (panel.classList.contains('show')) {
+                closeAllPanels();
+                return;
+            }
+            closeAllPanels();
+            panel.classList.add('show');
+            btn.textContent = '▲ Hide Code Runner';
+
+            const qid = targetId.replace('run-', '');
+            const textarea = document.getElementById(`editor-${qid}`);
+            if (textarea && !codeMirrorEditors[qid]) {
+                const langId = document.querySelector(`.execute-btn[data-qid="${qid}"]`).dataset.lang;
+                const mode = getCodeMirrorMode(langId);
+                const editor = CodeMirror.fromTextArea(textarea, {
+                    lineNumbers: true,
+                    mode: mode,
+                    theme: 'dracula',
+                    indentUnit: 4,
+                    autoCloseBrackets: true,
+                    matchBrackets: true
+                });
+                codeMirrorEditors[qid] = editor;
+            }
+        }
+
+        async function executeCode(e) {
+            e.preventDefault();
+            const btn = e.currentTarget;
+            const qid = btn.dataset.qid;
+            const langId = btn.dataset.lang;
+            const outputDiv = document.getElementById(`output-${qid}`);
+
+            let code;
+            if (codeMirrorEditors[qid]) {
+                code = codeMirrorEditors[qid].getValue();
+            } else {
+                code = document.getElementById(`editor-${qid}`).value;
+            }
+
+            outputDiv.textContent = "⏳ Running...";
+            btn.disabled = true;
+
+            const languageMap = {
+                py: "python",
+                js: "javascript",
+                cpp: "cpp",
+                java: "java",
+                c: "c",
+                cs: "csharp"
+            };
+
+            try {
+                const response = await fetch("/execute", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        language: languageMap[langId],
+                        files: [{ content: code }]
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server error (HTTP ${response.status})`);
+                }
+
+                const data = await response.json();
+
+                let output = "";
+                if (data.run?.stderr && data.run.stderr.trim() !== "") {
+                    const stderr = data.run.stderr;
+                    const lineMatch = stderr.match(/line (\d+)/i) || stderr.match(/:(\d+):\d+/) || stderr.match(/\.java:(\d+)/);
+                    if (lineMatch) {
+                        const lineNum = lineMatch[1];
+                        output = `❌ Error on line ${lineNum}:\n${stderr}`;
+                    } else {
+                        output = `❌ Error:\n${stderr}`;
+                    }
+                } else if (data.run?.stdout && data.run.stdout.trim() !== "") {
+                    output = data.run.stdout;
+                } else {
+                    output = "⚠ Program executed but no output";
+                }
+                outputDiv.textContent = output;
+
+            } catch (err) {
+                outputDiv.textContent = "🚨 Connection error: " + err.message + "\n\nIs your code execution server running?";
+            }
+
+            btn.disabled = false;
+        }
+
+        function attachSolutionEvents() {
+            document.querySelectorAll('.toggle-solution').forEach(btn => {
+                btn.removeEventListener('click', toggleSolutionHandler);
+                btn.addEventListener('click', toggleSolutionHandler);
+            });
+        }
+
+        function toggleSolutionHandler(e) {
+            const btn = e.currentTarget;
+            const targetId = btn.dataset.target;
+            const panel = document.getElementById(targetId);
+
+            if (panel.classList.contains('show')) {
+                closeAllPanels();
+                return;
+            }
+            closeAllPanels();
+            panel.classList.add('show');
+            btn.textContent = '▲ Hide Solution';
+            Prism.highlightAllUnder(panel);
+        }
+
+        function attachHintEvents() {
+            document.querySelectorAll('.hint-btn').forEach(btn => {
+                btn.removeEventListener('click', toggleHintHandler);
+                btn.addEventListener('click', toggleHintHandler);
+            });
+        }
+
+        function toggleHintHandler(e) {
+            const btn = e.currentTarget;
+            const targetId = btn.dataset.target;
+            const panel = document.getElementById(targetId);
+
+            if (panel.classList.contains('show')) {
+                closeAllPanels();
+                return;
+            }
+            closeAllPanels();
+            panel.classList.add('show');
+            btn.textContent = '▲ Hide Hint';
+        }
+
+        function attachRatingEvents() {
+            document.querySelectorAll('.rating-btn').forEach(btn => {
+                btn.removeEventListener('click', ratingHandler);
+                btn.addEventListener('click', ratingHandler);
+            });
+        }
+
+        function ratingHandler(e) {
+            const btn = e.currentTarget;
+            const qid = btn.dataset.qid;
+            const type = btn.classList.contains('up') ? 'up' : 'down';
+           
+            const currentVote = userVotes[qid];
+           
+            if (!ratings[qid]) ratings[qid] = { up: 0, down: 0 };
+           
+            if (currentVote === type) {
+                ratings[qid][type] -= 1;
+                delete userVotes[qid];
+            } else {
+                if (currentVote) {
+                    ratings[qid][currentVote] -= 1;
+                }
+                ratings[qid][type] += 1;
+                userVotes[qid] = type;
+            }
+           
+            localStorage.setItem(RATINGS_KEY, JSON.stringify(ratings));
+            localStorage.setItem(USER_VOTES_KEY, JSON.stringify(userVotes));
+           
+            const upBtn = btn.closest('.rating').querySelector('.rating-btn.up');
+            const downBtn = btn.closest('.rating').querySelector('.rating-btn.down');
+            upBtn.querySelector('.rating-count').textContent = ratings[qid].up;
+            downBtn.querySelector('.rating-count').textContent = ratings[qid].down;
+           
+            upBtn.classList.toggle('voted', userVotes[qid] === 'up');
+            downBtn.classList.toggle('voted', userVotes[qid] === 'down');
+        }
+
+        // ---------- LIVE SEARCH / FILTER (no datalist) ----------
+        function performSearch() {
+            // This function is called when user types (input) or clicks search button.
+            // It clears any selected topic and filters topics based on searchTerm.
+            if (searchTerm.trim() !== '') {
+                currentTopic = null;
+                showAllMode = false; // we are in search mode (show filtered topics, not all questions)
+            } else {
+                // If search term is empty, we might want to go back to showing all topics (with no topic selected)
+                currentTopic = null;
+                showAllMode = true; // show all topics and all questions
+            }
+            currentPage = 1; // reset to first page when searching
+            localStorage.removeItem(STORAGE_TOPIC);
+            renderTopics();   // re-render topics with filter
+            renderQuestions(); // update questions (show all if showAllMode true)
+        }
+
+        // Live filtering on input
+        searchInput.addEventListener('input', function(e) {
+            searchTerm = e.target.value.trim();
+            performSearch();
+        });
+
+        // Search button click
+        searchBtn.addEventListener('click', function() {
+            searchTerm = searchInput.value.trim();
+            performSearch();
+        });
+
+        // Enter key in search input
+        searchInput.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                searchTerm = searchInput.value.trim();
+                performSearch();
+            }
+        });
+
+        showAllBtn.addEventListener('click', () => {
+            showAllMode = true;
+            currentTopic = null;
+            currentPage = 1; // reset pagination
+            searchTerm = '';
+            searchInput.value = '';
+            localStorage.removeItem(STORAGE_TOPIC);
+            renderTopics();
+            renderQuestions();
+            // Auto-close sidebar on mobile
+            if (window.innerWidth <= 900) {
+                sidebar.classList.remove('show');
+            }
+        });
+
+        // Initial render
+        renderLanguages();
+        renderTopics();
+        renderQuestions();
+    })();
+    </script>
+</body>
+</html>

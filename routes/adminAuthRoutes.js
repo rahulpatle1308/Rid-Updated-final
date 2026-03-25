@@ -21,6 +21,32 @@ router.get("/forgot-password", (req, res) => {
   res.render("Admin/Authontication/forgetpassword");
 });
 
+// =============================
+// TEMP: Create Default Admin (One Time Use)
+// =============================
+router.get("/create-admin", async (req, res) => {
+  try {
+    const existing = await Admin.findOne({ email: "deepak232a@gmail.com" });
+    if (existing) {
+      return res.send("Admin already exists");
+    }
+
+    const hashed = await bcrypt.hash("Ritanshu@9279554156kumar", 10);
+
+    await Admin.create({
+      name: "Super Admin",
+      email: "deepak232a@gmail.com",
+      password: hashed,
+      role: "admin"
+    });
+
+    res.send("Default Admin Created Successfully");
+
+  } catch (error) {
+    console.log(error);
+    res.send("Error creating admin");
+  }
+});
 
 // =============================
 // Show Signup Page
