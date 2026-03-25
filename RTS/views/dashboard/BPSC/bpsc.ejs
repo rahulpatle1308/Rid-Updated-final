@@ -2,10 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><br><br>
-  <title>
-          <%= typeof title !== 'undefined' ? title : 'Technical & Coding Courses' %>
-</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= typeof title !== 'undefined' ? title : 'Technical & Coding Courses' %></title>
     
     <!-- External CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -26,102 +24,103 @@
    
     <!-- Main Content -->
     <main>
-       
-       <section class="courses-section">
-    <div class="courses-container">
-        <!-- Course 1: BPSC  -->
-        <div class="course-card" data-course-id="RRB NTPC" data-course-name="RRB NTPC">
-            <!-- VISIT COUNT - LEFT SIDE (Without eye icon) -->
-            <div class="visit-count">
-                <span class="count">0</span>
-                <span class="visits-text">visits</span>
-            </div>
-            <!-- BADGE - RIGHT SIDE -->
-            <span class="badge-left update-badge">UPDATED</span>
-            
-            <div class="course-header">
-                <div class="card-icon">
-                    <i class="fa-brands fa-html5"></i>
+        <section class="courses-section">
+            <div class="courses-container">
+                
+                <!-- Course 1: Primary Teacher (1-5) -->
+                <div class="course-card" data-course-id="Primary Teacher" data-course-name="Primary Teacher (1-5)">
+                    <div class="visit-count">
+                        <span class="count">0</span>
+                        <span class="visits-text">visits</span>
+                    </div>
+                    <span class="badge-left update-badge">UPDATED</span>
+                    
+                    <div class="course-header">
+                        <div class="card-icon">
+                            <i class="fas fa-chalkboard-user"></i>
+                        </div>
+                        <h3>Primary Teacher (1-5)</h3>
+                    </div>
+                    <div class="course-content">
+                        <div class="marquee">
+                            <p>All Test <span>Series</span></p>
+                        </div>
+                        <div class="btn-container">
+                            <a href="/rts/bpsc/primary-teacher" class="btn track-visit">Open Now</a>
+                        </div>
+                    </div>
                 </div>
-                <h3>Primary Teacher (1-5) </h3>
-            </div>
-            <div class="course-content">
-                <div class="marquee">
-                    <p>All Test <span>Series</span></p>
+                
+                <!-- Course 2: Middle School Teacher (6-8) -->
+                <div class="course-card" data-course-id="Middle School Teacher" data-course-name="Middle School Teacher (6-8)">
+                    <div class="visit-count">
+                        <span class="count">0</span>
+                        <span class="visits-text">visits</span>
+                    </div>
+                    <span class="badge-left update-badge">UPDATED</span>
+                    
+                    <div class="course-header">
+                        <div class="card-icon">
+                            <i class="fas fa-chalkboard"></i>
+                        </div>
+                        <h3>Middle School Teacher (6-8)</h3>
+                    </div>
+                    <div class="course-content">
+                        <div class="marquee">
+                            <p>All Test <span>Series</span></p>
+                        </div>
+                        <div class="btn-container">
+                            <a href="/rts/bpsc/middle-school-teacher" class="btn track-visit">Open Now</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="btn-container">
-                   <a href="/rts/bpsc/primary-teacher" class="btn track-visit">Open Now</a>
+                
+                <!-- Course 3: Higher Secondary (11-12) -->
+                <div class="course-card" data-course-id="Higher Secondary" data-course-name="Higher Secondary (11-12)">
+                    <div class="visit-count">
+                        <span class="count">0</span>
+                        <span class="visits-text">visits</span>
+                    </div>
+                    <span class="badge-left new-badge">COMING SOON</span>
+                    
+                    <div class="course-header">
+                        <div class="card-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3>Higher Secondary (11-12)</h3>
+                    </div>
+                    <div class="course-content">
+                        <div class="marquee">
+                            <p>All Test <span>Series</span></p>
+                        </div>
+                        <div class="btn-container">
+                            <a href="/rts/ComingSoon" class="btn track-visit">Open Now</a>
+                        </div>
+                    </div>
                 </div>
+                
+              
             </div>
-        </div>
-      <!-- Course 2: BPSC -->
-        <div class="course-card" data-course-id="RRB Group D" data-course-name="RRB Group D">
-            <!-- VISIT COUNT - LEFT SIDE (Without eye icon) -->
-            <div class="visit-count">
-                <span class="count">0</span>
-                <span class="visits-text">visits</span>
-            </div>
-            <!-- BADGE - RIGHT SIDE -->
-            <span class="badge-left update-badge">UPDATED</span>
-            
-            <div class="course-header">
-                <div class="card-icon">
-                    <i class="fa-brands fa-html5"></i>
-                </div>
-                <h3>Middle School Teacher (6-8)</h3>
-            </div>
-            <div class="course-content">
-                <div class="marquee">
-                    <p>All Test <span>Series</span></p>
-                </div>
-                <div class="btn-container">
-                   <a href="/rts/bpsc/middle-school-teacher" class="btn track-visit">Open Now</a>
-                </div>
-            </div>
-        </div>
-    
-        <!-- Course 3: BPSC -->
-          <div class="course-card" data-course-id="RRB Group D" data-course-name="RRB Group D">
-            <!-- VISIT COUNT - LEFT SIDE (Without eye icon) -->
-            <div class="visit-count">
-                <span class="count">0</span>
-                <span class="visits-text">visits</span>
-            </div>
-            <!-- BADGE - RIGHT SIDE -->
-            <span class="badge-left update-badge">UPDATED</span>
-            
-            <div class="course-header">
-                <div class="card-icon">
-                    <i class="fa-brands fa-html5"></i>
-                </div>
-                <h3>Higher Secondary  (11-12)</h3>
-            </div>
-            <div class="course-content">
-                <div class="marquee">
-                    <p>All Test <span>Series</span></p>
-                </div>
-                <div class="btn-container">
-                   <a href="/rts/bpsc/higher-secondary" class="btn track-visit">Open Now</a>
-                </div>
-            </div>
-        </div>
-
-
-    </div>
-</section>
+        </section>
     </main>
     
     <!-- Footer -->
     <%- include('../partials/footer') %>
-
     
+    <!-- JavaScript -->
+    <script>
+        window.API_BASE_URL = "<%= typeof apiBaseUrl !== 'undefined' ? apiBaseUrl : '' %>";
+        window.USER_DATA = <%- JSON.stringify(user || {}) %>;
+    </script>
+    
+    <script src="/rts/js/config.js"></script>
     <script src="/rts/js/visit-counter.js"></script>
     <script src="/rts/js/banner-slider.js"></script>
     <script src="/rts/js/search-filter.js"></script>
     <script src="/rts/js/ui-handlers.js"></script>
     <script src="/rts/js/dashboard.js"></script>
     
-    <!-- Ionicons for footer icons -->
+    <!-- Ionicons -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>

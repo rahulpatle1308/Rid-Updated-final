@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Website</title>
+
+    <!-- OPTIONAL: agar CSS already hai to ye hata sakta hai -->
+    <style>
+        body {
+            font-family: Arial;
+            background: #f5f6fa;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .btn {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background: #ff6b81;
+            color: white;
+            border: none;
+        }
+        .btn-outline {
+            border: 1px solid #333;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Birthday Website Page -->
+<div class="calendar-page" id="calendarPage">
+
+    <div style="text-align:center; margin-bottom:25px;">
+        <h2 style="color:#ff6b81;">🎂 Create a Beautiful Birthday Website</h2>
+        <p style="color:#666;">Fill the details below and generate a surprise birthday page</p>
+    </div>
+
+    <div class="calendar-container" style="max-width:700px; margin:auto;">
+        <div class="form-container">
+
+            <!-- FORM -->
+            <form id="giftForm" enctype="multipart/form-data">
+
+                <div class="form-group">
+                    <label>Birthday Person's Name</label>
+                    <input type="text" name="didiName" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Your Message</label>
+                    <textarea name="message" class="form-control" rows="4" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Birthday Person Photo</label>
+                    <input type="file" name="didiImage" class="form-control" accept="image/*" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Your Photo (Optional)</label>
+                    <input type="file" name="jijaImage" class="form-control" accept="image/*">
+                </div>
+
+                <div class="form-group">
+                    <label>Birthday Song (Optional)</label>
+                    <input type="file" name="song" class="form-control" accept="audio/*">
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width:100%;">
+                    Create Birthday Website
+                </button>
+
+            </form>
+
+            <!-- RESULT -->
+            <div id="result" style="display:none; margin-top:20px;">
+                <h3>🎉 Website Ready!</h3>
+                <input type="text" id="generatedLink" class="form-control" readonly>
+
+                <button onclick="copyLink()" class="btn btn-outline" style="margin-top:10px;">
+                    Copy Link
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- SCRIPT -->
+<script>
+document.getElementById("giftForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+
+    try {
+        const res = await fetch("/create-gift", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await res.json();
+
+        if (!data.success) {
+            alert("Failed to create website");
+            return;
+        }
+
+        const fullLink = window.location.origin + data.url;
+
+        document.getElementById("result").style.display = "block";
+        document.getElementById("generatedLink").value = fullLink;
+
+    } catch (err) {
+        console.error(err);
+    }
+});
+
+function copyLink() {
+    const link = document.getElementById("generatedLink");
+    link.select();
+    navigator.clipboard.writeText(link.value);
+    alert("Link copied!");
+}
+</script>
+
+</body>
+</html>

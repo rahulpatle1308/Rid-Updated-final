@@ -41,7 +41,8 @@ router.get("/html/purchase", (req, res) => {
 router.get("/jee/subparts", (req, res) => {
   res.render("dashboard/JEE/jeesub-parts", {
     category: "jee",
-    subject: "JEE"
+    subject: "JEE",
+    user: req.user || {}   
   });
 });
 router.get("/jee/mains", (req, res) => {
@@ -61,7 +62,8 @@ router.get("/jee/advance", (req, res) => {
 router.get("/ssc/subparts", (req, res) => {
   res.render("dashboard/SSC/ssc", {
     category: "ssc",
-    subject: "SSC"
+    subject: "SSC",
+     user: req.user || {}
   });
 });
 router.get("/Group-B/purchase", (req, res) => {
@@ -70,7 +72,7 @@ router.get("/Group-B/purchase", (req, res) => {
     subject: "SSC"
   });
 });
-router.get("/Group-D/purchase", (req, res) => {
+router.get("/Group-C/purchase", (req, res) => {
   res.render("dashboard/SSC/Group-C/purchase", {
     category: "ssc",
     subject: "SSC"
@@ -82,7 +84,8 @@ router.get("/Group-D/purchase", (req, res) => {
 router.get("/neet", (req, res) => {
   res.render("dashboard/NEET/neet", {
     category: "neet",
-    subject: "NEET"
+    subject: "NEET",
+    user: req.user || {} 
   });
 });
 router.get("/neet/biology",(req,res)=>{
@@ -238,6 +241,7 @@ router.get('/DjanGo/purchase', (req, res) => {
 router.get("/state-boards", (req, res) => {
   res.render("dashboard/StateBoard/stateboard", {
     title: "State Boards",
+   
   });
 });
 
@@ -269,6 +273,7 @@ router.get('/mpboard/purchase', (req, res) => {
 router.get("/HomeGuard", (req, res) => {
   res.render("dashboard/HomeGuard/homeguard", {
     title: "Home Guard",
+    user: req.user || {}  
   });
 });
 
@@ -295,6 +300,7 @@ router.get('/uphomeguard/purchase', (req, res) => {
 router.get("/railway",(req, res) => {
   res.render("dashboard/Railway/railway",{
     title: "Railway",
+    user: req.user || {}  
   });
 });
 
@@ -310,14 +316,22 @@ router.get('/ntpc/purchase', (req, res) => {
 // BPSC TEACHER
 router.get("/bpsc",(req,res)=>{
   res.render("dashboard/BPSC/bpsc",{
-    title:"BPSC"
+    title:"BPSC",
+     user: req.user || {}  
   });
 });
-router.get("/bpsc/higher-secondary",(req,res)=>{
-  res.render("dashboard/BPSC/Higher-Secondary/purchase",{
+// router.get("/bpsc/higher-secondary",(req,res)=>{
+//   res.render("dashboard/BPSC/Higher-Secondary/purchase",{
+//     title:"BPSC Higher-Secondary"
+//   });
+// });
+
+router.get("/ComingSoon",(req,res)=>{
+  res.render("dashboard/Coming Soon",{
     title:"BPSC Higher-Secondary"
   });
 });
+
 router.get("/bpsc/middle-school-teacher",(req,res)=>{
   res.render("dashboard/BPSC/Middle-School-Teacher/purchase",{
     title:"BPSC Middle-School-Teacher"
@@ -329,6 +343,11 @@ router.get("/bpsc/primary-teacher",(req,res)=>{
   });
 });
 
+
+
+router.get("/birthday-software", (req, res) => {
+    res.render("dashboard/partials/birthday");
+});
 
 // router.get("/quiz/:category/:subject/:testNo", (req, res) => {
 //   const { category, subject, testNo } = req.params;

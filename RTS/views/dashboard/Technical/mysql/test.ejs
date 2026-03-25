@@ -32255,7 +32255,7 @@ const SUBJECT = "<%= subject %>".toLowerCase();
   </div>
   
   <div class="main-container">
-    <header><%= subject %> <%= testNo %> QUIZ</header>
+    <header><%= subject %> QUIZ and TEST <%= testNo %> </header>
     
     <div class="quiz-header">
       <div class="header-left">
@@ -32442,37 +32442,30 @@ const SUBJECT = "<%= subject %>".toLowerCase();
 
     // Initialize quiz
     function initializeQuiz() {
-      if (questions.length === 0) {
-        alert('No questions available.');
-        return;
-      }
-      
-      quizStarted = true;
-      startTime = new Date();
-      
-      // Enable buttons
-      prevBtn.disabled = false;
-      nextBtn.disabled = false;
-      markBtn.disabled = false;
-      submitBtn.disabled = false;
-      
-      // Update total questions count
-      totalQuestionsElement.textContent = `Questions (${questions.length})`;
-      
-      // Load first question
-      loadQuestion(currentQuestion);
-      
-      // Start timer
-      startTimer();
-      
-      // Update navigation circles
-      updateNavigationCircles();
-      
-     
-      
-      // Enable auto-save
-      enableAutoSave();
-    }
+  if (questions.length === 0) {
+    alert('No questions available.');
+    return;
+  }
+
+  quizStarted = true;
+  startTime = new Date();
+
+  // 🔥 Dynamic Timer
+  timeLeft = questions.length * 60;
+
+  // Enable buttons
+  prevBtn.disabled = false;
+  nextBtn.disabled = false;
+  markBtn.disabled = false;
+  submitBtn.disabled = false;
+
+  totalQuestionsElement.textContent = `Questions (${questions.length})`;
+
+  loadQuestion(currentQuestion);
+  startTimer();
+  updateNavigationCircles();
+  enableAutoSave();
+}
 
     // Load Question
     function loadQuestion(index) {
