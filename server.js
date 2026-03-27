@@ -16,8 +16,18 @@ const dashboardRoutes = require("./routes/dashboard-count-all-system.js");
 const candidateRoutes = require("./routes/candidateRoutes.js");
 
 
-// Load environment variables
+
+
+
+
 dotenv.config();
+
+
+// Routes
+// app.use("/", require("./routes/product"));
+
+
+
 
 // Initialize express app
 const app = express();
@@ -470,6 +480,12 @@ app.post("/api/send-email", async (req, res) => {
         res.json({ success: false });
     }
 });
+  // app.get("/grammarchecker",(req,res)=>{
+  // res.render("product/texttools/grammar.ejs")
+  // })
+app.get("/com",(req,res)=>{
+  res.render("product/pdftools/compresspdf.ejs")
+  })
 const teacherTests = require("./routes/teacherTests");
 app.use("/teacher-tests", teacherTests);
 const advanceStudentRoutes = require("./routes/advanceStudentRoutes");
@@ -509,10 +525,22 @@ app.get("/typing-software",(req,res)=>{
   res.render("typing-software/main.ejs")
 })
 
-app.get("/com",(req,res)=>{
-  res.render("com/main.ejs")
-})
+//////////////////////////////////////////////////product routes/////////////////////////////////////////
+const  productRoutes = require("./routes/product.js");
+app.use("/",productRoutes);
+// ////////////////////////////////////////////product routes///////////////////////////////////
+// // Routes
+// // app.use("/", require("./routes/product"));
+// app.use("/product", productRoutes);
 
+//////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+  
 // before configureRoutes()
 app.use("/api/candidates", candidateRoutes);
 

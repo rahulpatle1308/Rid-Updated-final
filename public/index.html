@@ -173,14 +173,15 @@
         <div class="tools-card">
           <h2>Image Tools</h2>
           <div class="tools-buttons">
-             <button>Convert Image to (JPG,PNG,WEBP,BMP,GIF)</button>
-           <button>Image Background Remover</button>
+            
+          <button type="button" onclick="convertimage()">Convert Image to (JPG,PNG,WEBP,BMP,GIF)</button>
+            <!--<button type="button" onclick="backgroundRemover()">Image Background Remover</button>--> 
             <button type="button" onclick="compress()">Compress Image</button>
-            <button>Resize Image</button>
-            <button>Convert Image to PDF</button>
-            <button>Crop Image</button>
-            <button>Image to Text (OCR)</button>
-            <button>Merge Images</button>
+            <button type="button" onclick="resize()">Resize Image</button>
+            <button type="button" onclick="convert()">Convert Image to PDF</button>
+            <button type="button" onclick="crop()">Crop Image</button>
+            <button type="button" onclick="image()">Image to Text (OCR)</button>
+            <button type="button" onclick="merge()">Merge Images</button>
           </div>
         </div>
 
@@ -188,16 +189,18 @@
         <div class="tools-card">
           <h2>PDF Tools</h2>
           <div class="tools-buttons">
-            <button>Convert PDF to Word</button>
-            <button>Convert Word to PDF</button>
-            <button>Convert PDF to Excel</button>
-            <button>Convert Excel to PDF</button>
-            <button>Merge PDF</button>
-            <button>Split PDF</button>
-            <button>Compress PDF</button>
-            <button>PDF to JPG</button>
-            <button>Add Password to PDF</button>
-            <button>Remove Password from PDF</button>
+            <!--<button type="button" onclick="convertPDFtoWord()">Convert PDF to Word</button>
+            <button type="button" onclick="convertWordtoPDF()">Convert Word to PDF</button>-->
+            <button type="button" onclick="convertPDFtoExcel()">Convert PDF to Excel</button>
+            <button type="button" onclick="convertExceltoPDF()">Convert Excel to PDF</button>
+            <button type="button" onclick="mergePDF()">Merge PDF</button>
+            <button type="button" onclick="splitPDF()">Split PDF</button>
+          
+            <button type="button" onclick="compressPDF()">Compress PDF</button>
+            
+            <button type="button" onclick="pDFtojPG()">PDF to JPG</button>
+            <!--<button type="button" onclick="addPasswordToPDF()">Add Password to PDF</button>
+            <button type="button" onclick="removePasswordFromPDF()">Remove Password from PDF</button>-->
           </div>
         </div>
 
@@ -205,14 +208,14 @@
         <div class="tools-card">
           <h2>Text Utility Tools</h2>
           <div class="tools-buttons">
-            <button>Word Counter</button>
-            <button>Character Counter</button>
-            <button>Grammar Checker</button>
-            <button>Plagiarism Checker</button>
-            <button>Case Converter</button>
-            <button>Text to Speech</button>
-            <button>Speech to Text</button>
-            <button>Handwriting to Text</button>
+            <button type="button" onclick="wordCounter()">Word Counter</button>
+            <button type="button" onclick="characterCounter()">Character Counter</button>
+            <button type="button" onclick="grammarChecker()">Grammar Checker</button>
+            <button type="button" onclick="plagiarismChecker()">Plagiarism Checker</button>
+            <button type="button" onclick="caseConverter()">Case Converter</button>
+            <button type="button" onclick="textToSpeech()">Text to Speech</button>
+            <button type="button" onclick="speechToText()">Speech to Text</button>
+            <button type="button" onclick="handwritingToText()">Handwriting to Text</button>
           </div>
         </div>
 
@@ -257,7 +260,7 @@
     </div>
   </section>
   <!-- Dummy footer to show font consistency -->
-  <!--------footer parts-->
+
 
   <!-- Footer -->
   <footer>
@@ -316,12 +319,20 @@
       <div class="footer-bottom">
         <p>Copyright ©2024, RID | TWF (TWKSAA WELFARE FOUNDATION). All Rights Reserved.</p>
         <div class="footer-links-bottom">
+<<<<<<< HEAD
+          <a href="about/about.html">About Us</a>
+          <a href="Terms & Conditions.html">Terms & Conditions</a>
+          <a href="Privacy Policy.html">Privacy Policy</a>
+          <a href="Disclaimer.html">Disclaimer</a>
+          <a href="contact.html">Contact</a>
+=======
           <a href="#">About Us</a>
           <a href="#">Terms & Conditions</a>
           <a href="/myteam">My Teams</a>
           <a href="#">Privacy Policy</a>
           <a href="#">Disclaimer</a>
           <a href="#">Contact</a>
+>>>>>>> 1b54dbed0338027e8a5cdb8e5c924c6c5d0976f1
         </div>
       </div>
 
@@ -333,7 +344,7 @@
 
   <!-- tiny script for demo interactions (dropdown toggle) -->
   <script>
-    (function () {
+   (function () {
       // Mobile menu toggle
       const menuIcon = document.getElementById('menuIcon');
       const menu = document.getElementById('innerCont');
@@ -390,9 +401,97 @@
     function typingsoftware() {
       window.location.href = "/typing-software"
     }
+
+     /////////////////////////////////// <h2>Image Tools</h2>///////////////////////////////
     function compress() {
-      window.location.href = "/com"
+      window.location.href="/image-tools"
     }
+    function convert(){
+      window.location.href="/convertpdf"
+    }
+   
+    function convertimage(){
+      window.location.href="/convertimage"
+    }
+    function resize(){
+      window.location.href="/resize"
+
+    }
+    function crop(){
+      window.location.href="/cropimage"
+    }
+   
+    function merge(){
+      window.location.href="/mergeimage"
+    }
+    function image(){
+      window.location.href="/textocr"
+    }
+   function backgroundRemover(){
+    window.location.href="/imagebackgroundremover"
+   }
+
+   ///////////////////////////////pdf tools////////////////////////////////////////////////
+
+   function converterpdftoword(){
+      window.location.href="/converterpdf"
+   }
+    function converterpdf(){
+      window.location.href="/converterpdf"
+    }
+    function convertPDFtoExcel(){
+      window.location.href="/convertpdftoexcel"
+    }
+    function convertExceltoPDF(){
+      window.location.href="/convertexcel"
+    }
+    function mergePDF(){
+      window.location.href="/mergepdf"
+    }
+    function splitPDF(){
+      window.location.href="/splitpdf"
+    }
+   
+    function pDFtojPG(){
+      window.location.href="/pdfjpg"
+    }
+    function addPasswordToPDF(){
+      window.location.href="/addpasswordtopdf"
+    }
+    function removePasswordFromPDF(){
+      window.location.href="/removepassword"
+    }
+
+    /////////////////////////////////////text utility tools/////////////////////////////////////////////
+    function wordCounter(){
+      window.location.href="/wordcounter"
+    }
+    function characterCounter(){
+      window.location.href="/charactercounter"
+    }
+    function grammarChecker(){
+      window.location.href="/grammarchecker"
+    }
+    function plagiarismChecker(){
+      window.location.href="/plagiarismchecker"
+    }
+    function caseConverter(){
+      window.location.href="/caseconverter"
+    }
+    function textToSpeech(){
+      window.location.href="/texttospeech"
+    }
+    function speechToText(){
+      window.location.href="/speechtotext"
+    }
+    function handwritingToText(){
+      window.location.href="/handwritingtotext"
+    }
+    
+    function compressPDF(){
+      window.location.href="/com"
+    }
+
 
  
 
