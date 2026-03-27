@@ -2450,3 +2450,37 @@
         height: 280px;
       }
     }
+
+    /* Add to your CSS file */
+.menu-link i {
+  margin-right: 6px;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  width: 24px; /* Fixed width for alignment */
+  text-align: center;
+}
+
+.menu-link:hover i {
+  transform: translateX(3px);
+  color: var(--accent);
+}
+
+/* Specific icon colors (optional) */
+.menu-link:hover .fa-house { color: #4da8da; }
+.menu-link:hover .fa-circle-info { color: #ff6b35; }
+.menu-link:hover .fa-flask { color: #00b894; }
+.menu-link:hover .fa-laptop-code { color: #e84393; }
+.menu-link:hover .fa-book-open { color: #f39c12; }
+.menu-link:hover .fa-headset { color: #27ae60; }
+
+@media (max-width: 768px) {
+  .menu-link i {
+    width: 28px;
+    font-size: 1.2rem;
+  }
+  
+  .menu-link {
+    padding: 12px 0;
+    font-size: 1rem;
+  }
+}

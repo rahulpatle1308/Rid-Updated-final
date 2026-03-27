@@ -138,6 +138,7 @@ const configureMiddleware = () => {
 
 
 
+
 // ========== VIEW ENGINE SETUP ==========
 const configureViews = () => {
   app.set("view engine", "ejs");
