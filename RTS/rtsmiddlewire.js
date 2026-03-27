@@ -62,10 +62,6 @@ app.use("/", require("./routes/test.routes"));
 app.use("/", require("./routes/certificate.routes"));
 app.use("/", require("./routes/profile.routes"));
 app.use("/api", require("./routes/visit.routes"));
-
-
-
-// demo route
 app.get("/", (req, res) => {
   res.send("RTS Home Working");
 });

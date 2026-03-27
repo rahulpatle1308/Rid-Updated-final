@@ -142,10 +142,18 @@ const configureMiddleware = () => {
 // ========== VIEW ENGINE SETUP ==========
 const configureViews = () => {
   app.set("view engine", "ejs");
-  app.set("views", [path.join(__dirname, "views", 'ebook'), path.join(__dirname, "views")]);
-  app.use(express.static(path.join(__dirname, "public")));
-};
 
+  // ✅ ALL VIEWS (main + code folder)
+  app.set("views", [
+    path.join(__dirname, "views", "ebook"),
+    path.join(__dirname, "views"),
+    path.join(__dirname, "code", "views")   // 🔥 ADD THIS
+  ]);
+
+  // ✅ STATIC FILES (CSS, JS, images)
+  app.use(express.static(path.join(__dirname, "public")));        // main public
+  app.use(express.static(path.join(__dirname, "code", "public"))); // 🔥 code/public
+};
 //=========================RTS MIDDLEWIRE=====================
 // ===== RTS MODULE CONNECT =====
 const rtsApp = require("./RTS/rtsmiddlewire");
@@ -587,6 +595,9 @@ app.use("/",myteam)
 const techInterviewApp = require("./code/server");
 
 // middleware mount
+app.get("/tech-interview", (req, res) => {
+  res.render("index");   // code/views/index.ejs
+});
 app.use("/tech-interview", techInterviewApp);
 
 
