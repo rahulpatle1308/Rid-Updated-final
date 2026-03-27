@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= typeof title !== 'undefined' ? title : 'Railway Group B & C Courses' %></title>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <link rel="stylesheet" href="../css/technical.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <%- include('../partials/header') %>  
+    
+    <!-- Sidebar -->
+    <%- include('../partials/sidebar') %>
+   
+    <!-- Main Content -->
+    <main>
+        <section class="courses-section">
+            <div class="courses-container">
+                
+                <!-- Course 1: Group B -->
+                <div class="course-card" data-course-id="Group B" data-course-name="Group B">
+                    <!-- VISIT COUNT - LEFT SIDE -->
+                    <div class="visit-count">
+                        <span class="count">0</span>
+                        <span class="visits-text">visits</span>
+                    </div>
+                    <!-- BADGE - RIGHT SIDE -->
+                    <span class="badge-left update-badge">UPDATED</span>
+                    
+                    <div class="course-header">
+                        <div class="card-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Group B</h3>
+                    </div>
+                    <div class="course-content">
+                        <div class="marquee">
+                            <p>All Test <span>Series</span></p>
+                        </div>
+                        <div class="btn-container">
+                            <a href="/rts/Group-B/purchase" class="btn track-visit">Open Now</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Course 2: Group C -->
+                <div class="course-card" data-course-id="Group C" data-course-name="Group C">
+                    <!-- VISIT COUNT - LEFT SIDE -->
+                    <div class="visit-count">
+                        <span class="count">0</span>
+                        <span class="visits-text">visits</span>
+                    </div>
+                    <!-- BADGE - RIGHT SIDE -->
+                    <span class="badge-left update-badge">UPDATED</span>
+                    
+                    <div class="course-header">
+                        <div class="card-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <h3>Group C</h3>
+                    </div>
+                    <div class="course-content">
+                        <div class="marquee">
+                            <p>All Test <span>Series</span></p>
+                        </div>
+                        <div class="btn-container">
+                            <a href="/rts/Group-C/purchase" class="btn track-visit">Open Now</a>
+                        </div>
+                    </div>
+                </div>
+
+               
+                
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <%- include('../partials/footer') %>
+    
+    <!-- JavaScript -->
+    <script>
+        window.API_BASE_URL = "<%= typeof apiBaseUrl !== 'undefined' ? apiBaseUrl : '' %>";
+        window.USER_DATA = <%- JSON.stringify(user || {}) %>;
+    </script>
+    
+    <script src="/rts/js/config.js"></script>
+    <script src="/rts/js/visit-counter.js"></script>
+    <script src="/rts/js/banner-slider.js"></script>
+    <script src="/rts/js/search-filter.js"></script>
+    <script src="/rts/js/ui-handlers.js"></script>
+    <script src="/rts/js/dashboard.js"></script>
+    
+    <!-- Ionicons for footer icons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

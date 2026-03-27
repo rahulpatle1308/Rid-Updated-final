@@ -412,6 +412,333 @@
     transform: translateY(-2px) scale(1.03);
 }
 
+
+/* ==================== BPSC TEACHER COURSES COLORS ==================== */
+
+/* Primary Teacher (1-5) */
+.course-card[data-course-id="Primary Teacher"] { 
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+.course-card[data-course-id="Primary Teacher"]:hover { 
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+}
+
+/* Middle School Teacher (6-8) */
+.course-card[data-course-id="Middle School Teacher"] { 
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+.course-card[data-course-id="Middle School Teacher"]:hover { 
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
+}
+
+/* Higher Secondary (11-12) */
+.course-card[data-course-id="Higher Secondary"] { 
+    background: linear-gradient(135deg, #f97316, #ea580c);
+}
+.course-card[data-course-id="Higher Secondary"]:hover { 
+    background: linear-gradient(135deg, #ea580c, #c2410c);
+}
+
+/* ==================== EXTRA: Agar aur BPSC Courses Add Karna Ho ==================== */
+
+/* TGT Teacher */
+.course-card[data-course-id="TGT Teacher"] { 
+    background: linear-gradient(135deg, #0d9488, #0f766e);
+}
+.course-card[data-course-id="TGT Teacher"]:hover { 
+    background: linear-gradient(135deg, #0f766e, #115e59);
+}
+
+/* PGT Teacher */
+.course-card[data-course-id="PGT Teacher"] { 
+    background: linear-gradient(135deg, #d97706, #b45309);
+}
+.course-card[data-course-id="PGT Teacher"]:hover { 
+    background: linear-gradient(135deg, #b45309, #92400e);
+}
+
+/* Headmaster */
+.course-card[data-course-id="Headmaster"] { 
+    background: linear-gradient(135deg, #ec4899, #db2777);
+}
+.course-card[data-course-id="Headmaster"]:hover { 
+    background: linear-gradient(135deg, #db2777, #be185d);
+}
+
+/* Principal */
+.course-card[data-course-id="Principal"] { 
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+}
+.course-card[data-course-id="Principal"]:hover { 
+    background: linear-gradient(135deg, #4f46e5, #4338ca);
+}
+
+
+/* ==================== HOME GUARD COURSES COLORS ==================== */
+
+/* UP HomeGuard Card */
+.course-card[data-course-id="UP HomeGuard"] { 
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+.course-card[data-course-id="UP HomeGuard"]:hover { 
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+}
+
+/* BIHAR Home Guard Card */
+.course-card[data-course-id="BIHAR Home Guard"] { 
+    background: linear-gradient(135deg, #f97316, #ea580c);
+}
+.course-card[data-course-id="BIHAR Home Guard"]:hover { 
+    background: linear-gradient(135deg, #ea580c, #c2410c);
+}
+
+/* MP Home Guard Card */
+.course-card[data-course-id="MP Home Guard"] { 
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+.course-card[data-course-id="MP Home Guard"]:hover { 
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
+}
+
+/* Rajasthan Home Guard Card */
+.course-card[data-course-id="Rajasthan Home Guard"] { 
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+}
+.course-card[data-course-id="Rajasthan Home Guard"]:hover { 
+    background: linear-gradient(135deg, #0891b2, #0e7490);
+}
+
+/* Additional Home Guard Courses */
+.course-card[data-course-id="Delhi Home Guard"] { 
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+.course-card[data-course-id="Delhi Home Guard"]:hover { 
+    background: linear-gradient(135deg, #059669, #047857);
+}
+
+.course-card[data-course-id="Gujarat Home Guard"] { 
+    background: linear-gradient(135deg, #ec4899, #db2777);
+}
+.course-card[data-course-id="Gujarat Home Guard"]:hover { 
+    background: linear-gradient(135deg, #db2777, #be185d);
+}
+
+.course-card[data-course-id="Maharashtra Home Guard"] { 
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+}
+.course-card[data-course-id="Maharashtra Home Guard"]:hover { 
+    background: linear-gradient(135deg, #4f46e5, #4338ca);
+}
+
+.course-card[data-course-id="West Bengal Home Guard"] { 
+    background: linear-gradient(135deg, #d97706, #b45309);
+}
+.course-card[data-course-id="West Bengal Home Guard"]:hover { 
+    background: linear-gradient(135deg, #b45309, #92400e);
+}
+
+
+/* ==================== RRB RAILWAY COURSES COLORS ==================== */
+
+/* RRB NTPC Card */
+.course-card[data-course-id="RRB NTPC"] { 
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+}
+.course-card[data-course-id="RRB NTPC"]:hover { 
+    background: linear-gradient(135deg, #0891b2, #0e7490);
+}
+
+/* RRB Group D Card */
+.course-card[data-course-id="RRB Group D"] { 
+    background: linear-gradient(135deg, #f97316, #ea580c);
+}
+.course-card[data-course-id="RRB Group D"]:hover { 
+    background: linear-gradient(135deg, #ea580c, #c2410c);
+}
+
+/* RRB ALP Card */
+.course-card[data-course-id="RRB ALP"] { 
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+.course-card[data-course-id="RRB ALP"]:hover { 
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
+}
+
+/* RRB JE Card */
+.course-card[data-course-id="RRB JE"] { 
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+.course-card[data-course-id="RRB JE"]:hover { 
+    background: linear-gradient(135deg, #059669, #047857);
+}
+
+/* Additional RRB Courses */
+.course-card[data-course-id="RRB Technician"] { 
+    background: linear-gradient(135deg, #ec4899, #db2777);
+}
+.course-card[data-course-id="RRB Technician"]:hover { 
+    background: linear-gradient(135deg, #db2777, #be185d);
+}
+
+.course-card[data-course-id="RRB Paramedical"] { 
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+}
+.course-card[data-course-id="RRB Paramedical"]:hover { 
+    background: linear-gradient(135deg, #4f46e5, #4338ca);
+}
+
+.course-card[data-course-id="RRB Ministerial"] { 
+    background: linear-gradient(135deg, #d97706, #b45309);
+}
+.course-card[data-course-id="RRB Ministerial"]:hover { 
+    background: linear-gradient(135deg, #b45309, #92400e);
+}
+
+/* ==================== RAILWAY GROUP COURSES COLORS ==================== */
+
+/* Group B Card */
+.course-card[data-course-id="Group B"] { 
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+.course-card[data-course-id="Group B"]:hover { 
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+}
+
+/* Group C Card */
+.course-card[data-course-id="Group C"] { 
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+.course-card[data-course-id="Group C"]:hover { 
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
+}
+
+/* Group D Card */
+.course-card[data-course-id="Group D"] { 
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+}
+.course-card[data-course-id="Group D"]:hover { 
+    background: linear-gradient(135deg, #0891b2, #0e7490);
+}
+
+/* Additional Railway Groups */
+.course-card[data-course-id="Group A"] { 
+    background: linear-gradient(135deg, #f97316, #ea580c);
+}
+.course-card[data-course-id="Group A"]:hover { 
+    background: linear-gradient(135deg, #ea580c, #c2410c);
+}
+
+.course-card[data-course-id="Group E"] { 
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+.course-card[data-course-id="Group E"]:hover { 
+    background: linear-gradient(135deg, #059669, #047857);
+}
+
+/* ==================== JEE ENGINEERING COURSES COLORS ==================== */
+
+/* JEE MAINS Card */
+.course-card[data-course-id="JEE MAINS"] { 
+    background: linear-gradient(135deg, #f97316, #ea580c);
+}
+.course-card[data-course-id="JEE MAINS"]:hover { 
+    background: linear-gradient(135deg, #ea580c, #c2410c);
+}
+
+/* JEE ADVANCE Card */
+.course-card[data-course-id="JEE ADVANCE"] { 
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+.course-card[data-course-id="JEE ADVANCE"]:hover { 
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+}
+
+/* BITSAT Card */
+.course-card[data-course-id="BITSAT"] { 
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+}
+.course-card[data-course-id="BITSAT"]:hover { 
+    background: linear-gradient(135deg, #0891b2, #0e7490);
+}
+
+/* Additional Engineering Entrance Exams */
+.course-card[data-course-id="VITEEE"] { 
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+.course-card[data-course-id="VITEEE"]:hover { 
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
+}
+
+.course-card[data-course-id="SRMJEEE"] { 
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+.course-card[data-course-id="SRMJEEE"]:hover { 
+    background: linear-gradient(135deg, #059669, #047857);
+}
+
+.course-card[data-course-id="WBJEE"] { 
+    background: linear-gradient(135deg, #ec4899, #db2777);
+}
+.course-card[data-course-id="WBJEE"]:hover { 
+    background: linear-gradient(135deg, #db2777, #be185d);
+}
+
+.course-card[data-course-id="COMEDK"] { 
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+}
+.course-card[data-course-id="COMEDK"]:hover { 
+    background: linear-gradient(135deg, #4f46e5, #4338ca);
+}
+
+/* ==================== NEET SUBJECTS COLORS ==================== */
+
+/* Biology Card */
+.course-card[data-course-id="Biology"] { 
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+.course-card[data-course-id="Biology"]:hover { 
+    background: linear-gradient(135deg, #059669, #047857);
+}
+
+/* Chemistry Card */
+.course-card[data-course-id="Chemistry"] { 
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+.course-card[data-course-id="Chemistry"]:hover { 
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
+}
+
+/* Physics Card */
+.course-card[data-course-id="Physics"] { 
+    background: linear-gradient(135deg, #f97316, #ea580c);
+}
+.course-card[data-course-id="Physics"]:hover { 
+    background: linear-gradient(135deg, #ea580c, #c2410c);
+}
+
+/* Zoology Card */
+.course-card[data-course-id="Zoology"] { 
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+}
+.course-card[data-course-id="Zoology"]:hover { 
+    background: linear-gradient(135deg, #0891b2, #0e7490);
+}
+
+/* Botany Card */
+.course-card[data-course-id="Botany"] { 
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+.course-card[data-course-id="Botany"]:hover { 
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+}
+
+/* Additional NEET Related */
+.course-card[data-course-id="NEET Mock Test"] { 
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+.course-card[data-course-id="NEET Mock Test"]:hover { 
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+}
 /* ==================== ANIMATIONS ==================== */
 @keyframes pulse {
     0% { transform: scale(1); }

@@ -2,281 +2,744 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Register Here</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Register | RID Bharat</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
-}
+    /* ===== ANIMATION KEYFRAMES ===== */
+    @keyframes float {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        33% { transform: translateY(-10px) rotate(120deg); }
+        66% { transform: translateY(5px) rotate(240deg); }
+    }
 
-body{
-  background:#495057;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  min-height:100vh;
-  padding:15px;
-}
+    @keyframes floatSlow {
+        0%, 100% { transform: translateY(0) scale(1); }
+        50% { transform: translateY(-15px) scale(1.05); }
+    }
 
-.register-container{
-  width:100%;
-  max-width:650px;
-  background:#fff;
-  border-radius:16px;
-  padding:35px 30px;
-  box-shadow:0 20px 40px rgba(0,0,0,.15);
-}
+    @keyframes pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.8; transform: scale(1.05); }
+    }
 
-.header{
-  text-align:center;
-  margin-bottom:25px;
-  border-bottom:1px solid #eee;
-  padding-bottom:20px;
-}
+    @keyframes shimmer {
+        0% { background-position: -200% center; }
+        100% { background-position: 200% center; }
+    }
 
-.header h1{
-  font-size:28px;
-  color:#2c3e50;
-}
+    @keyframes glow {
+        0%, 100% { 
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.3),
+                        0 0 40px rgba(124, 58, 237, 0.2),
+                        0 0 60px rgba(6, 182, 212, 0.1);
+        }
+        50% { 
+            box-shadow: 0 0 30px rgba(37, 99, 235, 0.5),
+                        0 0 60px rgba(124, 58, 237, 0.3),
+                        0 0 90px rgba(6, 182, 212, 0.2);
+        }
+    }
 
-.header h3{
-  font-size:16px;
-  color:#7f8c8d;
-}
+    @keyframes logoReveal {
+        0% { 
+            transform: scale(0) rotate(-180deg);
+            opacity: 0;
+            filter: blur(10px);
+        }
+        60% { 
+            transform: scale(1.2) rotate(10deg);
+            opacity: 1;
+            filter: blur(0);
+        }
+        80% { 
+            transform: scale(0.95) rotate(-5deg);
+        }
+        100% { 
+            transform: scale(1) rotate(0);
+            opacity: 1;
+            filter: blur(0);
+        }
+    }
 
-.form-row{
-  display:flex;
-  gap:15px;
-  margin-bottom:18px;
-}
+    @keyframes textReveal {
+        0% { 
+            transform: translateY(20px);
+            opacity: 0;
+            letter-spacing: 20px;
+        }
+        60% { 
+            transform: translateY(0);
+            opacity: 1;
+            letter-spacing: normal;
+        }
+        100% { 
+            transform: translateY(0);
+            opacity: 1;
+            letter-spacing: normal;
+        }
+    }
 
-.form-group{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-}
+    @keyframes orbit {
+        0% { transform: rotate(0deg) translateX(150px) rotate(0deg); }
+        100% { transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+    }
 
-.form-group label{
-  margin-bottom:6px;
-  font-weight:600;
-}
+    @keyframes orbitReverse {
+        0% { transform: rotate(0deg) translateX(100px) rotate(0deg); }
+        100% { transform: rotate(-360deg) translateX(100px) rotate(360deg); }
+    }
 
-.form-group input,
-.form-group select{
-  padding:14px;
-  border-radius:10px;
-  border:2px solid #e1e8ed;
-  background:#f8f9fa;
-  font-size:15px;
-  transition:.3s;
-}
+    @keyframes particleMove {
+        0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+        100% { transform: translate(var(--tx), var(--ty)) rotate(360deg); opacity: 0; }
+    }
 
-.form-group input:focus,
-.form-group select:focus{
-  outline:none;
-  border-color:#4a6cf7;
-  background:#fff;
-}
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
 
-/* Organisation Box */
-.org-selection{
-  display:none;
-  margin-bottom:18px;
-  padding:18px;
-  background:#f1f3f5;
-  border-radius:12px;
-  border:2px solid #dee2e6;
-}
+    @keyframes logoRotate {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
 
-.org-buttons{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-}
+    @keyframes widthExpand {
+        from { width: 0; }
+        to { width: 200px; }
+    }
 
-.org-btn{
-  flex:1;
-  min-width:120px;
-  padding:12px;
-  background:#fff;
-  border:2px solid #dee2e6;
-  border-radius:10px;
-  cursor:pointer;
-  text-align:center;
-  font-weight:600;
-  transition:.3s;
-}
+    @keyframes heightExpand {
+        from { height: 0; }
+        to { height: 200px; }
+    }
 
-.org-btn.selected{
-  background:#4a6cf7;
-  color:#fff;
-  border-color:#4a6cf7;
-}
+    @keyframes rotate {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
 
-.org-validation{
-  display:none;
-  margin-top:10px;
-  color:#e74c3c;
-  text-align:center;
-}
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
 
-.submit-btn{
-  width:100%;
-  padding:16px;
-  background:#4a6cf7;
-  border:none;
-  color:#fff;
-  font-size:18px;
-  border-radius:12px;
-  cursor:pointer;
-  transition:.3s;
-}
+    /* ===== ORIGINAL REGISTER STYLES (Kept as is) ===== */
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+    }
 
-.submit-btn:hover:not(:disabled){
-  background:#3954d4;
-}
+    body{
+        background:#495057;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        min-height:100vh;
+        padding:15px;
+        font-family:'Inter', sans-serif;
+    }
 
-.submit-btn:disabled{
-  background:#95a5a6;
-  cursor:not-allowed;
-}
+    /* ===== NEW CARD LAYOUT WITH LEFT ANIMATED SIDE ===== */
+    .register-wrapper {
+        width:100%;
+        max-width:1200px;
+        margin:0 auto;
+        display:grid;
+        grid-template-columns:1fr;
+        background:#fff;
+        border-radius:16px;
+        overflow:hidden;
+        box-shadow:0 20px 40px rgba(0,0,0,.15);
+    }
 
-.login-link{
-  text-align:center;
-  margin-top:22px;
-  border-top:1px solid #eee;
-  padding-top:18px;
-}
+    /* ===== LEFT SECTION - ANIMATED SIDE (NEW) ===== */
+    .left-animated {
+        display: none;
+        background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+        background-size: 400% 400%;
+        padding: 40px;
+        color: white;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        animation: gradientShift 10s ease infinite;
+    }
 
-.login-btn{
-  background:#4a6cf7;
-  color:#fff;
-  padding:8px 14px;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-}
+    .animated-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 0;
+    }
 
-/* Responsive */
-@media(max-width:768px){
-  .form-row{
-    flex-direction:column;
-  }
-}
-.login-link{
-  text-align:center;
-  margin-top:25px;
-  padding-top:18px;
-  border-top:1px solid #eee;
-  font-size:15px;
-  color:#555;
-}
+    .orbiting-circle {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        animation: orbit 15s linear infinite;
+        top: 50%;
+        left: 50%;
+        transform-origin: center;
+    }
 
-.login-text{
-  color:#4a6cf7;
-  font-weight:600;
-  cursor:pointer;
-  margin-left:6px;
-  position:relative;
-  transition:.3s;
-}
+    .orbiting-circle:nth-child(2) {
+        width: 15px;
+        height: 15px;
+        background: rgba(255, 255, 255, 0.15);
+        animation: orbitReverse 20s linear infinite;
+        animation-delay: -5s;
+    }
 
-.login-text::after{
-  content:"";
-  position:absolute;
-  width:0%;
-  height:2px;
-  left:0;
-  bottom:-3px;
-  background:#4a6cf7;
-  transition:.3s;
-}
+    .orbiting-circle:nth-child(3) {
+        width: 25px;
+        height: 25px;
+        background: rgba(255, 255, 255, 0.08);
+        animation: orbit 25s linear infinite;
+        animation-delay: -10s;
+    }
 
-.login-text:hover{
-  color:#2f4de0;
-}
+    .particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        animation: particleMove 3s linear infinite;
+    }
 
-.login-text:hover::after{
-  width:100%;
-}
+    .logo-container {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .logo-main {
+        width: 180px;
+        height: 180px;
+        margin: 0 auto 30px;
+        position: relative;
+        animation: logoReveal 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) both,
+                   glow 3s ease-in-out infinite 1.5s;
+    }
+
+    .logo-circle {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .logo-circle::before {
+        display: none;
+    }
+
+    .logo-image {
+      
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 50%;
+        position: relative;
+        z-index: 2;
+        animation: logoRotate 20s linear infinite;
+        transition: all 0.3s ease;
+        padding: 0;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .logo-image img {
+      margin-top: 20px;
+        width: 120%;
+        height: 120%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    .logo-line {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .line-horizontal {
+        width: 200px;
+        height: 2px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation: widthExpand 1s ease-out 0.8s both;
+    }
+
+    .line-vertical {
+        width: 2px;
+        height: 200px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation: heightExpand 1s ease-out 1s both;
+    }
+
+    .logo-title-container {
+        margin-top: 20px;
+        width: 100%;
+        position: relative;
+        z-index: 2;
+    }
+
+    .logo-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+        opacity: 0;
+        animation: textReveal 0.8s ease-out forwards;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .logo-title:nth-child(1) {
+        animation-delay: 1.2s;
+        color: white;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .logo-title:nth-child(2) {
+        animation-delay: 1.4s;
+        color: #e0e7ff;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .logo-title:nth-child(3) {
+        animation-delay: 1.6s;
+        color: #e0e7ff;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .logo-acronym {
+        font-size: 2.5rem;
+        font-weight: 900;
+        margin: 15px 0;
+        color: white;
+        opacity: 0;
+        animation: textReveal 0.8s ease-out 3.8s forwards;
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(37, 99, 235, 0.3);
+        position: relative;
+        display: inline-block;
+    }
+
+    .logo-acronym::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, white, transparent);
+        animation: shimmer 2s infinite linear;
+    }
+
+    .logo-subtitle {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #fbbf24;
+        opacity: 0;
+        animation: textReveal 0.8s ease-out 2s forwards;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-top: 10px;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .floating-element {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        animation: float 20s infinite linear;
+        z-index: 1;
+    }
+
+    .floating-1 {
+        width: 60px;
+        height: 60px;
+        top: 20%;
+        left: 15%;
+        animation-delay: 0s;
+        background: radial-gradient(circle, rgba(255,255,255,0.2), transparent);
+    }
+
+    .floating-2 {
+        width: 80px;
+        height: 80px;
+        bottom: 20%;
+        right: 15%;
+        animation-delay: -5s;
+        animation-duration: 25s;
+        background: radial-gradient(circle, rgba(255,255,255,0.15), transparent);
+    }
+
+    .corner-decoration {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        animation: rotate 20s linear infinite;
+    }
+
+    .corner-tl {
+        top: -40px;
+        left: -40px;
+        border-radius: 20px;
+        border-top: 2px solid rgba(255, 255, 255, 0.3);
+        border-left: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .corner-br {
+        bottom: -40px;
+        right: -40px;
+        border-radius: 20px;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+        border-right: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .welcome-text {
+        position: relative;
+        z-index: 2;
+        margin-top: 20px;
+    }
+
+    .welcome-text h1 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+        opacity: 0;
+        animation: textReveal 0.8s ease-out 3.2s forwards;
+    }
+
+    .welcome-text p {
+        opacity: 0.9;
+        line-height: 1.5;
+        opacity: 0;
+        animation: textReveal 0.8s ease-out 2.4s forwards;
+    }
+
+    /* ===== ORIGINAL RIGHT SECTION STYLES ===== */
+    .register-container {
+        width:100%;
+        background:#fff;
+        padding:35px 30px;
+    }
+
+    .header{
+        text-align:center;
+        margin-bottom:25px;
+        border-bottom:1px solid #eee;
+        padding-bottom:20px;
+    }
+
+    .header h1{
+        font-size:28px;
+        color:#2c3e50;
+    }
+
+    .header h3{
+        font-size:16px;
+        color:#7f8c8d;
+    }
+
+    .form-row{
+        display:flex;
+        gap:15px;
+        margin-bottom:18px;
+    }
+
+    .form-group{
+        flex:1;
+        display:flex;
+        flex-direction:column;
+    }
+
+    .form-group label{
+        margin-bottom:6px;
+        font-weight:600;
+    }
+
+    .form-group input,
+    .form-group select{
+        padding:14px;
+        border-radius:10px;
+        border:2px solid #e1e8ed;
+        background:#f8f9fa;
+        font-size:15px;
+        transition:.3s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus{
+        outline:none;
+        border-color:#4a6cf7;
+        background:#fff;
+    }
+
+    .org-selection{
+        display:none;
+        margin-bottom:18px;
+        padding:18px;
+        background:#f1f3f5;
+        border-radius:12px;
+        border:2px solid #dee2e6;
+    }
+
+    .org-buttons{
+        display:flex;
+        gap:12px;
+        flex-wrap:wrap;
+    }
+
+    .org-btn{
+        flex:1;
+        min-width:120px;
+        padding:12px;
+        background:#fff;
+        border:2px solid #dee2e6;
+        border-radius:10px;
+        cursor:pointer;
+        text-align:center;
+        font-weight:600;
+        transition:.3s;
+    }
+
+    .org-btn.selected{
+        background:#4a6cf7;
+        color:#fff;
+        border-color:#4a6cf7;
+    }
+
+    .org-validation{
+        display:none;
+        margin-top:10px;
+        color:#e74c3c;
+        text-align:center;
+    }
+
+    .password-group {
+        margin-bottom: 30px;
+    }
+
+    .submit-btn{
+        width:100%;
+        padding:16px;
+        background:#4a6cf7;
+        border:none;
+        color:#fff;
+        font-size:18px;
+        border-radius:12px;
+        cursor:pointer;
+        transition:.3s;
+        margin-top: 5px;
+    }
+
+    .submit-btn:hover:not(:disabled){
+        background:#3954d4;
+    }
+
+    .submit-btn:disabled{
+        background:#95a5a6;
+        cursor:not-allowed;
+    }
+
+    .login-link{
+        text-align:center;
+        margin-top:22px;
+        border-top:1px solid #eee;
+        padding-top:18px;
+    }
+
+    .login-text{
+        color:#4a6cf7;
+        font-weight:600;
+        cursor:pointer;
+        margin-left:6px;
+        position:relative;
+        transition:.3s;
+    }
+
+    .login-text::after{
+        content:"";
+        position:absolute;
+        width:0%;
+        height:2px;
+        left:0;
+        bottom:-3px;
+        background:#4a6cf7;
+        transition:.3s;
+    }
+
+    .login-text:hover{
+        color:#2f4de0;
+    }
+
+    .login-text:hover::after{
+        width:100%;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:768px){
+        .form-row{
+            flex-direction:column;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .register-wrapper {
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        .left-animated {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .left-animated {
+            display: none;
+        }
+    }
+    
 </style>
 </head>
-
 <body>
 
-<div class="register-container">
-  <div class="header">
-    <h1>Register</h1>
-    <h3>Research Innovation & Discovery</h3>
-  </div>
+<div class="register-wrapper">
+    <!-- LEFT ANIMATED SIDE - NEW -->
+    <div class="left-animated">
+        <div class="animated-bg"></div>
+        <div class="floating-element floating-1"></div>
+        <div class="floating-element floating-2"></div>
+        <div class="corner-decoration corner-tl"></div>
+        <div class="corner-decoration corner-br"></div>
+        
+        <div class="logo-container">
+            <div class="logo-main">
+                <div class="logo-circle">
+                    <div class="logo-image">
+                        <img src="/assets/signup.png" alt="RID Logo">
+                    </div>
+                </div>
+                <div class="logo-line line-horizontal"></div>
+                <div class="logo-line line-vertical"></div>
+            </div>
+            
+            <div class="logo-title-container">
+                <h1 class="logo-title">RESEARCH</h1>
+                <h1 class="logo-title">INNOVATION</h1>
+                <h1 class="logo-title">DISCOVERY</h1>
+                <div class="logo-acronym">RID</div>
+                <div class="logo-subtitle">TECH</div>
+                <h2 class="logo-subtitle">BHARAT</h2>
+            </div>
+        </div>
 
-  <form id="registerForm">
-
-    <!-- Name + Email -->
-    <div class="form-row">
-      <div class="form-group">
-        <label>Full Name</label>
-        <input type="text" id="fullName" name="name" placeholder="Enter the name " required>
-      </div>
-
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="email" name="email" autocomplete="new-password" placeholder="xyz@gmail.com" required>
-      </div>
+        <div class="welcome-text">
+            <h1>Join Us Today!</h1>
+            <p>Create your account and be part of India's premier Research, Innovation & Discovery community</p>
+        </div>
     </div>
 
-    <!-- Mobile + Register As -->
-    <div class="form-row">
-      <div class="form-group">
-        <label>Mobile</label>
-        <input type="tel" id="mobile" name="phone" placeholder="Mobile number " maxlength="10" required>
-      </div>
+    <!-- RIGHT SECTION - ORIGINAL REGISTER FORM -->
+    <div class="register-container">
+        <div class="header">
+            <h1>Register</h1>
+            <h3>Research Innovation & Discovery</h3>
+        </div>
 
-      <div class="form-group">
-        <label>Register As</label> 
-        <select id="role" name="role" required>
-          <option value="student">Student</option>
-          <option value="teacher">Teacher</option>
-          <option value="organisation">Organisation</option>
-        </select>
-      </div>
-    </div>
+        <form id="registerForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="fullName" name="name" placeholder="Enter the name " required>
+                </div>
 
-    <!-- Organisation Options -->
-    <div id="orgSelection" class="org-selection">
-      <p><b>Select Organization Type:</b></p>
-      <div class="org-buttons">
-        <div class="org-btn" data-type="Library" onclick="selectOrg(this)">Library</div>
-        <div class="org-btn" data-type="DCA" onclick="selectOrg(this)">DCA</div>
-        <div class="org-btn" data-type="Coaching Centre" onclick="selectOrg(this)">Coaching Centre</div>
-      </div>
-      <div id="orgValidation" class="org-validation">
-        Please select organization type
-      </div>
-    </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email" name="email" autocomplete="new-password" placeholder="xyz@gmail.com" required>
+                </div>
+            </div>
 
-    <input type="hidden" id="organisationType" name="organisationType">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Mobile</label>
+                    <input type="tel" id="mobile" name="phone" placeholder="Mobile number " maxlength="10" required>
+                </div>
 
-    <!-- Password -->
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" id="password" name="password" placeholder="Create Password" required>
-    </div>
+                <div class="form-group">
+                    <label>Register As</label> 
+                    <select id="role" name="role" required>
+                        <option value="student">Student</option>
+                        <option value="teacher">Teacher</option>
+                        <option value="organisation">Organisation</option>
+                    </select>
+                </div>
+            </div>
 
-    <button type="submit" class="submit-btn" id="submitBtn" disabled>
-      Submit
-    </button>
+            <div id="orgSelection" class="org-selection">
+                <p><b>Select Organization Type:</b></p>
+                <div class="org-buttons">
+                    <div class="org-btn" data-type="Library" onclick="selectOrg(this)">Library</div>
+                    <div class="org-btn" data-type="DCA" onclick="selectOrg(this)">DCA</div>
+                    <div class="org-btn" data-type="Coaching Centre" onclick="selectOrg(this)">Coaching Centre</div>
+                </div>
+                <div id="orgValidation" class="org-validation">
+                    Please select organization type
+                </div>
+            </div>
 
-   <div class="login-link">
-  Already have an account? 
-  <span class="login-text" onclick="goToLogin()">Login</span>
+            <input type="hidden" id="organisationType" name="organisationType">
+
+           <div class="form-group password-group" style="position:relative;">
+    <label>Password</label>
+    
+    <input type="password" id="password" name="password" placeholder="Create Password" required>
+
+    <span onclick="togglePassword()" 
+          style="position:absolute; right:15px; top:45px; cursor:pointer;">
+        👁️
+    </span>
 </div>
 
-  </form>
+            <button type="submit" class="submit-btn" id="submitBtn" disabled>
+                Submit
+            </button>
+
+            <div class="login-link">
+                Already have an account? 
+                <span class="login-text" onclick="goToLogin()">Login</span>
+            </div>
+        </form>
+    </div>
 </div>
 
 <script>
@@ -294,106 +757,193 @@ const email = document.getElementById("email");
 const mobile = document.getElementById("mobile");
 const password = document.getElementById("password");
 
+// ===== LEFT SIDE ANIMATIONS =====
+function initAnimations() {
+    createParticles();
+    addLogoInteractions();
+    createOrbits();
+}
+
+function createParticles() {
+    const animatedBg = document.querySelector('.animated-bg');
+    if (!animatedBg) return;
+    
+    animatedBg.innerHTML = '';
+    
+    for (let i = 0; i < 12; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        const tx = (Math.random() - 0.5) * 120;
+        const ty = (Math.random() - 0.5) * 120;
+        
+        particle.style.setProperty('--tx', `${tx}px`);
+        particle.style.setProperty('--ty', `${ty}px`);
+        
+        const size = 2 + Math.random() * 3;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.opacity = 0.2 + Math.random() * 0.3;
+        
+        particle.style.left = `${x}%`;
+        particle.style.top = `${y}%`;
+        
+        particle.style.animationDelay = `${Math.random() * 3}s`;
+        particle.style.animationDuration = `${2 + Math.random() * 2}s`;
+        
+        animatedBg.appendChild(particle);
+    }
+}
+
+function createOrbits() {
+    const animatedBg = document.querySelector('.animated-bg');
+    if (!animatedBg) return;
+    
+    document.querySelectorAll('.orbiting-circle').forEach(el => el.remove());
+    
+    for (let i = 0; i < 3; i++) {
+        const orbit = document.createElement('div');
+        orbit.className = 'orbiting-circle';
+        animatedBg.appendChild(orbit);
+    }
+}
+
+function addLogoInteractions() {
+    const logoCircle = document.querySelector('.logo-circle');
+    if (!logoCircle) return;
+    
+    logoCircle.addEventListener('mouseenter', () => {
+        logoCircle.style.transform = 'scale(1.05)';
+        logoCircle.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.3)';
+    });
+    
+    logoCircle.addEventListener('mouseleave', () => {
+        logoCircle.style.transform = 'scale(1)';
+        logoCircle.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.2)';
+    });
+}
+
+// ===== ORIGINAL FORM FUNCTIONS =====
 role.addEventListener("change", () => {
-  if (role.value === "organisation") {
-    orgBox.style.display = "block";
-    isOrgSelected = false;
-  } else {
-    orgBox.style.display = "none";
-    isOrgSelected = true;
-    selectedOrgType = "";
-  }
-  validateForm();
+    if (role.value === "organisation") {
+        orgBox.style.display = "block";
+        isOrgSelected = false;
+    } else {
+        orgBox.style.display = "none";
+        isOrgSelected = true;
+        selectedOrgType = "";
+    }
+    validateForm();
 });
 
 function selectOrg(el) {
-  document.querySelectorAll(".org-btn").forEach(b => b.classList.remove("selected"));
-  el.classList.add("selected");
-  selectedOrgType = el.dataset.type;
-  isOrgSelected = true;
-  orgValidation.style.display = "none";
-  validateForm();
+    document.querySelectorAll(".org-btn").forEach(b => b.classList.remove("selected"));
+    el.classList.add("selected");
+    selectedOrgType = el.dataset.type;
+    isOrgSelected = true;
+    orgValidation.style.display = "none";
+    validateForm();
 }
 
 function validateForm() {
-  const nameValid = fullName.value.trim().length > 0;
-  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
-  const mobileValid = /^\d{10}$/.test(mobile.value);
-  const passwordValid = password.value.length >= 6;
+    const nameValid = fullName.value.trim().length > 0;
+    const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+    const mobileValid = /^\d{10}$/.test(mobile.value);
+    const passwordValid = password.value.length >= 6;
 
-  const filled = nameValid && emailValid && mobileValid && passwordValid;
+    const filled = nameValid && emailValid && mobileValid && passwordValid;
 
-  if (role.value === "organisation" && !isOrgSelected) {
-    submitBtn.disabled = true;
-    return;
-  }
+    if (role.value === "organisation" && !isOrgSelected) {
+        submitBtn.disabled = true;
+        return;
+    }
 
-  submitBtn.disabled = !filled;
+    submitBtn.disabled = !filled;
 }
 
 form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (role.value === "organisation" && !isOrgSelected) {
-    orgValidation.style.display = "block";
-    return;
-  }
-
-  const data = {
-    name: fullName.value,
-    email: email.value,
-    phone: mobile.value,
-    password: password.value,
-    role: role.value,
-    organisationType: role.value === "organisation" ? selectedOrgType : ""
-  };
-
-  try {
-    const res = await fetch("/user/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-
-    const result = await res.json();
-    alert(result.message);
-
-    if (result.success) {
-      window.location.href = "/login";
+    if (role.value === "organisation" && !isOrgSelected) {
+        orgValidation.style.display = "block";
+        return;
     }
 
-  } catch (err) {
-    alert("Server error");
-  }
+    const data = {
+        name: fullName.value,
+        email: email.value,
+        phone: mobile.value,
+        password: password.value,
+        role: role.value,
+        organisationType: role.value === "organisation" ? selectedOrgType : ""
+    };
+
+    try {
+        const res = await fetch("/user/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+        alert(result.message);
+
+        if (result.success) {
+            window.location.href = "/login";
+        }
+
+    } catch (err) {
+        alert("Server error");
+    }
 });
 
 document.querySelectorAll("input").forEach(i =>
-  i.addEventListener("input", validateForm)
+    i.addEventListener("input", validateForm)
 );
 
 function goToLogin(){
-  window.location.href = "/login";
+    window.location.href = "/login";
 }
 
-
 window.addEventListener("load", () => {
-
-  const params = new URLSearchParams(window.location.search);
-  const roleParam = params.get("role");
-
-  if(roleParam){
-    const roleSelect = document.getElementById("role");
-    roleSelect.value = roleParam;
-
-    if(roleParam === "organisation"){
-      document.getElementById("orgSelection").style.display = "block";
-      isOrgSelected = false;
+    if (window.innerWidth >= 768) {
+        initAnimations();
     }
+    
+    const params = new URLSearchParams(window.location.search);
+    const roleParam = params.get("role");
 
-    validateForm();
-  }
+    if(roleParam){
+        const roleSelect = document.getElementById("role");
+        roleSelect.value = roleParam;
 
+        if(roleParam === "organisation"){
+            document.getElementById("orgSelection").style.display = "block";
+            isOrgSelected = false;
+        }
+        validateForm();
+    }
 });
+
+window.addEventListener('resize', function() {
+    if (window.innerWidth >= 768) {
+        const animatedBg = document.querySelector('.animated-bg');
+        if (animatedBg && !animatedBg.querySelector('.particle')) {
+            initAnimations();
+        }
+    }
+});
+function togglePassword() {
+    const pass = document.getElementById("password");
+
+    if (pass.type === "password") {
+        pass.type = "text";
+    } else {
+        pass.type = "password";
+    }
+}
 </script>
 
 </body>

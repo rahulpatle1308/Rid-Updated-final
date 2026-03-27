@@ -832,7 +832,7 @@ const SUBJECT = "<%= subject %>".toLowerCase();
   </div>
   
   <div class="main-container">
-    <header><%= subject %> <%= testNo %> QUIZ</header>
+    <header><%= subject %> QUIZ and TEST <%= testNo %> </header>
     
     <div class="quiz-header">
       <div class="header-left">
@@ -936,7 +936,7 @@ const SUBJECT = "<%= subject %>".toLowerCase();
     // Global variables
     let questions = [];
     let currentQuestion = 0;
-    let language = "en";
+    let language = "hi";
     let timeLeft = 60 * 60; // 60 minutes in seconds
     let timerInterval;
     let markedQuestions = new Set();
@@ -962,6 +962,8 @@ const SUBJECT = "<%= subject %>".toLowerCase();
     // 🔥 CHANGE 3: Initialize - हमेशा Question 1 से start करें
     document.addEventListener('DOMContentLoaded', async function() {
       showLoader();
+  // Default Hindi select karo
+  languageSelect.value = "hi";
 
       // हमेशा fresh start (clear any previous progress)
       localStorage.removeItem("quizProgress");
@@ -1019,37 +1021,30 @@ const SUBJECT = "<%= subject %>".toLowerCase();
 
     // Initialize quiz
     function initializeQuiz() {
-      if (questions.length === 0) {
-        alert('No questions available.');
-        return;
-      }
-      
-      quizStarted = true;
-      startTime = new Date();
-      
-      // Enable buttons
-      prevBtn.disabled = false;
-      nextBtn.disabled = false;
-      markBtn.disabled = false;
-      submitBtn.disabled = false;
-      
-      // Update total questions count
-      totalQuestionsElement.textContent = `Questions (${questions.length})`;
-      
-      // Load first question
-      loadQuestion(currentQuestion);
-      
-      // Start timer
-      startTimer();
-      
-      // Update navigation circles
-      updateNavigationCircles();
-      
-     
-      
-      // Enable auto-save
-      enableAutoSave();
-    }
+  if (questions.length === 0) {
+    alert('No questions available.');
+    return;
+  }
+
+  quizStarted = true;
+  startTime = new Date();
+
+  // 🔥 Dynamic Timer
+  timeLeft = questions.length * 60;
+
+  // Enable buttons
+  prevBtn.disabled = false;
+  nextBtn.disabled = false;
+  markBtn.disabled = false;
+  submitBtn.disabled = false;
+
+  totalQuestionsElement.textContent = `Questions (${questions.length})`;
+
+  loadQuestion(currentQuestion);
+  startTimer();
+  updateNavigationCircles();
+  enableAutoSave();
+}
 
     // Load Question
     function loadQuestion(index) {
@@ -1300,7 +1295,7 @@ const SUBJECT = "<%= subject %>".toLowerCase();
     }
 
     // 🔥 CHANGE 5: Submit Quiz function सही करें
-    async function submitQuiz() {
+   async function submitQuiz() {
       if (!confirm("Are you sure you want to submit the test?")) return;
 
       let attempted = 0;
@@ -1321,21 +1316,21 @@ const SUBJECT = "<%= subject %>".toLowerCase();
       const timeSpent = timerElement.innerText;
 
       const payload = {
-        
-  testNo: TEST_NO,
-  totalQuestions: questions.length,
-  attempted,
-  correct,
-  percentage,
-  accuracy,
-  timeSpent,
-       
+
+        testNo: TEST_NO,
+        totalQuestions: questions.length,
+        attempted,
+        correct,
+        percentage,
+        accuracy,
+        timeSpent,
+
       };
 
       console.log("Submitting payload:", payload);
 
       try {
-        const res = await fetch(`/quiz/${CATEGORY}/${SUBJECT}/${TEST_NO}/submit`, {
+        const res = await fetch(`/rts/quiz/${CATEGORY}/${SUBJECT}/${TEST_NO}/submit`, {
 
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -1344,20 +1339,19 @@ const SUBJECT = "<%= subject %>".toLowerCase();
 
         const data = await res.json();
 
-        if (data.success) {
-          localStorage.removeItem("quizProgress");
-          // 🔥 CHANGE 4: Dynamic redirect based on test number
-        window.location.href = `/quiz/${CATEGORY}/${SUBJECT}/test-${TEST_NO}/result/${data.resultId}`;
+       if (data.success) {
 
+  // 🔥 RESULT save (important)
+  sessionStorage.setItem("resultData", JSON.stringify(data.result));
+  sessionStorage.setItem("tempReview", JSON.stringify(questions));
 
-
-
-        } else {
+  window.location.href = `/rts/quiz/${CATEGORY}/${SUBJECT}/test-${TEST_NO}/result/${data.resultId}`;
+} else {
           alert("Submit failed: " + (data.message || "Unknown error"));
         }
       } catch (error) {
         console.error("Submit error:", error);
-        alert("Network error. Please try again.");
+        alert("Please login first, then submit the test.");
       }
     }
 

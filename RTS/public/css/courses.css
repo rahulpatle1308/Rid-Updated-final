@@ -258,43 +258,9 @@
     box-shadow: 0 4px 12px rgba(255, 255, 255, 0.35);
 }
 
-/* ==================== CARD SPECIFIC COLORS - CORRECTED ==================== */
-/* HTML ke exact data-course-id ke according fixed */
-.course-card[data-course-id="TECHNICAL & CODING"] { 
-    background: var(--card-blue); 
-}
-.course-card[data-course-id="TECHNICAL & CODING"]:hover { 
-    background: var(--card-blue-hover); 
-}
+/* ==================== CARD SPECIFIC COLORS - COMPLETE (ALL 12 CARDS) ==================== */
 
-.course-card[data-course-id="STATE BOARD"] { 
-    background: var(--card-purple); 
-}
-.course-card[data-course-id="STATE BOARD"]:hover { 
-    background: var(--card-purple-hover); 
-}
-
-.course-card[data-course-id="CBSE BOARD"] { 
-    background: var(--card-lime); 
-}
-.course-card[data-course-id="CBSE BOARD"]:hover { 
-    background: var(--card-lime-hover); 
-}
-
-.course-card[data-course-id="JEE / NEET"] { 
-    background: var(--card-orange); 
-}
-.course-card[data-course-id="JEE / NEET"]:hover { 
-    background: var(--card-orange-hover); 
-}
-
-.course-card[data-course-id="SSC / BANK"] { 
-    background: var(--card-indigo); 
-}
-.course-card[data-course-id="SSC / BANK"]:hover { 
-    background: var(--card-indigo-hover); 
-}
-
+/* 1. RAILWAY */
 .course-card[data-course-id="RAILWAY"] { 
     background: var(--card-cyan); 
 }
@@ -302,6 +268,23 @@
     background: var(--card-cyan-hover); 
 }
 
+/* 2. BPSC */
+.course-card[data-course-id="BPSC"] { 
+    background: var(--card-purple); 
+}
+.course-card[data-course-id="BPSC"]:hover { 
+    background: var(--card-purple-hover); 
+}
+
+/* 3. Home Guard */
+.course-card[data-course-id="Home Guard"] { 
+    background: var(--card-teal); 
+}
+.course-card[data-course-id="Home Guard"]:hover { 
+    background: var(--card-teal-hover); 
+}
+
+/* 4. POLYTECHNIC */
 .course-card[data-course-id="POLYTECHNIC"] { 
     background: var(--card-amber); 
 }
@@ -309,13 +292,69 @@
     background: var(--card-amber-hover); 
 }
 
+/* 5. SSC */
+.course-card[data-course-id="SSC"] { 
+    background: var(--card-indigo); 
+}
+.course-card[data-course-id="SSC"]:hover { 
+    background: var(--card-indigo-hover); 
+}
+
+/* 6. Assam Rifles */
+.course-card[data-course-id="Assam Rifles"] { 
+    background: var(--card-emerald); 
+}
+.course-card[data-course-id="Assam Rifles"]:hover { 
+    background: var(--card-emerald-hover); 
+}
+
+/* 7. JEE */
+.course-card[data-course-id="JEE"] { 
+    background: var(--card-orange); 
+}
+.course-card[data-course-id="JEE"]:hover { 
+    background: var(--card-orange-hover); 
+}
+
+/* 8. NEET */
+.course-card[data-course-id="NEET"] { 
+    background: var(--card-pink); 
+}
+.course-card[data-course-id="NEET"]:hover { 
+    background: var(--card-pink-hover); 
+}
+
+/* 9. TECHNICAL & CODING */
+.course-card[data-course-id="TECHNICAL & CODING"] { 
+    background: var(--card-blue); 
+}
+.course-card[data-course-id="TECHNICAL & CODING"]:hover { 
+    background: var(--card-blue-hover); 
+}
+
+/* 10. STATE BOARD */
+.course-card[data-course-id="STATE BOARD"] { 
+    background: var(--card-purple); 
+}
+.course-card[data-course-id="STATE BOARD"]:hover { 
+    background: var(--card-purple-hover); 
+}
+
+/* 11. CBSE BOARD */
+.course-card[data-course-id="CBSE BOARD"] { 
+    background: var(--card-lime); 
+}
+.course-card[data-course-id="CBSE BOARD"]:hover { 
+    background: var(--card-lime-hover); 
+}
+
+/* 12. MPPSC */
 .course-card[data-course-id="MPPSC"] { 
     background: var(--card-rose); 
 }
 .course-card[data-course-id="MPPSC"]:hover { 
     background: var(--card-rose-hover); 
 }
-
 
 /* ==================== HOVER EFFECTS ==================== */
 .course-card:hover {
@@ -340,6 +379,8 @@
     color: #92400e;
     transform: translateY(-2px) scale(1.03);
 }
+
+
 
 /* ==================== ANIMATIONS ==================== */
 @keyframes pulse {
@@ -368,6 +409,10 @@
 .course-card:nth-child(6) { animation-delay: 0.3s; }
 .course-card:nth-child(7) { animation-delay: 0.35s; }
 .course-card:nth-child(8) { animation-delay: 0.4s; }
+.course-card:nth-child(9) { animation-delay: 0.45s; }
+.course-card:nth-child(10) { animation-delay: 0.5s; }
+.course-card:nth-child(11) { animation-delay: 0.55s; }
+.course-card:nth-child(12) { animation-delay: 0.6s; }
 
 /* ==================== RESPONSIVE DESIGN ==================== */
 

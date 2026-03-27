@@ -1386,6 +1386,9 @@
 </head>
 
 <body>
+    <audio id="backgroundMusic" autoplay loop muted preload="auto">
+    <source src="/audio/b.mp3" type="audio/mpeg">
+</audio>
     <!-- Letter Popup Modal -->
     <div class="letter-popup-container" id="letterPopup">
         <div class="letter-popup-content">
@@ -1519,7 +1522,7 @@
                     <div class="love-fill" id="loveFill"></div>
                 </div>
                 <p style="color: #ffcc00; font-family: 'Dancing Script', cursive; font-size: 1.3rem; text-align: center;">
-                    प्यार का स्तर: अनंत
+                    "दिल से निकली बात" <p style="text-align: center;"><%= gift.message %></p>
                 </p>
             </div>
             <div class="footer-column">
@@ -2002,6 +2005,72 @@
             `;
             document.head.appendChild(style);
         });
+
+        // ============ AUDIO CODE - पेज ओपन होते ही बजेगा ============
+document.addEventListener("DOMContentLoaded", function() {
+
+    const audio = document.getElementById("backgroundMusic");
+    const navLinks = document.querySelectorAll(".nav-link");
+
+    if (!audio) {
+        console.error("❌ Audio element not found!");
+        return;
+    }
+
+    audio.loop = true;
+    audio.volume = 0.5;
+    audio.muted = false;   // 🔴 IMPORTANT: false रखना
+
+    let isPlaying = false;
+
+    // ✅ तुरंत चलाने की कोशिश
+    function tryAutoPlay() {
+        audio.play().then(() => {
+            isPlaying = true;
+            console.log("✅ ऑडियो चल रहा है!");
+        }).catch(err => {
+            console.log("⚠️ ऑटोप्ले ब्लॉक हुआ, क्लिक का इंतज़ार...");
+            
+            // क्लिक पर चलाओ
+            const playOnClick = () => {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    console.log("✅ क्लिक करने पर चल गया!");
+                });
+                document.removeEventListener("click", playOnClick);
+                document.removeEventListener("touchstart", playOnClick);
+            };
+            
+            document.addEventListener("click", playOnClick);
+            document.addEventListener("touchstart", playOnClick);
+        });
+    }
+
+    // थोड़ी देर बाद try करो (पेज पूरा लोड हो जाए)
+    setTimeout(tryAutoPlay, 500);
+
+    // ✅ नेविगेशन पर ऑडियो रोकना
+    navLinks.forEach(link => {
+        link.addEventListener("click", function() {
+            const href = this.getAttribute("href");
+            if (href && !href.startsWith("#") && href !== "#") {
+                audio.pause();
+                audio.currentTime = 0;
+                isPlaying = false;
+            }
+        });
+    });
+
+    // ✅ टैब visibility handle
+    document.addEventListener("visibilitychange", function() {
+        if (document.hidden) {
+            audio.pause();
+        } else if (isPlaying) {
+            audio.play();
+        }
+    });
+
+});
     </script>
 </body>
 

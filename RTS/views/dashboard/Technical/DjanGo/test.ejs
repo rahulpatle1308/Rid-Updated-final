@@ -679,205 +679,51 @@ const SUBJECT = "<%= subject %>".toLowerCase();
     
     // 🔥 CHANGE 1: QUESTION_BANK को GLOBAL SCOPE में रखें
     const QUESTION_BANK = {
-      1: [
-        {
-          num: 1,
-          question_en: "What does HTML stand for?",
-          question_hi: "HTML का पूरा नाम क्या है?",
-          options_en: [
-            "Hyper Text Markup Language",
-            "High Text Machine Language",
-            "Hyper Tool Markup Language",
-            "Home Text Markup Language"
-          ],
-          options_hi: [
-            "Hyper Text Markup Language",
-            "High Text Machine Language",
-            "Hyper Tool Markup Language",
-            "Home Text Markup Language"
-          ],
-          answer_en: "Hyper Text Markup Language",
-          answer_hi: "Hyper Text Markup Language",
-          attempted: false,
-          selected: "",
-          visited: false
-        },
-        {
-          num: 2,
-          question_en: "Which tag defines the HTML document?",
-          question_hi: "HTML डॉक्यूमेंट को परिभाषित करने वाला टैग कौन सा है?",
-          options_en: ["&lt;html&gt;", "&lt;body&gt;", "&lt;head&gt;", "&lt;doc&gt;"],
-          options_hi: ["&lt;html&gt;", "&lt;body&gt;", "&lt;head&gt;", "&lt;doc&gt;"],
-          answer_en: "&lt;html&gt;",
-          answer_hi: "&lt;html&gt;",
-          attempted: false,
-          selected: "",
-          visited: false
-        },
-        {
-          num: 3,
-          question_en: "Which tag contains meta information?",
-          question_hi: "मेटा जानकारी किस टैग में होती है?",
-          options_en: ["&lt;head&gt;", "&lt;meta&gt;", "&lt;title&gt;", "&lt;body&gt;"],
-          options_hi: ["&lt;head&gt;", "&lt;meta&gt;", "&lt;title&gt;", "&lt;body&gt;"],
-          answer_en: "&lt;head&gt;",
-          answer_hi: "&lt;head&gt;",
-          attempted: false,
-          selected: "",
-          visited: false
-        },
-        {
-          num: 4,
-          question_en: "Which tag is used for page title?",
-          question_hi: "पेज का टाइटल किस टैग से लिखा जाता है?",
-          options_en: ["&lt;title&gt;", "&lt;head&gt;", "&lt;h1&gt;", "&lt;meta&gt;"],
-          options_hi: ["&lt;title&gt;", "&lt;head&gt;", "&lt;h1&gt;", "&lt;meta&gt;"],
-          answer_en: "&lt;title&gt;",
-          answer_hi: "&lt;title&gt;",
-          attempted: false,
-          selected: "",
-          visited: false
-        },
-        {
-          num: 5,
-          question_en: "Which tag displays page content?",
-          question_hi: "पेज का कंटेंट किस टैग में दिखता है?",
-          options_en: ["&lt;body&gt;", "&lt;head&gt;", "&lt;html&gt;", "&lt;main&gt;"],
-          options_hi: ["&lt;body&gt;", "&lt;head&gt;", "&lt;html&gt;", "&lt;main&gt;"],
-          answer_en: "&lt;body&gt;",
-          answer_hi: "&lt;body&gt;",
-          attempted: false,
-          selected: "",
-          visited: false
-        }
+  1: [
+    {
+      "num": 1,
+      "questionen": "What is Django?",
+      "questionhi": "Django क्या है?",
+      "optionsen": [
+        "A Python web framework",
+        "A JavaScript library",
+        "A database system",
+        "A cloud service"
       ],
-
-      2: [
-        {
-          num: 1,
-          question_en: "Which tag defines HTML document?",
-          question_hi: "HTML डॉक्यूमेंट को परिभाषित करने वाला टैग कौन सा है?",
-          options_en: ["&lt;html&gt;", "&lt;body&gt;", "&lt;head&gt;", "&lt;doc&gt;"],
-          options_hi: ["&lt;html&gt;", "&lt;body&gt;", "&lt;head&gt;", "&lt;doc&gt;"],
-          answer_en: "&lt;html&gt;",
-          answer_hi: "&lt;html&gt;",
-          attempted: false,
-          selected: "",
-          visited: false
-        },
-        {
-          num: 2,
-          question_en: "Which attribute is used for image source?",
-          question_hi: "इमेज का सोर्स किस attribute में दिया जाता है?",
-          options_en: ["src", "href", "link", "source"],
-          options_hi: ["src", "href", "link", "source"],
-          answer_en: "src",
-          answer_hi: "src",
-          attempted: false,
-          selected: "",
-          visited: false
-        },
-        {
-          num: 3,
-          question_en: "Which tag creates a hyperlink?",
-          question_hi: "हाइपरलिंक बनाने के लिए कौन सा टैग use किया जाता है?",
-          options_en: ["&lt;a&gt;", "&lt;link&gt;", "&lt;href&gt;", "&lt;url&gt;"],
-          options_hi: ["&lt;a&gt;", "&lt;link&gt;", "&lt;href&gt;", "&lt;url&gt;"],
-          answer_en: "&lt;a&gt;",
-          answer_hi: "&lt;a&gt;",
-          attempted: false,
-          selected: "",
-          visited: false
-        },
-        {
-          num: 4,
-          question_en: "Which tag is used for the largest heading?",
-          question_hi: "सबसे बड़ा हेडिंग किस टैग से बनता है?",
-          options_en: ["&lt;h1&gt;", "&lt;h6&gt;", "&lt;head&gt;", "&lt;header&gt;"],
-          options_hi: ["&lt;h1&gt;", "&lt;h6&gt;", "&lt;head&gt;", "&lt;header&gt;"],
-          answer_en: "&lt;h1&gt;",
-          answer_hi: "&lt;h1&gt;",
-          attempted: false,
-          selected: "",
-          visited: false
-        },
-        {
-          num: 5,
-          question_en: "Which tag creates a line break?",
-          question_hi: "लाइन ब्रेक किस टैग से बनता है?",
-          options_en: ["&lt;br&gt;", "&lt;lb&gt;", "&lt;break&gt;", "&lt;newline&gt;"],
-          options_hi: ["&lt;br&gt;", "&lt;lb&gt;", "&lt;break&gt;", "&lt;newline&gt;"],
-          answer_en: "&lt;br&gt;",
-          answer_hi: "&lt;br&gt;",
-          attempted: false,
-          selected: "",
-          visited: false
-        }
+      "optionshi": [
+        "एक Python वेब फ्रेमवर्क",
+        "एक JavaScript लाइब्रेरी",
+        "एक डेटाबेस सिस्टम",
+        "एक क्लाउड सर्विस"
       ],
-
-      3: [
-        {
-          num: 1,
-          question_en: "Which tag is used for an ordered list?",
-          question_hi: "ऑर्डर लिस्ट किस टैग से बनती है?",
-          options_en: ["&lt;ol&gt;", "&lt;ul&gt;", "&lt;li&gt;", "&lt;list&gt;"],
-          options_hi: ["&lt;ol&gt;", "&lt;ul&gt;", "&lt;li&gt;", "&lt;list&gt;"],
-          answer_en: "&lt;ol&gt;",
-          answer_hi: "&lt;ol&gt;",
-          attempted: false,
-          selected: "",
-          visited: false
-        },
-        {
-          num: 2,
-          question_en: "Which tag creates an unordered list?",
-          question_hi: "अनऑर्डर लिस्ट किस टैग से बनती है?",
-          options_en: ["&lt;ul&gt;", "&lt;ol&gt;", "&lt;li&gt;", "&lt;list&gt;"],
-          options_hi: ["&lt;ul&gt;", "&lt;ol&gt;", "&lt;li&gt;", "&lt;list&gt;"],
-          answer_en: "&lt;ul&gt;",
-          answer_hi: "&lt;ul&gt;",
-          attempted: false,
-          selected: "",
-          visited: false
-        },
-        {
-          num: 3,
-          question_en: "Which tag defines a table row?",
-          question_hi: "टेबल रो किस टैग से define होती है?",
-          options_en: ["&lt;tr&gt;", "&lt;td&gt;", "&lt;table&gt;", "&lt;row&gt;"],
-          options_hi: ["&lt;tr&gt;", "&lt;td&gt;", "&lt;table&gt;", "&lt;row&gt;"],
-          answer_en: "&lt;tr&gt;",
-          answer_hi: "&lt;tr&gt;",
-          attempted: false,
-          selected: "",
-          visited: false
-        },
-        {
-          num: 4,
-          question_en: "Which tag creates a text input field?",
-          question_hi: "टेक्स्ट इनपुट फील्ड किस टैग से बनती है?",
-          options_en: ["&lt;input&gt;", "&lt;text&gt;", "&lt;textarea&gt;", "&lt;field&gt;"],
-          options_hi: ["&lt;input&gt;", "&lt;text&gt;", "&lt;textarea&gt;", "&lt;field&gt;"],
-          answer_en: "&lt;input&gt;",
-          answer_hi: "&lt;input&gt;",
-          attempted: false,
-          selected: "",
-          visited: false
-        },
-        {
-          num: 5,
-          question_en: "Which tag is used for a button?",
-          question_hi: "बटन के लिए कौन सा टैग use किया जाता है?",
-          options_en: ["&lt;button&gt;", "&lt;btn&gt;", "&lt;input&gt;", "&lt;submit&gt;"],
-          options_hi: ["&lt;button&gt;", "&lt;btn&gt;", "&lt;input&gt;", "&lt;submit&gt;"],
-          answer_en: "&lt;button&gt;",
-          answer_hi: "&lt;button&gt;",
-          attempted: false,
-          selected: "",
-          visited: false
-        }
-      ]
-    };
+      "answeren": "A Python web framework",
+      "answerhi": "एक Python वेब फ्रेमवर्क",
+      "attempted": false,
+      "selected": ""
+    },
+    {
+      "num": 2,
+      "questionen": "How to add CSRF token in Express EJS?",
+      "questionhi": "Express EJS में CSRF टोकन कैसे जोड़ें?",
+      "optionsen": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "optionshi": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "answeren": "a",
+      "answerhi": "a",
+      "attempted": false,
+      "selected": ""
+    }
+  ]
+}
   </script>
 </head>
 
@@ -889,7 +735,7 @@ const SUBJECT = "<%= subject %>".toLowerCase();
   </div>
   
   <div class="main-container">
-    <header><%= subject %> <%= testNo %> QUIZ</header>
+    <header><%= subject %> QUIZ and TEST <%= testNo %> </header>
     
     <div class="quiz-header">
       <div class="header-left">
@@ -1076,37 +922,30 @@ const SUBJECT = "<%= subject %>".toLowerCase();
 
     // Initialize quiz
     function initializeQuiz() {
-      if (questions.length === 0) {
-        alert('No questions available.');
-        return;
-      }
-      
-      quizStarted = true;
-      startTime = new Date();
-      
-      // Enable buttons
-      prevBtn.disabled = false;
-      nextBtn.disabled = false;
-      markBtn.disabled = false;
-      submitBtn.disabled = false;
-      
-      // Update total questions count
-      totalQuestionsElement.textContent = `Questions (${questions.length})`;
-      
-      // Load first question
-      loadQuestion(currentQuestion);
-      
-      // Start timer
-      startTimer();
-      
-      // Update navigation circles
-      updateNavigationCircles();
-      
-     
-      
-      // Enable auto-save
-      enableAutoSave();
-    }
+  if (questions.length === 0) {
+    alert('No questions available.');
+    return;
+  }
+
+  quizStarted = true;
+  startTime = new Date();
+
+  // 🔥 Dynamic Timer
+  timeLeft = questions.length * 60;
+
+  // Enable buttons
+  prevBtn.disabled = false;
+  nextBtn.disabled = false;
+  markBtn.disabled = false;
+  submitBtn.disabled = false;
+
+  totalQuestionsElement.textContent = `Questions (${questions.length})`;
+
+  loadQuestion(currentQuestion);
+  startTimer();
+  updateNavigationCircles();
+  enableAutoSave();
+}
 
     // Load Question
     function loadQuestion(index) {
@@ -1357,7 +1196,7 @@ const SUBJECT = "<%= subject %>".toLowerCase();
     }
 
     // 🔥 CHANGE 5: Submit Quiz function सही करें
-    async function submitQuiz() {
+   async function submitQuiz() {
       if (!confirm("Are you sure you want to submit the test?")) return;
 
       let attempted = 0;
@@ -1378,21 +1217,21 @@ const SUBJECT = "<%= subject %>".toLowerCase();
       const timeSpent = timerElement.innerText;
 
       const payload = {
-        
-  testNo: TEST_NO,
-  totalQuestions: questions.length,
-  attempted,
-  correct,
-  percentage,
-  accuracy,
-  timeSpent,
-       
+
+        testNo: TEST_NO,
+        totalQuestions: questions.length,
+        attempted,
+        correct,
+        percentage,
+        accuracy,
+        timeSpent,
+
       };
 
       console.log("Submitting payload:", payload);
 
       try {
-        const res = await fetch(`/quiz/${CATEGORY}/${SUBJECT}/${TEST_NO}/submit`, {
+        const res = await fetch(`/rts/quiz/${CATEGORY}/${SUBJECT}/${TEST_NO}/submit`, {
 
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -1401,21 +1240,19 @@ const SUBJECT = "<%= subject %>".toLowerCase();
 
         const data = await res.json();
 
-        if (data.success) {
-          localStorage.removeItem("quizProgress");
-           sessionStorage.setItem("tempReview", JSON.stringify(questions));
-          // 🔥 CHANGE 4: Dynamic redirect based on test number
-        window.location.href = `/quiz/${CATEGORY}/${SUBJECT}/test-${TEST_NO}/result/${data.resultId}`;
+       if (data.success) {
 
+  // 🔥 RESULT save (important)
+  sessionStorage.setItem("resultData", JSON.stringify(data.result));
+  sessionStorage.setItem("tempReview", JSON.stringify(questions));
 
-
-
-        } else {
+  window.location.href = `/rts/quiz/${CATEGORY}/${SUBJECT}/test-${TEST_NO}/result/${data.resultId}`;
+} else {
           alert("Submit failed: " + (data.message || "Unknown error"));
         }
       } catch (error) {
         console.error("Submit error:", error);
-        alert("Network error. Please try again.");
+        alert("Please login first, then submit the test.");
       }
     }
 

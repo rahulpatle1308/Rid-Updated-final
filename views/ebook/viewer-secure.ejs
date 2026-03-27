@@ -5,72 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Mobile Reader - <%= pdf.title %> | ReadVault</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- PWA Support -->
-    <link rel="manifest" href="/manifest.json">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <!-- Preload critical resources -->
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com/ajax/libs" crossorigin>
-    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com/ajax/libs">
     <link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js">
     <style>
-        /* Mobile-First Base Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
             user-select: none;
-            -webkit-touch-callout: none;
-            -webkit-tap-highlight-color: transparent;
+            -webkit-user-select: none;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             color: white;
             overflow: hidden;
-            touch-action: manipulation;
-            -webkit-text-size-adjust: 100%;
         }
 
-        /* Security Overlay - Mobile Optimized */
-        .security-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            z-index: 9999;
-            pointer-events: none;
-        }
-
-        .watermark {
-            position: absolute;
-            font-size: clamp(30px, 8vw, 80px);
-            color: rgba(255, 255, 255, 0.02);
-            pointer-events: none;
-            z-index: 10000;
-            white-space: nowrap;
-            font-weight: 900;
-            text-align: center;
-            width: 100%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-45deg);
-        }
-
-        /* Mobile-Optimized Header */
         .security-header {
             background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -79,546 +36,221 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            height: 50px;
-            flex-wrap: nowrap;
-            gap: 0.5rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            will-change: transform;
-            pointer-events: all;
-            transform: translateZ(0);
-        }
-
-        /* Header Hide/Show Animation */
-        .header-hidden {
-            transform: translateY(-100%) !important;
-            opacity: 0 !important;
-            pointer-events: none !important;
-        }
-
-        .header-visible {
-            transform: translateY(0) !important;
-            opacity: 1 !important;
-            pointer-events: all !important;
+            height: 70px;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            flex-shrink: 0;
-            min-width: 0;
+            gap: 1rem;
         }
 
         .logo-icon {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            border-radius: 6px;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 0.8rem;
-            flex-shrink: 0;
         }
 
         .logo-text {
-            font-size: 0.9rem;
-            font-weight: 600;
-            white-space: nowrap;
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .book-info {
             flex: 1;
-            min-width: 0;
             text-align: center;
-            padding: 0 0.25rem;
         }
 
         .book-title {
-            font-size: 0.8rem;
-            font-weight: 600;
-            white-space: nowrap;
+            font-size: 1rem;
+            font-weight: 500;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 100%;
+            white-space: nowrap;
         }
 
         .security-status {
-            flex-shrink: 0;
             display: flex;
             align-items: center;
-            gap: 0.25rem;
-            font-size: 0.7rem;
+            gap: 0.5rem;
+            background: rgba(16, 185, 129, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
             color: #10b981;
         }
 
-        /* Main Container - Mobile Optimized */
         .main-container {
-            margin-top: 50px;
-            height: calc(100vh - 50px);
-            background: #000;
-            position: relative;
-            overflow: hidden;
+            margin-top: 70px;
+            height: calc(100vh - 70px);
+            background: #1a1a1a;
             display: flex;
             flex-direction: column;
         }
 
-        /* PDF Container - Enhanced for Zoom */
         .pdf-container {
             flex: 1;
-            background: #1a1a1a;
             overflow: auto;
-            position: relative;
-            -webkit-overflow-scrolling: touch;
-            overscroll-behavior: contain;
-            touch-action: pan-x pan-y pinch-zoom;
-            width: 100%;
-            height: 100%;
-            overscroll-behavior-y: contain;
+            background: #2d2d2d;
         }
 
-        /* Canvas Container - Enhanced for Zoom */
         .canvas-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 20px;
-            padding: 20px;
-            min-height: min-content;
-            width: 100%;
-            margin: 0 auto;
-            box-sizing: border-box;
-            position: relative;
-            overflow: visible !important;
-            transform-origin: center center;
-            will-change: transform;
-        }
+    display: flex;
+    flex-direction: column;
+    align-items: center;        /* center horizontally */
+    justify-content: flex-start; /* top se start (important) */
+    padding: 30px;
+    min-height: 100%;
+}
+@media (max-width: 768px) {
+    .canvas-container {
+        display: block;
+        align-items: center;     /* center on mobile */
+        justify-content: flex-start;
+    }
+}
 
-        /* Mobile-Optimized Canvas - Enhanced for Zoom */
+        /* HD Canvas Styles */
         .page-canvas {
             display: block;
             background: white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-radius: 12px;
             cursor: default;
-            position: relative;
             max-width: none !important;
+            width: auto !important;
             height: auto !important;
+            /* HD Rendering */
             image-rendering: -webkit-optimize-contrast;
             image-rendering: crisp-edges;
-            touch-action: none;
-            transform-origin: center center;
-            transition: transform 0.2s ease-out;
-            will-change: transform;
-            margin: 0 auto;
-            overflow: hidden;
-            transform: translateZ(0);
-            backface-visibility: hidden;
-            perspective: 1000;
-            -webkit-backface-visibility: hidden;
-            -webkit-perspective: 1000;
+            image-rendering: pixelated;
         }
 
-        /* Page Skeleton for Loading */
-        .page-skeleton {
-            width: 90%;
-            max-width: 400px;
-            height: 500px;
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-            margin: 20px auto;
-            border-radius: 8px;
-        }
-
-        @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        /* Network Status */
-        .network-status {
-            position: fixed;
-            top: 60px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(37, 99, 235, 0.9);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 12px;
-            z-index: 1001;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            white-space: nowrap;
-            animation: fade-in 0.3s ease;
-            pointer-events: none;
-        }
-
-        /* Mobile Navigation Controls - FIXED LAYOUT */
-        .navigation-controls {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.95);
-            padding: 0.75rem 1rem;
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            z-index: 100;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            justify-content: space-between;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            will-change: transform;
-            pointer-events: all;
-        }
-
-        /* Navigation Hide/Show Animation */
-        .navigation-hidden {
-            transform: translateY(100%) !important;
-            opacity: 0 !important;
-            pointer-events: none !important;
-        }
-
-        .navigation-visible {
-            transform: translateY(0) !important;
-            opacity: 1 !important;
-            pointer-events: all !important;
-        }
-
-        /* Fixed Button Layout */
-        .nav-buttons-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            gap: 1rem;
-        }
-
-        .page-navigation {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            flex: 1;
-            justify-content: center;
-        }
-
-        .nav-btn {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            color: white;
-            padding: 0.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-            font-size: 0.8rem;
-            min-height: 44px;
-            min-width: 44px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            touch-action: manipulation;
-            pointer-events: all;
-        }
-
-        .nav-btn:active {
-            background: rgba(255, 255, 255, 0.25);
-            transform: scale(0.95);
-        }
-
-        .nav-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-
-        .nav-btn span {
-            display: none;
-        }
-
-        /* Page info styling */
-        .page-info-container {
-            display: flex;
-            align-items: center;
-            min-width: 120px;
-            justify-content: center;
-        }
-
-        .page-info {
-            color: white;
-            font-weight: 600;
-            text-align: center;
-            font-size: 0.9rem;
-            padding: 0.5rem 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            min-width: 100px;
-            transition: background 0.3s ease;
-            pointer-events: none;
-        }
-
-        /* Back button */
-        .back-btn-container {
-            flex-shrink: 0;
-        }
-
-        .back-btn {
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-            font-size: 0.8rem;
-            min-height: 44px;
-            min-width: 44px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            gap: 0.5rem;
-            touch-action: manipulation;
-            pointer-events: all;
-        }
-
-        .back-btn:active {
-            background: rgba(239, 68, 68, 0.3);
-            transform: scale(0.95);
-        }
-
-        .back-btn i {
-            font-size: 0.9rem;
-        }
-
-        .back-btn span {
-            display: none;
-        }
-
-        /* Mobile Zoom Controls */
+        /* Zoom Controls */
         .zoom-controls {
             position: fixed;
-            bottom: 70px;
-            right: 10px;
+            right: 20px;
+            bottom: 100px;
             background: rgba(0, 0, 0, 0.95);
-            padding: 0.5rem;
-            border-radius: 12px;
+            backdrop-filter: blur(20px);
+            padding: 12px;
+            border-radius: 16px;
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            gap: 12px;
             z-index: 100;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            will-change: transform;
-            pointer-events: all;
-        }
-
-        /* Zoom Controls Hide/Show Animation */
-        .zoom-hidden {
-            transform: translateX(100%) !important;
-            opacity: 0 !important;
-            pointer-events: none !important;
-        }
-
-        .zoom-visible {
-            transform: translateX(0) !important;
-            opacity: 1 !important;
-            pointer-events: all !important;
         }
 
         .zoom-btn {
             background: rgba(255, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.25);
             color: white;
-            width: 44px;
-            height: 44px;
-            border-radius: 8px;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            font-size: 1.2rem;
             transition: all 0.2s ease;
-            touch-action: manipulation;
-            pointer-events: all;
         }
 
-        .zoom-btn:active {
+        .zoom-btn:hover {
             background: rgba(255, 255, 255, 0.25);
-            transform: scale(0.95);
+            transform: scale(1.05);
         }
 
         .zoom-level {
-            color: white;
-            font-size: 0.7rem;
             text-align: center;
-            margin-top: 5px;
+            font-size: 0.85rem;
             font-weight: 600;
-            white-space: nowrap;
-            pointer-events: none;
-        }
-
-        /* Zoom Hint Styling */
-        .zoom-hint {
-            position: fixed;
-            bottom: 120px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(37, 99, 235, 0.9);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            z-index: 1001;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            white-space: nowrap;
-            animation: slide-up 0.3s ease;
-            pointer-events: none;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Controls Hint Styling */
-        .controls-hint {
-            position: fixed;
-            top: 70px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.85);
-            color: white;
-            padding: 0.5rem 1rem;
+            padding: 8px 0;
+            color: #10b981;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 8px;
-            font-size: 0.7rem;
-            z-index: 1001;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            white-space: nowrap;
-            animation: fade-in 0.3s ease;
-            pointer-events: none;
         }
 
-        @keyframes fade-in {
-            from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
-            to { opacity: 1; transform: translateX(-50%) translateY(0); }
-        }
-
-        /* Click Feedback Animation */
-        .click-feedback {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(37, 99, 235, 0.3);
-            pointer-events: none;
-            z-index: 10;
-            animation: ripple 0.6s ease-out;
-            transform: translate(-50%, -50%);
-        }
-
-        @keyframes ripple {
-            0% {
-                width: 0;
-                height: 0;
-                opacity: 0.5;
-            }
-            100% {
-                width: 100px;
-                height: 100px;
-                opacity: 0;
-            }
-        }
-
-        /* Double click zone indicator */
-        .double-click-zone {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80%;
-            height: 80%;
-            border: 2px dashed rgba(37, 99, 235, 0.3);
-            border-radius: 10px;
-            pointer-events: none;
-            z-index: 5;
-            display: none;
-        }
-
-        /* Show double click zone only when needed */
-        .show-double-click-zone .double-click-zone {
-            display: block;
-            animation: pulse-border 2s infinite;
-        }
-
-        @keyframes pulse-border {
-            0%, 100% {
-                border-color: rgba(37, 99, 235, 0.3);
-            }
-            50% {
-                border-color: rgba(37, 99, 235, 0.6);
-            }
-        }
-
-        /* Security Warning - Mobile */
-        .security-warning {
+        /* Navigation Controls */
+        .navigation-controls {
             position: fixed;
-            top: 60px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(239, 68, 68, 0.95);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            z-index: 1001;
-            display: none;
-            max-width: 90vw;
-            text-align: center;
+            background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            padding: 12px 24px;
+            border-radius: 60px;
+            z-index: 100;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* Mobile Loading State */
+        .nav-buttons-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .back-btn, .nav-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover, .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .page-info {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            min-width: 120px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
         .loading-state {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #1a1a1a;
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
             z-index: 50;
-            padding: 1rem;
-            text-align: center;
-            contain: layout paint style;
-            content-visibility: auto;
         }
 
         .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid #333;
-            border-top: 3px solid #2563eb;
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top: 4px solid #667eea;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         @keyframes spin {
@@ -626,120 +258,39 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Progress Bar */
         .progress-bar {
-            width: 200px;
-            height: 6px;
+            width: 300px;
+            height: 8px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
+            border-radius: 4px;
             overflow: hidden;
             margin: 1rem 0;
         }
 
-        .progress-bar .progress {
+        .progress {
             height: 100%;
-            background: linear-gradient(90deg, #2563eb, #3b82f6);
+            background: linear-gradient(90deg, #667eea, #764ba2);
             transition: width 0.3s ease;
         }
 
-        /* Mobile Gesture Hints */
-        .gesture-hint {
+        .zoom-hint, .controls-hint {
             position: fixed;
-            bottom: 120px;
+            bottom: 180px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            z-index: 90;
-            display: none;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            z-index: 1001;
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-
-        .gesture-hint.hidden {
-            opacity: 0;
-            transform: translateX(-50%) translateY(20px);
-        }
-
-        /* Double Tap Zoom Indicator */
-        .double-tap-hint {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            z-index: 10;
-            display: none;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        /* Keyboard Feedback Animation */
-        .keyboard-feedback {
-            position: fixed;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(37, 99, 235, 0.9);
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            z-index: 1000;
-            animation: pulse-fade 0.5s ease-out;
-            pointer-events: none;
-        }
-
-        @keyframes pulse-fade {
-            0% {
-                opacity: 0;
-                transform: translateY(-50%) scale(0.8);
-            }
-            50% {
-                opacity: 1;
-                transform: translateY(-50%) scale(1.1);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-50%) scale(1);
-            }
-        }
-
-        /* Keyboard shortcuts hint */
-        .keyboard-hint {
-            position: fixed;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.85);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            z-index: 90;
-            display: none;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
             white-space: nowrap;
-            animation: slide-up 0.3s ease;
+            animation: fadeInUp 0.3s ease;
             pointer-events: none;
         }
 
-        @keyframes slide-up {
+        @keyframes fadeInUp {
             from {
                 opacity: 0;
                 transform: translateX(-50%) translateY(20px);
@@ -750,160 +301,71 @@
             }
         }
 
-        .keyboard-hint kbd {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 0.1rem 0.4rem;
-            border-radius: 4px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            font-family: monospace;
-            font-size: 0.7rem;
-            margin: 0 0.2rem;
+        .security-warning {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(239, 68, 68, 0.95);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            z-index: 1001;
+            display: none;
         }
+       .pdf-container {
+    overflow: auto;
+    cursor: grab;
+}
 
-        /* Mobile Scrollbar */
+.pdf-container:active {
+    cursor: grabbing;
+}
+
         .pdf-container::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+            width: 10px;
+            height: 10px;
         }
 
         .pdf-container::-webkit-scrollbar-track {
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
         }
 
         .pdf-container::-webkit-scrollbar-thumb {
             background: rgba(255, 255, 255, 0.3);
-            border-radius: 3px;
+            border-radius: 5px;
         }
 
-        /* Enhanced Print Protection */
         @media print {
-            body * {
-                visibility: hidden !important;
-                display: none !important;
-                opacity: 0 !important;
-            }
-            
-            .security-overlay {
-                display: block !important;
-                background: white !important;
-                position: absolute !important;
-                top: 0 !important;
-                left: 0 !important;
-                width: 100% !important;
-                height: 100% !important;
-                z-index: 999999 !important;
-            }
-            
-            .watermark {
-                display: block !important;
-                color: black !important;
-                opacity: 0.3 !important;
-                font-size: 48px !important;
-                position: absolute !important;
-                top: 50% !important;
-                left: 50% !important;
-                transform: translate(-50%, -50%) rotate(-45deg) !important;
-                white-space: nowrap !important;
-                z-index: 1000000 !important;
-                width: auto !important;
-            }
-            
-            /* Prevent any content from printing */
-            body:before {
-                content: "PRINTING NOT ALLOWED - ReadVault Protected Document" !important;
-                display: block !important;
-                position: absolute !important;
-                top: 50% !important;
-                left: 50% !important;
-                transform: translate(-50%, -50%) !important;
-                font-size: 24px !important;
-                color: red !important;
-                z-index: 1000001 !important;
-            }
-            
-            /* Force print dialog to close */
-            @page {
-                size: auto !important;
-                margin: 0 !important;
-            }
-            
-            html, body {
-                height: 100% !important;
-                overflow: hidden !important;
-                page-break-after: avoid !important;
-                page-break-before: avoid !important;
+            body * { display: none !important; }
+        }
+
+        /* High DPI Screens */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .page-canvas {
+                image-rendering: -webkit-optimize-contrast;
+                image-rendering: crisp-edges;
             }
         }
 
-        /* Print detection warning */
-        .print-warning {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            z-index: 999999;
-            color: white;
-            text-align: center;
-            padding: 2rem;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-        }
-
-        .print-warning-content {
-            background: rgba(239, 68, 68, 0.9);
-            padding: 2rem;
-            border-radius: 12px;
-            max-width: 400px;
-            width: 90%;
-        }
-
-        /* Controls Toggle Button (For Debug) */
-        .controls-toggle {
-            position: fixed;
-            top: 60px;
-            right: 10px;
-            background: rgba(37, 99, 235, 0.9);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            z-index: 1001;
-            cursor: pointer;
-            display: none; /* Hidden by default, enable for debug */
-        }
-
-        /* For desktop users - show keyboard hints */
-        @media (min-width: 768px) {
-            .keyboard-hint {
-                display: block;
-            }
-            
-            .nav-btn span {
-                display: inline;
-                margin-left: 0.5rem;
-            }
-            
-            .back-btn span {
-                display: inline;
-            }
-        }
-
-        /* Tablet Optimizations */
-        @media (min-width: 768px) {
+        @media (max-width: 768px) {
             .security-header {
                 height: 60px;
-                padding: 0.75rem 1rem;
+                padding: 0 1rem;
+            }
+            
+            .logo-icon {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .logo-text {
+                display: none;
+            }
+            
+            .security-status span {
+                display: none;
             }
             
             .main-container {
@@ -911,237 +373,63 @@
                 height: calc(100vh - 60px);
             }
             
-            .logo-icon {
-                width: 35px;
-                height: 35px;
+            .zoom-controls {
+                right: 10px;
+                bottom: 80px;
+                padding: 8px;
+                gap: 8px;
             }
             
-            .logo-text {
-                font-size: 1rem;
-            }
-            
-            .book-title {
+            .zoom-btn {
+                width: 40px;
+                height: 40px;
                 font-size: 1rem;
             }
             
             .navigation-controls {
-                bottom: 10px;
-                left: 50%;
-                right: auto;
-                transform: translateX(-50%);
-                width: auto;
-                border-radius: 25px;
-                border-top: none;
-                max-width: 600px;
+                padding: 8px 16px;
             }
             
-            .navigation-hidden {
-                transform: translateX(-50%) translateY(100%) !important;
+            .nav-buttons-container {
+                gap: 12px;
             }
             
-            .navigation-visible {
-                transform: translateX(-50%) translateY(0) !important;
-            }
-            
-            .canvas-container {
-                padding: 15px;
-                gap: 15px;
-            }
-            
-            .page-info {
-                font-size: 1rem;
-                padding: 0.5rem 1.5rem;
-            }
-            
-            .zoom-controls {
-                bottom: 80px;
-                right: 20px;
-            }
-        }
-
-        /* Large Mobile Landscape */
-        @media (max-width: 767px) and (orientation: landscape) {
-            .security-header {
-                height: 40px;
-                padding: 0.25rem 0.5rem;
-            }
-            
-            .main-container {
-                margin-top: 40px;
-                height: calc(100vh - 40px);
-            }
-            
-            .logo-text {
+            .back-btn span, .nav-btn span {
                 display: none;
             }
             
-            .book-title {
-                font-size: 0.75rem;
-            }
-            
-            .navigation-controls {
-                padding: 0.5rem;
-                gap: 0.75rem;
-            }
-            
-            .nav-buttons-container {
-                gap: 1rem;
-            }
-            
-            .nav-btn {
-                min-height: 36px;
-                min-width: 36px;
-                padding: 0.4rem;
+            .back-btn i, .nav-btn i {
+                margin: 0;
             }
             
             .page-info {
-                font-size: 0.8rem;
-                padding: 0.4rem 0.8rem;
+                padding: 6px 16px;
+                font-size: 0.85rem;
                 min-width: 80px;
             }
             
-            .back-btn {
-                padding: 0.5rem;
-            }
-            
-            .zoom-controls {
-                bottom: 60px;
-                right: 5px;
-            }
-        }
-
-        /* Very Small Phones */
-        @media (max-width: 360px) {
-            .security-header {
-                padding: 0.25rem;
-            }
-            
-            .logo-icon {
-                width: 28px;
-                height: 28px;
-                font-size: 0.7rem;
-            }
-            
-            .book-title {
-                font-size: 0.75rem;
-            }
-            
-            .navigation-controls {
-                padding: 0.5rem;
-                gap: 0.5rem;
-            }
-            
-            .nav-buttons-container {
-                gap: 0.75rem;
-            }
-            
-            .page-navigation {
-                gap: 0.25rem;
-            }
-            
-            .page-info {
-                font-size: 0.75rem;
-                padding: 0.3rem 0.6rem;
-                min-width: 70px;
-            }
-            
-            .back-btn {
-                padding: 0.5rem;
-            }
-        }
-
-        /* High DPI Mobile Screens - HD Optimization */
-        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-            .page-canvas {
-                image-rendering: pixelated;
-            }
-        }
-
-        /* Reduce motion for accessibility */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-            
-            .page-canvas {
-                transition: none !important;
-            }
-        }
-
-        /* Button hover effects for desktop */
-        @media (hover: hover) {
-            .nav-btn:hover:not(:disabled) {
-                background: rgba(255, 255, 255, 0.2);
-            }
-            
-            .back-btn:hover {
-                background: rgba(239, 68, 68, 0.3);
-            }
-            
-            .zoom-btn:hover {
-                background: rgba(255, 255, 255, 0.2);
+            .canvas-container {
+                padding: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Security Overlay -->
     <div class="security-overlay" id="securityOverlay">
-        <div class="watermark" id="watermark">READVAULT MOBILE</div>
+        <div class="watermark" style="display: none;">READVAULT</div>
     </div>
 
-    <!-- Print Warning Modal -->
-    <div class="print-warning" id="printWarning">
-        <div class="print-warning-content">
-            <i class="fas fa-ban" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-            <h2 style="margin-bottom: 1rem;">Printing Restricted</h2>
-            <p>Printing is not allowed for protected documents.</p>
-            <p style="font-size: 0.9rem; margin-top: 1rem; color: rgba(255, 255, 255, 0.8);">
-                This action has been logged for security purposes.
-            </p>
-            <button onclick="closePrintWarning()" class="nav-btn" style="margin-top: 1.5rem; background: rgba(255, 255, 255, 0.2);">
-                <i class="fas fa-times"></i> Close
-            </button>
-        </div>
-    </div>
-
-    <!-- Security Warning -->
-    <div class="security-warning" id="securityWarning">
-        <i class="fas fa-shield-alt"></i> Security Action Blocked
-    </div>
-
-    <!-- Gesture Hints -->
-    <div class="gesture-hint" id="gestureHint">
-        <i class="fas fa-hand-pointer"></i> Tap screen to show/hide controls
-    </div>
-
-    <!-- Keyboard Shortcuts Hint -->
-    <!-- <div class="keyboard-hint" id="keyboardHint">
-        <i class="fas fa-keyboard"></i> 
-        Navigate: 
-        <kbd>←</kbd>/<kbd>→</kbd> or 
-        <kbd>Space</kbd> • 
-        Zoom: <kbd>Ctrl</kbd>+<kbd>+</kbd>/<kbd>-</kbd>
-    </div> -->
-
-    <!-- Debug Toggle Button (Hidden by default) -->
-    <div class="controls-toggle" id="debugToggle" title="Debug: Toggle Controls">
-        <i class="fas fa-bug"></i>
-    </div>
-
-    <!-- Mobile Header -->
-    <div class="security-header header-visible">
+    <div class="security-header">
         <div class="logo">
-            <a href="<%= typeof basePath !== 'undefined' ? basePath + '/' : '/ebook/' %>" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
-            </a>
+            <div class="logo-icon">
+                <i class="fas fa-book-open"></i>
+            </div>
+            <div class="logo-text">ReadVault</div>
         </div>
         
         <div class="book-info">
             <div class="book-title">
-                <i class="fas fa-book"></i>
-                <%= pdf.title %>
+                <i class="fas fa-book"></i> <%= pdf.title %>
             </div>
         </div>
 
@@ -1151,38 +439,23 @@
         </div>
     </div>
 
-    <!-- Main Container -->
     <div class="main-container">
-        <!-- Loading State -->
         <div class="loading-state" id="loadingState">
             <div class="loading-spinner"></div>
-            <div>Loading Mobile Reader...</div>
+            <div style="margin-bottom: 1rem;">Loading HD PDF Reader...</div>
             <div class="progress-bar">
                 <div class="progress" id="loadingProgress" style="width: 0%"></div>
             </div>
-            <div style="font-size: 0.7rem; margin-top: 1rem; color: #ccc;">
-                Optimized for mobile viewing
+            <div style="font-size: 0.8rem; color: #999; margin-top: 1rem;">
+                High Quality • Secure Reading
             </div>
         </div>
 
-        <!-- PDF Container -->
         <div class="pdf-container" id="pdfContainer" style="display: none;">
-            <div class="canvas-container" id="canvasContainer">
-                <!-- PDF skeleton will be shown immediately -->
-                <div class="page-skeleton" id="pageSkeleton"></div>
-                
-                <!-- Double Click Zone Indicator -->
-                <div class="double-click-zone" id="doubleClickZone"></div>
-            </div>
+            <div class="canvas-container" id="canvasContainer"></div>
         </div>
 
-        <!-- Double Tap Hint -->
-        <div class="double-tap-hint" id="doubleTapHint">
-            Double tap to reset zoom
-        </div>
-
-        <!-- Zoom Controls -->
-        <div class="zoom-controls zoom-visible" id="zoomControls">
+        <div class="zoom-controls" id="zoomControls">
             <button class="zoom-btn" id="zoomIn" title="Zoom In (Ctrl + +)">
                 <i class="fas fa-search-plus"></i>
             </button>
@@ -1195,214 +468,164 @@
             <div class="zoom-level" id="zoomLevel">100%</div>
         </div>
 
-        <!-- Navigation Controls - FIXED LAYOUT -->
-        <div class="navigation-controls navigation-visible" id="mainNavigation">
+        <div class="navigation-controls" id="mainNavigation">
             <div class="nav-buttons-container">
-                <!-- Back Button -->
-                <div class="back-btn-container">
-                    <button class="back-btn" id="backButton" title="Go Back (Esc)">
-                        <i class="fas fa-arrow-left"></i>
-                        <span>Back</span>
-                    </button>
+                <button class="back-btn" id="backButton" title="Go Back">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back</span>
+                </button>
+                
+                <button class="nav-btn" id="prevPage" title="Previous Page">
+                    <i class="fas fa-chevron-left"></i>
+                    <span>Prev</span>
+                </button>
+                
+                <div class="page-info">
+                    <span id="currentPage">1</span> / <span id="totalPages">0</span>
                 </div>
                 
-                <div class="page-navigation">
-                    <button class="nav-btn" id="prevPage" title="Previous Page (Left Arrow)">
-                        <i class="fas fa-chevron-left"></i>
-                        <span>Prev</span>
-                    </button>
-                    
-                    <div class="page-info-container">
-                        <div class="page-info">
-                            <span id="currentPage">1</span>/<span id="totalPages">0</span>
-                        </div>
-                    </div>
-                    
-                    <button class="nav-btn" id="nextPage" title="Next Page (Right Arrow or Space)">
-                        <i class="fas fa-chevron-right"></i>
-                        <span>Next</span>
-                    </button>
-                </div>
+                <button class="nav-btn" id="nextPage" title="Next Page">
+                    <span>Next</span>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Include PDF.js from CDN -->
+    <div class="security-warning" id="securityWarning">
+        <i class="fas fa-shield-alt"></i> Security Action Blocked
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <script>
-        // Set PDF.js worker path
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
-        // Mobile Configuration
-        const MOBILE_CONFIG = {
+        const CONFIG = {
             logEndpoint: '<%= typeof basePath !== "undefined" ? basePath + "/api/security/log" : "/ebook/api/security/log" %>',
             pdfId: '<%= pdf._id %>',
             sessionToken: '<%= sessionToken %>',
-            enablePinchZoom: true,
-            smoothZoom: true,
-            zoomAnimationDuration: 200,
-            controlsAutoHide: true,
-            controlsHideDelay: 3000
+            minZoom: 0.5,
+            maxZoom: 3.0,
+            zoomStep: 0.1
         };
 
-        // Mobile Performance Configuration
-        const MOBILE_PERFORMANCE_CONFIG = {
-            // Network optimization
-            enableRangeLoading: true,
-            maxChunkSize: 65536, // 64KB chunks for mobile
-            
-            // Rendering optimization
-            lowResFirst: true,
-            lowResScale: 0.5,
-            fullResDelay: 1000, // Wait 1s for full res
-            
-            // Memory optimization
-            maxCanvasCache: 3, // Keep only 3 canvases in memory
-            clearUnusedCanvases: true,
-            
-            // Mobile detection
-            isSlowConnection: () => {
-                // Check connection type
-                const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-                if (connection) {
-                    return connection.effectiveType === 'slow-2g' || 
-                           connection.effectiveType === '2g' ||
-                           connection.saveData === true;
-                }
-                return false;
-            }
-        };
-
-        // Mobile-Optimized State
         let pdfDoc = null;
         let currentPage = 1;
         let totalPages = 0;
         let currentScale = 1.0;
-        
-        // Zoom Toggle State
-        let isZoomedIn = false;
         let originalScale = 1.0;
-        let zoomInScale = 3.0; // 300% zoom
-        
-        // Touch State Variables
-        let touchState = {
-            isPinching: false,
-            wasPinching: false,
-            initialDistance: 0,
-            initialScale: 1,
-            lastScale: 1,
-            initialX: 0,
-            initialY: 0,
-            currentX: 0,
-            currentY: 0,
-            isDragging: false,
-            isSwiping: false,
-            swipeStartX: 0,
-            swipeEndX: 0
-        };
-        
-        // Click/Tap State Variables
-        let clickState = {
-            lastClickTime: 0,
-            clickCount: 0,
-            clickTimer: null
-        };
-        
-        // Auto-Hide State Variables
-        let hideControlsTimeout;
-        let isControlsVisible = true;
-        let lastActivityTime = Date.now();
-        const INACTIVITY_TIMEOUT = MOBILE_CONFIG.controlsHideDelay;
-        
-        // Mobile-optimized scale settings
-        const MOBILE_SCALE_FACTOR = 0.2;
-        const MOBILE_MIN_SCALE = 0.5;
-        const MOBILE_MAX_SCALE = 5.0; // Increased for 300% zoom
 
-        // HD Rendering Configuration
+        // HD Configuration - High Quality Rendering
         const HD_CONFIG = {
-            pixelRatio: Math.min(2.0, window.devicePixelRatio || 1),
-            imageSmoothing: true,
-            renderQuality: 'high'
+            // Get device pixel ratio for HD rendering
+            devicePixelRatio: window.devicePixelRatio || 1,
+            // Maximum pixel ratio for HD (limit to 2 for performance)
+            maxPixelRatio: Math.min(2, window.devicePixelRatio || 1),
+            // Enable image smoothing for better quality
+            imageSmoothingEnabled: true,
+            imageSmoothingQuality: 'high'
         };
 
-        // ==================== NETWORK AWARE CONFIG ====================
+        console.log('HD Config:', HD_CONFIG);
 
-        // Network-aware loading strategy
-        function getNetworkAwareConfig() {
-            const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-            
-            if (!connection) {
-                return {
-                    quality: 'medium',
-                    pixelRatio: 1.0,
-                    preloadPages: 1,
-                    enableWebGL: true,
-                    lowResFirst: false
-                };
-            }
-            
-            switch(connection.effectiveType) {
-                case 'slow-2g':
-                case '2g':
-                    return {
-                        quality: 'low',
-                        pixelRatio: 0.75,
-                        preloadPages: 0,
-                        enableWebGL: false,
-                        lowResFirst: true,
-                        maxImageSize: 512 * 512
-                    };
-                    
-                case '3g':
-                    return {
-                        quality: 'medium',
-                        pixelRatio: 1.0,
-                        preloadPages: 1,
-                        enableWebGL: false,
-                        lowResFirst: true,
-                        maxImageSize: 768 * 768
-                    };
-                    
-                case '4g':
-                default:
-                    return {
-                        quality: 'high',
-                        pixelRatio: Math.min(1.5, window.devicePixelRatio),
-                        preloadPages: 2,
-                        enableWebGL: true,
-                        lowResFirst: false,
-                        maxImageSize: 1024 * 1024
-                    };
+        // ==================== HD ZOOM FUNCTIONS ====================
+        
+        async function zoomIn() {
+            if (currentScale < CONFIG.maxZoom) {
+                let newScale = currentScale + CONFIG.zoomStep;
+                newScale = Math.min(newScale, CONFIG.maxZoom);
+                await applyZoom(newScale);
+                showHint('HD Zoomed In: ' + Math.round(newScale * 100) + '%', 'zoom');
+            } else {
+                showHint('Maximum HD zoom reached', 'zoom');
             }
         }
 
-        // Calculate mobile-optimized initial scale
-        function calculateMobileScale() {
-            const screenWidth = window.innerWidth;
-            const screenHeight = window.innerHeight;
-            const isPortrait = screenHeight > screenWidth;
-            
-            if (screenWidth < 360) return isPortrait ? 0.6 : 0.8;
-            if (screenWidth < 414) return isPortrait ? 0.7 : 0.9;
-            if (screenWidth < 768) return isPortrait ? 0.8 : 1.0;
-            if (screenWidth < 1024) return isPortrait ? 1.0 : 1.2;
-            return 1.2; // Desktop
+        async function zoomOut() {
+            if (currentScale > CONFIG.minZoom) {
+                let newScale = currentScale - CONFIG.zoomStep;
+                newScale = Math.max(newScale, CONFIG.minZoom);
+                await applyZoom(newScale);
+                showHint('HD Zoomed Out: ' + Math.round(newScale * 100) + '%', 'zoom');
+            } else {
+                showHint('Minimum zoom reached', 'zoom');
+            }
         }
 
-        // ==================== PERFORMANCE OPTIMIZED PDF LOADING ====================
+        async function zoomReset() {
+            await applyZoom(originalScale);
+            showHint('HD Zoom Reset: ' + Math.round(originalScale * 100) + '%', 'zoom');
+        }
 
-        // Progressive PDF loading with network awareness
+        async function applyZoom(newScale) {
+    if (!pdfDoc) return;
+
+    const container = document.getElementById("pdfContainer");
+
+    // 👇 OLD center position nikal lo
+    const prevCenterX = container.scrollLeft + container.clientWidth / 2;
+    const prevCenterY = container.scrollTop + container.clientHeight / 2;
+
+    const prevScale = currentScale;
+
+    newScale = Math.max(CONFIG.minZoom, Math.min(newScale, CONFIG.maxZoom));
+    currentScale = newScale;
+
+    // 👇 re-render
+    await renderPageHD(currentPage);
+
+    // 👇 NEW scale ke hisaab se adjust karo
+    const scaleRatio = currentScale / prevScale;
+
+    const newScrollLeft = (prevCenterX * scaleRatio) - (container.clientWidth / 2);
+    const newScrollTop = (prevCenterY * scaleRatio) - (container.clientHeight / 2);
+
+    container.scrollLeft = newScrollLeft;
+    container.scrollTop = newScrollTop;
+
+    updateZoomDisplay();
+}
+
+        function updateZoomDisplay() {
+            const zoomLevel = document.getElementById('zoomLevel');
+            if (zoomLevel) {
+                const percent = Math.round(currentScale * 100);
+                zoomLevel.textContent = percent + '%';
+                
+                if (percent === 100) {
+                    zoomLevel.style.color = '#10b981';
+                } else if (percent > 150) {
+                    zoomLevel.style.color = '#f59e0b';
+                } else {
+                    zoomLevel.style.color = '#ffffff';
+                }
+            }
+        }
+
+        // ==================== MOUSE WHEEL ZOOM ====================
+
+        function setupMouseWheelZoom() {
+            const pdfContainer = document.getElementById('pdfContainer');
+            if (!pdfContainer) return;
+            
+            pdfContainer.addEventListener('wheel', (e) => {
+                if (e.ctrlKey) {
+                    e.preventDefault();
+                    if (e.deltaY < 0) {
+                        zoomIn();
+                    } else {
+                        zoomOut();
+                    }
+                }
+            }, { passive: false });
+        }
+
+        // ==================== HD PAGE RENDERING ====================
+
         async function loadPDF() {
             try {
-                console.log('📱 Mobile-optimized PDF loading...');
-                
-                // Detect network speed
-                const networkConfig = getNetworkAwareConfig();
-                console.log('📶 Network config:', networkConfig);
-                
-                // Show network status to user
-                showNetworkStatus(networkConfig.quality);
+                console.log('Loading HD PDF...');
+                console.log('Device Pixel Ratio:', HD_CONFIG.devicePixelRatio);
                 
                 const basePath = '<%= typeof basePath !== "undefined" ? basePath : "" %>';
                 const streamingUrl = `${basePath}/api/stream-pdf?token=<%= sessionToken %>`;
@@ -1412,1731 +635,446 @@
                     withCredentials: false,
                     cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/cmaps/',
                     cMapPacked: true,
-                    enableXfa: networkConfig.quality !== 'low',
-                    
-                    // Adaptive settings based on network
-                    disableAutoFetch: networkConfig.quality === 'low',
+                    disableAutoFetch: false,
                     disableStream: false,
                     disableRange: false,
-                    maxImageSize: networkConfig.maxImageSize || 1024 * 1024,
-                    pdfBug: false,
-                    verbosity: 0,
-                    isEvalSupported: true,
-                    disableFontFace: networkConfig.quality === 'low'
+                    // HD Settings
+                    maxImageSize: -1, // No limit for HD
+                    disableFontFace: false,
+                    enableXfa: true
                 });
                 
-                // Show loading state with network info
-                showLoadingState(networkConfig.quality);
-                
-                // Track loading progress
                 loadingTask.onProgress = (progress) => {
                     const percent = Math.round((progress.loaded / progress.total) * 100);
-                    updateProgressBar(percent);
+                    updateProgress(percent);
                 };
 
-                // Load document metadata first (fast)
                 pdfDoc = await loadingTask.promise;
                 totalPages = pdfDoc.numPages;
                 
-                console.log(`✅ PDF metadata loaded: ${totalPages} pages`);
+                console.log(`HD PDF loaded: ${totalPages} pages`);
                 
-                // Update UI immediately
                 document.getElementById('totalPages').textContent = totalPages;
-                
-                // Hide loading spinner, show PDF container
                 document.getElementById('loadingState').style.display = 'none';
                 document.getElementById('pdfContainer').style.display = 'block';
                 
-                // Set initial scale
-                originalScale = calculateMobileScale();
+                originalScale = calculateOptimalScale();
                 currentScale = originalScale;
                 
-                // Render first page with network-appropriate settings
-                await renderPageAdaptive(currentPage, networkConfig);
+                await renderPageHD(currentPage);
+                updateZoomDisplay();
                 
-                // Preload next pages based on network
-                if (networkConfig.preloadPages > 0) {
-                    setTimeout(() => {
-                        for (let i = 1; i <= networkConfig.preloadPages; i++) {
-                            preloadPage(currentPage + i);
-                        }
-                    }, 500);
-                }
-                
-                // Initialize auto-hide
-                setTimeout(() => {
-                    setupAutoHide();
-                    resetHideTimeout(); // Start auto-hide timer
-                }, 1000);
-                
-                // Full resolution render after initial display (for non-low quality)
-                if (!networkConfig.lowResFirst) {
-                    setTimeout(async () => {
-                        await reRenderPageAtScale(currentPage, currentScale, networkConfig);
-                        console.log('🔄 Full resolution rendered');
-                    }, networkConfig.fullResDelay || 1000);
-                }
-                
-                logSecurityEvent('MOBILE_PDF_LOADED', {
-                    pageCount: totalPages,
-                    networkQuality: networkConfig.quality,
-                    screenSize: `${window.innerWidth}x${window.innerHeight}`,
-                    lowResFirst: networkConfig.lowResFirst
-                });
+                logSecurityEvent('PDF_LOADED', { pageCount: totalPages });
                 
             } catch (error) {
-                console.error('Mobile PDF error:', error);
-                showMobileError(error);
+                console.error('PDF load error:', error);
+                showError(error);
             }
         }
 
-        // Adaptive page rendering
-        async function renderPageAdaptive(pageNum, networkConfig) {
+        function calculateOptimalScale() {
+            const container = document.getElementById('pdfContainer');
+            if (!container) return 1.0;
+            
+            const containerWidth = container.clientWidth - 60;
+            // Standard PDF page width is around 600-800px
+            const optimalScale = containerWidth / 700;
+            
+            return Math.max(0.6, Math.min(optimalScale, 1.5));
+        }
+
+        async function renderPageHD(pageNum) {
             try {
+                console.log(`Rendering HD page ${pageNum} at scale ${currentScale}...`);
+                
                 const page = await pdfDoc.getPage(pageNum);
                 const container = document.getElementById('canvasContainer');
                 
-                // Clear skeleton
-                const skeleton = document.getElementById('pageSkeleton');
-                if (skeleton) skeleton.remove();
-                
-                // Clear container
                 container.innerHTML = '';
                 
-                // Create canvas
                 const canvas = document.createElement('canvas');
                 canvas.className = 'page-canvas';
                 canvas.id = `page-${pageNum}`;
-                canvas.dataset.page = pageNum;
                 
-                // Enhanced security attributes
-                canvas.setAttribute('draggable', 'false');
-                canvas.setAttribute('ondragstart', 'return false');
-                canvas.setAttribute('onselectstart', 'return false');
-                canvas.style.userSelect = 'none';
-                canvas.style.webkitUserSelect = 'none';
-                canvas.style.MozUserSelect = 'none';
-                canvas.style.msUserSelect = 'none';
-                
-                const ctx = canvas.getContext('2d', { 
+                const ctx = canvas.getContext('2d', {
                     alpha: false,
-                    willReadFrequently: true // Better for mobile
+                    desynchronized: true, // Performance optimization
+                    willReadFrequently: false
                 });
                 
-                // Adaptive viewport based on network
-                let renderScale = currentScale;
-                if (networkConfig.lowResFirst) {
-                    renderScale = currentScale * 0.5; // Half resolution initially
-                }
+                // Get viewport with current scale
+                const viewport = page.getViewport({ scale: currentScale });
                 
-                const viewport = page.getViewport({ scale: renderScale });
+                // HD Rendering - Use device pixel ratio for sharper text
+                const pixelRatio = HD_CONFIG.maxPixelRatio;
                 
-                // Adaptive pixel ratio
-                const pixelRatio = networkConfig.pixelRatio || 1.0;
+                // Set canvas dimensions with pixel ratio for HD
                 canvas.width = Math.floor(viewport.width * pixelRatio);
                 canvas.height = Math.floor(viewport.height * pixelRatio);
-                canvas.style.width = `${viewport.width}px`;
-                canvas.style.height = `${viewport.height}px`;
+                canvas.style.width = viewport.width + 'px';
+                canvas.style.height = viewport.height + 'px';
                 
-                // Scale context
+                // Scale context for HD rendering
                 ctx.scale(pixelRatio, pixelRatio);
                 
-                // Adaptive rendering quality
-                ctx.imageSmoothingEnabled = networkConfig.quality !== 'low';
-                ctx.imageSmoothingQuality = networkConfig.quality === 'high' ? 'high' : 'medium';
+                // Enable high-quality image smoothing
+                ctx.imageSmoothingEnabled = HD_CONFIG.imageSmoothingEnabled;
+                ctx.imageSmoothingQuality = HD_CONFIG.imageSmoothingQuality;
                 
-                // Add to container
+                // Better text rendering
+                ctx.textRenderingOptimization = 'optimizeLegibility';
+                
                 container.appendChild(canvas);
                 
                 const renderContext = {
                     canvasContext: ctx,
                     viewport: viewport,
-                    enableWebGL: networkConfig.enableWebGL,
-                    background: 'white'
+                    background: 'white',
+                    // HD rendering options
+                    enableWebGL: true,
+                    renderInteractiveForms: true,
+                    annotationMode: 2 // Render all annotations
                 };
 
                 await page.render(renderContext).promise;
                 
-                console.log(`⚡ Page ${pageNum} rendered (${networkConfig.quality} quality)`);
-                
-                // Setup touch events
-                setTimeout(() => {
-                    setupEnhancedTouchEvents(canvas);
-                }, 50);
-                
                 updateNavigation();
                 
-                // Cache page for faster access
+                // Cache page
                 if (!window.pageCache) window.pageCache = {};
                 window.pageCache[pageNum] = page;
                 
+                console.log(`HD Page ${pageNum} rendered`);
+                console.log(`  - Scale: ${Math.round(currentScale * 100)}%`);
+                console.log(`  - Viewport: ${Math.round(viewport.width)} x ${Math.round(viewport.height)}px`);
+                console.log(`  - Canvas: ${canvas.width} x ${canvas.height}px (${pixelRatio}x HD)`);
+                
             } catch (error) {
-                console.error(`Adaptive render error:`, error);
+                console.error('HD Render error:', error);
                 throw error;
             }
         }
 
-        // Preload next page
-        async function preloadPage(pageNum) {
-            if (pageNum < 1 || pageNum > totalPages) return;
-            
-            try {
-                const page = await pdfDoc.getPage(pageNum);
-                
-                // Just load the page object, don't render
-                console.log(`📖 Preloaded page ${pageNum}`);
-                
-                // Store for quick access
-                if (!window.pageCache) window.pageCache = {};
-                window.pageCache[pageNum] = page;
-                
-            } catch (error) {
-                console.error(`Preload error for page ${pageNum}:`, error);
-            }
-        }
-
-        // Enhanced re-render with cache
-        async function reRenderPageAtScale(pageNum, scale, networkConfig = null) {
-            if (!pdfDoc) return;
-            
-            try {
-                // Use cached page if available
-                const page = window.pageCache && window.pageCache[pageNum] 
-                    ? window.pageCache[pageNum] 
-                    : await pdfDoc.getPage(pageNum);
-                
-                const canvas = document.getElementById(`page-${pageNum}`);
-                if (!canvas) return;
-                
-                const ctx = canvas.getContext('2d');
-                const viewport = page.getViewport({ scale: scale });
-                
-                // Get network config if not provided
-                if (!networkConfig) {
-                    networkConfig = getNetworkAwareConfig();
-                }
-                
-                // Adaptive pixel ratio
-                const pixelRatio = networkConfig.pixelRatio || Math.min(1.5, window.devicePixelRatio);
-                canvas.width = Math.floor(viewport.width * pixelRatio);
-                canvas.height = Math.floor(viewport.height * pixelRatio);
-                canvas.style.width = `${viewport.width}px`;
-                canvas.style.height = `${viewport.height}px`;
-                
-                // Scale context
-                ctx.scale(pixelRatio, pixelRatio);
-                
-                // Enable smoothing only for good connections
-                ctx.imageSmoothingEnabled = networkConfig.quality !== 'low';
-                ctx.imageSmoothingQuality = networkConfig.quality === 'high' ? 'high' : 'medium';
-                
-                // Clear and re-render
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                const renderContext = {
-                    canvasContext: ctx,
-                    viewport: viewport,
-                    enableWebGL: networkConfig.enableWebGL,
-                    background: 'white'
-                };
-                
-                await page.render(renderContext).promise;
-                
-                console.log(`✅ Page ${pageNum} full resolution rendered`);
-                
-                // Cleanup old canvases to save memory
-                cleanupOldCanvases(pageNum);
-                
-            } catch (error) {
-                console.error('Re-render error:', error);
-            }
-        }
-
-        // Cleanup old canvases
-        function cleanupOldCanvases(currentPage) {
-            if (!MOBILE_PERFORMANCE_CONFIG.clearUnusedCanvases) return;
-            
-            const maxCache = MOBILE_PERFORMANCE_CONFIG.maxCanvasCache;
-            const allCanvases = document.querySelectorAll('.page-canvas');
-            
-            // Remove canvases that are far from current page
-            allCanvases.forEach(canvas => {
-                const canvasPage = parseInt(canvas.id.split('-')[1]);
-                const distance = Math.abs(canvasPage - currentPage);
-                
-                if (distance > maxCache) {
-                    console.log(`🗑️ Removing canvas for page ${canvasPage}`);
-                    canvas.remove();
-                    
-                    // Clear from cache
-                    if (window.pageCache && window.pageCache[canvasPage]) {
-                        delete window.pageCache[canvasPage];
-                    }
-                }
-            });
-        }
-
-        // ==================== UI HELPERS ====================
-
-        // Show network status
-        function showNetworkStatus(quality) {
-            const messages = {
-                'low': 'Slow connection detected. Optimizing for mobile data...',
-                'medium': 'Moderate connection. Loading optimized version...',
-                'high': 'Good connection. Loading HD version...'
-            };
-            
-            const statusDiv = document.createElement('div');
-            statusDiv.className = 'network-status';
-            statusDiv.innerHTML = `
-                <i class="fas fa-signal"></i>
-                ${messages[quality]}
-            `;
-            
-            document.body.appendChild(statusDiv);
-            
-            setTimeout(() => {
-                statusDiv.remove();
-            }, 3000);
-        }
-
-        // Show loading state with network info
-        function showLoadingState(quality) {
-            const loadingText = document.querySelector('#loadingState div:nth-child(2)');
-            if (loadingText && quality === 'low') {
-                loadingText.innerHTML = 'Loading optimized version for slow network...';
-            }
-        }
-
-        // Show mobile error
-        function showMobileError(error) {
-            const loadingState = document.getElementById('loadingState');
-            if (loadingState) {
-                loadingState.innerHTML = `
-                    <div style="text-align: center; color: #ef4444;">
-                        <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 1rem;"></i>
-                        <div>Failed to load PDF</div>
-                        <div style="font-size: 0.7rem; margin-top: 0.5rem;">${error.message}</div>
-                        <div style="font-size: 0.7rem; margin-top: 0.5rem; color: #ccc;">
-                            Please check your internet connection
-                        </div>
-                        <button onclick="window.location.reload()" class="nav-btn" style="margin-top: 1rem;">
-                            <i class="fas fa-redo"></i>
-                            Retry
-                        </button>
-                        <button onclick="goBack()" class="nav-btn" style="margin-top: 0.5rem; background: rgba(255, 255, 255, 0.1);">
-                            <i class="fas fa-arrow-left"></i>
-                            Go Back
-                        </button>
-                    </div>
-                `;
-            }
-        }
-
-        // Update progress bar
-        function updateProgressBar(percent) {
-            const progressBar = document.getElementById('loadingProgress');
-            if (progressBar) {
-                progressBar.style.width = `${percent}%`;
-            }
-        }
-
-        // Show PDF skeleton immediately
-        function showPDFSkeleton() {
-            const container = document.getElementById('canvasContainer');
-            if (container) {
-                container.innerHTML = '<div class="page-skeleton" id="pageSkeleton"></div>';
-            }
-        }
-
-        // ==================== FIXED CLICK & DOUBLE CLICK HANDLING ====================
-
-        // Enhanced Touch Gestures Setup with proper controls handling
-        function setupEnhancedTouchEvents(canvas) {
-            if (!canvas) return;
-            
-            // Variables for smooth zoom and pan
-            let scale = currentScale;
-            let posX = 0;
-            let posY = 0;
-            let lastZoom = scale;
-            
-            // Prevent default touch behaviors
-            canvas.style.touchAction = 'none';
-            
-            // Single click/tap handler
-            function handleSingleClick(e) {
-                console.log('👆 Single click - toggle controls');
-                
-                // Show click feedback
-                const rect = canvas.getBoundingClientRect();
-                const x = e.clientX || (e.touches && e.touches[0].clientX) || rect.left + rect.width/2;
-                const y = e.clientY || (e.touches && e.touches[0].clientY) || rect.top + rect.height/2;
-                showClickFeedback(x, y, 'single');
-                
-                toggleControls();
-            }
-            
-            // Double click/tap handler
-            function handleDoubleClick(e) {
-                console.log('👆👆 Double click - toggle zoom');
-                
-                // Show click feedback
-                const rect = canvas.getBoundingClientRect();
-                const x = e.clientX || (e.touches && e.touches[0].clientX) || rect.left + rect.width/2;
-                const y = e.clientY || (e.touches && e.touches[0].clientY) || rect.top + rect.height/2;
-                showClickFeedback(x, y, 'double');
-                
-                toggleZoom(canvas);
-            }
-            
-            // Touch start handler - ONLY FOR PINCH/PAN
-            canvas.addEventListener('touchstart', (e) => {
-                if (e.touches.length === 2) {
-                    // Pinch zoom start
-                    touchState.isPinching = true;
-                    touchState.wasPinching = false;
-                    touchState.initialDistance = getTouchDistance(e.touches);
-                    touchState.initialScale = scale;
-                    e.preventDefault();
-                    
-                    // Hide controls during pinch
-                    hideControls();
-                }
-                
-                if (e.touches.length === 1) {
-                    const touch = e.touches[0];
-                    touchState.isSwiping = true;
-                    touchState.swipeStartX = touch.clientX;
-                    touchState.swipeEndX = touch.clientX;
-                    
-                    if (scale > 1) {
-                        touchState.isDragging = true;
-                        touchState.initialX = touch.clientX - posX;
-                        touchState.initialY = touch.clientY - posY;
-                    }
-                    
-                    touchState.wasPinching = false;
-                }
-            }, { passive: false });
-            
-            // SIMPLE CLICK HANDLER FOR CANVAS - FIXED
-            canvas.addEventListener('click', function(e) {
-                console.log('Canvas click event - single click for controls');
-                
-                // Reset double click timer
-                clearTimeout(clickState.clickTimer);
-                clickState.clickCount = 0;
-                
-                // Handle single click after delay
-                setTimeout(() => {
-                    handleSingleClick(e);
-                }, 50);
-            });
-            
-            // SEPARATE DOUBLE CLICK HANDLER
-            canvas.addEventListener('dblclick', function(e) {
-                console.log('Canvas dblclick event - double click for zoom');
-                e.preventDefault();
-                e.stopPropagation();
-                
-                // Cancel any pending single click
-                clearTimeout(clickState.clickTimer);
-                clickState.clickCount = 0;
-                
-                handleDoubleClick(e);
-            });
-            
-            // SIMPLE TOUCH HANDLER FOR TAP DETECTION
-            let lastTapTime = 0;
-            let tapCount = 0;
-            let tapTimer = null;
-            
-            canvas.addEventListener('touchend', function(e) {
-                if (e.touches.length === 0 && e.changedTouches.length === 1) {
-                    const currentTime = Date.now();
-                    const tap = e.changedTouches[0];
-                    
-                    // Check if this is a double tap
-                    if (currentTime - lastTapTime < 300) {
-                        // Double tap detected
-                        clearTimeout(tapTimer);
-                        tapCount = 0;
-                        
-                        console.log('Double tap detected for zoom');
-                        handleDoubleClick({
-                            clientX: tap.clientX,
-                            clientY: tap.clientY
-                        });
-                    } else {
-                        // Single tap
-                        tapCount = 1;
-                        clearTimeout(tapTimer);
-                        
-                        tapTimer = setTimeout(() => {
-                            if (tapCount === 1) {
-                                console.log('Single tap detected for controls');
-                                handleSingleClick({
-                                    clientX: tap.clientX,
-                                    clientY: tap.clientY
-                                });
-                            }
-                            tapCount = 0;
-                        }, 300);
-                    }
-                    
-                    lastTapTime = currentTime;
-                }
-            }, { passive: true });
-            
-            // Touch move handler - ONLY FOR PINCH/PAN/SWIPE
-            canvas.addEventListener('touchmove', (e) => {
-                if (touchState.isPinching && e.touches.length === 2) {
-                    // Pinch zoom in progress
-                    e.preventDefault();
-                    
-                    const currentDistance = getTouchDistance(e.touches);
-                    const scaleChange = currentDistance / touchState.initialDistance;
-                    
-                    // Calculate new scale with limits
-                    let newScale = touchState.initialScale * scaleChange;
-                    newScale = Math.max(MOBILE_MIN_SCALE, Math.min(newScale, MOBILE_MAX_SCALE));
-                    
-                    // Update scale
-                    scale = newScale;
-                    currentScale = scale;
-                    
-                    // Apply visual scale transform
-                    canvas.style.transform = `scale(${scale})`;
-                    canvas.style.transformOrigin = 'center center';
-                    
-                    // Update zoom level display
-                    updateZoomLevel();
-                    
-                } else if (touchState.isDragging && scale > 1 && e.touches.length === 1) {
-                    // Pan when zoomed
-                    e.preventDefault();
-                    
-                    const touch = e.touches[0];
-                    posX = touch.clientX - touchState.initialX;
-                    posY = touch.clientY - touchState.initialY;
-                    
-                    // Limit panning to keep canvas in view
-                    const canvasRect = canvas.getBoundingClientRect();
-                    const maxX = (canvasRect.width * (scale - 1)) / 2;
-                    const maxY = (canvasRect.height * (scale - 1)) / 2;
-                    
-                    posX = Math.max(-maxX, Math.min(maxX, posX));
-                    posY = Math.max(-maxY, Math.min(maxY, posY));
-                    
-                    canvas.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
-                    
-                } else if (touchState.isSwiping && e.touches.length === 1 && scale <= 1) {
-                    // Track swipe for page navigation
-                    const touch = e.touches[0];
-                    touchState.swipeEndX = touch.clientX;
-                }
-                
-                // Reset activity timer
-                resetHideTimeout();
-            }, { passive: false });
-            
-            // Touch end handler for gestures
-            canvas.addEventListener('touchend', (e) => {
-                // Handle swipe for page navigation
-                if (touchState.isSwiping && scale <= 1) {
-                    const swipeDistance = touchState.swipeEndX - touchState.swipeStartX;
-                    const swipeThreshold = 50;
-                    
-                    if (Math.abs(swipeDistance) > swipeThreshold) {
-                        if (swipeDistance > 0) {
-                            // Swipe right - previous page
-                            goToPreviousPage();
-                        } else {
-                            // Swipe left - next page
-                            goToNextPage();
-                        }
-                        e.preventDefault();
-                    }
-                }
-                
-                // IMPORTANT: If user was pinching, show controls after a short delay
-                if (touchState.isPinching) {
-                    touchState.wasPinching = true;
-                    setTimeout(() => {
-                        if (touchState.wasPinching) {
-                            forceShowControls();
-                            touchState.wasPinching = false;
-                        }
-                    }, 500);
-                }
-                
-                // Reset touch states
-                touchState.isPinching = false;
-                touchState.isDragging = false;
-                touchState.isSwiping = false;
-                
-                // Re-render at new scale if needed
-                if (Math.abs(scale - lastZoom) > 0.1) {
-                    lastZoom = scale;
-                    setTimeout(() => {
-                        reRenderPageAtScale(currentPage, scale);
-                    }, 100);
-                }
-                
-                // Reset transform
-                canvas.style.transform = '';
-                
-                // Show controls after interaction
-                if (!touchState.wasPinching) {
-                    setTimeout(() => showControlsTemporarily(), 300);
-                }
-                
-                // Reset activity timer
-                resetHideTimeout();
-            });
-        }
-
-        // Helper function for touch distance
-        function getTouchDistance(touches) {
-            const dx = touches[0].clientX - touches[1].clientX;
-            const dy = touches[0].clientY - touches[1].clientY;
-            return Math.sqrt(dx * dx + dy * dy);
-        }
-
-        // ==================== FIXED ZOOM TOGGLE FUNCTION ====================
-
-        // Toggle zoom between original and 300%
-        async function toggleZoom(canvas) {
-            if (!canvas) return;
-            
-            // First, show controls
-            showControlsTemporarily();
-            
-            if (!isZoomedIn) {
-                // Zoom in to 300%
-                console.log('Zooming in to 300%');
-                originalScale = currentScale;
-                await zoomToPercentage(300);
-                isZoomedIn = true;
-                
-                // Show zoom hint
-                showZoomHint('Zoomed in 300% (Double click to zoom out)');
-            } else {
-                // Zoom back to original
-                console.log('Zooming out to original size');
-                await zoomResetToOriginal();
-                isZoomedIn = false;
-                
-                // Show zoom hint
-                showZoomHint('Zoomed out (Double click to zoom in)');
-            }
-        }
-
-        // Reset to original scale
-        async function zoomResetToOriginal() {
-            const canvas = document.getElementById(`page-${currentPage}`);
-            if (!canvas) return;
-            
-            // Smooth zoom animation
-            canvas.style.transition = 'transform 0.3s ease-out';
-            currentScale = originalScale;
-            canvas.style.transform = `scale(${currentScale})`;
-            
-            setTimeout(async () => {
-                canvas.style.transition = '';
-                canvas.style.transform = '';
-                await reRenderPageAtScale(currentPage, currentScale);
-                updateZoomLevel();
-            }, 300);
-            
-            logSecurityEvent('MOBILE_ZOOM_RESET_TO_ORIGINAL', { 
-                scale: currentScale
-            });
-        }
-
-        // Simple zoom to percentage
-        async function zoomToPercentage(percentage) {
-            const canvas = document.getElementById(`page-${currentPage}`);
-            if (!canvas) return;
-            
-            const targetScale = percentage / 100;
-            
-            // Smooth zoom animation
-            canvas.style.transition = 'transform 0.3s ease-out';
-            currentScale = Math.max(MOBILE_MIN_SCALE, Math.min(targetScale, MOBILE_MAX_SCALE));
-            canvas.style.transform = `scale(${currentScale})`;
-            
-            setTimeout(async () => {
-                canvas.style.transition = '';
-                canvas.style.transform = '';
-                await reRenderPageAtScale(currentPage, currentScale);
-                updateZoomLevel();
-            }, 300);
-            
-            logSecurityEvent('MOBILE_ZOOM_TO_PERCENTAGE', { 
-                scale: currentScale,
-                percentage: percentage 
-            });
-        }
-
-        // ==================== UI HELPERS ====================
-
-        // Show controls hint
-        function showControlsHint(message) {
-            // Remove existing hint if any
-            const existingHint = document.querySelector('.controls-hint');
-            if (existingHint) {
-                existingHint.remove();
-            }
-            
-            const hint = document.createElement('div');
-            hint.className = 'controls-hint';
-            hint.innerHTML = `<i class="fas fa-hand-point-up"></i> ${message}`;
-            hint.style.cssText = `
-                position: fixed;
-                top: 70px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: rgba(0, 0, 0, 0.85);
-                color: white;
-                padding: 0.5rem 1rem;
-                border-radius: 8px;
-                font-size: 0.7rem;
-                z-index: 1001;
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                white-space: nowrap;
-                animation: fade-in 0.3s ease;
-                pointer-events: none;
-            `;
-            
-            document.body.appendChild(hint);
-            
-            // Auto hide after 1.5 seconds
-            setTimeout(() => {
-                if (hint.parentNode) {
-                    hint.style.opacity = '0';
-                    hint.style.transition = 'opacity 0.3s ease';
-                    setTimeout(() => {
-                        if (hint.parentNode) {
-                            hint.parentNode.removeChild(hint);
-                        }
-                    }, 300);
-                }
-            }, 1500);
-        }
-
-        // Show zoom hint
-        function showZoomHint(message) {
-            // Remove existing hint if any
-            const existingHint = document.querySelector('.zoom-hint');
-            if (existingHint) {
-                existingHint.remove();
-            }
-            
-            const hint = document.createElement('div');
-            hint.className = 'zoom-hint';
-            hint.innerHTML = `<i class="fas fa-search"></i> ${message}`;
-            hint.style.cssText = `
-                position: fixed;
-                bottom: 120px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: rgba(37, 99, 235, 0.9);
-                color: white;
-                padding: 0.75rem 1.5rem;
-                border-radius: 12px;
-                font-size: 0.8rem;
-                z-index: 1001;
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
-                border: 1px solid rgba(255, 255, 255, 0.3);
-                white-space: nowrap;
-                animation: slide-up 0.3s ease;
-                pointer-events: none;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            `;
-            
-            document.body.appendChild(hint);
-            
-            // Auto hide after 2 seconds
-            setTimeout(() => {
-                if (hint.parentNode) {
-                    hint.style.opacity = '0';
-                    hint.style.transition = 'opacity 0.3s ease';
-                    setTimeout(() => {
-                        if (hint.parentNode) {
-                            hint.parentNode.removeChild(hint);
-                        }
-                    }, 300);
-                }
-            }, 2000);
-        }
-
-        // Add click feedback animation
-        function showClickFeedback(x, y, type = 'single') {
-            const feedback = document.createElement('div');
-            feedback.className = 'click-feedback';
-            feedback.style.left = `${x}px`;
-            feedback.style.top = `${y}px`;
-            
-            if (type === 'double') {
-                feedback.style.background = 'rgba(34, 197, 94, 0.3)';
-                feedback.style.width = '80px';
-                feedback.style.height = '80px';
-            } else {
-                feedback.style.width = '60px';
-                feedback.style.height = '60px';
-            }
-            
-            document.body.appendChild(feedback);
-            
-            setTimeout(() => {
-                if (feedback.parentNode) {
-                    feedback.parentNode.removeChild(feedback);
-                }
-            }, 600);
-        }
-
-        // Show double tap hint
-        function showDoubleTapHint() {
-            const hint = document.getElementById('doubleTapHint');
-            if (hint) {
-                hint.style.display = 'block';
-                
-                setTimeout(() => {
-                    hint.style.display = 'none';
-                }, 1000);
-            }
-        }
-
-        // ==================== CONTROLS MANAGEMENT ====================
-
-        // Show controls with animation
-        function showControls() {
-            // Don't show if currently pinching
-            if (touchState.isPinching) {
-                return;
-            }
-            
-            const header = document.querySelector('.security-header');
-            const navigation = document.querySelector('.navigation-controls');
-            const zoom = document.querySelector('.zoom-controls');
-            const gestureHint = document.getElementById('gestureHint');
-            
-            // Show header
-            if (header) {
-                header.classList.remove('header-hidden');
-                header.classList.add('header-visible');
-                header.style.pointerEvents = 'all';
-                header.style.opacity = '1';
-                header.style.transform = 'translateY(0)';
-            }
-            
-            // Show navigation
-            if (navigation) {
-                navigation.classList.remove('navigation-hidden');
-                navigation.classList.add('navigation-visible');
-                navigation.style.pointerEvents = 'all';
-                navigation.style.opacity = '1';
-                navigation.style.transform = 'translateY(0)';
-            }
-            
-            // Show zoom controls
-            if (zoom) {
-                zoom.classList.remove('zoom-hidden');
-                zoom.classList.add('zoom-visible');
-                zoom.style.pointerEvents = 'all';
-                zoom.style.opacity = '1';
-                zoom.style.transform = 'translateX(0)';
-            }
-            
-            // Show gesture hint
-            if (gestureHint) {
-                gestureHint.style.display = 'block';
-                setTimeout(() => {
-                    if (gestureHint) gestureHint.classList.remove('hidden');
-                }, 10);
-            }
-            
-            // Hide double click zone
-            const pdfContainer = document.getElementById('pdfContainer');
-            if (pdfContainer) {
-                pdfContainer.classList.remove('show-double-click-zone');
-            }
-            
-            // Update state
-            isControlsVisible = true;
-            
-            // Reset auto-hide timeout
-            resetHideTimeout();
-            
-            console.log('👆 Controls shown');
-        }
-
-        // Hide controls with animation
-        function hideControls() {
-            const header = document.querySelector('.security-header');
-            const navigation = document.querySelector('.navigation-controls');
-            const zoom = document.querySelector('.zoom-controls');
-            const gestureHint = document.getElementById('gestureHint');
-            
-            // Hide header
-            if (header) {
-                header.classList.remove('header-visible');
-                header.classList.add('header-hidden');
-                header.style.pointerEvents = 'none';
-            }
-            
-            // Hide navigation
-            if (navigation) {
-                navigation.classList.remove('navigation-visible');
-                navigation.classList.add('navigation-hidden');
-                navigation.style.pointerEvents = 'none';
-            }
-            
-            // Hide zoom controls
-            if (zoom) {
-                zoom.classList.remove('zoom-visible');
-                zoom.classList.add('zoom-hidden');
-                zoom.style.pointerEvents = 'none';
-            }
-            
-            // Hide gesture hint
-            if (gestureHint) {
-                gestureHint.classList.add('hidden');
-                setTimeout(() => {
-                    if (gestureHint) gestureHint.style.display = 'none';
-                }, 300);
-            }
-            
-            // Show double click zone hint
-            const pdfContainer = document.getElementById('pdfContainer');
-            if (pdfContainer) {
-                pdfContainer.classList.add('show-double-click-zone');
-                setTimeout(() => {
-                    if (pdfContainer) pdfContainer.classList.remove('show-double-click-zone');
-                }, 3000);
-            }
-            
-            // Update state
-            isControlsVisible = false;
-            
-            console.log('👇 Controls hidden');
-        }
-
-        // Toggle controls visibility
-        function toggleControls() {
-            // Don't toggle during pinch or drag
-            if (touchState.isPinching || touchState.isDragging) {
-                return;
-            }
-            
-            if (isControlsVisible) {
-                hideControls();
-                showControlsHint('Tap to show controls');
-            } else {
-                showControls();
-                showControlsHint('Tap to hide controls');
-            }
-            
-            // Reset auto-hide timeout
-            resetHideTimeout();
-        }
-
-        // Show controls temporarily (for user actions)
-        function showControlsTemporarily() {
-            showControls();
-            
-            // Reset hide timeout after showing
-            setTimeout(() => {
-                if (Date.now() - lastActivityTime > INACTIVITY_TIMEOUT - 1000) {
-                    resetHideTimeout();
-                }
-            }, 500);
-        }
-
-        // Force show controls (bypass all checks)
-        function forceShowControls() {
-            const header = document.querySelector('.security-header');
-            const navigation = document.querySelector('.navigation-controls');
-            const zoom = document.querySelector('.zoom-controls');
-            
-            if (header) {
-                header.classList.remove('header-hidden');
-                header.classList.add('header-visible');
-                header.style.pointerEvents = 'all';
-                header.style.opacity = '1';
-                header.style.transform = 'translateY(0)';
-            }
-            
-            if (navigation) {
-                navigation.classList.remove('navigation-hidden');
-                navigation.classList.add('navigation-visible');
-                navigation.style.pointerEvents = 'all';
-                navigation.style.opacity = '1';
-                navigation.style.transform = 'translateY(0)';
-            }
-            
-            if (zoom) {
-                zoom.classList.remove('zoom-hidden');
-                zoom.classList.add('zoom-visible');
-                zoom.style.pointerEvents = 'all';
-                zoom.style.opacity = '1';
-                zoom.style.transform = 'translateX(0)';
-            }
-            
-            // Hide double click zone
-            const pdfContainer = document.getElementById('pdfContainer');
-            if (pdfContainer) {
-                pdfContainer.classList.remove('show-double-click-zone');
-            }
-            
-            isControlsVisible = true;
-            lastActivityTime = Date.now();
-            
-            // Reset auto-hide timer
-            clearTimeout(hideControlsTimeout);
-            hideControlsTimeout = setTimeout(() => {
-                if (isControlsVisible && !touchState.isPinching) {
-                    hideControls();
-                }
-            }, INACTIVITY_TIMEOUT);
-            
-            console.log('🔧 Force show controls');
-        }
-
-        // Reset auto-hide timeout
-        function resetHideTimeout() {
-            clearTimeout(hideControlsTimeout);
-            lastActivityTime = Date.now();
-            
-            // Show keyboard hint briefly on desktop
-            if (window.innerWidth >= 768) {
-                const hint = document.getElementById('keyboardHint');
-                if (hint) {
-                    hint.style.display = 'block';
-                    setTimeout(() => {
-                        if (hint) hint.style.display = 'none';
-                    }, 3000);
-                }
-            }
-            
-            // Set new timeout
-            hideControlsTimeout = setTimeout(() => {
-                if (isControlsVisible && !touchState.isPinching) {
-                    hideControls();
-                }
-            }, INACTIVITY_TIMEOUT);
-        }
-
-        // Setup auto-hide functionality
-        function setupAutoHide() {
-            const pdfContainer = document.getElementById('pdfContainer');
-            
-            if (!pdfContainer) return;
-            
-            // Track activity to auto-hide
-            const activityEvents = ['mousemove', 'touchmove', 'keypress', 'click', 'scroll'];
-            activityEvents.forEach(event => {
-                document.addEventListener(event, resetHideTimeout, { passive: true });
-            });
-            
-            // Never hide when interacting with buttons
-            document.querySelectorAll('.nav-btn, .zoom-btn, .back-btn').forEach(btn => {
-                btn.addEventListener('touchstart', (e) => {
-                    e.stopPropagation();
-                    resetHideTimeout();
-                    showControls(); // Ensure controls are visible
-                });
-                
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    resetHideTimeout();
-                });
-            });
-            
-            console.log('✅ Auto-hide navigation initialized');
-        }
-
-        // ==================== KEYBOARD NAVIGATION ====================
-
-        // Mobile Keyboard Navigation
-        function setupKeyboardNavigation() {
-            console.log('⌨️ Keyboard navigation initialized');
-            
-            document.addEventListener('keydown', (e) => {
-                // Don't trigger if user is typing in an input field
-                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
-                    return;
-                }
-                
-                switch(e.key) {
-                    case 'ArrowRight':
-                    case 'Right':
-                    case ' ':
-                    case 'Spacebar':
-                        // Spacebar or Right Arrow for next page
-                        e.preventDefault();
-                        showKeyPressFeedback('right');
-                        goToNextPage();
-                        break;
-                        
-                    case 'ArrowLeft':
-                    case 'Left':
-                        // Left Arrow for previous page
-                        e.preventDefault();
-                        showKeyPressFeedback('left');
-                        goToPreviousPage();
-                        break;
-                        
-                    case '+':
-                    case '=':
-                        // Plus or Equals for zoom in
-                        e.preventDefault();
-                        if (e.ctrlKey || e.metaKey) {
-                            zoomIn();
-                        }
-                        break;
-                        
-                    case '-':
-                        // Minus for zoom out
-                        e.preventDefault();
-                        if (e.ctrlKey || e.metaKey) {
-                            zoomOut();
-                        }
-                        break;
-                        
-                    case '0':
-                        // Zero for reset zoom
-                        e.preventDefault();
-                        if (e.ctrlKey || e.metaKey) {
-                            zoomReset();
-                        }
-                        break;
-                        
-                    case 'Escape':
-                        // Escape to toggle controls
-                        e.preventDefault();
-                        toggleControls();
-                        break;
-                        
-                    case 'Home':
-                        // Home for first page
-                        e.preventDefault();
-                        goToPage(1);
-                        break;
-                        
-                    case 'End':
-                        // End for last page
-                        e.preventDefault();
-                        goToPage(totalPages);
-                        break;
-                }
-                
-                // Show controls when using keyboard
-                showControlsTemporarily();
-            });
-        }
-
-        // Visual feedback for keyboard navigation
-        function showKeyPressFeedback(direction) {
-            // Remove any existing feedback
-            const existingFeedback = document.querySelector('.keyboard-feedback');
-            if (existingFeedback) {
-                existingFeedback.remove();
-            }
-            
-            const feedback = document.createElement('div');
-            feedback.className = 'keyboard-feedback';
-            feedback.innerHTML = `<i class="fas fa-arrow-${direction}"></i>`;
-            
-            const isLeft = direction === 'left';
-            feedback.style.left = isLeft ? '20px' : 'auto';
-            feedback.style.right = isLeft ? 'auto' : '20px';
-            
-            document.body.appendChild(feedback);
-            
-            setTimeout(() => {
-                if (feedback.parentNode) {
-                    feedback.parentNode.removeChild(feedback);
-                }
-            }, 500);
-        }
-
-        // Focus management for keyboard users
-        function setupFocusManagement() {
-            const focusableElements = document.querySelectorAll(
-                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-            );
-            
-            if (focusableElements.length === 0) return;
-            
-            const firstFocusable = focusableElements[0];
-            const lastFocusable = focusableElements[focusableElements.length - 1];
-            
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Tab') {
-                    if (e.shiftKey) {
-                        // Shift + Tab
-                        if (document.activeElement === firstFocusable) {
-                            e.preventDefault();
-                            lastFocusable.focus();
-                        }
-                    } else {
-                        // Tab
-                        if (document.activeElement === lastFocusable) {
-                            e.preventDefault();
-                            firstFocusable.focus();
-                        }
-                    }
-                    showControlsTemporarily();
-                }
-            });
-        }
-
-        // Update button tooltips
-        function updateButtonTooltips() {
-            const elements = {
-                'prevPage': 'Previous Page (Left Arrow)',
-                'nextPage': 'Next Page (Right Arrow or Space)',
-                'zoomIn': 'Zoom In (Ctrl + +)',
-                'zoomOut': 'Zoom Out (Ctrl + -)',
-                'zoomReset': 'Reset Zoom (Ctrl + 0)',
-                'backButton': 'Go Back (Esc)'
-            };
-            
-            Object.keys(elements).forEach(id => {
-                const element = document.getElementById(id);
-                if (element) {
-                    element.title = elements[id];
-                }
-            });
-        }
-
-        // ==================== MOBILE SECURITY ====================
-
-        // Mobile Security System
-        function initializeMobileSecurity() {
-            console.log('📱 Initializing mobile security...');
-
-            // Set mobile-optimized scale
-            currentScale = calculateMobileScale();
-            originalScale = currentScale;
-
-            // Enhanced print protection
-            setupPrintProtection();
-
-            // Mobile-optimized security events
-            document.addEventListener('contextmenu', (e) => {
-                e.preventDefault();
-                showSecurityWarning('Right-click disabled');
-                logSecurityEvent('CONTEXT_MENU_BLOCKED');
-            });
-
-            document.addEventListener('selectstart', (e) => {
-                e.preventDefault();
-            });
-
-            // Prevent screenshot on some mobile devices
-            document.body.style.webkitUserSelect = 'none';
-            document.body.style.webkitTouchCallout = 'none';
-
-            // Handle mobile-specific security
-            document.addEventListener('touchmove', (e) => {
-                if (e.scale !== 1) {
-                    e.preventDefault();
-                }
-            }, { passive: false });
-
-            // Prevent drag and drop
-            document.addEventListener('dragstart', (e) => {
-                e.preventDefault();
-                return false;
-            });
-
-            console.log('✅ Mobile security initialized');
-        }
-
-        // Mobile-optimized security warning
-        function showSecurityWarning(message) {
-            const warning = document.getElementById('securityWarning');
-            if (warning) {
-                warning.innerHTML = `<i class="fas fa-shield-alt"></i> ${message}`;
-                warning.style.display = 'block';
-                
-                setTimeout(() => {
-                    warning.style.display = 'none';
-                }, 2000);
-            }
-        }
-
-        // Mobile-optimized logging
-        function logSecurityEvent(eventType, details = {}) {
-            console.log(`📱 Security: ${eventType}`, details);
-            
-            // Send log to server
-            if (MOBILE_CONFIG.logEndpoint) {
-                fetch(MOBILE_CONFIG.logEndpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        eventType,
-                        pdfId: MOBILE_CONFIG.pdfId,
-                        details: {
-                            ...details,
-                            userAgent: navigator.userAgent,
-                            isMobile: true,
-                            screenSize: `${window.innerWidth}x${window.innerHeight}`,
-                            timestamp: new Date().toISOString()
-                        }
-                    })
-                }).catch(error => {
-                    console.error('Mobile log failed:', error);
-                });
-            }
-        }
-
-        // ==================== ZOOM FUNCTIONS ====================
-
-        // Enhanced zoom functions with smooth animations
-        async function zoomIn() {
-            if (currentScale < MOBILE_MAX_SCALE) {
-                const canvas = document.getElementById(`page-${currentPage}`);
-                if (canvas) {
-                    // Reset double click state
-                    isZoomedIn = false;
-                    
-                    // Smooth zoom animation
-                    canvas.style.transition = 'transform 0.2s ease-out';
-                    currentScale = Math.min(currentScale + MOBILE_SCALE_FACTOR, MOBILE_MAX_SCALE);
-                    canvas.style.transform = `scale(${currentScale})`;
-                    
-                    setTimeout(async () => {
-                        canvas.style.transition = '';
-                        canvas.style.transform = '';
-                        await reRenderPageAtScale(currentPage, currentScale);
-                        updateZoomLevel();
-                        showControlsTemporarily();
-                    }, 200);
-                    
-                    logSecurityEvent('MOBILE_ZOOM_IN', { 
-                        scale: currentScale,
-                        hd: true 
-                    });
-                }
-            }
-        }
-
-        async function zoomOut() {
-            if (currentScale > MOBILE_MIN_SCALE) {
-                const canvas = document.getElementById(`page-${currentPage}`);
-                if (canvas) {
-                    // Reset double click state
-                    isZoomedIn = false;
-                    
-                    // Smooth zoom animation
-                    canvas.style.transition = 'transform 0.2s ease-out';
-                    currentScale = Math.max(currentScale - MOBILE_SCALE_FACTOR, MOBILE_MIN_SCALE);
-                    canvas.style.transform = `scale(${currentScale})`;
-                    
-                    setTimeout(async () => {
-                        canvas.style.transition = '';
-                        canvas.style.transform = '';
-                        await reRenderPageAtScale(currentPage, currentScale);
-                        updateZoomLevel();
-                        showControlsTemporarily();
-                    }, 200);
-                    
-                    logSecurityEvent('MOBILE_ZOOM_OUT', { 
-                        scale: currentScale,
-                        hd: true 
-                    });
-                }
-            }
-        }
-
-        async function zoomReset() {
-            const canvas = document.getElementById(`page-${currentPage}`);
-            if (canvas) {
-                // Reset double click state
-                isZoomedIn = false;
-                
-                // Smooth reset animation
-                canvas.style.transition = 'transform 0.3s ease-out';
-                currentScale = originalScale;
-                canvas.style.transform = `scale(${currentScale})`;
-                
-                setTimeout(async () => {
-                    canvas.style.transition = '';
-                    canvas.style.transform = '';
-                    await reRenderPageAtScale(currentPage, currentScale);
-                    updateZoomLevel();
-                    showControlsTemporarily();
-                }, 300);
-                
-                logSecurityEvent('MOBILE_ZOOM_RESET');
-            }
-        }
-
-        function updateZoomLevel() {
-            const zoomLevelElement = document.getElementById('zoomLevel');
-            if (zoomLevelElement) {
-                zoomLevelElement.textContent = `${Math.round(currentScale * 100)}%`;
-            }
-        }
-
-        // ==================== PAGE NAVIGATION ====================
-
-        // Mobile navigation
-        function updateNavigation() {
-            const prevBtn = document.getElementById('prevPage');
-            const nextBtn = document.getElementById('nextPage');
-            
-            if (prevBtn) prevBtn.disabled = currentPage <= 1;
-            if (nextBtn) nextBtn.disabled = currentPage >= totalPages;
-            
-            // Update page info styling based on state
-            const pageInfo = document.querySelector('.page-info');
-            if (pageInfo) {
-                if (currentPage === 1) {
-                    pageInfo.style.background = 'rgba(59, 130, 246, 0.2)';
-                } else if (currentPage === totalPages) {
-                    pageInfo.style.background = 'rgba(239, 68, 68, 0.2)';
-                } else {
-                    pageInfo.style.background = 'rgba(255, 255, 255, 0.1)';
-                }
-            }
-        }
-
-        // Go to specific page function
-        async function goToPage(pageNum) {
-            if (pageNum >= 1 && pageNum <= totalPages && pageNum !== currentPage) {
-                currentPage = pageNum;
-                await renderPageAdaptive(currentPage, getNetworkAwareConfig());
-                document.getElementById('currentPage').textContent = currentPage;
-                updateNavigation();
-                showControlsTemporarily();
-                logSecurityEvent('MOBILE_PAGE_JUMP', { page: pageNum });
-            }
-        }
+        // ==================== NAVIGATION ====================
 
         async function goToPreviousPage() {
             if (currentPage > 1) {
                 currentPage--;
-                await renderPageAdaptive(currentPage, getNetworkAwareConfig());
+                await renderPageHD(currentPage);
                 document.getElementById('currentPage').textContent = currentPage;
                 updateNavigation();
-                showControlsTemporarily();
-                logSecurityEvent('MOBILE_PAGE_PREV');
+                logSecurityEvent('PAGE_PREV', { page: currentPage });
             }
         }
 
         async function goToNextPage() {
             if (currentPage < totalPages) {
                 currentPage++;
-                await renderPageAdaptive(currentPage, getNetworkAwareConfig());
+                await renderPageHD(currentPage);
                 document.getElementById('currentPage').textContent = currentPage;
                 updateNavigation();
-                showControlsTemporarily();
-                logSecurityEvent('MOBILE_PAGE_NEXT');
+                logSecurityEvent('PAGE_NEXT', { page: currentPage });
             }
+        }
+
+        async function goToPage(pageNum) {
+            if (pageNum >= 1 && pageNum <= totalPages && pageNum !== currentPage) {
+                currentPage = pageNum;
+                await renderPageHD(currentPage);
+                document.getElementById('currentPage').textContent = currentPage;
+                updateNavigation();
+                logSecurityEvent('PAGE_JUMP', { page: pageNum });
+            }
+        }
+
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prevPage');
+            const nextBtn = document.getElementById('nextPage');
+            
+            if (prevBtn) prevBtn.disabled = currentPage <= 1;
+            if (nextBtn) nextBtn.disabled = currentPage >= totalPages;
+        }
+
+        // ==================== KEYBOARD SHORTCUTS ====================
+
+        function setupKeyboardShortcuts() {
+            document.addEventListener('keydown', (e) => {
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+                
+                switch(e.key) {
+                    case 'ArrowLeft':
+                        e.preventDefault();
+                        goToPreviousPage();
+                        break;
+                        
+                    case 'ArrowRight':
+                        e.preventDefault();
+                        goToNextPage();
+                        break;
+                        
+                    case '+':
+                    case '=':
+                        if (e.ctrlKey || e.metaKey) {
+                            e.preventDefault();
+                            zoomIn();
+                        }
+                        break;
+                        
+                    case '-':
+                        if (e.ctrlKey || e.metaKey) {
+                            e.preventDefault();
+                            zoomOut();
+                        }
+                        break;
+                        
+                    case '0':
+                        if (e.ctrlKey || e.metaKey) {
+                            e.preventDefault();
+                            zoomReset();
+                        }
+                        break;
+                        
+                    case 'Escape':
+                        e.preventDefault();
+                        goBack();
+                        break;
+                        
+                    case 'Home':
+                        e.preventDefault();
+                        goToPage(1);
+                        break;
+                        
+                    case 'End':
+                        e.preventDefault();
+                        goToPage(totalPages);
+                        break;
+                }
+            });
         }
 
         // ==================== BACK BUTTON ====================
 
-        // Back button functionality
+        function goBack() {
+            const basePath = '<%= typeof basePath !== "undefined" ? basePath : "/ebook" %>';
+            window.location.href = basePath;
+        }
+
         function setupBackButton() {
             const backButton = document.getElementById('backButton');
             if (backButton) {
-                const basePath = '<%= typeof basePath !== "undefined" ? basePath : "/ebook" %>';
-                
-                backButton.addEventListener('click', function() {
-                    console.log('Back button clicked');
-                    window.location.href = basePath;
-                });
-                
-                // Touch events ke liye bhi
-                backButton.addEventListener('touchend', function(e) {
+                backButton.addEventListener('click', goBack);
+            }
+        }
+
+        // ==================== UI HELPERS ====================
+
+        function updateProgress(percent) {
+            const progress = document.getElementById('loadingProgress');
+            if (progress) {
+                progress.style.width = percent + '%';
+            }
+        }
+
+        function showHint(message, type = 'general') {
+            const existingHint = document.querySelector('.' + type + '-hint');
+            if (existingHint) existingHint.remove();
+            
+            const hint = document.createElement('div');
+            hint.className = type + '-hint';
+            hint.innerHTML = `<i class="fas fa-${type === 'zoom' ? 'search' : 'info-circle'}"></i> ${message}`;
+            document.body.appendChild(hint);
+            
+            setTimeout(() => {
+                hint.style.opacity = '0';
+                hint.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => hint.remove(), 300);
+            }, 2000);
+        }
+
+        function showError(error) {
+            const loadingState = document.getElementById('loadingState');
+            if (loadingState) {
+                loadingState.innerHTML = `
+                    <div style="text-align: center; color: #ef4444;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <div style="font-size: 1.2rem; margin-bottom: 0.5rem;">Failed to load PDF</div>
+                        <div style="font-size: 0.9rem; margin-bottom: 1rem;">${error.message}</div>
+                        <button onclick="location.reload()" style="padding: 12px 24px; background: linear-gradient(135deg, #667eea, #764ba2); border: none; border-radius: 40px; color: white; cursor: pointer;">
+                            <i class="fas fa-redo"></i> Retry
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        function showSecurityWarning(message) {
+            const warning = document.getElementById('securityWarning');
+            if (warning) {
+                warning.innerHTML = `<i class="fas fa-shield-alt"></i> ${message}`;
+                warning.style.display = 'block';
+                setTimeout(() => {
+                    warning.style.display = 'none';
+                }, 2000);
+            }
+        }
+
+        // ==================== SECURITY ====================
+
+        function setupSecurity() {
+            document.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                showSecurityWarning('Right-click disabled');
+                return false;
+            });
+            
+            // ✅ allow drag but block text selection
+document.addEventListener('selectstart', (e) => {
+    if (!e.target.closest('#pdfContainer')) {
+        e.preventDefault();
+    }
+});;
+            
+            document.addEventListener('dragstart', (e) => {
+                e.preventDefault();
+                return false;
+            });
+            
+            window.addEventListener('beforeprint', (e) => {
+                e.preventDefault();
+                showSecurityWarning('Printing is disabled');
+                logSecurityEvent('PRINT_ATTEMPT_BLOCKED');
+                return false;
+            });
+            
+            window.print = function() {
+                showSecurityWarning('Printing is disabled');
+                logSecurityEvent('PRINT_FUNCTION_BLOCKED');
+                return false;
+            };
+            
+            document.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
                     e.preventDefault();
-                    console.log('Back button touched');
-                    window.location.href = basePath;
-                });
+                    showSecurityWarning('Printing is disabled');
+                    logSecurityEvent('PRINT_SHORTCUT_BLOCKED');
+                    return false;
+                }
+            });
+        }
+
+        function logSecurityEvent(eventType, details = {}) {
+            if (CONFIG.logEndpoint) {
+                fetch(CONFIG.logEndpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        eventType,
+                        pdfId: CONFIG.pdfId,
+                        details: {
+                            ...details,
+                            userAgent: navigator.userAgent,
+                            timestamp: new Date().toISOString()
+                        }
+                    })
+                }).catch(err => console.error('Log failed:', err));
             }
         }
 
         // ==================== EVENT LISTENERS ====================
 
-        // Mobile event listeners setup
         function setupEventListeners() {
-            // Page navigation
-            const nextPageBtn = document.getElementById('nextPage');
-            const prevPageBtn = document.getElementById('prevPage');
+            document.getElementById('prevPage').addEventListener('click', goToPreviousPage);
+            document.getElementById('nextPage').addEventListener('click', goToNextPage);
+            document.getElementById('backButton').addEventListener('click', goBack);
+            document.getElementById('zoomIn').addEventListener('click', zoomIn);
+            document.getElementById('zoomOut').addEventListener('click', zoomOut);
+            document.getElementById('zoomReset').addEventListener('click', zoomReset);
             
-            if (nextPageBtn) nextPageBtn.addEventListener('click', goToNextPage);
-            if (prevPageBtn) prevPageBtn.addEventListener('click', goToPreviousPage);
-            
-            // Zoom controls
-            const zoomInBtn = document.getElementById('zoomIn');
-            const zoomOutBtn = document.getElementById('zoomOut');
-            const zoomResetBtn = document.getElementById('zoomReset');
-            
-            if (zoomInBtn) zoomInBtn.addEventListener('click', zoomIn);
-            if (zoomOutBtn) zoomOutBtn.addEventListener('click', zoomOut);
-            if (zoomResetBtn) zoomResetBtn.addEventListener('click', zoomReset);
-            
-            // Mobile-optimized touch events for buttons
-            document.querySelectorAll('.nav-btn, .zoom-btn, .back-btn').forEach(btn => {
-                btn.addEventListener('touchstart', (e) => {
-                    e.currentTarget.style.transform = 'scale(0.95)';
-                });
-                
-                btn.addEventListener('touchend', (e) => {
-                    e.currentTarget.style.transform = 'scale(1)';
-                });
-            });
-            
-            // Double click zone visibility
-            const pdfContainer = document.getElementById('pdfContainer');
-            const doubleClickZone = document.getElementById('doubleClickZone');
-            
-            if (pdfContainer && doubleClickZone) {
-                // Show double click zone when controls are hidden
-                pdfContainer.addEventListener('mouseenter', () => {
-                    if (!isControlsVisible) {
-                        pdfContainer.classList.add('show-double-click-zone');
-                    }
-                });
-                
-                pdfContainer.addEventListener('mouseleave', () => {
-                    pdfContainer.classList.remove('show-double-click-zone');
-                });
-                
-                // Touch events for mobile
-                pdfContainer.addEventListener('touchstart', () => {
-                    if (!isControlsVisible) {
-                        pdfContainer.classList.add('show-double-click-zone');
-                        setTimeout(() => {
-                            pdfContainer.classList.remove('show-double-click-zone');
-                        }, 2000);
-                    }
-                });
-            }
-            
-            // Debug toggle button
-            const debugToggle = document.getElementById('debugToggle');
-            if (debugToggle) {
-                debugToggle.addEventListener('click', () => {
-                    toggleControls();
-                });
-            }
+            setupMouseWheelZoom();
+            setupKeyboardShortcuts();
         }
 
-        // ==================== INITIALIZATION ====================
+        // ==================== RESIZE HANDLER ====================
 
-        // Mobile initialization
-        document.addEventListener('DOMContentLoaded', async () => {
-            try {
-                console.log('📱 HD Mobile Reader Initializing...');
-                
-                // Show PDF skeleton immediately for instant feedback
-                showPDFSkeleton();
-                
-                // Set initial zoom state
-                originalScale = calculateMobileScale();
-                currentScale = originalScale;
-                
-                // Test touch capabilities
-                testTouchCapabilities();
-                
-                // Initialize all systems
-                initializeMobileSecurity();
-                setupKeyboardNavigation();
-                setupFocusManagement();
-                setupBackButton();
-                setupEventListeners();
-                
-                // Load PDF
-                await loadPDF();
-                
-                // Update UI
-                updateNavigation();
-                updateZoomLevel();
-                updateButtonTooltips();
-                
-                // Performance monitoring
-                monitorPerformance();
-                
-                console.log('✅ HD Mobile Reader Ready!');
-                
-            } catch (error) {
-                console.error('❌ Mobile init error:', error);
-                showSecurityWarning('Failed to initialize');
-            }
-        });
-
-        // Mobile resize handling with HD optimization
-        let mobileResizeTimeout;
+        let resizeTimeout;
         window.addEventListener('resize', () => {
-            clearTimeout(mobileResizeTimeout);
-            mobileResizeTimeout = setTimeout(() => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
                 if (pdfDoc) {
-                    originalScale = calculateMobileScale();
-                    if (!isZoomedIn) {
+                    originalScale = calculateOptimalScale();
+                    if (Math.abs(currentScale - originalScale) < 0.1) {
                         currentScale = originalScale;
-                        renderPageAdaptive(currentPage, getNetworkAwareConfig());
+                        renderPageHD(currentPage);
+                        updateZoomDisplay();
                     }
                 }
             }, 250);
         });
 
-        // Mobile cleanup
+        // ==================== INITIALIZATION ====================
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log('HD PDF Reader Initializing...');
+            console.log('Screen:', window.innerWidth, 'x', window.innerHeight);
+            console.log('Device Pixel Ratio:', window.devicePixelRatio);
+            
+            setupSecurity();
+            setupEventListeners();
+            setupBackButton();
+                enableDragPan();  // 👈 ADD THIS
+            await loadPDF();
+            
+            console.log('HD PDF Reader Ready!');
+        });
+
         window.addEventListener('beforeunload', () => {
             if (pdfDoc) {
                 pdfDoc.destroy().catch(() => {});
             }
-            clearTimeout(hideControlsTimeout);
-            
-            // Log user exit
             logSecurityEvent('USER_EXIT', {
                 lastPage: currentPage,
-                sessionDuration: Date.now() - lastActivityTime
+                zoomLevel: currentScale
             });
         });
 
-        // Offline detection
-        window.addEventListener('offline', () => {
-            showSecurityWarning('You are offline');
-        });
+        function enableDragPan() {
+    const container = document.getElementById("pdfContainer");
 
-        // Online detection
-        window.addEventListener('online', () => {
-            showSecurityWarning('Connection restored');
-        });
+    let isDragging = false;
+    let startX, startY;
+    let scrollLeft, scrollTop;
 
-        // Go back function for error handling
-        window.goBack = function() {
-            const basePath = '<%= typeof basePath !== "undefined" ? basePath : "/ebook" %>';
-            window.location.href = basePath;
-        };
+    container.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        startX = e.pageX - container.offsetLeft;
+        startY = e.pageY - container.offsetTop;
+        scrollLeft = container.scrollLeft;
+        scrollTop = container.scrollTop;
+    });
 
-        // Service Worker for PWA
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').catch(error => {
-                    console.log('Service Worker registration failed:', error);
-                });
-            });
-        }
+    container.addEventListener("mouseleave", () => {
+        isDragging = false;
+    });
 
-        // Test touch capabilities
-        function testTouchCapabilities() {
-            const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-            
-            console.log(`📱 Touch capabilities:`, {
-                hasTouch,
-                maxTouchPoints: navigator.maxTouchPoints || 0,
-                userAgent: navigator.userAgent,
-                platform: navigator.platform
-            });
-            
-            if (!hasTouch) {
-                console.warn('Device may not support touch gestures');
-                const gestureHint = document.getElementById('gestureHint');
-                if (gestureHint) gestureHint.style.display = 'none';
-            }
-            
-            return hasTouch;
-        }
+    container.addEventListener("mouseup", () => {
+        isDragging = false;
+    });
 
-        // Performance monitoring
-        function monitorPerformance() {
-            const perfEntries = performance.getEntriesByType('navigation');
-            if (perfEntries.length > 0) {
-                const navEntry = perfEntries[0];
-                console.log('📊 Performance metrics:', {
-                    'DOM Load': navEntry.domContentLoadedEventEnd - navEntry.domContentLoadedEventStart,
-                    'Page Load': navEntry.loadEventEnd - navEntry.loadEventStart,
-                    'First Paint': performance.getEntriesByName('first-paint')[0]?.startTime,
-                    'First Contentful Paint': performance.getEntriesByName('first-contentful-paint')[0]?.startTime
-                });
-            }
-        }
+    container.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
 
-        // ==================== PRINT PROTECTION ====================
+        const x = e.pageX - container.offsetLeft;
+        const y = e.pageY - container.offsetTop;
 
-        // Enhanced Print Protection
-        function setupPrintProtection() {
-            console.log('🛡️ Enhanced print protection initialized');
-            
-            // Before print event
-            window.addEventListener('beforeprint', (event) => {
-                event.preventDefault();
-                showPrintWarning();
-                logSecurityEvent('PRINT_ATTEMPT_BLOCKED', {
-                    method: 'beforeprint',
-                    timestamp: new Date().toISOString()
-                });
-                return false;
-            });
-            
-            // After print event
-            window.addEventListener('afterprint', (event) => {
-                event.preventDefault();
-                closePrintWarning();
-                logSecurityEvent('PRINT_DIALOG_CLOSED');
-                return false;
-            });
-            
-            // Override print function
-            window.print = function() {
-                showPrintWarning();
-                logSecurityEvent('PRINT_FUNCTION_OVERRIDE');
-                return false;
-            };
-            
-            // Catch print key combinations
-            document.addEventListener('keydown', (e) => {
-                if ((e.ctrlKey || e.metaKey) && (e.key === 'p' || e.key === 'P')) {
-                    e.preventDefault();
-                    showPrintWarning();
-                    logSecurityEvent('PRINT_SHORTCUT_BLOCKED', { key: e.key });
-                    return false;
-                }
-            });
-            
-            // Monitor for print media queries
-            const printMediaQuery = window.matchMedia('print');
-            printMediaQuery.addListener((mq) => {
-                if (mq.matches) {
-                    showPrintWarning();
-                    logSecurityEvent('PRINT_MEDIA_QUERY_DETECTED');
-                }
-            });
-        }
+        const walkX = (x - startX) * 1.5;
+        const walkY = (y - startY) * 1.5;
 
-        function showPrintWarning() {
-            const warning = document.getElementById('printWarning');
-            if (warning) {
-                warning.style.display = 'flex';
-                
-                // Auto-hide after 5 seconds
-                setTimeout(() => {
-                    closePrintWarning();
-                }, 5000);
-            }
-        }
-
-        function closePrintWarning() {
-            const warning = document.getElementById('printWarning');
-            if (warning) {
-                warning.style.display = 'none';
-            }
-        }
+        container.scrollLeft = scrollLeft - walkX;
+        container.scrollTop = scrollTop - walkY;
+    });
+}
     </script>
 </body>
 </html>
+

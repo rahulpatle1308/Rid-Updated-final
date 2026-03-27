@@ -148,13 +148,22 @@ const configureMiddleware = () => {
 
 
 
+
 // ========== VIEW ENGINE SETUP ==========
 const configureViews = () => {
   app.set("view engine", "ejs");
-  app.set("views", [path.join(__dirname, "views", 'ebook'), path.join(__dirname, "views")]);
-  app.use(express.static(path.join(__dirname, "public")));
-};
 
+  // ✅ ALL VIEWS (main + code folder)
+  app.set("views", [
+    path.join(__dirname, "views", "ebook"),
+    path.join(__dirname, "views"),
+    path.join(__dirname, "code", "views")   // 🔥 ADD THIS
+  ]);
+
+  // ✅ STATIC FILES (CSS, JS, images)
+  app.use(express.static(path.join(__dirname, "public")));        // main public
+  app.use(express.static(path.join(__dirname, "code", "public"))); // 🔥 code/public
+};
 //=========================RTS MIDDLEWIRE=====================
 // ===== RTS MODULE CONNECT =====
 const rtsApp = require("./RTS/rtsmiddlewire");
@@ -581,6 +590,7 @@ const intership=require("./routes/intanships/intanshippage.js")
 app.use("/",intership)
 
 
+
 // service pages auto diteated logic routes
 const Lead = require("./models/Lead.js");
 
@@ -607,12 +617,58 @@ app.post("/api/save-lead", async (req,res)=>{
  }
 
 })
+const myteam=require("./routes/myteampages/myteam.js")
+app.use("/",myteam)
+// ===== TECH INTERVIEW SERVER CONNECT =====
+const techInterviewApp = require("./code/server");
+
+// middleware mount
+app.get("/tech-interview", (req, res) => {
+  res.render("index");   // code/views/index.ejs
+});
+app.use("/tech-interview", techInterviewApp);
+
 
 configureRoutes();
 
 
+
 // ========== START SERVER ==========
-app.listen(port, () => {
-  console.log(`\n✅ Server is running on http://localhost:${port}`);
+// ================== DB + SERVER START ==================
+async function startServer() {
+  try {
+    console.log("🔗 Connecting MongoDB...");
+
+    await mongoose.connect(process.env.MONGODB_URI);
+
+    console.log("✅ MongoDB Connected Successfully");
+
+    app.listen(port, () => {
+      console.log(`🚀 Server running on http://localhost:${port}`);
+    });
+
+  } catch (err) {
+    console.error("❌ MongoDB Error:", err);
+    process.exit(1);
+  }
+}
+
+startServer();
+
+
+// ✅ SOCKET.IO AFTER SERVER
+const { Server } = require("socket.io");
+const io = new Server(server);
+
+let onlineUsers = 0;
+
+io.on("connection", (socket) => {
+  onlineUsers++;
+  io.emit("onlineUsers", onlineUsers);
+
+  socket.on("disconnect", () => {
+    onlineUsers--;
+    io.emit("onlineUsers", onlineUsers);
+  });
 });
 

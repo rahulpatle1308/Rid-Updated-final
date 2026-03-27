@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <%= typeof title !== 'undefined' ? title : 'Technical & Coding Courses' %>
+    <title><%= typeof title !== 'undefined' ? title : 'Home Guard Courses' %></title>
     
     <!-- External CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -24,77 +24,83 @@
     
     <!-- Main Content -->
     <main>
-        
-       <section class="courses-section">
-    <div class="courses-container">
-        <!-- Course 1: UP HomeGuard -->
-        <div class="course-card" data-course-id="UP BOARD" data-course-name="UP BOARD">
-            <!-- VISIT COUNT - LEFT SIDE (Without eye icon) -->
-            <div class="visit-count">
-                <span class="count">0</span>
-                <span class="visits-text">visits</span>
-            </div>
-            <!-- BADGE - RIGHT SIDE -->
-            <span class="badge-left update-badge">UPDATED</span>
-            
-            <div class="course-header">
-                <div class="card-icon">
-                    <i class="fa-brands fa-html5"></i>
+        <section class="courses-section">
+            <div class="courses-container">
+                
+                <!-- Course 1: UP HomeGuard -->
+                <div class="course-card" data-course-id="UP HomeGuard" data-course-name="UP HomeGuard">
+                    <!-- VISIT COUNT - LEFT SIDE -->
+                    <div class="visit-count">
+                        <span class="count">0</span>
+                        <span class="visits-text">visits</span>
+                    </div>
+                    <!-- BADGE - RIGHT SIDE -->
+                    <span class="badge-left update-badge">UPDATED</span>
+                    
+                    <div class="course-header">
+                        <div class="card-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>U.P HomeGuard</h3>
+                    </div>
+                    <div class="course-content">
+                        <div class="marquee">
+                            <p>All Test <span>Series</span></p>
+                        </div>
+                        <div class="btn-container">
+                            <a href="/rts/uphomeguard/purchase" class="btn track-visit">Open Now</a>
+                        </div>
+                    </div>
                 </div>
-                <h3>U.P HomeGuard </h3>
-            </div>
-            <div class="course-content">
-                <div class="marquee">
-                    <p>All Test <span>Series</span></p>
-                </div>
-                <div class="btn-container">
-                   <a href="/rts/HomeGuard/subjects" class="btn track-visit">Open Now</a>
-                </div>
-            </div>
-        </div>
 
-        <!-- Course 2:BIHAR BOARD -->
-        <div class="course-card" data-course-id="BIHAR BOARD" data-course-name="BIHAR BOARD">
-            <!-- VISIT COUNT - LEFT SIDE (Without eye icon) -->
-            <div class="visit-count">
-                <span class="count">0</span>
-                <span class="visits-text">visits</span>
-            </div>
-            <!-- BADGE - RIGHT SIDE -->
-            <span class="badge-left new-badge">UPDATED</span>
-            
-            <div class="course-header">
-                <div class="card-icon">
-                    <i class="fa-brands fa-css3-alt"></i>
+                <!-- Course 2: BIHAR Home Guard -->
+                <div class="course-card" data-course-id="BIHAR Home Guard" data-course-name="BIHAR Home Guard">
+                    <!-- VISIT COUNT - LEFT SIDE -->
+                    <div class="visit-count">
+                        <span class="count">0</span>
+                        <span class="visits-text">visits</span>
+                    </div>
+                    <!-- BADGE - RIGHT SIDE -->
+                    <span class="badge-left new-badge">COMING SOON</span>
+                    
+                    <div class="course-header">
+                        <div class="card-icon">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <h3>BIHAR Home Guard</h3>
+                    </div>
+                    <div class="course-content">
+                        <div class="marquee">
+                            <p>All Test <span>Series</span></p>
+                        </div>
+                        <div class="btn-container">
+                            <!-- <a href="/biharhomeguard/purchase" class="btn track-visit">Open Now</a> -->
+                                <a href="/rts/ComingSoon" class="btn track-visit">Open Now</a>
+                        </div>
+                    </div>
                 </div>
-                <h3>BIHAR BOARD</h3>
-            </div>
-            <div class="course-content">
-                <div class="marquee">
-                    <p>All Test <span>Series</span></p>
-                </div>
-                <div class="btn-container">
-                    <a href="/biharboard/purchase" class="btn track-visit">Open Now</a>
-                </div>
-            </div>
-        </div>
 
-    
-
-       
-    </div>
-</section>
+             
+                
+            </div>
+        </section>
     </main>
     
     <!-- Footer -->
     <%- include('../partials/footer') %>
-
     
-    <script src="/js/visit-counter.js"></script>
-    <script src="/js/banner-slider.js"></script>
-    <script src="/js/search-filter.js"></script>
-    <script src="/js/ui-handlers.js"></script>
-    <script src="/js/dashboard.js"></script>
+    <!-- JavaScript -->
+    <script>
+        window.API_BASE_URL = "<%= typeof apiBaseUrl !== 'undefined' ? apiBaseUrl : '' %>";
+        window.USER_DATA = <%- JSON.stringify(user || {}) %>;
+    </script>
+    
+    <script src="/rts/js/config.js"></script>
+    <script src="/rts/js/visit-counter.js"></script>
+    <script src="/rts/js/banner-slider.js"></script>
+    <script src="/rts/js/search-filter.js"></script>
+    <script src="/rts/js/ui-handlers.js"></script>
+    <script src="/rts/js/dashboard.js"></script>
     
     <!-- Ionicons for footer icons -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

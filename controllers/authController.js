@@ -56,11 +56,19 @@ exports.login = async (req, res) => {
       secure: false, // local development
       maxAge: 3600000,
     });
+// 🔥 SESSION SAVE
+req.session.userId = user._id;
+req.session.userRole = user.role;
+req.session.userEmail = user.email;
 
-    // 🔹 Role-based redirect
-    if (user.role === "student") {
-      return res.redirect("/RTS/public/main.html");
-    }
+// 🔥 REDIRECT FIX
+const redirectUrl = req.session.redirectTo || "/rts/dashboard";
+delete req.session.redirectTo;
+
+// 🔹 Role-based redirect
+if (user.role === "student") {
+  return res.redirect("/rts/dashboard");
+}
 
     if (user.role === "teacher") {
       return res.redirect("/teacher-dashboard");
@@ -98,7 +106,12 @@ exports.login = async (req, res) => {
 
 exports.logout = (req, res) => {
   res.clearCookie("token");
-  console.log("token remove");
+
+  // 🔥 SESSION DESTROY KARO
+  req.session.destroy(() => {
+    console.log("Session destroyed");
+  });
+
   res.send({ message: "successfully signed out!" });
 };
 exports.verifyOTP = async (req, res) => {
@@ -182,4 +195,10 @@ exports.resetPassword = async (req, res) => {
     console.error("Reset error:", error);
     res.status(500).json({ success: false });
   }
+};
+exports.logout = (req, res) => {
+    res.clearCookie("token"); // agar JWT use kar raha hai
+    req.session?.destroy?.(); // agar session use ho raha hai
+
+    return res.redirect("/login");
 };

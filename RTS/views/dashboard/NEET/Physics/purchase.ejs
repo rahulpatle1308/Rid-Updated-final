@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title><%= typeof title !== 'undefined' ? title : 'Physics Test Series' %></title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+    <link rel="stylesheet" href="../css/purchase.css">
+    <link rel="stylesheet" href="../css/header.css">
+    
+    <style>
+        /* ==================== CSS VARIABLES ==================== */
+        :root {
+            /* Background Colors */
+            --bg-footer: #f4f1f1;
+            --bg-copyright: #f4f1f1;
+            --bg-footer-overlay: rgba(244, 241, 241, 0.9);
+                 
+            /* Text Colors */
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --text-link: #0a66c2;
+            --text-hover: #084e94;
+            --text-grey: #808080;
+            --text-dark: #140b0b;
+            --text-white: #ffffff;
+                 
+            /* Font Settings */
+            --font-family-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            --font-family-heading: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+                 
+            /* Font Weights */
+            --font-normal: 400;
+            --font-medium: 500;
+            --font-semibold: 600;
+            --font-bold: 700;
+                 
+            /* Line Heights */
+            --line-height-tight: 1.2;
+            --line-height-normal: 1.5;
+            --line-height-loose: 1.8;
+        }
+
+        /* Dark Mode Colors */
+        body.dark-mode {
+            --bg-footer: #2d2d2d;
+            --bg-copyright: #404040;
+            --bg-footer-overlay: rgba(45, 45, 45, 0.95);
+            --text-primary: #ffffff;
+            --text-secondary: #e0e0e0;
+            --text-link: #6ea8fe;
+            --text-hover: #8bb9fe;
+            --text-grey: #c0c0c0;
+            --text-dark: #f0f0f0;
+        }
+
+        /* ==================== FOOTER STYLING ==================== */
+        .footer {
+            width: 100%;
+            margin-left: 0;
+            padding: 20px 15px 15px 15px;
+            background: linear-gradient(var(--bg-footer-overlay), var(--bg-footer-overlay)), url('/image_all/footer overlay.png') no-repeat center;
+            background-size: cover;
+            background-color: var(--bg-footer);
+            color: var(--text-dark);
+            box-sizing: border-box;
+            font-family: var(--font-family-primary);
+        }
+
+        footer {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            margin-bottom: 12px;
+        }
+
+        /* Left Section */
+        footer .left {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1 1 100%;
+            min-width: 100%;
+            text-align: center;
+            align-items: center;
+        }
+
+        footer .left img {
+            width: 140px;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 5px;
+        }
+
+        footer .left p {
+            font-size: 12px;
+            line-height: 1.5;
+            color: var(--text-link);
+            font-family: var(--font-family-primary);
+            font-weight: var(--font-normal);
+            margin: 0;
+            max-width: 280px;
+        }
+
+        footer .left div {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: center;
+        }
+
+        footer .left a {
+            font-size: 12px;
+            text-decoration: none;
+            color: var(--text-link);
+            font-family: var(--font-family-primary);
+            font-weight: var(--font-medium);
+            transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Links Sections */
+        footer .links-head, .links-social {
+            flex: 1 1 100%;
+            min-width: 100%;
+            text-align: center;
+        }
+
+        footer .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+            justify-content: center;
+        }
+
+        .links-head h3, .links-social h3 {
+            text-transform: uppercase;
+            font-size: 14px;
+            font-weight: var(--font-semibold);
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            font-family: var(--font-family-heading);
+            letter-spacing: 0.5px;
+        }
+
+        .links-head hr, .links-social hr {
+            width: 40px;
+            height: 2px;
+            background: var(--text-link);
+            border: none;
+            margin: 0 auto 10px auto;
+        }
+
+        .links-head .links-1, .links-2, .links-3, .links-social .links-1, .links-2 {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: center;
+        }
+
+        .links-head a, .links-social a {
+            text-decoration: none;
+            color: var(--text-grey);
+            transition: 0.3s ease-in-out;
+            font-size: 12px;
+            font-family: var(--font-family-primary);
+            font-weight: var(--font-normal);
+            line-height: 1.5;
+            display: inline-block;
+        }
+
+        .links-head a:hover, .links-social a:hover {
+            color: var(--text-link);
+            text-decoration: underline;
+        }
+
+        .links-social .links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .links-social .links a i {
+            font-size: 16px;
+            color: var(--text-link);
+        }
+
+        .links-social .links a ion-icon {
+            font-size: 16px;
+        }
+
+        /* About Text Section */
+        .about-text {
+            margin-top: 15px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            color: var(--text-secondary);
+            font-size: 11px;
+            line-height: 1.5;
+            font-family: var(--font-family-primary);
+            text-align: center;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .about-text strong {
+            color: var(--text-primary);
+            font-weight: var(--font-bold);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Copyright Section */
+        .copyrightsection {
+            width: 100%;
+            margin-left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 12px 15px;
+            background: var(--bg-copyright);
+            color: var(--text-dark);
+            margin-top: 10px;
+            box-sizing: border-box;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-family: var(--font-family-primary);
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .copyrightsection p, .copyrightsection a {
+            font-size: 10px;
+            margin: 0;
+            font-family: var(--font-family-primary);
+        }
+
+        .copyrightsection p {
+            color: var(--text-secondary);
+            font-weight: var(--font-normal);
+        }
+
+        .copyrightsection .link {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .copyrightsection .link a {
+            text-decoration: none;
+            color: var(--text-grey);
+            transition: 0.3s;
+            font-weight: var(--font-medium);
+        }
+
+        .copyrightsection .link a:hover {
+            color: var(--text-link);
+        }
+
+        /* ==================== CARD STYLING - NO SUBJECT BADGES ==================== */
+
+        .description-section {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+            font-family: var(--font-family-heading);
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--text-link), #4a90e2);
+            border-radius: 2px;
+        }
+
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .test-item {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .test-item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(10, 102, 194, 0.15);
+            border-color: rgba(10, 102, 194, 0.2);
+        }
+
+        .test-header {
+            padding: 24px 20px 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            background: linear-gradient(135deg, #f8faff, #ffffff);
+        }
+
+        .test-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+            line-height: 1.4;
+            font-family: var(--font-family-heading);
+            letter-spacing: -0.01em;
+        }
+
+        .test-action {
+            padding: 20px;
+            background: white;
+        }
+
+        .start-button {
+            width: 100%;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, var(--text-link), #4a90e2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(10, 102, 194, 0.2);
+            font-family: var(--font-family-primary);
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .start-button:hover {
+            background: linear-gradient(135deg, #084e94, var(--text-link));
+            transform: scale(1.02);
+            box-shadow: 0 6px 16px rgba(10, 102, 194, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+
+        .start-button:active {
+            transform: scale(0.98);
+        }
+
+        /* Responsive adjustments */
+        @media screen and (max-width: 767px) {
+            .section-title {
+                font-size: 26px;
+                margin-bottom: 30px;
+            }
+
+            .test-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 15px;
+            }
+
+            .test-header h3 {
+                font-size: 16px;
+            }
+
+            .test-header {
+                padding: 20px 16px 16px;
+            }
+
+            .test-action {
+                padding: 16px;
+            }
+
+            .start-button {
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .test-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .test-item {
+                max-width: 100%;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+        }
+
+        /* Dark mode support for cards */
+        body.dark-mode .test-item {
+            background: #2d2d2d;
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .test-header {
+            background: linear-gradient(135deg, #353535, #2d2d2d);
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .test-header h3 {
+            color: #ffffff;
+        }
+
+        body.dark-mode .test-action {
+            background: #2d2d2d;
+        }
+
+        /* ==================== FOOTER RESPONSIVE ==================== */
+
+        /* Tablet Devices (768px and above) */
+        @media screen and (min-width: 768px) {
+            .footer {
+                padding: 25px 30px 20px 30px;
+            }
+            
+            footer {
+                gap: 25px;
+                margin-bottom: 15px;
+            }
+            
+            /* Left Section - Tablet */
+            footer .left {
+                flex: 1 1 280px;
+                min-width: 250px;
+                text-align: left;
+                align-items: flex-start;
+            }
+            
+            footer .left img {
+                width: 180px;
+            }
+            
+            footer .left p {
+                font-size: 11px;
+                max-width: 100%;
+            }
+            
+            footer .left div {
+                align-items: flex-start;
+            }
+            
+            /* Links Sections - Tablet */
+            footer .links-head, .links-social {
+                flex: 1 1 200px;
+                min-width: 180px;
+                text-align: left;
+            }
+            
+            .links-head hr, .links-social hr {
+                margin: 0 0 8px 0;
+            }
+            
+            .links-head .links-1, .links-2, .links-3, .links-social .links-1, .links-2 {
+                text-align: left;
+            }
+            
+            .links-social .links a {
+                justify-content: flex-start;
+            }
+            
+            footer .links {
+                justify-content: flex-start;
+            }
+            
+            .copyrightsection {
+                flex-direction: row;
+                justify-content: space-between;
+                text-align: left;
+                padding: 8px 30px;
+            }
+            
+            .about-text {
+                padding-left: 0;
+                padding-right: 0;
+            }
+            
+            .about-text strong {
+                display: inline;
+                margin-bottom: 0;
+            }
+        }
+
+        /* Desktop Devices (1024px and above) */
+        @media screen and (min-width: 1024px) {
+            .footer {
+                padding: 30px 40px 25px 40px;
+            }
+            
+            footer {
+                gap: 30px;
+            }
+            
+            footer .left img {
+                width: 200px;
+            }
+            
+            footer .left p,
+            footer .left a,
+            .links-head a,
+            .links-social a {
+                font-size: 12px;
+            }
+            
+            .links-head h3,
+            .links-social h3 {
+                font-size: 14px;
+            }
+            
+            .about-text {
+                font-size: 11px;
+            }
+            
+            .copyrightsection p,
+            .copyrightsection a {
+                font-size: 11px;
+            }
+        }
+
+        /* Large Desktop (1920px and above) */
+        @media screen and (min-width: 1920px) {
+            .footer {
+                padding: 35px 40px 25px 40px;
+            }
+            
+            footer .left img {
+                width: 220px;
+            }
+            
+            footer .left p,
+            footer .left a,
+            .links-head a,
+            .links-social a {
+                font-size: 13px;
+            }
+            
+            .links-head h3,
+            .links-social h3 {
+                font-size: 15px;
+            }
+            
+            .about-text {
+                font-size: 12px;
+            }
+            
+            .copyrightsection p,
+            .copyrightsection a {
+                font-size: 12px;
+            }
+        }
+
+        /* Small Mobile (up to 480px) */
+        @media screen and (max-width: 480px) {
+            .footer {
+                padding: 15px 12px 12px 12px;
+            }
+            
+            footer {
+                gap: 18px;
+                margin-bottom: 10px;
+            }
+            
+            footer .left img {
+                width: 120px;
+            }
+            
+            footer .left p {
+                font-size: 11px;
+            }
+            
+            footer .left a {
+                font-size: 11px;
+            }
+            
+            .links-head h3,
+            .links-social h3 {
+                font-size: 13px;
+            }
+            
+            .links-head a,
+            .links-social a {
+                font-size: 11px;
+            }
+            
+            footer .links {
+                gap: 15px;
+            }
+            
+            .links-head .links-1, .links-2,
+            .links-social .links-1, .links-2 {
+                gap: 6px;
+            }
+            
+            .about-text {
+                font-size: 10px;
+                margin-top: 12px;
+                padding-top: 10px;
+            }
+            
+            .copyrightsection {
+                padding: 10px 12px;
+                gap: 8px;
+            }
+            
+            .copyrightsection p,
+            .copyrightsection a {
+                font-size: 9px;
+            }
+            
+            .copyrightsection .link {
+                gap: 12px;
+            }
+        }
+
+        /* Very Small Mobile (up to 360px) */
+        @media screen and (max-width: 360px) {
+            .footer {
+                padding: 12px 10px 10px 10px;
+            }
+            
+            footer .left img {
+                width: 100px;
+            }
+            
+            footer .left p,
+            footer .left a,
+            .links-head a,
+            .links-social a {
+                font-size: 10px;
+            }
+            
+            .links-head h3,
+            .links-social h3 {
+                font-size: 12px;
+            }
+            
+            .about-text {
+                font-size: 9px;
+            }
+            
+            .copyrightsection p,
+            .copyrightsection a {
+                font-size: 8px;
+            }
+            
+            .copyrightsection .link {
+                gap: 10px;
+            }
+        }
+
+        /* Landscape Mode for Mobile */
+        @media screen and (max-width: 896px) and (orientation: landscape) {
+            .footer {
+                padding: 12px 20px 10px 20px;
+            }
+            
+            footer {
+                gap: 15px;
+                margin-bottom: 8px;
+            }
+            
+            footer .left {
+                flex: 1 1 100%;
+            }
+            
+            footer .left img {
+                width: 100px;
+            }
+            
+            footer .links-head,
+            .links-social {
+                flex: 1 1 45%;
+                min-width: 45%;
+            }
+            
+            .about-text {
+                margin-top: 10px;
+                padding-top: 8px;
+            }
+        }
+
+        /* Dark Mode Support for Footer */
+        body.dark-mode .footer {
+            background: linear-gradient(var(--bg-footer-overlay), var(--bg-footer-overlay)), url('/image_all/footer overlay.png') no-repeat center;
+            background-size: cover;
+        }
+
+        body.dark-mode .copyrightsection {
+            background: var(--bg-copyright);
+        }
+
+        body.dark-mode .links-head a,
+        body.dark-mode .links-social a {
+            color: var(--text-grey);
+        }
+
+        body.dark-mode footer .left p {
+            color: var(--text-link);
+        }
+
+        body.dark-mode .about-text {
+            border-top-color: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <%- include('../../partials/header') %><br>
+
+    <main>
+        <!-- Test Cards Section - No Subject Tabs, No Subject Badges -->
+        <section class="description-section" aria-labelledby="tests-title">
+            <h2 class="section-title" id="tests-title">PHYSICS TEST SERIES</h2>
+            
+            <!-- Test Cards Grid - Clean cards without any subject badges -->
+            <div class="test-grid" id="testGrid">
+                <% const totalTests = 40; %>
+                <% for(let i = 1; i <= totalTests; i++) { %>
+                    <div class="test-item">
+                        <div class="test-header">
+                            <h3>Physics Test : <%= i %></h3>
+                        </div>
+                        <div class="test-action">
+                            <a href="/rts/quiz/NEET/Physics/<%= i %>" class="start-button">Start Test</a>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <section class="footer">
+        <footer>
+            <div class="left">
+                <img src="/rts/img/logo ridtech.jpeg" alt="RID Bharat Logo">
+                <p>Mig, 72, Rajiv Nagar, A Sector, Aayodhya Bypass Bhopal, Madhya Pradesh, India (462022)</p>
+                <div>
+                    <a href="mailto:ridorg.in@gmail.com">
+                        <i class="fas fa-envelope"></i> ridorg.in@gmail.com | Email
+                    </a>
+                    <a href="tel:+919202707903">
+                        <i class="fas fa-phone"></i> +91 9202707903 | Mobile
+                    </a>
+                </div>
+            </div>
+
+            <div class="links-head">
+                <h3>Research Topics</h3>
+                <hr>
+                <div class="links">
+                    <div class="links-1">
+                        <a href="#">Computers</a>
+                        <a href="#">Tech National Affairs</a>
+                        <a href="#">AI: Artificial Intelligence</a>
+                        <a href="#">Race & Ethnicity</a>
+                        <a href="#">Religion</a>
+                        <a href="#">Age & Generations</a>
+                        <a href="#">Gender & Equality</a>
+                    </div>
+                    <div class="links-2">
+                        <a href="#">Space Engineering</a>
+                        <a href="#">Economy & Work</a>
+                        <a href="#">Science</a>
+                        <a href="#">Internet & Technology</a>
+                        <a href="#">News Habits & Media</a>
+                        <a href="#">Methodological Research</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="links-social">
+                <h3>Social Links</h3>
+                <hr>
+                <div class="links">
+                    <div class="links-1">
+                        <a href="#"><ion-icon name="logo-facebook"></ion-icon> Facebook</a>
+                        <a href="https://www.linkedin.com/in/rid-bharat-9a4517324" target="_blank" rel="noopener noreferrer">
+                            <ion-icon name="logo-linkedin"></ion-icon> LinkedIn
+                        </a>
+                        <a href="https://youtube.com/@ridbharat" target="_blank" rel="noopener noreferrer">
+                            <ion-icon name="logo-youtube"></ion-icon> YouTube
+                        </a>
+                    </div>
+                    <div class="links-2">
+                        <a href="https://www.instagram.com/ridbharat" target="_blank" rel="noopener noreferrer">
+                            <ion-icon name="logo-instagram"></ion-icon> Instagram
+                        </a>
+                        <a href="mailto:ridorg.in@gmail.com">
+                            <ion-icon name="mail-outline"></ion-icon> Email Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <p class="about-text">
+            <strong>ABOUT RESEARCH INNOVATION & DISCOVERY:</strong> RID Organization i.e. Research,
+            Innovation and Discovery Organization is an organization which is run by TWF (TWKSAA WELFARE FOUNDATION) NGO. The
+            main objective of which is that in the coming times, the discovery, publication and use of NEW (RID, PMS & TLR)
+            should be done first in Indian culture, civilization and language from this holy land of India.
+        </p>
+
+        <section class="copyrightsection">
+            <p>Copyright ©<%= new Date().getFullYear() %>, RID | TWF (TWKSAA Welfare Foundation). All Rights Reserved.</p>
+            <div class="link">
+                <a href="#">About</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Feedback</a>
+            </div>
+        </section>
+    </section>
+
+    <script>
+        // ==================== MOBILE MENU TOGGLE FUNCTIONALITY ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all required elements
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileNav = document.getElementById('mobileNav');
+            const overlay = document.getElementById('mobileMenuOverlay');
+            const closeBtn = document.querySelector('.mobile-close-btn');
+            const header = document.querySelector('.main-header');
+            const body = document.body;
+
+            // Check if elements exist
+            if (menuToggle && mobileNav && overlay) {
+                // Function to open menu
+                function openMenu() {
+                    mobileNav.classList.add('active');
+                    overlay.classList.add('active');
+                    menuToggle.classList.add('active');
+                    if (header) header.classList.add('menu-open');
+                    body.classList.add('menu-open');
+                    menuToggle.setAttribute('aria-expanded', 'true');
+                    menuToggle.innerHTML = '<i class="fas fa-times"></i>';
+                    body.style.overflow = 'hidden';
+                }
+
+                // Function to close menu
+                function closeMenu() {
+                    mobileNav.classList.remove('active');
+                    overlay.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                    if (header) header.classList.remove('menu-open');
+                    body.classList.remove('menu-open');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                    body.style.overflow = '';
+                }
+
+                // Toggle menu on button click
+                menuToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const isOpen = mobileNav.classList.contains('active');
+                    if (isOpen) {
+                        closeMenu();
+                    } else {
+                        openMenu();
+                    }
+                });
+
+                // Close menu when clicking overlay
+                overlay.addEventListener('click', closeMenu);
+
+                // Close menu when clicking close button (if exists)
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', closeMenu);
+                }
+
+                // Close menu on escape key press
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+                        closeMenu();
+                    }
+                });
+
+                // Prevent menu from closing when clicking inside mobile nav
+                mobileNav.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+
+                // Handle window resize - close menu on desktop
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 992 && mobileNav.classList.contains('active')) {
+                        closeMenu();
+                    }
+                });
+            }
+
+            // ==================== FONT SIZE CONTROLS ====================
+            const increaseBtn = document.getElementById('increaseFont');
+            const resetBtn = document.getElementById('resetFont');
+            const decreaseBtn = document.getElementById('decreaseFont');
+            
+            let currentFontSize = 16;
+            const minFontSize = 12;
+            const maxFontSize = 24;
+
+            function setBodyFontSize(size) {
+                document.body.style.fontSize = size + 'px';
+                localStorage.setItem('preferredFontSize', size);
+            }
+
+            if (increaseBtn) {
+                increaseBtn.addEventListener('click', function() {
+                    currentFontSize = Math.min(maxFontSize, currentFontSize + 2);
+                    setBodyFontSize(currentFontSize);
+                });
+            }
+
+            if (decreaseBtn) {
+                decreaseBtn.addEventListener('click', function() {
+                    currentFontSize = Math.max(minFontSize, currentFontSize - 2);
+                    setBodyFontSize(currentFontSize);
+                });
+            }
+
+            if (resetBtn) {
+                resetBtn.addEventListener('click', function() {
+                    currentFontSize = 16;
+                    document.body.style.fontSize = '';
+                    localStorage.removeItem('preferredFontSize');
+                });
+            }
+
+            const savedFontSize = localStorage.getItem('preferredFontSize');
+            if (savedFontSize) {
+                currentFontSize = parseInt(savedFontSize);
+                document.body.style.fontSize = currentFontSize + 'px';
+            }
+
+            // ==================== ACTIVE LINK HIGHLIGHTING ====================
+            const currentPath = window.location.pathname;
+
+            document.querySelectorAll('.desktop-menu-link').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === currentPath) {
+                    link.classList.add('active');
+                    if (link.style) {
+                        link.style.backgroundColor = '#e6f0ff';
+                        link.style.color = 'var(--maintheme)';
+                    }
+                }
+            });
+
+            document.querySelectorAll('.mobile-menu-link').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === currentPath) {
+                    link.classList.add('active');
+                    if (link.style) {
+                        link.style.backgroundColor = '#f0f7ff';
+                        link.style.borderLeft = '3px solid var(--maintheme)';
+                    }
+                }
+            });
+
+            // Simple swipe support if elements exist
+            if (mobileNav && 'ontouchstart' in window) {
+                let touchStartX = 0;
+                let touchEndX = 0;
+                
+                mobileNav.addEventListener('touchstart', function(e) {
+                    touchStartX = e.changedTouches[0].screenX;
+                }, { passive: true });
+                
+                mobileNav.addEventListener('touchend', function(e) {
+                    touchEndX = e.changedTouches[0].screenX;
+                    const swipeThreshold = 100;
+                    const swipeDistance = touchEndX - touchStartX;
+                    
+                    if (swipeDistance < -swipeThreshold && mobileNav.classList.contains('active')) {
+                        const closeMenuFn = () => {
+                            mobileNav.classList.remove('active');
+                            if (overlay) overlay.classList.remove('active');
+                            if (menuToggle) {
+                                menuToggle.classList.remove('active');
+                                menuToggle.setAttribute('aria-expanded', 'false');
+                                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                            }
+                            if (header) header.classList.remove('menu-open');
+                            document.body.classList.remove('menu-open');
+                            document.body.style.overflow = '';
+                        };
+                        closeMenuFn();
+                    }
+                }, { passive: true });
+            }
+        });
+    </script>
+    <!-- Ionicons for social icons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

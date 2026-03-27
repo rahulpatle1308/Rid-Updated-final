@@ -1,780 +1,1306 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= typeof title !== 'undefined' ? title : 'HTML Test Series' %></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title><%= typeof title !== 'undefined' ? title : 'U.P HomeGuard Test Series' %></title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+    <link rel="stylesheet" href="../css/purchase.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="/rts/css/purchase/all purchase.css">
+    
+    <style>
+        /* ==================== CSS VARIABLES ==================== */
+        :root {
+            /* Background Colors */
+            --bg-footer: #f4f1f1;
+            --bg-copyright: #f4f1f1;
+            --bg-footer-overlay: rgba(244, 241, 241, 0.9);
+                 
+            /* Text Colors */
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --text-link: #0a66c2;
+            --text-hover: #084e94;
+            --text-grey: #808080;
+            --text-dark: #140b0b;
+            --text-white: #ffffff;
+                 
+            /* Font Settings */
+            --font-family-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            --font-family-heading: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+                 
+            /* Font Weights */
+            --font-normal: 400;
+            --font-medium: 500;
+            --font-semibold: 600;
+            --font-bold: 700;
+                 
+            /* Line Heights */
+            --line-height-tight: 1.2;
+            --line-height-normal: 1.5;
+            --line-height-loose: 1.8;
+            
+            /* Tab Colors */
+            --tab-economy: #d32f2f;
+            --tab-polity: #1976d2;
+            --tab-science: #2e7d32;
+            --tab-geography: #ed6c02;
+            --tab-history: #9c27b0;
+        }
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
-  <link rel="stylesheet" href="../css/purchase.css">
-  <link rel="stylesheet" href="../css/header.css">
- <style>
- /* ==================== CSS VARIABLES ==================== */
-:root {
-    /* Background Colors */
-    --bg-footer: #f4f1f1;
-    --bg-copyright: #f4f1f1;
-    --bg-footer-overlay: rgba(244, 241, 241, 0.9);
-    
-    /* Text Colors */
-    --text-primary: #212529;
-    --text-secondary: #6c757d;
-    --text-link: #0a66c2;
-    --text-hover: #084e94;
-    --text-grey: #808080;
-    --text-dark: #140b0b;
-    --text-white: #ffffff;
-    
-    /* Font Settings */
-    --font-family-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    --font-family-heading: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    
-    /* Font Weights */
-    --font-normal: 400;
-    --font-medium: 500;
-    --font-semibold: 600;
-    --font-bold: 700;
-    
-    /* Line Heights */
-    --line-height-tight: 1.2;
-    --line-height-normal: 1.5;
-    --line-height-loose: 1.8;
-}
+        /* Dark Mode Colors */
+        body.dark-mode {
+            --bg-footer: #2d2d2d;
+            --bg-copyright: #404040;
+            --bg-footer-overlay: rgba(45, 45, 45, 0.95);
+            --text-primary: #ffffff;
+            --text-secondary: #e0e0e0;
+            --text-link: #6ea8fe;
+            --text-hover: #8bb9fe;
+            --text-grey: #c0c0c0;
+            --text-dark: #f0f0f0;
+        }
 
-/* Dark Mode Colors */
-body.dark-mode {
-    --bg-footer: #2d2d2d;
-    --bg-copyright: #404040;
-    --bg-footer-overlay: rgba(45, 45, 45, 0.95);
-    --text-primary: #ffffff;
-    --text-secondary: #e0e0e0;
-    --text-link: #6ea8fe;
-    --text-hover: #8bb9fe;
-    --text-grey: #c0c0c0;
-    --text-dark: #f0f0f0;
-}
+        /* ==================== FOOTER STYLING ==================== */
+        .footer {
+            width: 100%;
+            margin-left: 0;
+            padding: 20px 15px 15px 15px;
+            background: linear-gradient(var(--bg-footer-overlay), var(--bg-footer-overlay)), url('/image_all/footer overlay.png') no-repeat center;
+            background-size: cover;
+            background-color: var(--bg-footer);
+            color: var(--text-dark);
+            box-sizing: border-box;
+            font-family: var(--font-family-primary);
+        }
 
-/* ==================== FOOTER STYLING ==================== */
-.footer {
-    height: fit-content;
-    width: 100%;
-    margin-left: 0;
-    padding: 64px 32px;
-    background: linear-gradient(var(--bg-footer-overlay), var(--bg-footer-overlay)), url('/image_all/footer overlay.png') no-repeat center;
-    align-items: start;
-    color: var(--text-dark);
-    background-size: cover;
-    background-attachment: scroll;
-    overflow-x: hidden;
-    box-sizing: border-box;
-    background-color: var(--bg-footer);
-    font-family: var(--font-family-primary);
-}
+        footer {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            margin-bottom: 12px;
+        }
 
-footer {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    align-items: start;
-    gap: 40px;
-    max-width: 1400px;
-    margin: 0 auto;
-}
+        /* Left Section */
+        footer .left {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1 1 100%;
+            min-width: 100%;
+            text-align: center;
+            align-items: center;
+        }
 
-/* Left Section */
-footer .left {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    flex: 1 1 300px;
-    min-width: 280px;
-}
+        footer .left img {
+            width: 140px;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 5px;
+        }
 
-footer .left img {
-    width: 100%;
-    max-width: 330px;
-    height: auto;
-}
+        footer .left p {
+            font-size: 12px;
+            line-height: 1.5;
+            color: var(--text-link);
+            font-family: var(--font-family-primary);
+            font-weight: var(--font-normal);
+            margin: 0;
+            max-width: 280px;
+        }
 
-footer .left p {
-    font-size: 14px;
-    line-height: var(--line-height-loose);
-    color: var(--text-link);
-    font-family: var(--font-family-primary);
-    font-weight: var(--font-normal);
-    margin: 0;
-}
+        footer .left div {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: center;
+        }
 
-footer .left a {
-    font-size: 14px;
-    text-decoration: none;
-    color: var(--text-link);
-    font-family: var(--font-family-primary);
-    font-weight: var(--font-medium);
-    transition: color 0.3s ease;
-}
+        footer .left a {
+            font-size: 12px;
+            text-decoration: none;
+            color: var(--text-link);
+            font-family: var(--font-family-primary);
+            font-weight: var(--font-medium);
+            transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
 
-footer .left a:hover {
-    color: var(--text-hover);
-    text-decoration: underline;
-}
+        /* Links Sections */
+        footer .links-head, .links-social {
+            flex: 1 1 100%;
+            min-width: 100%;
+            text-align: center;
+        }
 
-/* Links Sections */
-footer .links-head,
-.links-social {
-    flex: 1 1 200px;
-    min-width: 200px;
-}
+        footer .links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+            justify-content: center;
+        }
 
-footer .links {
-    display: flex;
-    gap: 24px;
-    flex-wrap: wrap;
-}
+        .links-head h3, .links-social h3 {
+            text-transform: uppercase;
+            font-size: 14px;
+            font-weight: var(--font-semibold);
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            font-family: var(--font-family-heading);
+            letter-spacing: 0.5px;
+        }
 
-.links-head h3,
-.links-social h3 {
-    text-transform: uppercase;
-    font-size: 16px;
-    font-weight: var(--font-semibold);
-    margin-bottom: 16px;
-    color: var(--text-primary);
-    font-family: var(--font-family-heading);
-    letter-spacing: 0.5px;
-}
+        .links-head hr, .links-social hr {
+            width: 40px;
+            height: 2px;
+            background: var(--text-link);
+            border: none;
+            margin: 0 auto 10px auto;
+        }
 
-.links-head .links-1,
-.links-2,
-.links-3,
-.links-social .links-1,
-.links-2 {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
+        .links-head .links-1, .links-2, .links-3, .links-social .links-1, .links-2 {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: center;
+        }
 
-.links-head a,
-.links-social a {
-    text-decoration: none;
-    color: var(--text-grey);
-    transition: 0.3s ease-in-out;
-    font-size: 14px;
-    font-family: var(--font-family-primary);
-    font-weight: var(--font-normal);
-    line-height: var(--line-height-loose);
-}
+        .links-head a, .links-social a {
+            text-decoration: none;
+            color: var(--text-grey);
+            transition: 0.3s ease-in-out;
+            font-size: 12px;
+            font-family: var(--font-family-primary);
+            font-weight: var(--font-normal);
+            line-height: 1.5;
+            display: inline-block;
+        }
 
-.links-head a:hover,
-.links-social a:hover {
-    color: var(--text-link);
-    text-decoration: underline;
-}
+        .links-head a:hover, .links-social a:hover {
+            color: var(--text-link);
+            text-decoration: underline;
+        }
 
-.links-social .links a {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
+        .links-social .links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
 
-.links-social .links a i {
-    font-size: 18px;
-    color: var(--text-link);
-}
+        .links-social .links a i {
+            font-size: 16px;
+            color: var(--text-link);
+        }
 
-/* Copyright Section */
-.copyrightsection {
-    width: 100%;
-    margin-left: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 32px;
-    background: var(--bg-copyright);
-    color: var(--text-dark);
-    overflow-x: hidden;
-    margin-top: 5px;
-    box-sizing: border-box;
-    flex-wrap: wrap;
-    gap: 16px;
-    font-family: var(--font-family-primary);
-}
+        .links-social .links a ion-icon {
+            font-size: 16px;
+        }
 
-.copyrightsection p,
-.copyrightsection a {
-    font-size: 12px;
-    margin: 0;
-    font-family: var(--font-family-primary);
-}
+        /* About Text Section */
+        .about-text {
+            margin-top: 15px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            color: var(--text-secondary);
+            font-size: 11px;
+            line-height: 1.5;
+            font-family: var(--font-family-primary);
+            text-align: center;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
 
-.copyrightsection p {
-    color: var(--text-secondary);
-    font-weight: var(--font-normal);
-}
+        .about-text strong {
+            color: var(--text-primary);
+            font-weight: var(--font-bold);
+            display: block;
+            margin-bottom: 5px;
+        }
 
-.copyrightsection .link {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-}
+        /* Copyright Section */
+        .copyrightsection {
+            width: 100%;
+            margin-left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 12px 15px;
+            background: var(--bg-copyright);
+            color: var(--text-dark);
+            margin-top: 10px;
+            box-sizing: border-box;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-family: var(--font-family-primary);
+            flex-direction: column;
+            text-align: center;
+        }
 
-.copyrightsection .link a {
-    text-decoration: none;
-    color: var(--text-grey);
-    transition: 0.3s;
-    white-space: nowrap;
-    font-weight: var(--font-medium);
-}
+        .copyrightsection p, .copyrightsection a {
+            font-size: 10px;
+            margin: 0;
+            font-family: var(--font-family-primary);
+        }
 
-.copyrightsection .link a:hover {
-    color: var(--text-link);
-}
+        .copyrightsection p {
+            color: var(--text-secondary);
+            font-weight: var(--font-normal);
+        }
 
-.about-text {
-    margin-top: 20px;
-    color: var(--text-secondary);
-    font-size: 14px;
-    line-height: var(--line-height-loose);
-    font-family: var(--font-family-primary);
-}
+        .copyrightsection .link {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
 
-/* ==================== MEDIA QUERIES ==================== */
+        .copyrightsection .link a {
+            text-decoration: none;
+            color: var(--text-grey);
+            transition: 0.3s;
+            font-weight: var(--font-medium);
+        }
 
-/* Tablet Devices (768px to 1024px) */
-@media screen and (max-width: 1024px) {
-    .footer {
-        padding: 48px 24px;
-        background-color: var(--bg-footer);
-    }
-    
-    footer .left {
-        flex: 1 1 250px;
-    }
-    
-    footer .left img {
-        max-width: 280px;
-    }
-    
-    .copyrightsection {
-        padding: 16px 24px;
-        background: var(--bg-copyright);
-    }
-    
-    .links-head h3,
-    .links-social h3 {
-        font-size: 15.5px;
-    }
-}
+        .copyrightsection .link a:hover {
+            color: var(--text-link);
+        }
 
-/* Mobile Devices (up to 767px) */
-@media screen and (max-width: 767px) {
-    .footer {
-        padding: 40px 20px;
-        background-attachment: scroll;
-        background-size: cover;
-        background-color: var(--bg-footer);
-    }
-    
-    footer {
-        flex-direction: column;
-        gap: 40px;
-    }
-    
-    footer .left {
-        max-width: 100%;
-        width: 100%;
-    }
-    
-    footer .left img {
-        max-width: 250px;
-    }
-    
-    footer .links-head,
-    .links-social {
-        max-width: 100%;
-        width: 100%;
-    }
-    
-    footer .links {
-        gap: 30px;
-    }
-    
-    .links-head h3,
-    .links-social h3 {
-        font-size: 15px;
-        margin-bottom: 14px;
-        font-family: var(--font-family-heading);
-    }
-    
-    .links-head a,
-    .links-social a,
-    footer .left p,
-    footer .left a {
-        font-size: 13px;
-        line-height: var(--line-height-loose);
-    }
-    
-    /* Copyright section mobile */
-    .copyrightsection {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding: 16px 20px;
-        gap: 12px;
-        background: var(--bg-copyright);
-    }
-    
-    .copyrightsection .link {
-        justify-content: center;
-        gap: 16px;
-    }
-    
-    .copyrightsection .link a {
-        font-size: 11px;
-    }
-    
-    .copyrightsection p {
-        font-size: 11px;
-    }
-}
+        /* ==================== PROFESSIONAL CARD STYLING ==================== */
 
-/* Small Mobile Devices (up to 480px) */
-@media screen and (max-width: 480px) {
-    .footer {
-        padding: 32px 16px;
-        background-color: var(--bg-footer);
-    }
-    
-    footer {
-        gap: 32px;
-    }
-    
-    footer .left img {
-        max-width: 200px;
-    }
-    
-    footer .links {
-        flex-direction: column;
-        gap: 20px;
-    }
-    
-    .links-head h3,
-    .links-social h3 {
-        font-size: 14px;
-        margin-bottom: 12px;
-    }
-    
-    .links-head a,
-    .links-social a {
-        font-size: 13px;
-    }
-    
-    .copyrightsection {
-        background: var(--bg-copyright);
-    }
-    
-    .copyrightsection .link {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 12px;
-    }
-    
-    .copyrightsection .link a {
-        white-space: normal;
-        font-size: 11px;
-    }
-    
-    .copyrightsection p {
-        font-size: 11px;
-    }
-    
-    .about-text {
-        font-size: 13px;
-    }
-}
+        .description-section {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
 
-/* Landscape Mode for Mobile */
-@media screen and (max-width: 896px) and (orientation: landscape) {
-    .footer {
-        padding: 40px 24px;
-        background-color: var(--bg-footer);
-    }
-    
-    footer {
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-    
-    footer .left {
-        flex: 1 1 100%;
-    }
-    
-    footer .links-head,
-    .links-social {
-        flex: 1 1 200px;
-    }
-}
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+            font-family: var(--font-family-heading);
+        }
 
-/* Dark Mode Support */
-@media (prefers-color-scheme: dark) {
-    body.dark-mode .footer {
-        background: linear-gradient(var(--bg-footer-overlay), var(--bg-footer-overlay)), url('/image_all/footer overlay.png') no-repeat center;
-        background-size: cover;
-    }
-    
-    body.dark-mode .copyrightsection {
-        background: var(--bg-copyright);
-    }
-    
-    body.dark-mode .links-head a,
-    body.dark-mode .links-social a {
-        color: var(--text-grey);
-    }
-    
-    body.dark-mode footer .left p {
-        color: var(--text-link);
-    }
-}
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--text-link), #4a90e2);
+            border-radius: 2px;
+        }
 
-/* High Resolution Screens */
-@media (min-width: 1920px) {
-    .footer {
-        padding: 80px 40px;
-    }
-    
-    footer .left p,
-    footer .left a,
-    .links-head a,
-    .links-social a {
-        font-size: 16px;
-    }
-    
-    .links-head h3,
-    .links-social h3 {
-        font-size: 18px;
-    }
-    
-    .copyrightsection p,
-    .copyrightsection a {
-        font-size: 14px;
-    }
-    
-    .about-text {
-        font-size: 16px;
-    }
-}
- </style> 
- 
+        /* ==================== SUBJECT TABS STYLING ==================== */
+        .subject-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            padding: 10px;
+        }
 
+        .tab-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            color: var(--text-primary);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            font-family: var(--font-family-primary);
+            letter-spacing: 0.3px;
+            border: 2px solid transparent;
+        }
+
+        .tab-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .tab-btn.active {
+            border-color: currentColor;
+            transform: scale(1.05);
+        }
+
+        .tab-btn[data-subject="all"] {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .tab-btn[data-subject="economy"] {
+            background: rgba(211, 47, 47, 0.1);
+            color: var(--tab-economy);
+            border-color: var(--tab-economy);
+        }
+
+        .tab-btn[data-subject="polity"] {
+            background: rgba(25, 118, 210, 0.1);
+            color: var(--tab-polity);
+            border-color: var(--tab-polity);
+        }
+
+        .tab-btn[data-subject="science"] {
+            background: rgba(46, 125, 50, 0.1);
+            color: var(--tab-science);
+            border-color: var(--tab-science);
+        }
+
+        .tab-btn[data-subject="geography"] {
+            background: rgba(237, 108, 2, 0.1);
+            color: var(--tab-geography);
+            border-color: var(--tab-geography);
+        }
+
+        .tab-btn[data-subject="history"] {
+            background: rgba(156, 39, 176, 0.1);
+            color: var(--tab-history);
+            border-color: var(--tab-history);
+        }
+
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+            transition: opacity 0.3s ease;
+        }
+
+        .test-grid.loading {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .test-item {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .test-item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(10, 102, 194, 0.15);
+            border-color: rgba(10, 102, 194, 0.2);
+        }
+
+        .test-header {
+            padding: 20px 20px 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            background: linear-gradient(135deg, #f8faff, #ffffff);
+        }
+
+        .test-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+            line-height: 1.4;
+            font-family: var(--font-family-heading);
+            letter-spacing: -0.01em;
+        }
+
+        .test-action {
+            padding: 15px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: white;
+        }
+
+        .start-button {
+            width: 100%;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, var(--text-link), #4a90e2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(10, 102, 194, 0.2);
+            font-family: var(--font-family-primary);
+        }
+
+        .start-button:hover {
+            background: linear-gradient(135deg, #084e94, var(--text-link));
+            transform: scale(1.02);
+            box-shadow: 0 6px 16px rgba(10, 102, 194, 0.3);
+        }
+
+        .start-button:active {
+            transform: scale(0.98);
+        }
+
+        .special-text {
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 30px;
+            background: #f8f9fa;
+            display: inline-block;
+            margin: 5px auto 0;
+            letter-spacing: 0.3px;
+            font-family: var(--font-family-primary);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+        }
+
+        /* Category specific colors */
+        .s-text {
+            color: #d32f2f;
+            background: rgba(211, 47, 47, 0.08);
+            border-left: 3px solid #d32f2f;
+        }
+
+        .d-text {
+            color: #1976d2;
+            background: rgba(25, 118, 210, 0.08);
+            border-left: 3px solid #1976d2;
+        }
+
+        .g-text {
+            color: #2e7d32;
+            background: rgba(46, 125, 50, 0.08);
+            border-left: 3px solid #2e7d32;
+        }
+
+        .geo-text {
+            color: #ed6c02;
+            background: rgba(237, 108, 2, 0.08);
+            border-left: 3px solid #ed6c02;
+        }
+
+        .his-text {
+            color: #9c27b0;
+            background: rgba(156, 39, 176, 0.08);
+            border-left: 3px solid #9c27b0;
+        }
+
+        /* No results message */
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 18px;
+            color: var(--text-secondary);
+            background: #f8f9fa;
+            border-radius: 16px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Responsive adjustments for tabs and cards */
+        @media screen and (max-width: 767px) {
+            .section-title {
+                font-size: 26px;
+                margin-bottom: 30px;
+            }
+
+            .subject-tabs {
+                gap: 8px;
+                padding: 5px;
+            }
+
+            .tab-btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+
+            .test-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 15px;
+            }
+
+            .test-header h3 {
+                font-size: 16px;
+            }
+
+            .start-button {
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .test-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .test-item {
+                max-width: 100%;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .subject-tabs {
+                flex-direction: row;
+                overflow-x: auto;
+                padding: 10px 5px;
+                justify-content: flex-start;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+
+            .subject-tabs::-webkit-scrollbar {
+                display: none;
+            }
+
+            .tab-btn {
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+        }
+
+        /* Dark mode support for cards */
+        body.dark-mode .test-item {
+            background: #2d2d2d;
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .test-header {
+            background: linear-gradient(135deg, #353535, #2d2d2d);
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .test-header h3 {
+            color: #ffffff;
+        }
+
+        body.dark-mode .test-action {
+            background: #2d2d2d;
+        }
+
+        body.dark-mode .special-text {
+            background: #3d3d3d;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .tab-btn {
+            background: #2d2d2d;
+            color: #ffffff;
+        }
+
+        body.dark-mode .no-results {
+            background: #2d2d2d;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .s-text {
+            background: rgba(211, 47, 47, 0.15);
+            color: #ff6b6b;
+        }
+
+        body.dark-mode .d-text {
+            background: rgba(25, 118, 210, 0.15);
+            color: #6ea8fe;
+        }
+
+        body.dark-mode .g-text {
+            background: rgba(46, 125, 50, 0.15);
+            color: #81c784;
+        }
+
+        body.dark-mode .geo-text {
+            background: rgba(237, 108, 2, 0.15);
+            color: #ffb74d;
+        }
+
+        body.dark-mode .his-text {
+            background: rgba(156, 39, 176, 0.15);
+            color: #ce93d8;
+        }
+
+        /* ==================== FOOTER RESPONSIVE ==================== */
+
+        /* Tablet Devices (768px and above) */
+        @media screen and (min-width: 768px) {
+            .footer {
+                padding: 25px 30px 20px 30px;
+            }
+            
+            footer {
+                gap: 25px;
+                margin-bottom: 15px;
+            }
+            
+            /* Left Section - Tablet */
+            footer .left {
+                flex: 1 1 280px;
+                min-width: 250px;
+                text-align: left;
+                align-items: flex-start;
+            }
+            
+            footer .left img {
+                width: 180px;
+            }
+            
+            footer .left p {
+                font-size: 11px;
+                max-width: 100%;
+            }
+            
+            footer .left div {
+                align-items: flex-start;
+            }
+            
+            /* Links Sections - Tablet */
+            footer .links-head, .links-social {
+                flex: 1 1 200px;
+                min-width: 180px;
+                text-align: left;
+            }
+            
+            .links-head hr, .links-social hr {
+                margin: 0 0 8px 0;
+            }
+            
+            .links-head .links-1, .links-2, .links-3, .links-social .links-1, .links-2 {
+                text-align: left;
+            }
+            
+            .links-social .links a {
+                justify-content: flex-start;
+            }
+            
+            footer .links {
+                justify-content: flex-start;
+            }
+            
+            .copyrightsection {
+                flex-direction: row;
+                justify-content: space-between;
+                text-align: left;
+                padding: 8px 30px;
+            }
+            
+            .about-text {
+                padding-left: 0;
+                padding-right: 0;
+            }
+            
+            .about-text strong {
+                display: inline;
+                margin-bottom: 0;
+            }
+        }
+
+        /* Desktop Devices (1024px and above) */
+        @media screen and (min-width: 1024px) {
+            .footer {
+                padding: 30px 40px 25px 40px;
+            }
+            
+            footer {
+                gap: 30px;
+            }
+            
+            footer .left img {
+                width: 200px;
+            }
+            
+            footer .left p,
+            footer .left a,
+            .links-head a,
+            .links-social a {
+                font-size: 12px;
+            }
+            
+            .links-head h3,
+            .links-social h3 {
+                font-size: 14px;
+            }
+            
+            .about-text {
+                font-size: 11px;
+            }
+            
+            .copyrightsection p,
+            .copyrightsection a {
+                font-size: 11px;
+            }
+        }
+
+        /* Large Desktop (1920px and above) */
+        @media screen and (min-width: 1920px) {
+            .footer {
+                padding: 35px 40px 25px 40px;
+            }
+            
+            footer .left img {
+                width: 220px;
+            }
+            
+            footer .left p,
+            footer .left a,
+            .links-head a,
+            .links-social a {
+                font-size: 13px;
+            }
+            
+            .links-head h3,
+            .links-social h3 {
+                font-size: 15px;
+            }
+            
+            .about-text {
+                font-size: 12px;
+            }
+            
+            .copyrightsection p,
+            .copyrightsection a {
+                font-size: 12px;
+            }
+        }
+
+        /* Small Mobile (up to 480px) */
+        @media screen and (max-width: 480px) {
+            .footer {
+                padding: 15px 12px 12px 12px;
+            }
+            
+            footer {
+                gap: 18px;
+                margin-bottom: 10px;
+            }
+            
+            footer .left img {
+                width: 120px;
+            }
+            
+            footer .left p {
+                font-size: 11px;
+            }
+            
+            footer .left a {
+                font-size: 11px;
+            }
+            
+            .links-head h3,
+            .links-social h3 {
+                font-size: 13px;
+            }
+            
+            .links-head a,
+            .links-social a {
+                font-size: 11px;
+            }
+            
+            footer .links {
+                gap: 15px;
+            }
+            
+            .links-head .links-1, .links-2,
+            .links-social .links-1, .links-2 {
+                gap: 6px;
+            }
+            
+            .about-text {
+                font-size: 10px;
+                margin-top: 12px;
+                padding-top: 10px;
+            }
+            
+            .copyrightsection {
+                padding: 10px 12px;
+                gap: 8px;
+            }
+            
+            .copyrightsection p,
+            .copyrightsection a {
+                font-size: 9px;
+            }
+            
+            .copyrightsection .link {
+                gap: 12px;
+            }
+        }
+
+        /* Very Small Mobile (up to 360px) */
+        @media screen and (max-width: 360px) {
+            .footer {
+                padding: 12px 10px 10px 10px;
+            }
+            
+            footer .left img {
+                width: 100px;
+            }
+            
+            footer .left p,
+            footer .left a,
+            .links-head a,
+            .links-social a {
+                font-size: 10px;
+            }
+            
+            .links-head h3,
+            .links-social h3 {
+                font-size: 12px;
+            }
+            
+            .about-text {
+                font-size: 9px;
+            }
+            
+            .copyrightsection p,
+            .copyrightsection a {
+                font-size: 8px;
+            }
+            
+            .copyrightsection .link {
+                gap: 10px;
+            }
+        }
+
+        /* Landscape Mode for Mobile */
+        @media screen and (max-width: 896px) and (orientation: landscape) {
+            .footer {
+                padding: 12px 20px 10px 20px;
+            }
+            
+            footer {
+                gap: 15px;
+                margin-bottom: 8px;
+            }
+            
+            footer .left {
+                flex: 1 1 100%;
+            }
+            
+            footer .left img {
+                width: 100px;
+            }
+            
+            footer .links-head,
+            .links-social {
+                flex: 1 1 45%;
+                min-width: 45%;
+            }
+            
+            .about-text {
+                margin-top: 10px;
+                padding-top: 8px;
+            }
+        }
+
+        /* Dark Mode Support for Footer */
+        body.dark-mode .footer {
+            background: linear-gradient(var(--bg-footer-overlay), var(--bg-footer-overlay)), url('/image_all/footer overlay.png') no-repeat center;
+            background-size: cover;
+        }
+
+        body.dark-mode .copyrightsection {
+            background: var(--bg-copyright);
+        }
+
+        body.dark-mode .links-head a,
+        body.dark-mode .links-social a {
+            color: var(--text-grey);
+        }
+
+        body.dark-mode footer .left p {
+            color: var(--text-link);
+        }
+
+        body.dark-mode .about-text {
+            border-top-color: rgba(255, 255, 255, 0.1);
+        }
+    </style>
 </head>
-
 <body>
-  <!-- Header -->
+    <!-- Header -->
     <%- include('../../partials/header') %><br>
 
-  <main>
-  
-    
-    <!-- //////////////////////////////// section -->
-    <section class="description-section" aria-labelledby="tests-title">
-      <h2 class="section-title" id="tests-title"> U.P HomeGuard TEST's</h2>
-      <div class="test-grid">
-        
-        <% const totalTests = 30; %>
-
-        <% for(let i = 1; i <= totalTests; i++) { %>
-          <div class="test-item">
-            <div class="test-header">
-              <h3>U.P HomeGuard Test : <%= i %></h3>
+    <main>
+        <!-- Subject Tabs Section -->
+        <section class="description-section" aria-labelledby="tests-title">
+            <h2 class="section-title" id="tests-title">U.P HomeGuard TEST's</h2>
+            
+            <!-- Subject Tabs -->
+            <div class="subject-tabs">
+                <button class="tab-btn active" data-subject="all" onclick="filterTests('all')">All Tests</button>
+                <button class="tab-btn" data-subject="economy" onclick="filterTests('economy')">Indian Economy</button>
+                <button class="tab-btn" data-subject="polity" onclick="filterTests('polity')">Indian Polity</button>
+                <button class="tab-btn" data-subject="science" onclick="filterTests('science')">General Science</button>
+                <button class="tab-btn" data-subject="geography" onclick="filterTests('geography')">Geography of India</button>
+                <button class="tab-btn" data-subject="history" onclick="filterTests('history')">History of India</button>
+                <!-- <button class="tab-btn" data-subject="important" onclick="filterTests('important')">Important Test</button> -->
             </div>
 
-            <div class="test-action">
-              <a href="/quiz/HomeGuard/UpHomeGuard/<%= i %>">
+            <!-- Test Cards Grid -->
+            <div class="test-grid" id="testGrid">
+                <% const totalTests = 50; %>
+                <% for(let i = 1; i <= totalTests; i++) { 
+                    let subject = '';
+                    let subjectClass = '';
+                    let subjectName = '';
+                    
+                    if(i <= 10) { 
+                        subject = 'economy';
+                        subjectClass = 's-text';
+                        subjectName = 'Indian-Economy';
+                    } else if(i <= 20) { 
+                        subject = 'polity';
+                        subjectClass = 'd-text';
+                        subjectName = 'Indian-Polity';
+                    } else if(i <= 30) { 
+                        subject = 'science';
+                        subjectClass = 'g-text';
+                        subjectName = 'General-Science';
+                    } else if(i <= 40) { 
+                        subject = 'geography';
+                        subjectClass = 'geo-text';
+                        subjectName = 'Geography-of-India';
+                    } else if(i <= 50) { 
+                        subject = 'history';
+                        subjectClass = 'his-text';
+                        subjectName = 'History-of-India';
+                    }
+                %>
+                    <div class="test-item" data-subject="<%= subject %>">
+                        <div class="test-header">
+                            <h3>U.P HomeGuard Test : <%= i %></h3>
+                        </div>
 
-                <button class="start-button">
-                  Start Test
-                </button>
-              </a>
+                        <div class="test-action">
+                            <a href="/rts/quiz/HomeGuard/UpHomeGuard/<%= i %>">
+                                <button class="start-button">Start Test</button>
+                            </a>
+                            <div class="special-text <%= subjectClass %>"><%= subjectName %></div>
+                        </div>
+                    </div>
+                <% } %>
             </div>
-          </div>
-        <% } %>
+        </section>
+    </main>
 
-      </div>
-    </section>
-   
-  </main>
+    <!-- Footer Section -->
+    <section class="footer">
+        <footer>
+            <div class="left">
+                <img src="/rts/img/logo ridtech.jpeg" alt="RID Bharat Logo">
+                <p>Mig, 72, Rajiv Nagar, A Sector, Aayodhya Bypass Bhopal, Madhya Pradesh, India (462022)</p>
+                <div>
+                    <a href="mailto:ridorg.in@gmail.com">
+                        <i class="fas fa-envelope"></i> ridorg.in@gmail.com | Email
+                    </a>
+                    <a href="tel:+919202707903">
+                        <i class="fas fa-phone"></i> +91 9202707903 | Mobile
+                    </a>
+                </div>
+            </div>
 
- 
+            <div class="links-head">
+                <h3>Research Topics</h3>
+                <hr>
+                <div class="links">
+                    <div class="links-1">
+                        <a href="#">Computers</a>
+                        <a href="#">Tech National Affairs</a>
+                        <a href="#">AI: Artificial Intelligence</a>
+                        <a href="#">Race & Ethnicity</a>
+                        <a href="#">Religion</a>
+                        <a href="#">Age & Generations</a>
+                        <a href="#">Gender & Equality</a>
+                    </div>
+                    <div class="links-2">
+                        <a href="#">Space Engineering</a>
+                        <a href="#">Economy & Work</a>
+                        <a href="#">Science</a>
+                        <a href="#">Internet & Technology</a>
+                        <a href="#">News Habits & Media</a>
+                        <a href="#">Methodological Research</a>
+                    </div>
+                </div>
+            </div>
 
-  <!----------------------------------------------------------Footer parts in desbord---------------------------------------------------------------->
-  <section class="footer">
-    
-    <footer>
-      <div class="left">
-        <img src="/img/desbord_logo.png" alt="RID Bharat Logo">
-        <p>
-          Mig, 72, Rajiv Nagar, A Sector, Aayodhya Bypass Bhopal,
-          Madhya Pradesh, India (462022)
+            <div class="links-social">
+                <h3>Social Links</h3>
+                <hr>
+                <div class="links">
+                    <div class="links-1">
+                        <a href="#"><ion-icon name="logo-facebook"></ion-icon> Facebook</a>
+                        <a href="https://www.linkedin.com/in/rid-bharat-9a4517324" target="_blank" rel="noopener noreferrer">
+                            <ion-icon name="logo-linkedin"></ion-icon> LinkedIn
+                        </a>
+                        <a href="https://youtube.com/@ridbharat" target="_blank" rel="noopener noreferrer">
+                            <ion-icon name="logo-youtube"></ion-icon> YouTube
+                        </a>
+                    </div>
+                    <div class="links-2">
+                        <a href="https://www.instagram.com/ridbharat" target="_blank" rel="noopener noreferrer">
+                            <ion-icon name="logo-instagram"></ion-icon> Instagram
+                        </a>
+                        <a href="mailto:ridorg.in@gmail.com">
+                            <ion-icon name="mail-outline"></ion-icon> Email Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <p class="about-text">
+            <strong>ABOUT RESEARCH INNOVATION & DISCOVERY:</strong> RID Organization i.e. Research,
+            Innovation and Discovery Organization is an organization which is run by TWF (TWKSAA WELFARE FOUNDATION) NGO. The
+            main objective of which is that in the coming times, the discovery, publication and use of NEW (RID, PMS & TLR)
+            should be done first in Indian culture, civilization and language from this holy land of India.
         </p>
-        <div>
-          <a href="mailto:ridorg.in@gmail.com">
-            <i class="fas fa-envelope"></i> ridorg.in@gmail.com | Email
-          </a>
-          <a href="tel:+91 9202707903">
-            <i class="fas fa-phone"></i> +91 9202707903 | Mobile
-          </a>
-        </div>
-      </div>
 
-      <div class="links-head">
-        <h3>Research Topics</h3>
-        <hr>
-        <div class="links">
-          <div class="links-1">
-            <a href="#">Computers</a>
-            <a href="#">Tech National Affairs</a>
-            <a href="#">AI: Artificial Intelligence</a>
-            <a href="#">Race & Ethnicity</a>
-            <a href="#">Religion</a>
-            <a href="#">Age & Generations</a>
-            <a href="#">Gender & Equality</a>
-          </div>
-          <div class="links-2">
-            <a href="#">Space Engineering</a>
-            <a href="#">Economy & Work</a>
-            <a href="#">Science</a>
-            <a href="#">Internet & Technology</a>
-            <a href="#">News Habits & Media</a>
-            <a href="#">Methodological Research</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="links-social">
-        <h3>Social Links</h3>
-        <hr>
-        <div class="links">
-          <div class="links-1">
-            <a href="#"><ion-icon name="logo-facebook"></ion-icon> Facebook</a>
-            <a href="https://www.linkedin.com/in/rid-bharat-9a4517324">
-              <ion-icon name="logo-linkedin"></ion-icon> LinkedIn
-            </a>
-            <a href="https://youtube.com/@ridbharat">
-              <ion-icon name="logo-youtube"></ion-icon> YouTube
-            </a>
-          </div>
-          <div class="links-2">
-            <a href="https://www.instagram.com/ridbharat">
-              <ion-icon name="logo-instagram"></ion-icon> Instagram
-            </a>
-            <a href="mailto:ridorg.in@gmail.com">
-              <ion-icon name="mail-outline"></ion-icon> Email Us
-            </a>
-          </div>
-        </div>
-      </div>
-    </footer>
-
-    <p class="about-text">
-      <strong>ABOUT RESEARCH INNOVATION & DISCOVERY:</strong> RID Organization i.e. Research,
-      Innovation and Discovery Organization is an organization which is run by TWF (TWKSAA WELFARE FOUNDATION) NGO. The
-      main objective of which is that in the coming times, the discovery, publication and use of NEW (RID, PMS & TLR)
-      should be done first in Indian culture, civilization and language from this holy land of India.
-    </p>
-
-    <section class="copyrightsection">
-      <p>Copyright ©<%= new Date().getFullYear() %>, RID | TWF (TWKSAA Welfare Foundation). All Rights Reserved.</p>
-      <div class="link">
-        <a href="#">About</a>
-        <a href="#">Terms & Conditions</a>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Feedback</a>
-      </div>
+        <section class="copyrightsection">
+            <p>Copyright ©<%= new Date().getFullYear() %>, RID | TWF (TWKSAA Welfare Foundation). All Rights Reserved.</p>
+            <div class="link">
+                <a href="#">About</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Feedback</a>
+            </div>
+        </section>
     </section>
-  </section>
-  <script>
-// ==================== MOBILE MENU TOGGLE FUNCTIONALITY ====================
-document.addEventListener('DOMContentLoaded', function() {
-    
-    // Get all required elements
-    const menuToggle = document.getElementById('menuToggle');
-    const mobileNav = document.getElementById('mobileNav');
-    const overlay = document.getElementById('mobileMenuOverlay');
-    const closeBtn = document.querySelector('.mobile-close-btn');
-    const header = document.querySelector('.main-header');
-    const body = document.body;
-    
-    // Check if elements exist
-    if (!menuToggle || !mobileNav || !overlay) {
-        console.error('Mobile menu elements not found!');
-        return;
-    }
-    
-    // Function to open menu
-    function openMenu() {
-        mobileNav.classList.add('active');
-        overlay.classList.add('active');
-        menuToggle.classList.add('active');
-        header.classList.add('menu-open');
-        body.classList.add('menu-open');
-        menuToggle.setAttribute('aria-expanded', 'true');
-        menuToggle.innerHTML = '<i class="fas fa-times"></i>'; // Change to close icon
-        
-        // Prevent body scroll
-        body.style.overflow = 'hidden';
-    }
-    
-    // Function to close menu
-    function closeMenu() {
-        mobileNav.classList.remove('active');
-        overlay.classList.remove('active');
-        menuToggle.classList.remove('active');
-        header.classList.remove('menu-open');
-        body.classList.remove('menu-open');
-        menuToggle.setAttribute('aria-expanded', 'false');
-        menuToggle.innerHTML = '<i class="fas fa-bars"></i>'; // Change back to hamburger
-        
-        // Restore body scroll
-        body.style.overflow = '';
-    }
-    
-    // Toggle menu on button click
-    menuToggle.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const isOpen = mobileNav.classList.contains('active');
-        
-        if (isOpen) {
-            closeMenu();
-        } else {
-            openMenu();
+
+    <script>
+        // ==================== FILTER TESTS BY SUBJECT ====================
+        function filterTests(subject) {
+            const testGrid = document.getElementById('testGrid');
+            const testItems = document.querySelectorAll('.test-item');
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            
+            // Add loading class
+            testGrid.classList.add('loading');
+            
+            // Update active tab
+            tabButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-subject') === subject) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Filter tests
+            let visibleCount = 0;
+            testItems.forEach(item => {
+                const itemSubject = item.getAttribute('data-subject');
+                
+                if (subject === 'all' || itemSubject === subject) {
+                    item.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Check if no results
+            const existingNoResults = document.querySelector('.no-results');
+            if (visibleCount === 0) {
+                if (!existingNoResults) {
+                    const noResults = document.createElement('div');
+                    noResults.className = 'no-results';
+                    noResults.innerHTML = '<i class="fas fa-search" style="font-size: 48px; margin-bottom: 20px; opacity: 0.5;"></i><br>No tests found for this subject.';
+                    testGrid.appendChild(noResults);
+                }
+            } else {
+                if (existingNoResults) {
+                    existingNoResults.remove();
+                }
+            }
+
+            // Remove loading class after a short delay
+            setTimeout(() => {
+                testGrid.classList.remove('loading');
+            }, 300);
         }
-    });
-    
-    // Close menu when clicking overlay
-    overlay.addEventListener('click', closeMenu);
-    
-    // Close menu when clicking close button (if exists)
-    if (closeBtn) {
-        closeBtn.addEventListener('click', closeMenu);
-    }
-    
-    // Close menu on escape key press
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
-            closeMenu();
-        }
-    });
-    
-    // Prevent menu from closing when clicking inside mobile nav
-    mobileNav.addEventListener('click', function(e) {
-        e.stopPropagation();
-    });
-    
-    // Handle window resize - close menu on desktop
-    window.addEventListener('resize', function() {
-        if (window.innerWidth > 992 && mobileNav.classList.contains('active')) {
-            closeMenu();
-        }
-    });
-    
-    // ==================== FONT SIZE CONTROLS ====================
-    const increaseBtn = document.getElementById('increaseFont');
-    const resetBtn = document.getElementById('resetFont');
-    const decreaseBtn = document.getElementById('decreaseFont');
-    
-    let currentFontSize = 16; // base font size in pixels
-    const minFontSize = 12;
-    const maxFontSize = 24;
-    
-    function setBodyFontSize(size) {
-        document.body.style.fontSize = size + 'px';
-        // Store in localStorage for persistence
-        localStorage.setItem('preferredFontSize', size);
-    }
-    
-    if (increaseBtn) {
-        increaseBtn.addEventListener('click', function() {
-            currentFontSize = Math.min(maxFontSize, currentFontSize + 2);
-            setBodyFontSize(currentFontSize);
+
+        // ==================== MOBILE MENU TOGGLE FUNCTIONALITY ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all required elements
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileNav = document.getElementById('mobileNav');
+            const overlay = document.getElementById('mobileMenuOverlay');
+            const closeBtn = document.querySelector('.mobile-close-btn');
+            const header = document.querySelector('.main-header');
+            const body = document.body;
+
+            // Check if elements exist
+            if (menuToggle && mobileNav && overlay) {
+                // Function to open menu
+                function openMenu() {
+                    mobileNav.classList.add('active');
+                    overlay.classList.add('active');
+                    menuToggle.classList.add('active');
+                    header.classList.add('menu-open');
+                    body.classList.add('menu-open');
+                    menuToggle.setAttribute('aria-expanded', 'true');
+                    menuToggle.innerHTML = '<i class="fas fa-times"></i>';
+                    
+                    // Prevent body scroll
+                    body.style.overflow = 'hidden';
+                }
+
+                // Function to close menu
+                function closeMenu() {
+                    mobileNav.classList.remove('active');
+                    overlay.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                    header.classList.remove('menu-open');
+                    body.classList.remove('menu-open');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                    
+                    // Restore body scroll
+                    body.style.overflow = '';
+                }
+
+                // Toggle menu on button click
+                menuToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const isOpen = mobileNav.classList.contains('active');
+                    
+                    if (isOpen) {
+                        closeMenu();
+                    } else {
+                        openMenu();
+                    }
+                });
+
+                // Close menu when clicking overlay
+                overlay.addEventListener('click', closeMenu);
+
+                // Close menu when clicking close button (if exists)
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', closeMenu);
+                }
+
+                // Close menu on escape key press
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+                        closeMenu();
+                    }
+                });
+
+                // Prevent menu from closing when clicking inside mobile nav
+                mobileNav.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+
+                // Handle window resize - close menu on desktop
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 992 && mobileNav.classList.contains('active')) {
+                        closeMenu();
+                    }
+                });
+            }
+
+            // ==================== FONT SIZE CONTROLS ====================
+            const increaseBtn = document.getElementById('increaseFont');
+            const resetBtn = document.getElementById('resetFont');
+            const decreaseBtn = document.getElementById('decreaseFont');
+            
+            let currentFontSize = 16;
+            const minFontSize = 12;
+            const maxFontSize = 24;
+
+            function setBodyFontSize(size) {
+                document.body.style.fontSize = size + 'px';
+                localStorage.setItem('preferredFontSize', size);
+            }
+
+            if (increaseBtn) {
+                increaseBtn.addEventListener('click', function() {
+                    currentFontSize = Math.min(maxFontSize, currentFontSize + 2);
+                    setBodyFontSize(currentFontSize);
+                });
+            }
+
+            if (decreaseBtn) {
+                decreaseBtn.addEventListener('click', function() {
+                    currentFontSize = Math.max(minFontSize, currentFontSize - 2);
+                    setBodyFontSize(currentFontSize);
+                });
+            }
+
+            if (resetBtn) {
+                resetBtn.addEventListener('click', function() {
+                    currentFontSize = 16;
+                    document.body.style.fontSize = '';
+                    localStorage.removeItem('preferredFontSize');
+                });
+            }
+
+            const savedFontSize = localStorage.getItem('preferredFontSize');
+            if (savedFontSize) {
+                currentFontSize = parseInt(savedFontSize);
+                document.body.style.fontSize = currentFontSize + 'px';
+            }
+
+            // ==================== TOUCH EVENT HANDLING ====================
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            if ('ontouchstart' in window && mobileNav) {
+                mobileNav.addEventListener('touchstart', function(e) {
+                    touchStartX = e.changedTouches[0].screenX;
+                }, { passive: true });
+                
+                mobileNav.addEventListener('touchend', function(e) {
+                    touchEndX = e.changedTouches[0].screenX;
+                    const swipeThreshold = 100;
+                    const swipeDistance = touchEndX - touchStartX;
+                    
+                    if (swipeDistance < -swipeThreshold && mobileNav.classList.contains('active')) {
+                        if (typeof closeMenu === 'function') closeMenu();
+                    }
+                }, { passive: true });
+            }
+
+            // Initialize with "all" filter
+            filterTests('all');
         });
-    }
-    
-    if (decreaseBtn) {
-        decreaseBtn.addEventListener('click', function() {
-            currentFontSize = Math.max(minFontSize, currentFontSize - 2);
-            setBodyFontSize(currentFontSize);
-        });
-    }
-    
-    if (resetBtn) {
-        resetBtn.addEventListener('click', function() {
-            currentFontSize = 16;
-            document.body.style.fontSize = '';
-            localStorage.removeItem('preferredFontSize');
-        });
-    }
-    
-    // Load saved font size preference
-    const savedFontSize = localStorage.getItem('preferredFontSize');
-    if (savedFontSize) {
-        currentFontSize = parseInt(savedFontSize);
-        document.body.style.fontSize = currentFontSize + 'px';
-    }
-    
-    // ==================== ACTIVE LINK HIGHLIGHTING ====================
-    const currentPath = window.location.pathname;
-    
-    // Desktop menu active link
-    document.querySelectorAll('.desktop-menu-link').forEach(link => {
-        const href = link.getAttribute('href');
-        if (href === currentPath) {
-            link.classList.add('active');
-            // Optional: Add active state styling
-            link.style.backgroundColor = '#e6f0ff';
-            link.style.color = 'var(--maintheme)';
-        }
-    });
-    
-    // Mobile menu active link
-    document.querySelectorAll('.mobile-menu-link').forEach(link => {
-        const href = link.getAttribute('href');
-        if (href === currentPath) {
-            link.classList.add('active');
-            // Optional: Add active state styling
-            link.style.backgroundColor = '#f0f7ff';
-            link.style.borderLeft = '3px solid var(--maintheme)';
-        }
-    });
-    
-    // ==================== TOUCH EVENT HANDLING (for mobile) ====================
-    let touchStartX = 0;
-    let touchEndX = 0;
-    
-    // Swipe to close menu on mobile
-    if ('ontouchstart' in window) {
-        mobileNav.addEventListener('touchstart', function(e) {
-            touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true });
-        
-        mobileNav.addEventListener('touchend', function(e) {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        }, { passive: true });
-    }
-    
-    function handleSwipe() {
-        const swipeThreshold = 100;
-        const swipeDistance = touchEndX - touchStartX;
-        
-        // If swipe left more than threshold, close menu
-        if (swipeDistance < -swipeThreshold && mobileNav.classList.contains('active')) {
-            closeMenu();
-        }
-    }
-    
- 
-    
-});
-</script>
+    </script>
+    <!-- Ionicons for social icons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
 </html>
