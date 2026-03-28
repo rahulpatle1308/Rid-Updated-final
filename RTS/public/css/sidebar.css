@@ -158,8 +158,8 @@
     left: 1rem;
     width: 40px;
     height: 40px;
-    background: var(--sidebar-active);
-    color: white;
+    background: var(#f8fafc00);
+    color: #2d3748;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -173,7 +173,7 @@
 }
 
 .sidebar-toggle:hover {
-    background: #2563eb;
+    background: #f8fafc00;
     transform: scale(1.05);
     box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
 }
