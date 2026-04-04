@@ -359,22 +359,36 @@ router.get("/birthday-software", (req, res) => {
 //   });
 // });
 
-router.get("/quiz/:category/:subject/:testNo", (req, res) => {
-
+router.get("/quiz/:category/:subject/:testNo", async (req, res) => {
   const category = req.params.category;
   const subject = req.params.subject;
-  const testNo = parseInt(req.params.testNo);
+  const testNo = Number(req.params.testNo);
 
-  // console.log("CATEGORY:", category);
-  // console.log("SUBJECT:", subject);
-  // console.log("TEST NO:", testNo);
+  if (Number.isNaN(testNo) || testNo <= 0) {
+    return res.redirect("/dashboard");
+  }
 
-  res.render(`dashboard/${category}/${subject}/test`, {
+  // First 3 tests are free for everyone
+  if (testNo <= 3) {
+    return res.render(`dashboard/${category}/${subject}/test`, {
+      category: category,
+      subject: subject,
+      testNo: testNo
+    });
+  }
+
+  // From test 4 onwards, login is required
+  if (!req.session || !req.session.userId) {
+    req.session.redirectTo = req.originalUrl;
+    return res.redirect("/login");
+  }
+
+  // Logged-in users can access 4+ tests
+  return res.render(`dashboard/${category}/${subject}/test`, {
     category: category,
     subject: subject,
     testNo: testNo
   });
-
 });
 
 // router.post("/quiz/:category/:subject/:testNo/submit", (req, res) => {

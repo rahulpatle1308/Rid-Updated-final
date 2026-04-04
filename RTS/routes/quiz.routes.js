@@ -7,9 +7,9 @@ const TestResult = require("../models/TestResult");
 
 
 /* =====================================================
-   ✅ QUIZ PAGE OPEN
+   ✅ QUIZ PAGE OPEN (Anonymous allowed)
 ===================================================== */
-router.get("/quiz/:category/:subject/:testNo", requireAuth, (req, res) => {
+router.get("/quiz/:category/:subject/:testNo", (req, res) => {
   const { category, subject, testNo } = req.params;
 
   res.render(`dashboard/${category}/${subject}/test`, {
@@ -21,11 +21,11 @@ router.get("/quiz/:category/:subject/:testNo", requireAuth, (req, res) => {
 
 
 /* =====================================================
-   ✅ QUIZ SUBMIT
+   ✅ QUIZ SUBMIT (Anonymous allowed)
 ===================================================== */
-router.post("/quiz/:category/:subject/:testNo/submit", requireAuth, async (req, res) => {
+router.post("/quiz/:category/:subject/:testNo/submit", async (req, res) => {
   try {
-    const user = req.user;
+    const user = req.user; // May be null for anonymous
     const { category, subject, testNo } = req.params;
 
     const {
@@ -44,9 +44,9 @@ router.post("/quiz/:category/:subject/:testNo/submit", requireAuth, async (req, 
       });
     }
 
-    // ✅ SAVE RESULT
+    // ✅ SAVE RESULT (works for both logged in and anonymous)
     const result = await TestResult.create({
-      user: user._id,
+      user: user ? user._id : null, // Allow null for anonymous
       category,
       subject: subject.toUpperCase(),
       setNo: Number(testNo),
@@ -58,28 +58,30 @@ router.post("/quiz/:category/:subject/:testNo/submit", requireAuth, async (req, 
       timeSpent
     });
 
-    // ✅ SAVE USER HISTORY
-    user.testHistory.push({
-      resultId: result._id,
-      category,
-      subject: subject.toUpperCase(),
-      setNo: Number(testNo),
-      score: correct,
-      percentage,
-      totalQuestions,
-      incorrect: attempted - correct
-    });
+    // ✅ SAVE USER HISTORY only if logged in
+    if (user) {
+      user.testHistory.push({
+        resultId: result._id,
+        category,
+        subject: subject.toUpperCase(),
+        setNo: Number(testNo),
+        score: correct,
+        percentage,
+        totalQuestions,
+        incorrect: attempted - correct
+      });
 
-    user.totalTestsAttempted += 1;
+      user.totalTestsAttempted += 1;
 
-    const totalScore = user.testHistory.reduce(
-      (sum, t) => sum + (t.percentage || 0),
-      0
-    );
+      const totalScore = user.testHistory.reduce(
+        (sum, t) => sum + (t.percentage || 0),
+        0
+      );
 
-    user.averageScore = Math.round(totalScore / user.totalTestsAttempted);
+      user.averageScore = Math.round(totalScore / user.totalTestsAttempted);
 
-    await user.save();
+      await user.save();
+    }
 
     res.json({
       success: true,
