@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+    <title>RID Bharat – Research Innovation Discovery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="icon" type="image/png" href="/assets/signup.png">
+    <link rel="stylesheet" href="css/common/header.css">
+    <link rel="stylesheet" href="css/common/footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<style>
+        /*---------------images video play background code */
+/* ===== HERO SECTION ===== */
+.hero {
+  position: relative;
+  height: 60vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ===== VIDEO ===== */
+.bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  z-index: -1;
+}
+
+/* ===== OVERLAY ===== */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+
+  padding: 0 80px;
+}
+
+/* ===== CONTENT ===== */
+.content {
+  color: #fff;
+  max-width: 600px;
+  width: 100%;
+}
+
+/* ===== TEXT ===== */
+.site-name {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.tagline {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+/* ===== LIST ===== */
+.content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.content ul li {
+  margin: 8px 0;
+  font-size: 18px;
+}
+
+/* ===== BUTTON ===== */
+.btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 25px;
+  background: #ff6600;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #e65c00;
+}
+
+/* ========================= */
+/* 📱 TABLET */
+/* ========================= */
+@media (max-width: 992px) {
+  .hero {
+    height: 55vh; /* 🔥 thoda kam */
+  }
+
+  .overlay {
+    padding: 0 40px;
+  }
+
+  .site-name {
+    font-size: 34px;
+  }
+
+  .tagline {
+    font-size: 18px;
+  }
+
+  .content ul li {
+    font-size: 16px;
+  }
+}
+
+/* ========================= */
+/* 📱 MOBILE */
+/* ========================= */
+@media (max-width: 600px) {
+  .hero {
+    height: 45vh; /* 🔥 MAIN FIX (pehle 75vh tha) */
+  }
+
+  .overlay {
+    justify-content: center;
+    text-align: center;
+    padding: 15px;
+  }
+
+  .content {
+    max-width: 100%;
+  }
+
+  .site-name {
+    font-size: 28px; /* 🔥 pehle 58px bahut bada tha */
+  }
+
+  .tagline {
+    font-size: 14px;
+  }
+
+  .content ul li {
+    font-size: 13px;
+  }
+
+  .btn {
+    padding: 10px 18px;
+    font-size: 13px;
+  }
+}
+
+/* ========================= */
+/* 📱 SMALL DEVICES */
+/* ========================= */
+@media (max-width: 400px) {
+  .hero {
+    height: 40vh; /* 🔥 aur compact */
+  }
+
+  .site-name {
+    font-size: 22px;
+  }
+
+  .tagline {
+    font-size: 13px;
+  }
+}
+
+/* Add to your CSS file */
+.menu-link i {
+  margin-right: 5px;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  width: 24px; /* Fixed width for alignment */
+  text-align: center;
+}
+
+.menu-link:hover i {
+  transform: translateX(3px);
+  color: var(--accent);
+}
+
+/* Specific icon colors (optional) */
+.menu-link:hover .fa-house { color: #4da8da; }
+.menu-link:hover .fa-circle-info { color: #ff6b35; }
+.menu-link:hover .fa-flask { color: #00b894; }
+.menu-link:hover .fa-laptop-code { color: #e84393; }
+.menu-link:hover .fa-book-open { color: #f39c12; }
+.menu-link:hover .fa-headset { color: #27ae60; }
+
+@media (max-width: 768px) {
+  .menu-link i {
+    width: 28px;
+    font-size: 1.2rem;
+  }
+  
+  .menu-link {
+    padding: 12px 0;
+    font-size: 1rem;
+  }
+}
+
+
+    .community-section {
+      background: var(--white);
+      /* FULL WIDTH SAME COLOR */
+      padding: 20px 0;
+    }
+
+    .community-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .community-section .container {
+      margin-left: auto;
+      margin-right: auto;
+
+    }
+
+    .community-text h2 {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+
+    .community-text p {
+      margin-bottom: 15px;
+      color: var(--gray);
+    }
+
+    .topics-section {
+      margin-top: 30px;
+    }
+
+    .topics-section h3 {
+      margin-bottom: 15px;
+      color: var(--primary);
+      font-size: 1.2rem;
+    }
+
+    .topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .topic {
+      background: var(--white);
+      border: 1px solid var(--primary);
+      border-radius: 5px;
+      padding: 8px 15px;
+      font-size: 0.85rem;
+      color: var(--primary);
+      transition: var(--transition);
+    }
+
+    .topic:hover {
+      background: var(--primary);
+      color: var(--white);
+      transform: translateY(-3px);
+    }
+
+    .community-image {
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+    }
+
+    .community-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+
+
+   
+    /* ===== LIVE MARQUEE ===== */
+    /* marquee */
+    .live-marquee {
+      background: var(--primary-dark);
+      color: white;
+      padding: 10px 0;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 30px;
+      animation: scrollMarquee 24s linear infinite;
+      white-space: nowrap;
+      padding-left: 20px;
+    }
+
+    .marquee-track span {
+      display: flex;
+      gap: 15px;
+    }
+
+    .marquee-track button {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 6px 20px;
+      border-radius: 40px;
+      font-weight: 500;
+      font-size: 0.85rem;
+      backdrop-filter: blur(4px);
+    }
+
+    .live-badge {
+      position: absolute;
+      right: 20px;
+      background: #dc2626;
+      padding: 4px 16px;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      box-shadow: 0 0 15px #dc2626;
+    }
+
+    .live-dot {
+      width: 10px;
+      height: 10px;
+      background: white;
+      border-radius: 50%;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes scrollMarquee {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    @keyframes blink {
+      0% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.2;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .marquee-track button:hover {
+      animation-play-state: paused;
+    }
+
+    .marquee-track:hover {
+      animation-play-state: paused;
+    }
+    .live-marquee {
+      background: linear-gradient(90deg, #062a41, #0f4765);
+      border-bottom: 3px solid var(--accent);
+      box-shadow: 0 5px 20px rgba(255, 107, 53, 0.3);
+    }
+
+    .marquee-track button {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 107, 53, 0.5);
+      font-weight: 600;
+      transition: 0.25s;
+    }
+
+    .marquee-track button:hover {
+      background: var(--accent);
+      color: #000;
+      transform: scale(1.1) translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 107, 53, 0.6);
+    }
+
+    .live-badge {
+      background: #e03131;
+      animation: pulse-glow 1.5s infinite;
+    }
+
+    @keyframes pulse-glow {
+      0% {
+        box-shadow: 0 0 5px #e03131;
+      }
+
+      50% {
+        box-shadow: 0 0 25px #ff8a5a;
+      }
+
+      100% {
+        box-shadow: 0 0 5px #e03131;
+      }
+    }
+
+/* ===== CONTAINER ===== */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px;
+}
+
+/* ===== WELCOME SECTION ===== */
+.welcome-section {
+  padding: 50px 0;
+  text-align: center;
+}
+
+.welcome-content h1 {
+  font-size: 2.5rem;
+  color: #083d5d;
+  margin-bottom: 20px;
+}
+
+/* BUTTON ROW */
+.welcome-content span {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* BUTTON STYLE */
+.welcome-content button {
+  background: #f0f7fc;
+  border: 1px solid #cde3f0;
+  padding: 10px 18px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.welcome-content button a {
+  text-decoration: none;
+  color: #083d5d;
+  font-weight: 500;
+}
+
+.welcome-content button:hover {
+  background: #083d5d;
+}
+
+.welcome-content button:hover a {
+  color: white;
+}
+
+/* ===== TOOLS SECTION ===== */
+.tools-section {
+  padding: 60px 0;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+/* CARD */
+.tools-card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  transition: 0.3s;
+}
+
+.tools-card:hover {
+  transform: translateY(-5px);
+}
+
+.tools-card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #083d5d;
+}
+
+/* BUTTON GRID */
+.tools-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.tools-buttons button {
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: 1px solid #cde3f0;
+  background: #f0f7fc;
+  font-size: 0.85rem;
+  transition: 0.3s;
+}
+
+.tools-buttons button:hover {
+  background: #083d5d;
+  color: white;
+}
+
+/* ===== COMMUNITY SECTION ===== */
+.community-section {
+  padding: 60px 0;
+  background: #fff;
+}
+
+.community-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.community-text h2 {
+  color: #083d5d;
+  margin-bottom: 15px;
+}
+
+.community-text p {
+  color: #555;
+}
+
+/* TOPICS */
+.topics {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.topic {
+  padding: 8px 12px;
+  border: 1px solid #083d5d;
+  border-radius: 6px;
+  color: #083d5d;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.topic:hover {
+  background: #083d5d;
+  color: white;
+}
+
+/* IMAGE */
+.community-image img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* ========================= */
+/* 📱 RESPONSIVE DESIGN */
+/* ========================= */
+
+/* TABLET */
+@media (max-width: 992px) {
+  .tools-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .community-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+
+  .welcome-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .welcome-content span {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+  }
+
+  .tools-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .community-image {
+    display: none;
+  }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 400px) {
+  .welcome-content h1 {
+    font-size: 1.5rem;
+  }
+}
+/* ===== TOOLS SECTION BACKGROUND ===== */
+.tools-section {
+  padding: 80px 0;
+  background: linear-gradient(180deg, #eef5fc, #dbe9f5);
+}
+
+/* GRID */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 35px;
+}
+
+/* ===== CARD DESIGN (MAIN MAGIC) ===== */
+.tools-card {
+  background: #ffffff;
+  padding: 30px 25px;
+  border-radius: 20px;
+
+  /* 🔥 Soft shadow (premium look) */
+  box-shadow: 
+    0 10px 30px rgba(0,0,0,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+
+  transition: all 0.3s ease;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 🔥 HOVER EFFECT */
+.tools-card:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.12);
+}
+
+/* TITLE */
+.tools-card h2 {
+  font-size: 24px;
+  color: #083d5d;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* ORANGE LINE */
+.tools-card h2::after {
+  content: "";
+  width: 60px;
+  height: 4px;
+  background: #ff6b35;
+  display: block;
+  margin: 10px auto 0;
+  border-radius: 10px;
+}
+
+/* ===== BUTTON GROUP ===== */
+.tools-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* BUTTON STYLE */
+.tools-buttons button {
+  padding: 10px 16px;
+  border-radius: 25px;
+  border: 1px solid #d0e3f2;
+  background: #f4f9ff;
+  color: #083d5d;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+/* 🔥 BUTTON HOVER */
+.tools-buttons button:hover {
+  background: #083d5d;
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(8,61,93,0.3);
+}
+
+/* ===== ACTIVE BUTTON (LIKE YOUR IMAGE) ===== */
+.tools-buttons button.active {
+  background: #083d5d;
+  color: white;
+}
+
+/* ========================= */
+/* 📱 RESPONSIVE */
+/* ========================= */
+
+@media (max-width: 992px) {
+  .tools-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .tools-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tools-card {
+    padding: 20px;
+  }
+
+  .tools-card h2 {
+    font-size: 20px;
+  }
+}
+</style>
+<body>
+<%- include("common/header.ejs")   %>
+    <!-- Hero slider -->
+    <section class="hero">
+        <video autoplay muted loop playsinline class="bg-video">
+            <source src="/assets/bg.mp4" type="video/mp4">
+        </video>
+
+        <div class="overlay">
+            <div class="content">
+                <h1 class="site-name">RID Tech</h1>
+                <p class="tagline">Learning, Technology & Innovation Platform</p>
+
+                <ul>
+                    <li>✔ Smart Online Test Series & Learning System</li>
+                    <li>✔ Mobile App & Web Development Solutions</li>
+                    <li>✔ AI-Based Learning & Performance Analysis</li>
+                    <li>✔ LMS / Education Portal Development</li>
+                    <li>✔ Fast, Secure & Scalable Platforms</li>
+                    <li>✔ UI/UX Focused Modern Design</li>
+
+                </ul>
+
+                <a href="/service" class="btn">Explore Services →</a>
+            </div>
+        </div>
+    </section>
+    <div class="hero-clear"></div>
+
+    <!-- Live marquee (buttons now inherit correct font) -->
+    <div class="live-marquee">
+        <div class="marquee-track">
+            <span>
+
+                <button><a href="/tech-interview">🔥 Tech Interview </a></button>
+                <button><a href="/rts/dashboard">Test Series </a></button>
+                <button type="button" onclick="typingsoftware()">⌨️ Typing Software</button>
+                <button><a href="/rts/dashboard">Test Series </a></button>
+                <button><a href="/form?role=teacher">Create Birthday Software </a> </button>
+                <button><a href="/rts/dashboard">Test Series </a></button>
+                <button><a href="/form?role=teacher"> Create Test </a></button>
+                <button><a href="/rts/dashboard">Test Series </a></button>
+                <button><a href="/ebook/?search=&filter=all&sort=newest"> E-Book </a></button>
+                <button><a href="/rts/dashboard">Test Series </a></button>
+                <button><a href="/research"> Research Papers</button></a>
+                <button><a href="/rts/dashboard">Test Series </a></button>
+                <button>💻 Webinar</button>
+                <button onclick="workshop()">🤖 Workshop</button>
+                <!-- <button class="btn"> <i class="fas fa-file-word"></i><i class="fas fa-arrow-right"></i><i
+            class="fas fa-file-pdf"></i>Convert Word to PDF</button> -->
+            </span>
+        </div>
+        <div class="live-badge"><span class="live-dot"></span>LIVE</div>
+    </div>
+    <div>
+
+    </div>
+    <!-- Welcome section with product buttons -->
+    <section class="welcome-section section-padding">
+        <div class="container">
+            <div class="welcome-content">
+                <h1>Use Our Product</h1>
+                <span>
+                    <button><a href="/form?role=teacher">Create Test</a></button>
+                    <button><a href="/tech-interview">Tech Interview</a></button>
+                    <button><a href="/research">Research Papers</a></button>
+                    <button onclick="typingsoftware()">Typing Software</button>
+                    <button><a href="/form?role=teacher"> Birthday Software</a></button>
+
+                    <button><a href="/ebook/?search=&filter=all&sort=newest">E-Books </a></button>
+
+
+                </span>
+            </div>
+        </div>
+    </section>
+    <section class="tools-section">
+        <div class="tools-container">
+            <div class="tools-grid">
+
+                <!-- CARD 1 -->
+                <div class="tools-card">
+                    <h2>Image Tools</h2>
+                    <div class="tools-buttons">
+
+                        <button type="button" onclick="convertimage()">Convert Image to (JPG,PNG,WEBP,BMP,GIF)</button>
+                        <!--<button type="button" onclick="backgroundRemover()">Image Background Remover</button>-->
+                        <button type="button" onclick="compress()">Compress Image</button>
+                        <button type="button" onclick="resize()">Resize Image</button>
+                        <button type="button" onclick="convert()">Convert Image to PDF</button>
+                        <button type="button" onclick="crop()">Crop Image</button>
+                        <button type="button" onclick="image()">Image to Text (OCR)</button>
+                        <button type="button" onclick="merge()">Merge Images</button>
+                    </div>
+                </div>
+
+                <!-- CARD 2 -->
+                <div class="tools-card">
+                    <h2>PDF Tools</h2>
+                    <div class="tools-buttons">
+                        <!--<button type="button" onclick="convertPDFtoWord()">Convert PDF to Word</button>
+            <button type="button" onclick="convertWordtoPDF()">Convert Word to PDF</button>-->
+                        <button type="button" onclick="convertPDFtoExcel()">Convert PDF to Excel</button>
+                        <button type="button" onclick="convertExceltoPDF()">Convert Excel to PDF</button>
+                        <button type="button" onclick="mergePDF()">Merge PDF</button>
+                        <button type="button" onclick="splitPDF()">Split PDF</button>
+
+                        <button type="button" onclick="compressPDF()">Compress PDF</button>
+
+                        <button type="button" onclick="pDFtojPG()">PDF to JPG</button>
+                        <!--<button type="button" onclick="addPasswordToPDF()">Add Password to PDF</button>
+            <button type="button" onclick="removePasswordFromPDF()">Remove Password from PDF</button>-->
+                    </div>
+                </div>
+
+                <!-- CARD 3 -->
+                <div class="tools-card">
+                    <h2>Text Utility Tools</h2>
+                    <div class="tools-buttons">
+                        <button type="button" onclick="wordCounter()">Word Counter</button>
+                        <button type="button" onclick="characterCounter()">Character Counter</button>
+                        <button type="button" onclick="grammarChecker()">Grammar Checker</button>
+                        <button type="button" onclick="plagiarismChecker()">Plagiarism Checker</button>
+                        <button type="button" onclick="caseConverter()">Case Converter</button>
+                        <button type="button" onclick="textToSpeech()">Text to Speech</button>
+                        <button type="button" onclick="speechToText()">Speech to Text</button>
+                        <!-- <button type="button" onclick="handwritingToText()">Handwriting to Text</button> -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="community-section section-padding">
+        <div class="container">
+            <div class="community-content">
+                <div class="community-text">
+                    <h2>RID SCIENTIFIC COMMUNITY (RSC)</h2>
+                    <p>Welcome to the RID Scientific Community (RSC). At RSC, we are dedicated to discovering,
+                        developing, and
+                        innovating cutting-edge technologies that shape the future. Our community brings together
+                        visionary
+                        researchers, industry leaders, and passionate innovators to tackle global challenges and advance
+                        scientific
+                        progress. Join us as we explore new horizons and drive meaningful change through science and
+                        technology.
+                        Together, we innovate for a better tomorrow.</p>
+
+                    <div class="topics-section">
+                        <h3>VISIT TOPICS</h3>
+                        <div class="topics">
+                            <a href="/ebook/?search=html&filter=all&sort=newest" class="topic">HTML</a>
+                            <a href="/ebook/?search=css&filter=all&sort=newest" class="topic">CSS</a>
+                            <a href="/ebook/?search=python&filter=all&sort=newest" class="topic">PYTHON</a>
+                            <a href="/ebook/?search=english&filter=all&sort=newest" class="topic">ENGLISH</a>
+                            <a href="/ebook/?search=react&filter=all&sort=newest" class="topic">REACT JS</a>
+                            <a href="/ebook/?search=javascript&filter=all&sort=newest" class="topic">Java Script</a>
+                            <!-- <a href="#" class="topic">Virtual Reality</a>
+              <a href="#" class="topic">Big Data Analytics</a>
+              <a href="#" class="topic">Wearable Technology</a>
+              <a href="#" class="topic">Digital Transformation</a>
+              <a href="#" class="topic">5G Technology</a> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="community-image">
+                    <img src="/assets/image.png" alt="Technology Image"
+                        onerror="this.src='https://via.placeholder.com/600x400/4da8da/FFFFFF?text=Technology+Image'">
+                </div>
+            </div>
+        </div>
+    </section>
+   <%- include("common/footer.ejs") %>
+    <!-- tiny script for demo interactions (dropdown toggle) -->
+    <script>
+       
+        function workshop() {
+            window.open("workshop/form.html", "_self");
+        }
+        function typingsoftware() {
+            window.location.href = "/typing-software"
+        }
+
+        /////////////////////////////////// <h2>Image Tools</h2>///////////////////////////////
+        function compress() {
+            window.location.href = "/image-tools"
+        }
+        function convert() {
+            window.location.href = "/convertpdf"
+        }
+
+        function convertimage() {
+            window.location.href = "/convertimage"
+        }
+        function resize() {
+            window.location.href = "/resize"
+
+        }
+        function crop() {
+            window.location.href = "/cropimage"
+        }
+
+        function merge() {
+            window.location.href = "/mergeimage"
+        }
+        function image() {
+            window.location.href = "/textocr"
+        }
+        function backgroundRemover() {
+            window.location.href = "/imagebackgroundremover"
+        }
+
+        ///////////////////////////////pdf tools////////////////////////////////////////////////
+
+        function converterpdftoword() {
+            window.location.href = "/converterpdf"
+        }
+        function converterpdf() {
+            window.location.href = "/converterpdf"
+        }
+        function convertPDFtoExcel() {
+            window.location.href = "/converterpdf"
+        }
+        function convertExceltoPDF() {
+            window.location.href = "/convertexcel"
+        }
+        function mergePDF() {
+            window.location.href = "/mergepdf"
+        }
+        function splitPDF() {
+            window.location.href = "/splitpdf"
+        }
+
+        function pDFtojPG() {
+            window.location.href = "/pdfjpg"
+        }
+        function addPasswordToPDF() {
+            window.location.href = "/addpasswordtopdf"
+        }
+        function removePasswordFromPDF() {
+            window.location.href = "/removepassword"
+        }
+
+        /////////////////////////////////////text utility tools/////////////////////////////////////////////
+        function wordCounter() {
+            window.location.href = "/wordcounter"
+        }
+        function characterCounter() {
+            window.location.href = "/charactercounter"
+        }
+        function grammarChecker() {
+            window.location.href = "/grammarchecker"
+        }
+        function plagiarismChecker() {
+            window.location.href = "/plagiarismchecker"
+        }
+        function caseConverter() {
+            window.location.href = "/caseconverter"
+        }
+        function textToSpeech() {
+            window.location.href = "/texttospeech"
+        }
+        function speechToText() {
+            window.location.href = "/speechtotext"
+        }
+        function handwritingToText() {
+            window.location.href = "/handwritingtotext"
+        }
+
+        function compressPDF() {
+            window.location.href = "/com"
+        }
+
+
+
+
+    </script>
+</body>
+
+</html>
