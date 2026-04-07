@@ -179,5 +179,8 @@ router.post("/execute", async (req, res) => {
   });
 });
 
+router.get("/", (req, res) => {
+  res.render("tech.ejs");   // 🔥 renamed file
+});
 
 module.exports = router;

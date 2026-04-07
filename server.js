@@ -598,18 +598,9 @@ const myteam=require("./routes/myteampages/myteam.js")
 app.use("/",myteam)
 // ===== TECH INTERVIEW SERVER CONNECT =====
 const techInterviewApp = require("./code/server");
-
 // middleware mount
-app.get("/tech-interview", (req, res) => {
-  res.render("index");   // code/views/index.ejs
-});
 app.use("/tech-interview", techInterviewApp);
-
-
 configureRoutes();
-
-
-
 // ========== START SERVER ==========
 // ================== DB + SERVER START ==================
 async function startServer() {
