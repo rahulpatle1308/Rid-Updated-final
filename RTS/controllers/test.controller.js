@@ -3,14 +3,7 @@ const User = require('../../models/user');
 
 exports.submitTest = async (req, res) => {
   try {
-    const user = req.user;
-
-    if (!user) {
-      return res.status(401).json({
-        success: false,
-        message: "User not found"
-      });
-    }
+    const user = req.user; // May be null for anonymous users
 
     const {
       subject,
@@ -23,9 +16,9 @@ exports.submitTest = async (req, res) => {
       timeSpent
     } = req.body;
 
-    // ✅ STEP 1: Save result
+    // ✅ STEP 1: Save result (works for both logged in and anonymous users)
     const result = await TestResult.create({
-      user: user._id,
+      user: user ? user._id : null, // Allow null for anonymous
       subject,
       setNo: testNo,
       totalQuestions: total,
@@ -37,35 +30,35 @@ exports.submitTest = async (req, res) => {
       category: req.params.category || "general"
     });
 
-    // ✅ STEP 2: Update user (IMPORTANT 🔥)
-    const dbUser = await User.findById(user._id);
+    // ✅ STEP 2: Update user only if logged in
+    if (user) {
+      const dbUser = await User.findById(user._id);
 
-   dbUser.testHistory.push({
-  resultId: result._id,
-  subject,
-  setNo: testNo,
-  score: correct,
-  totalQuestions: total,
-  percentage,
-  date: new Date()   // ✅ YE ADD KARNA HAI
-});
+      dbUser.testHistory.push({
+        resultId: result._id,
+        subject,
+        setNo: testNo,
+        score: correct,
+        totalQuestions: total,
+        percentage,
+        date: new Date()
+      });
 
-    
+      // ✅ STEP 3: Total tests
+      dbUser.totalTestsAttempted = dbUser.testHistory.length;
 
-    // ✅ STEP 3: Total tests
-    dbUser.totalTestsAttempted = dbUser.testHistory.length;
+      // ✅ STEP 4: Average
+      const totalScore = dbUser.testHistory.reduce(
+        (sum, t) => sum + (t.percentage || 0),
+        0
+      );
 
-    // ✅ STEP 4: Average
-    const totalScore = dbUser.testHistory.reduce(
-      (sum, t) => sum + (t.percentage || 0),
-      0
-    );
+      dbUser.averageScore = Math.round(
+        totalScore / dbUser.totalTestsAttempted
+      );
 
-    dbUser.averageScore = Math.round(
-      totalScore / dbUser.totalTestsAttempted
-    );
-
-    await dbUser.save();
+      await dbUser.save();
+    }
 
     res.json({
       success: true,

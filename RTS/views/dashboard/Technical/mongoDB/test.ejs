@@ -30774,7 +30774,7 @@ const SUBJECT = "<%= subject %>".toLowerCase();
   </div>
   
   <div class="main-container">
-    <header><%= subject %> QUIZ and TEST <%= testNo %> </header>
+    <header><%= subject %> TEST <%= testNo %>  </header>
     
     <div class="quiz-header">
       <div class="header-left">
@@ -31291,7 +31291,7 @@ const SUBJECT = "<%= subject %>".toLowerCase();
         }
       } catch (error) {
         console.error("Submit error:", error);
-       alert("Please login first, then submit the test.");
+       alert("Submission failed. Please try again.");
       }
     }
 
