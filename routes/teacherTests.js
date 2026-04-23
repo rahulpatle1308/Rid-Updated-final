@@ -6,19 +6,36 @@ const ensureTeacher = require("../middleware/authMiddleware");
 
 // ================= CREATE TEST =================
 router.post("/api/create-test", ensureTeacher, async (req, res) => {
-    try {
-        const test = new TeacherTest({
-            ...req.body,
-            teacher: req.user._id   // ✅ save teacher id
-        });
+  try {
 
-        await test.save();
+    console.log("BODY:", req.body);
 
-        res.json({ success: true });
-    } catch (err) {
-        console.error("Create test error:", err);
-        res.json({ success: false });
-    }
+  const questions = req.body.questions || [];
+
+req.body.questions = questions.map(q => ({
+  text: q.text || "",
+  type: q.type || "mcq",
+  difficulty: q.difficulty || "easy",
+  points: q.points || 1,
+  options: (q.options || []).map(opt => ({
+    text: opt.text || opt || "",
+    isCorrect: opt.isCorrect || false
+  }))
+}));
+
+    const test = new TeacherTest({
+      ...req.body,
+      teacher: req.user._id
+    });
+
+    await test.save();
+
+    res.json({ success: true });
+
+  } catch (err) {
+    console.error(err);
+    res.json({ success: false });
+  }
 });
 
 // ================= GET MY TESTS (TEACHER ONLY) =================
@@ -111,14 +128,44 @@ router.put("/update/:id", ensureTeacher, async (req, res) => {
         const testId = req.params.id;
         const updateData = req.body;
 
+        // ✅ SAFE QUESTIONS FORMAT
+        if (updateData.questions) {
+            updateData.questions = updateData.questions.map(q => ({
+                text: q.text || "",
+                type: q.type || "mcq",
+                difficulty: q.difficulty || "easy",
+                points: q.points || 1,
+                options: (q.options || []).map(opt => ({
+                    text: opt.text || opt || "",
+                    isCorrect: opt.isCorrect || false
+                }))
+            }));
+        }
+
         await TeacherTest.findOneAndUpdate(
-            { _id: testId, teacher: req.user._id }, // ✅ filter
-            updateData
+            { _id: testId, teacher: req.user._id },
+            { $set: updateData },   // ✅ FIX
+            { new: true }
         );
 
         res.json({ success: true });
+
     } catch (err) {
         console.error("Update test error:", err);
+        res.json({ success: false });
+    }
+});
+
+router.put("/update/:id", async (req, res) => {
+    try {
+        const updated = await Test.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true }
+        );
+
+        res.json({ success: true, updated });
+    } catch (err) {
         res.json({ success: false });
     }
 });

@@ -102,6 +102,10 @@
                 <i class="fas fa-tachometer-alt"></i>
                 <span>Dashboard</span>
             </button>
+            <button onclick="showTestRequests()">
+    <i class="fas fa-envelope"></i>
+    <span>Test Requests</span>
+</button>
             <button onclick="showAnalytics()">
                 <i class="fas fa-chart-line"></i>
                 <span>Analytics</span>
@@ -475,6 +479,80 @@
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
     <script>
+
+        async function showTestRequests() {
+
+  // dashboard hide
+  document.getElementById('dashboardContent').style.display = 'none';
+
+  // loading UI
+  document.getElementById('dynamicContent').innerHTML = `
+    <h2>Loading Requests...</h2>
+  `;
+
+  // fetch data
+  const res = await fetch("/admin/test-requests-data");
+  const requests = await res.json();
+
+  // अगर empty है
+  if (requests.length === 0) {
+    document.getElementById('dynamicContent').innerHTML = `
+      <h2>No Pending Requests</h2>
+    `;
+    return;
+  }
+
+  // render HTML
+  let html = `<h2>Pending Requests</h2>`;
+
+  requests.forEach(r => {
+  html += `
+    <div style="border:1px solid black; padding:10px; margin:10px;">
+      
+      <h3>${r.teacherId?.name}</h3>
+
+      <img src="${r.banner}" style="width:200px; border-radius:10px;"><br>
+
+      <a href="${r.notesFile}" target="_blank">📄 View Notes</a>
+
+      <p>${r.description}</p>
+      <p style="color:gray; font-size:12px;">
+Format: Question | Option1 | Option2 | Option3 | Option4 | CorrectOptionNumber
+</p>
+
+        <textarea id="q_${r._id}" placeholder="Add Questions (one per line)"></textarea>
+
+        <button onclick="approveRequest('${r._id}')">Approve</button>
+
+      </div>
+    `;
+  });
+
+  document.getElementById('dynamicContent').innerHTML = html;
+}
+
+async function approveRequest(id) {
+
+  const questions = document.getElementById("q_" + id).value;
+
+  if (!questions) {
+    alert("Enter questions first!");
+    return;
+  }
+
+  await fetch("/admin/approve-request", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ id, questions })
+  });
+
+  alert("Approved & Test Created!");
+
+  // reload list
+  showTestRequests();
+}
         // Preloader
         window.addEventListener('load', function () {
             setTimeout(() => {

@@ -4,16 +4,650 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Teacher's Advanced Dashboard with Test Services</title>
+    <title>Teacher's Dashboard with Test Services</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/teacher-advance.css">
     <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 <link rel="icon" type="image/png" href="/assets/signup.png">
+<style>
+    
+</style>
+
+<style>
+    
+    .invite-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.invite-box {
+  background: #fff;
+  padding: 25px;
+  width: 400px;
+  border-radius: 12px;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.invite-box h2 {
+  margin-bottom: 10px;
+}
+
+.invite-link-box {
+  display: flex;
+  margin: 15px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.invite-link-box input {
+  flex: 1;
+  border: none;
+  padding: 10px;
+}
+
+.invite-link-box button {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.invite-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.whatsapp-btn {
+  background: #25d366;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+}
+
+.qr-btn {
+  background: #9b59b6;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+}
+
+.close-btn {
+  margin-top: 15px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+}
+.invite-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.cancel-btn {
+  flex: 1;
+  background: #ecf0f1;
+  color: #333;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.cancel-btn:hover {
+  background: #dcdde1;
+}
+
+.close-btn {
+  flex: 1;
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  background: #2980b9;
+}
+
+canvas {
+  margin-top: 15px;
+}
+/* ===== MODAL OVERLAY ===== */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.65); /* dark glass */
+    backdrop-filter: blur(6px);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* ===== MODAL BOX ===== */
+.modal-box {
+    width: 420px;
+    max-width: 95%;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 25px 22px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    position: relative;
+    animation: modalPop 0.35s ease;
+}
+
+/* ===== TITLE ===== */
+.modal-box h3 {
+    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+/* ===== INPUTS ===== */
+.modal-box input,
+.modal-box textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    outline: none;
+    margin-top: 6px;
+    margin-bottom: 14px;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+/* focus effect */
+.modal-box input:focus,
+.modal-box textarea:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+}
+
+/* textarea */
+.modal-box textarea {
+    resize: none;
+    height: 80px;
+}
+
+/* ===== LABEL ===== */
+.modal-box label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #475569;
+}
+
+/* ===== BUTTON ===== */
+.modal-box button {
+    width: 100%;
+    padding: 11px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.modal-box button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(99,102,241,0.4);
+}
+
+/* ===== CLOSE BUTTON ===== */
+.close-btn {
+    position: absolute;
+    right: 12px;
+    top: 10px;
+    font-size: 22px;
+    cursor: pointer;
+    color: #64748b;
+    transition: 0.2s;
+}
+
+.close-btn:hover {
+    color: #ef4444;
+}
+
+/* ===== FILE INPUT STYLE ===== */
+.modal-box input[type="file"] {
+    background: #f8fafc;
+    border: 1px dashed #cbd5f5;
+    padding: 8px;
+    cursor: pointer;
+}
+
+/* ===== ANIMATION ===== */
+@keyframes modalPop {
+    from {
+        transform: translateY(40px) scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+/* ===== SEND REQUEST BUTTON ===== */
+.send-request-btn {
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    box-shadow: 0 4px 12px rgba(99,102,241,0.3);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* hover */
+.send-request-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(99,102,241,0.5);
+}
+
+/* click effect */
+.send-request-btn:active {
+    transform: scale(0.96);
+}
+
+/* icon style */
+.send-request-btn i {
+    font-size: 13px;
+}
+    
+/* ===== COMPACT MODAL - NO SCROLL ===== */
+.compact-modal {
+    max-width: 1100px !important;
+    width: 95% !important;
+    height: auto !important;
+    max-height: 90vh !important;
+}
+
+.compact-body {
+    padding: 20px !important;
+    overflow: visible !important;
+}
+
+.two-column-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 20px;
+    align-items: start;
+}
+
+/* Left Panel - Questions List */
+.questions-list-panel {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid #e0e6ed;
+    max-height: 450px;
+    display: flex;
+    flex-direction: column;
+}
+
+.questions-list-panel h4 {
+    margin-bottom: 12px;
+    color: #2c3e50;
+    font-size: 1rem;
+}
+
+.question-list-compact {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 380px;
+    padding-right: 8px;
+}
+
+.question-list-compact::-webkit-scrollbar {
+    width: 5px;
+}
+
+.question-list-compact::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+}
+
+.empty-state-compact {
+    text-align: center;
+    padding: 30px 15px;
+    color: #7f8c8d;
+}
+
+.empty-state-compact i {
+    font-size: 2rem;
+    margin-bottom: 8px;
+    color: #bdc3c7;
+}
+
+/* Right Panel - Add Question Form */
+.add-question-panel {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid #e0e6ed;
+}
+
+.add-question-panel h4 {
+    margin-bottom: 15px;
+    color: #2c3e50;
+    font-size: 1rem;
+}
+
+.compact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form-row-2cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 8px 0;
+}
+
+.question-option-input {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f8f9fa;
+    padding: 6px 8px;
+    border-radius: 8px;
+}
+
+.question-option-input input[type="radio"] {
+    margin: 0;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.question-option-input input[type="text"] {
+    flex: 1;
+    padding: 6px 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.85rem;
+}
+
+.btn-sm {
+    padding: 5px 12px;
+    font-size: 0.8rem;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.btn-outline {
+    background: transparent;
+    border-color: #3498db;
+    color: #3498db;
+}
+
+.btn-outline:hover {
+    background: #3498db;
+    color: white;
+}
+
+.add-question-btn {
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px;
+    font-size: 0.9rem;
+}
+
+/* Panel Buttons */
+.panel-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 12px;
+    border-top: 1px solid #e0e6ed;
+    justify-content: flex-end;
+}
+
+.panel-buttons .btn-sm {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    border-radius: 8px;
+}
+
+.panel-buttons .btn-secondary {
+    background: #95a5a6;
+    color: white;
+}
+
+.panel-buttons .btn-success {
+    background: linear-gradient(90deg, #2ecc71, #27ae60);
+    color: white;
+}
+
+.panel-buttons .btn-sm:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+    .two-column-layout {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .questions-list-panel {
+        max-height: 250px;
+    }
+    
+    .question-list-compact {
+        max-height: 180px;
+    }
+    
+    .form-row-2cols {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .options-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Question Item Style */
+.question-item {
+    background: white;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    border-left: 3px solid #3498db;
+    font-size: 0.85rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.question-text {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.question-meta {
+    font-size: 0.7rem;
+    color: #7f8c8d;
+    display: flex;
+    gap: 10px;
+}
+
+.delete-question {
+    float: right;
+    color: #e74c3c;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+/* highlight for Send Request */
+#nav-send-request a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+/* hover */
+#nav-send-request a:hover {
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: #fff;
+}
+
+/* active */
+#nav-send-request.active a {
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: #fff;
+}
+
+/* ===== MODAL BACKGROUND ===== */
+.student-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(6px);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* ===== MODAL BOX ===== */
+.student-modal-box {
+    background: #ffffff;
+    width: 350px;
+    max-width: 90%;
+    border-radius: 14px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    animation: modalFade 0.3s ease;
+    overflow: hidden;
+}
+
+/* ===== HEADER ===== */
+.modal-header {
+    background: linear-gradient(135deg, #3498db, #6c5ce7);
+    color: #fff;
+    padding: 15px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* CLOSE ICON */
+.close-icon {
+    font-size: 22px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.close-icon:hover {
+    transform: scale(1.2);
+}
+
+/* ===== BODY ===== */
+.modal-body {
+    padding: 18px;
+    font-size: 0.95rem;
+    color: #2c3e50;
+}
+
+.modal-body p {
+    margin: 10px 0;
+    padding: 8px 10px;
+    background: #f4f6f9;
+    border-radius: 8px;
+}
+
+/* ===== FOOTER ===== */
+.modal-footer {
+    padding: 15px;
+    text-align: right;
+}
+
+/* BUTTON */
+.close-btn {
+    background: linear-gradient(135deg, #e74c3c, #ff6b6b);
+    border: none;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.close-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+}
+
+/* ===== ANIMATION ===== */
+@keyframes modalFade {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+</style>
+
 </head>
 
 <body>
     <script>
         const TEACHER_ID = "<%= teacher._id %>";
+        const initialStudents = <%- JSON.stringify(students || []) %>;
     </script>
 
     <div class="main-container">
@@ -25,7 +659,7 @@
             </button>
             <div class="logo">
                 <i class="fas fa-chalkboard-teacher"></i>
-                <h1>Teacher's Advanced Dashboard</h1>
+                <h1>Teacher's Dashboard</h1>
             </div>
             <div class="user-info">
                 <div class="user-avatar" id="userAvatar">
@@ -61,7 +695,7 @@
                 </li>
 
                 <li class="nav-item locked" id="top-nav-birthday">
-                    <a href="#">
+                    <a href="/rts/birthday-software">
                         <i class="fas fa-birthday-cake"></i>
                         <span>Birthday Software</span>
                         <i class="fas fa-lock lock-icon"></i>
@@ -76,14 +710,15 @@
                     </a>
                 </li>
 
+                
 
-                <li class="nav-item locked" id="top-nav-templates">
-                    <a href="#" id="top-nav-templates-link">
-                        <i class="fas fa-layer-group"></i>
-                        <span>Assignment Creator</span>
-                        <i class="fas fa-lock lock-icon"></i>
-                    </a>
-                </li>
+
+              <li class="nav-item" id="top-nav-send-request">
+    <a href="#">
+        <i class="fas fa-paper-plane"></i>
+        <span>Send Request</span>
+    </a>
+</li>
 
                 <li class="nav-item locked" id="top-nav-alerts">
                     <a href="#">
@@ -138,7 +773,22 @@
                             <span>Create Tests</span>
                         </a>
                     </li>
+                    <li class="nav-item" id="nav-send-request">
+    <a href="#">
+        <i class="fas fa-paper-plane"></i>
+        <span>Send Request</span>
+    </a>
+</li>
 
+                    
+
+                    <li class="nav-item locked" id="nav-students">
+                        <a href="#">
+                            <i class="fas fa-users"></i>
+                            <span>Add Students</span>
+                            <i class="fas fa-lock lock-icon"></i>
+                        </a>
+                    </li>
 
                     <li class="nav-item locked" id="nav-test-services">
                         <a href="#">
@@ -214,13 +864,13 @@
                     <!-- ================= Smart Tools ================= -->
                     <li class="nav-section-title">Smart Tools</li>
 
-                    <li class="nav-item locked" id="nav-ai">
+                    <!-- <li class="nav-item locked" id="nav-ai">
                         <a href="#">
                             <i class="fas fa-robot"></i>
                             <span>AI Assistant</span>
                             <i class="fas fa-lock lock-icon"></i>
                         </a>
-                    </li>
+                    </li> -->
 
                     <li class="nav-item locked" id="nav-calculator">
                         <a href="#">
@@ -252,7 +902,7 @@
                     </li>
 
                     <li class="nav-item locked" id="nav-birthday">
-                        <a href="#">
+                        <a href="/rts/birthday-software">
                             <i class="fas fa-birthday-cake"></i>
                             <span>Birthday Software </span>
                             <i class="fas fa-lock lock-icon"></i>
@@ -291,10 +941,10 @@
                     </li>
                     <!-- Payment -->
                     <li class="nav-item active" id="nav-payment">
-                        <a href="#">
+                        <!-- <a href="#">
                             <i class="fas fa-credit-card"></i>
                             <span>Payment</span>
-                        </a>
+                        </a> -->
                     </li>
 
                 </ul>
@@ -375,7 +1025,7 @@
                                 </div>
                                 <h3>Dashboard Locked</h3>
                                 <p>This feature is only available after payment.</p>
-                                <p>Please complete the payment to access the advanced dashboard.</p>
+                                <p>Please complete the payment to access the dashboard.</p>
                                 <button class="btn btn-primary" style="margin-top: 20px;"
                                     id="goto-payment-from-dashboard">
                                     <i class="fas fa-credit-card"></i> Go to Payment
@@ -385,7 +1035,7 @@
 
                         <div class="page-title">
                             <i class="fas fa-tachometer-alt"></i>
-                            <h2>Advanced Dashboard</h2>
+                            <h2> Dashboard</h2>
                         </div>
 
                         <!-- Welcome Card with Animation -->
@@ -469,6 +1119,70 @@
 
                     </div>
 
+                    <!-- Students Section -->
+                    <div id="students-section" class="hidden">
+                        <div class="lock-overlay" id="students-lock">
+                            <div class="lock-message">
+                                <div class="lock-icon-large">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <h3>Students Locked</h3>
+                                <p>This feature is only available after payment.</p>
+                                <button class="btn btn-primary" style="margin-top: 20px;" id="goto-payment-from-students">
+                                    <i class="fas fa-credit-card"></i> Go to Payment
+                                </button>
+                            </div>
+                        </div>
+                        <div class="page-title">
+                            <i class="fas fa-users"></i>
+                            <h2>Student Management</h2>
+                        </div>
+
+                        <div class="card">
+                            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                                <div>
+                                    <h3><i class="fas fa-user-graduate"></i> Manage Students</h3>
+                                    <p>View and add students directly from your teacher dashboard.</p>
+                                </div>
+
+                                 <button onclick="openInviteModal()" class="btn btn-primary">
+    <i class="fas fa-link"></i> Invite Students
+</button>
+                                <button class="btn btn-primary" id="add-student-btn">
+                                    <i class="fas fa-user-plus"></i> Add Student
+                                </button>
+                               
+                            </div>
+
+                            <div class="form-group" style="margin-top: 20px;">
+                                <label>Search Students</label>
+                                <input type="text" id="student-search" placeholder="Search by name, class, or email...">
+                            </div>
+
+                            <div class="students-table-container" style="overflow-x:auto; margin-top:20px;">
+                                <table class="analytics-table" style="width:100%; min-width:700px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Class</th>
+                                            <th>Roll No.</th>
+                                            <th>Email</th>
+                                            <th>Parent Contact</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="students-table-body">
+                                        <tr>
+                                            <td colspan="6" style="text-align:center; color:#7f8c8d; padding:20px;">
+                                                No students added yet.
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Create Tests Section -->
                     <div id="create-test-section" class="hidden">
                         <div class="lock-overlay" id="create-test-lock">
@@ -509,17 +1223,18 @@
                                     <label for="test-duration">Duration (minutes)</label>
                                     <input type="number" id="test-duration" min="5" max="180" value="60" disabled>
                                 </div>
+                                
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="test-difficulty">Difficulty Level</label>
                                     <select id="test-difficulty" disabled>
                                         <option value="Beginner">Beginner</option>
                                         <option value="Intermediate" selected>Intermediate</option>
-                                        <option value="Advanced">Advanced</option>
+                                        <option value=""></option>
                                     </select>
-                                </div>
+                                </div> -->
 
-                                <div class="form-group full-width">
+                                <div class="form-group">
                                     <label for="test-description">Test Description</label>
                                     <textarea id="test-description" placeholder="Describe what this test covers..."
                                         disabled></textarea>
@@ -544,10 +1259,13 @@
                                         Form</button>
                                     <button type="submit" class="btn btn-primary disabled" disabled>Create Test
                                         Cards</button>
-                                    <button type="button" class="btn btn-success disabled create-test-card-btn"
+                                    <button type="button" class="btn btn-success disabled create-test-card-btn" style="display: none;"
                                         id="create-test-card-btn" disabled>
                                         <i class="fas fa-plus-circle"></i> Create Test Card Only
                                     </button>
+                                    <button class="send-request-btn" onclick="openRequestModal()">
+    <i class="fas fa-paper-plane"></i> Send Request
+</button>
                                 </div>
                             </form>
                         </div>
@@ -634,7 +1352,7 @@
                             </div>
 
                             <div class="cards-container" id="courses-container">
-                                <!-- Courses will be dynamically added here -->
+                               
                             </div>
 
                             <footer>
@@ -1035,12 +1753,44 @@
 
                     <div class="page-title">
                         <i class="fab fa-python"></i>
-                        <h2>Python Test Service</h2>
+                        <h2>AI Smart Translator</h2>
                     </div>
 
                     <div class="card">
-                        <h3><i class="fas fa-folder"></i> Transloter desbords</h3>
-                        <p>Transloter desbords contain this files .</p>
+                        <div class="translator-card" style="display:flex; flex-direction:column; gap:20px;">
+                            <div style="display:flex; flex-wrap:wrap; gap:20px; justify-content:space-between;">
+                                <div style="flex:1; min-width:280px;">
+                                    <label for="translator-from-lang">From</label>
+                                    <select id="translator-from-lang" style="width:100%; padding:10px; border-radius:10px; border:1px solid #ddd; margin-bottom:10px;">
+                                        <option value="auto">Auto Detect</option>
+                                        <option value="en">English</option>
+                                        <option value="hi">Hindi</option>
+                                    </select>
+                                    <textarea id="translator-input-text" placeholder="Type or speak... (Hinglish bhi chalega)" style="width:100%; min-height:160px; padding:12px; border-radius:12px; border:1px solid #ddd; resize:vertical;"></textarea>
+                                    <button type="button" class="btn btn-secondary" id="translator-voice-btn" style="margin-top:10px;">🎤 Voice Input</button>
+                                </div>
+                                <div style="flex:1; min-width:280px;">
+                                    <label for="translator-to-lang">To</label>
+                                    <select id="translator-to-lang" style="width:100%; padding:10px; border-radius:10px; border:1px solid #ddd; margin-bottom:10px;">
+                                        <option value="en">English</option>
+                                        <option value="hi">Hindi</option>
+                                    </select>
+                                    <textarea id="translator-output-text" placeholder="Translation..." readonly style="width:100%; min-height:160px; padding:12px; border-radius:12px; border:1px solid #ddd; background:#f9f9f9; resize:none;"></textarea>
+                                    <button type="button" class="btn" id="translator-speak-btn" style="margin-top:10px;">🔊 Speak</button>
+                                </div>
+                            </div>
+                            <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
+                                <button type="button" class="btn btn-primary" id="translator-translate-btn">Translate</button>
+                                <button type="button" class="btn warn" id="translator-swap-btn">🔁 Swap</button>
+                                <button type="button" class="btn danger" id="translator-clear-btn">Clear</button>
+                            </div>
+                            <div class="history" style="background:#f7fafc; padding:15px; border-radius:12px;">
+                                <h4 style="margin-bottom:10px;">🕘 History</h4>
+                                <div id="translator-history-list" style="display:grid; gap:8px; max-height:180px; overflow-y:auto;">
+                                    <p style="color:#7f8c8d;">No history yet.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -1064,32 +1814,33 @@
                         <h2>Calculator</h2>
                     </div>
 
-                    <div class="card">
-                        <input type="text" id="calc-display" style="width:100%; padding:10px; font-size:1.2rem;"
-                            readonly>
+                    <div class="card calculator-card">
+                        <div class="calculator-panel">
+                            <input type="text" id="calc-display" class="calculator-display">
 
-                        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:10px;">
-                            <button onclick="calc('7')">7</button>
-                            <button onclick="calc('8')">8</button>
-                            <button onclick="calc('9')">9</button>
-                            <button onclick="calc('/')">÷</button>
+                            <div class="calculator-grid">
+                                <button type="button" onclick="calc('7')">7</button>
+                                <button type="button" onclick="calc('8')">8</button>
+                                <button type="button" onclick="calc('9')">9</button>
+                                <button type="button" class="operator" onclick="calc('/')">÷</button>
 
-                            <button onclick="calc('4')">4</button>
-                            <button onclick="calc('5')">5</button>
-                            <button onclick="calc('6')">6</button>
-                            <button onclick="calc('*')">×</button>
+                                <button type="button" onclick="calc('4')">4</button>
+                                <button type="button" onclick="calc('5')">5</button>
+                                <button type="button" onclick="calc('6')">6</button>
+                                <button type="button" class="operator" onclick="calc('*')">×</button>
 
-                            <button onclick="calc('1')">1</button>
-                            <button onclick="calc('2')">2</button>
-                            <button onclick="calc('3')">3</button>
-                            <button onclick="calc('-')">−</button>
+                                <button type="button" onclick="calc('1')">1</button>
+                                <button type="button" onclick="calc('2')">2</button>
+                                <button type="button" onclick="calc('3')">3</button>
+                                <button type="button" class="operator" onclick="calc('-')">−</button>
 
-                            <button onclick="calc('0')">0</button>
-                            <button onclick="calc('.')">.</button>
-                            <button onclick="calculate()">=</button>
-                            <button onclick="calc('+')">+</button>
+                                <button type="button" onclick="calc('0')">0</button>
+                                <button type="button" onclick="calc('.')">.</button>
+                                <button type="button" class="equals" onclick="calculate()">=</button>
+                                <button type="button" class="operator" onclick="calc('+')">+</button>
 
-                            <button onclick="clearCalc()" style="grid-column:span 4;">Clear</button>
+                                <button type="button" class="clear" onclick="clearCalc()">Clear</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1325,106 +2076,182 @@
     </div>
     </div>
 
-    <!-- Modal for Create Test -->
-    <div class="modal" id="createTestModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Create Test Questions</h2>
-                <button class="close-btn" onclick="closeModal('createTestModal')">&times;</button>
+    <!-- Modal for Create Test - MOBILE LAYOUT (Buttons at Bottom) -->
+<!-- Modal for Create Test - DESKTOP + MOBILE RESPONSIVE -->
+<div class="modal" id="createTestModal">
+    <div class="modal-content responsive-modal">
+        <div class="modal-header">
+            <h2><i class="fas fa-pen-alt"></i> Create Test Questions</h2>
+            <button class="close-btn" onclick="closeModal('createTestModal')">&times;</button>
+        </div>
+        
+        <div class="modal-body responsive-modal-body">
+            
+            <!-- LEFT COLUMN: Added Questions -->
+            <div class="left-column">
+                <div class="panel-title">
+                    <i class="fas fa-list"></i>
+                    <span>Added Questions</span>
+                    <span class="question-badge" id="questionCountBadge">0</span>
+                </div>
+                
+                <div class="questions-container" id="questionList">
+                    <div class="empty-state">
+                        <i class="fas fa-question-circle"></i>
+                        <p>No questions added yet.</p>
+                        <small>Add your first question below 👇</small>
+                    </div>
+                </div>
+                
+                <!-- DESKTOP BUTTONS (Left Panel ke andar) - सिर्फ डेस्कटॉप पर दिखेगा -->
+                <div class="desktop-buttons">
+                    <button class="btn-cancel-desktop" onclick="closeModal('createTestModal')">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                    <button class="btn-save-desktop" id="saveQuestionsBtn">
+                        <i class="fas fa-save"></i> Save All
+                    </button>
+                </div>
             </div>
-            <div class="modal-body">
-                <div class="question-section">
-                    <h3>👇🏻👇🏻 Create Test Questions 👇🏻👇🏻</h3>
 
-                    <div class="question-list" id="questionList">
-                        <!-- Questions will be added here -->
-                        <div class="empty-state" style="padding: 20px;">
-                            <i class="fas fa-question-circle"></i>
-                            <p>No questions added yet. Add your first question below.</p>
+            <!-- RIGHT COLUMN: Add New Question -->
+            <div class="right-column">
+                <div class="panel-title">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Add New Question</span>
+                </div>
+                
+                <!-- Question Type + Marks -->
+                <div class="row-2cols">
+                    <div class="form-group-custom">
+                        <label>Question Type</label>
+                        <select id="questionType" class="custom-input">
+                            <option value="multiple-choice">Multiple Choice (MCQ)</option>
+                            <option value="true-false">True/False</option>
+                            <option value="short-answer">Short Answer</option>
+                        </select>
+                    </div>
+                    <div class="form-group-custom">
+                        <label>Marks</label>
+                        <input type="number" id="questionPoints" class="custom-input" value="1" min="1">
+                    </div>
+                </div>
+
+                <!-- Write Your Question -->
+                <div class="form-group-custom">
+                    <label>Write Your Question</label>
+                    <textarea id="questionText" class="custom-input" rows="2" placeholder="Enter your question..."></textarea>
+                </div>
+
+                <!-- Options (MCQ) -->
+                <div id="optionsContainer">
+                    <label>Options (For MCQ)</label>
+                    <div id="optionsList" class="options-grid-custom">
+                        <div class="option-row-custom">
+                            <input type="radio" name="correctOption" value="0">
+                            <input type="text" id="option0" class="custom-input" placeholder="Option A">
+                        </div>
+                        <div class="option-row-custom">
+                            <input type="radio" name="correctOption" value="1">
+                            <input type="text" id="option1" class="custom-input" placeholder="Option B">
+                        </div>
+                        <div class="option-row-custom">
+                            <input type="radio" name="correctOption" value="2">
+                            <input type="text" id="option2" class="custom-input" placeholder="Option C">
+                        </div>
+                        <div class="option-row-custom">
+                            <input type="radio" name="correctOption" value="3">
+                            <input type="text" id="option3" class="custom-input" placeholder="Option D">
                         </div>
                     </div>
+                    <button type="button" class="add-option-custom" id="addOptionBtn">
+                        <i class="fas fa-plus"></i> Add More Options
+                    </button>
+                </div>
 
-                    <div class="question-form">
-                        <h3><b>Add New Question</b></h3>
-
-                        <div class="form-group">
-                            <label><b>Question Type</b></label>
-                            <select class="form-control" id="questionType">
-                                <option value="multiple-choice">Multiple Choice (MCQ)</option>
-                                <option value="true-false">True/False</option>
-                                <option value="short-answer">Short Answer</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label><b>Write Your Question ✍️✍️</b></label>
-                            <textarea class="form-control" id="questionText" rows="3"
-                                placeholder="Enter your question..."></textarea>
-                        </div>
-                        <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
-                            <button type="button" class="btn btn-secondary" onclick="translateAuto()">
-                                <i class="fas fa-language"></i> Auto Translate
-                            </button>
-                        </div>
-
-
-                        <div id="optionsContainer" style="display: block;">
-                            <div class="form-group">
-                                <label><b>Options (For MCQ)</b></label>
-                                <div id="optionsList">
-                                    <div class="question-option-input">
-                                        <input type="radio" name="correctOption" value="0">
-                                        <input type="text" class="form-control" placeholder="Option A" id="option0">
-                                    </div>
-                                    <div class="question-option-input">
-                                        <input type="radio" name="correctOption" value="1">
-                                        <input type="text" class="form-control" placeholder="Option B" id="option1">
-                                    </div>
-                                    <div class="question-option-input">
-                                        <input type="radio" name="correctOption" value="2">
-                                        <input type="text" class="form-control" placeholder="Option C" id="option2">
-                                    </div>
-                                    <div class="question-option-input">
-                                        <input type="radio" name="correctOption" value="3">
-                                        <input type="text" class="form-control" placeholder="Option D" id="option3">
-                                    </div>
-                                </div>
-                                <button type="button" class="btn" id="addOptionBtn"
-                                    style="margin-top: 10px; background-color: #f0f0f0;">
-                                    <i class="fas fa-plus"></i> Add More Options
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Marks for this Question *</label>
-                                <input type="number" class="form-control" id="questionPoints" value="1" min="1">
-                            </div>
-                            <div class="form-group">
-                                <label>Question Difficulty</label>
-                                <select class="form-control" id="questionDifficulty">
-                                    <option value="Easy">Easy</option>
-                                    <option value="Medium" selected>Medium</option>
-                                    <option value="Hard">Hard</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <button class="btn btn-primary" id="addQuestionBtn" style="width: 100%;">
-                            <i class="fas fa-plus"></i> Add Question to Test
+                <!-- Difficulty + Translate -->
+                <div class="row-2cols">
+                    <div class="form-group-custom">
+                        <label>Difficulty</label>
+                        <select id="questionDifficulty" class="custom-input">
+                            <option value="Easy">Easy</option>
+                            <option value="Medium" selected>Medium</option>
+                            <option value="Hard">Hard</option>
+                        </select>
+                    </div>
+                    <div class="form-group-custom">
+                        <label>&nbsp;</label>
+                        <button type="button" class="translate-custom" onclick="translateAuto()">
+                            <i class="fas fa-language"></i> Auto Translate
                         </button>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="closeModal('createTestModal')">Cancel</button>
-                <button class="btn btn-success" id="saveQuestionsBtn">
-                    <i class="fas fa-save"></i> Save All Questions
+
+                <!-- Add Question Button -->
+                <button class="add-question-custom" id="addQuestionBtn">
+                    <i class="fas fa-plus"></i> Add Question to Test
                 </button>
             </div>
         </div>
+
+        <!-- MOBILE BUTTONS (सिर्फ मोबाइल पर दिखेगा - सबसे नीचे) -->
+        <div class="mobile-bottom-buttons">
+            <button class="mobile-cancel" onclick="closeModal('createTestModal')">
+                <i class="fas fa-times"></i> Cancel
+            </button>
+            <button class="mobile-save" id="saveQuestionsBtnMobile">
+                <i class="fas fa-save"></i> Save All (<span id="saveCountMobile">0</span>)
+            </button>
+        </div>
     </div>
+</div>
+
+    <!-- Modal for Add Student -->
+    <div class="modal" id="addStudentModal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Student</h2>
+                <button class="close-btn" onclick="closeModal('addStudentModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-student-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" id="student-first-name" class="form-control" placeholder="Enter first name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" id="student-last-name" class="form-control" placeholder="Enter last name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="student-email-input" class="form-control" placeholder="Enter email address">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Class</label>
+                            <input type="text" id="student-class" class="form-control" placeholder="Enter class (e.g., 10-A)">
+                        </div>
+                        <div class="form-group">
+                            <label>Roll Number</label>
+                            <input type="text" id="student-roll" class="form-control" placeholder="Enter roll number">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Parent Contact</label>
+                        <input type="tel" id="student-parent-contact" class="form-control" placeholder="Enter parent contact">
+                    </div>
+                    <div class="modal-footer" style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('addStudentModal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add Student</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- QR Popup Modal -->
     <div id="qrModal"
         style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center;">
@@ -1465,7 +2292,142 @@
         </div>
     </div>
 
+    <!-- MODAL -->
+<div id="requestModal" class="modal-overlay">
+  
+  <div class="modal-box">
+    
+    <span class="close-btn" onclick="closeRequestModal()">&times;</span>
+
+    <h3>Send Test Request</h3>
+
+    <label>Upload Banner</label>
+    <input type="file" id="banner" accept="image/*"><br><br>
+
+    <label>Upload Notes (PDF)</label>
+    <input type="file" id="notes" accept=".pdf,.doc,.docx"><br><br>
+
+    <textarea id="description" placeholder="Description"></textarea><br><br>
+
+    <button onclick="submitRequest()">Send</button>
+
+  </div>
+
+</div>
+<div id="inviteModal" class="invite-modal">
+  <div class="invite-box">
+
+    <h2><i class="fas fa-user-plus"></i> Invite Students</h2>
+
+    <p>Share this link with students to register</p>
+
+    <div class="invite-link-box">
+      <input type="text" id="inviteLinkInput" readonly>
+      <button onclick="copyInviteLink()">
+        <i class="fas fa-copy"></i>
+      </button>
+    </div>
+
+    <div class="invite-actions">
+      <button onclick="shareWhatsApp()" class="whatsapp-btn">
+        <i class="fab fa-whatsapp"></i> WhatsApp
+      </button>
+
+      <button onclick="downloadQR()" class="qr-btn">
+        <i class="fas fa-download"></i> QR Code
+      </button>
+    </div>
+
+    <canvas id="qrCanvas"></canvas>
+
+    <!-- 🔥 NEW BUTTONS -->
+    <div class="invite-footer">
+      <button class="cancel-btn" onclick="closeInviteModal()">
+        Cancel
+      </button>
+
+      <button class="close-btn" onclick="closeInviteModal()">
+        Done
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<div id="viewStudentModal" class="student-modal">
+
+  <div class="student-modal-box">
+    
+    <div class="modal-header">
+      <h3><i class="fas fa-user"></i> Student Details</h3>
+      <span class="close-icon" onclick="closeViewStudent()">&times;</span>
+    </div>
+
+    <div id="studentDetails" class="modal-body"></div>
+
+    <div class="modal-footer">
+      <button onclick="closeViewStudent()" class="close-btn">Close</button>
+    </div>
+
+  </div>
+
+</div>
+<script>
+function openRequestModal() {
+  document.getElementById("requestModal").style.display = "block";
+}
+
+
+function submitRequest() {
+
+  const bannerFile = document.getElementById("banner").files[0];
+  const notesFile = document.getElementById("notes").files[0];
+  const description = document.getElementById("description").value;
+
+  const formData = new FormData();
+  formData.append("banner", bannerFile);
+  formData.append("notes", notesFile);
+  formData.append("description", description);
+
+  fetch("/teacher/send-request", {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert("Request Sent!");
+    location.reload();
+  });
+}
+// Sidebar + Top दोनों के लिए
+const navSendRequest = document.getElementById('nav-send-request');
+const topNavSendRequest = document.getElementById('top-nav-send-request');
+
+function handleSendRequestClick(e) {
+    e.preventDefault();
+
+    if (!state.paymentCompleted) {
+        alert('Please complete payment first.');
+        showPaymentSection();
+        return;
+    }
+
+    openRequestModal();
+}
+
+// Sidebar click
+if (navSendRequest) {
+    navSendRequest.addEventListener('click', handleSendRequestClick);
+}
+
+// Top navbar click
+if (topNavSendRequest) {
+    topNavSendRequest.addEventListener('click', handleSendRequestClick);
+}
+</script>
+
     <script src="/js/teacher-advance-version/desbord.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js"></script>
 </body>
 
 </html>
