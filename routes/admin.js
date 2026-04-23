@@ -18,6 +18,9 @@ const User = require("../models/user"); // Adjust the path as necessary
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
+const TestRequest = require("../models/TestRequest");
+const TeacherTest = require("../models/teacherTestModel");
+
 router.post("/upload", upload.single("certificate"), addCertificate);
 router.get("/registrations/count", getRegistrationsCount); // New route for getting registrations count
 router.get("/admin-count", getAdminCount);
@@ -146,6 +149,81 @@ router.get("/leads", async (req, res) => {
       message: "Server error"
     });
 
+  }
+});
+
+router.get("/test-requests", async (req, res) => {
+  const requests = await TestRequest.find({ status: "pending" })
+    .populate("teacherId");
+
+  res.render("admin/test-requests", { requests });
+});
+
+router.post("/approve-request", async (req, res) => {
+  try {
+    const { id, questions } = req.body;
+
+    const request = await TestRequest.findById(id);
+
+    // 🔥 text → array
+   const questionArray = questions.split("\n").map(line => {
+
+  const parts = line.split("|");
+
+  const questionText = parts[0];
+  const correctIndex = parseInt(parts[parts.length - 1]) - 1;
+
+  const options = parts.slice(1, -1).map((opt, i) => ({
+    text: opt,
+    isCorrect: i === correctIndex
+  }));
+
+  return {
+    text: questionText,
+    type: "multiple-choice",
+    difficulty: "easy",
+    points: 1,
+    options
+  };
+});
+
+    // 🔥 create test
+  const newTest = new TeacherTest({
+  teacher: request.teacherId,
+  name: "Admin Created Test",
+  subject: "Auto",
+  duration: 30,
+  difficulty: "easy",
+  description: request.description,
+
+  questions: questionArray
+});
+
+    await newTest.save();
+
+    request.status = "approved";
+    request.questionsText = questions;
+
+    await request.save();
+
+    res.json({ success: true });
+
+  } catch (err) {
+    console.log(err);
+    res.json({ success: false });
+  }
+});
+
+router.get("/test-requests-data", async (req, res) => {
+  try {
+    const requests = await TestRequest.find({ status: "pending" })
+      .populate("teacherId");
+
+    res.json(requests);
+
+  } catch (err) {
+    console.log(err);
+    res.json([]);
   }
 });
 

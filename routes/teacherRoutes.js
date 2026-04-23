@@ -10,6 +10,9 @@ const sendMail = require("../utils/sendMail");
 const Test = require("../models/Test");       // ✅ ALSO ADD
 const Question = require("../models/Question"); // ✅ ALSO ADD
 const ClassModel = require("../models/Class");
+const TestRequest = require("../models/TestRequest");
+const multer = require("multer");
+
 
 
 // ================= DASHBOARD =================
@@ -26,8 +29,8 @@ router.get("/teacher-dashboard", ensureTeacher, async (req, res) => {
     if (!teacher) return res.redirect("/login");
 
     const students = await Student.find({ teacherId: teacher._id });
-
-    res.render("tracher_deshboard/deshboard", { teacher, students });
+    
+    res.render("tracher_deshboard/advance-version/teacher-test-version", { teacher, students });
 
   } catch (err) {
     console.log("Teacher Dashboard Error:", err);
@@ -58,17 +61,24 @@ router.post("/teacher/add-student", async (req, res) => {
 
     const newStudent = new Student({
       teacherId: decoded.userId,
-      ...req.body
+      name: `${req.body.firstName || ''} ${req.body.lastName || ''}`.trim(),
+      email: req.body.email || '',
+      class: req.body.className || req.body.class || '',
+      roll: req.body.roll || '',
+      parentContact: req.body.parentContact || ''
     });
 
     await newStudent.save();
-    res.json({ success: true });
+    res.json({ success: true, student: newStudent });
 
   } catch (err) {
     console.log("Add Student Error:", err);
     res.json({ success: false });
   }
 });
+
+
+
 
 // ================= DELETE STUDENT =================
 router.delete("/teacher/delete-student/:id", async (req, res) => {
@@ -86,14 +96,23 @@ router.put("/teacher/update-student/:id", async (req, res) => {
   try {
     const decoded = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
 
+    const updateData = {
+      name: `${req.body.firstName || ''} ${req.body.lastName || ''}`.trim(),
+      email: req.body.email || '',
+      class: req.body.className || req.body.class || '',
+      roll: req.body.roll || '',
+      parentContact: req.body.parentContact || ''
+    };
+
     const updated = await Student.findOneAndUpdate(
       { _id: req.params.id, teacherId: decoded.userId },
-      req.body
+      updateData,
+      { new: true }
     );
 
     if(!updated) return res.json({ success:false });
 
-    res.json({ success:true });
+    res.json({ success:true, student: updated });
 
   } catch (err) {
     console.log("Update Student Error:", err);
@@ -270,7 +289,8 @@ router.post("/teacher/create-test", ensureTeacher, async (req, res) => {
   instructions,
   startDate,
   endDate,
-  teacherId: req.user._id   // ✅ यही MAIN FIX था
+  teacherId: req.user._id   
+  
 });
 
 
@@ -278,14 +298,17 @@ router.post("/teacher/create-test", ensureTeacher, async (req, res) => {
     await newTest.save();
 
     // 2️⃣ Save all Questions
-    const questionDocs = questions.map(q => ({
-      testId: newTest._id,
-      type: q.type,
-      text: q.text,
-      options: q.options || [],
-      correctAnswer: q.correctAnswer || 0,
-      points: q.points || 1
-    }));
+   const questionDocs = questions.map(q => ({
+  testId: newTest._id,
+  type: q.type || "mcq",
+  text: q.text,
+  points: q.points || 1,
+
+  options: (q.options || []).map(opt => ({
+    text: opt.text || opt,
+    isCorrect: opt.isCorrect || false
+  }))
+}));
 
     await Question.insertMany(questionDocs);
 
@@ -310,17 +333,20 @@ router.get("/teacher/view-test/:testId", ensureTeacher, async (req, res) => {
 
     // Format questions for student test page
     const formattedQuestions = dbQuestions.map((q, index) => ({
-      num: index + 1,
-      question_en: q.text,
-      question_hi: q.text,
-      options_en: q.options,
-      options_hi: q.options,
-      answer_en: q.options[q.correctAnswer],
-      answer_hi: q.options[q.correctAnswer],
-      points: q.points || 1,     // ✅ MARKS FIELD ADDED
-      attempted: false,
-      selected: ""
-    }));
+  num: index + 1,
+  question_en: q.text,
+  question_hi: q.text,
+
+  options_en: q.options.map(o => o.text),
+  options_hi: q.options.map(o => o.text),
+
+  answer_en: q.options.find(o => o.isCorrect)?.text || "",
+  answer_hi: q.options.find(o => o.isCorrect)?.text || "",
+
+  points: q.points || 1,
+  attempted: false,
+  selected: ""
+}));
 
     // Render test page with formatted questions
 res.render("tracher_deshboard/viewtext", {
@@ -373,14 +399,17 @@ router.put("/teacher/update-test/:testId", ensureTeacher, async (req, res) => {
     await Question.deleteMany({ testId: req.params.testId });
 
     // Insert new questions
-    const questionDocs = questions.map(q => ({
-      testId: req.params.testId,
-      type: q.type,
-      text: q.text,
-      options: q.options || [],
-      correctAnswer: q.correctAnswer || 0,
-      points: q.points || 1
-    }));
+   const questionDocs = questions.map(q => ({
+  testId: newTest._id,
+  type: q.type || "mcq",
+  text: q.text,
+  points: q.points || 1,
+
+  options: (q.options || []).map(opt => ({
+    text: opt.text || opt,
+    isCorrect: opt.isCorrect || false
+  }))
+}));
 
     await Question.insertMany(questionDocs);
 
@@ -505,6 +534,106 @@ router.get("/advance-version", ensureTeacher, async (req, res) => {
     res.redirect("/login");
   }
 });
+
+router.post("/teacher/send-request", async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    const decoded = require("jsonwebtoken").verify(token, process.env.JWT_SECRET);
+
+    const newRequest = new TestRequest({
+      teacherId: decoded.userId,
+      banner: req.body.banner,
+      notes: req.body.notes,
+      description: req.body.description
+    });
+
+    await newRequest.save();
+
+    res.json({ success: true });
+
+  } catch (err) {
+    console.log("Send Request Error:", err);
+    res.json({ success: false });
+  }
+});
+
+const storage = multer.diskStorage({ 
+  destination: "public/uploads/",
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
+  }
+});
+
+const upload = multer({ storage });
+
+router.post("/send-request", upload.single("banner"), async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    const decoded = require("jsonwebtoken").verify(token, process.env.JWT_SECRET);
+
+    const newRequest = new TestRequest({
+      teacherId: decoded.userId,
+      banner: req.file ? "/uploads/" + req.file.filename : "",
+      notes: req.body.notes,
+      description: req.body.description
+    });
+
+    await newRequest.save();
+
+    res.json({ success: true });
+
+  } catch (err) {
+    console.log(err);
+    res.json({ success: false });
+  }
+});
+
+router.put("/api/update-test/:id", async (req, res) => {
+    try {
+        const updated = await Test.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true }
+        );
+
+        res.json({ success: true, test: updated });
+    } catch (err) {
+        res.json({ success: false });
+    }
+});
+
+// Show student registration page
+router.get('/student-register/:teacherId', (req, res) => {
+    res.render('tracher_deshboard/advance-version/student-register', {
+        teacherId: req.params.teacherId
+    });
+});
+
+router.post('/student-register', async (req, res) => {
+
+    const { name, class: className, roll, email, parentContact, teacherId } = req.body;
+
+    try {
+        await Student.create({
+            name,
+            class: className,
+            roll,
+            email,
+            parentContact,
+
+            // ✅ YAHI FIX
+            teacherId: teacherId
+        });
+
+        res.send("Registration Successful ✅");
+
+    } catch (err) {
+        console.log(err);
+        res.send("Error ❌");
+    }
+});
+
+
 
 
 module.exports = router;
