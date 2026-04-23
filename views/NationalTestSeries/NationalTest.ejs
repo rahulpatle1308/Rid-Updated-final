@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>RIDTECH — Smart Search | Empty = All Videos | Sticky Chips</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/Allindiatestserice/testserice.css">
+</head>
+
+<body>
+<% 
+function timeAgo(date) {
+    const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+    const intervals = { year:31536000, month:2592000, day:86400, hour:3600, minute:60 };
+    for (let key in intervals) {
+        const value = Math.floor(seconds / intervals[key]);
+        if (value >= 1) {
+            return value + " " + key + (value > 1 ? "s" : "") + " ago";
+        }
+    }
+    return "just now";
+}
+
+function formatViews(views) {
+    if (views >= 1000000) return (views/1000000).toFixed(1).replace('.0','') + "M";
+    if (views >= 1000) return (views/1000).toFixed(1).replace('.0','') + "K";
+    return views;
+}
+%>
+    <%- include("common/allindiatestheader.ejs") %>
+
+    <!-- This hidden content will be moved inside .main-layout -->
+    <div id="tempContent" style="display: none;">
+        <div class="content">
+            <!-- CHIPS ROW -->
+            <div class="chips-row" id="chipsRow">
+                <div class="chip active" data-filter="all">All Exams</div>
+                <div class="chip" data-filter="ssc">SSC Exams</div>
+                <div class="chip" data-filter="banking">Banking Exams</div>
+                <div class="chip" data-filter="railway">Railway Exams</div>
+                <div class="chip" data-filter="upsc">UPSC / Civil Services</div>
+                <div class="chip" data-filter="neet">NEET Exam</div>
+                <div class="chip" data-filter="jee">JEE Exam</div>
+                <div class="chip" data-filter="state">State Government Exams</div>
+                <div class="chip" data-filter="police">Police / Defence Exams</div>
+                <div class="chip" data-filter="teaching">Teaching Exams (CTET / TET)</div>
+                <div class="chip" data-filter="computer">Computer / IT Tests</div>
+                <div class="chip" data-filter="mock">Mock Tests</div>
+                <div class="chip" data-filter="previous">Previous Year Papers</div>
+                <div class="chip" data-filter="class10">Class 10 Exams</div>
+                <div class="chip" data-filter="class12">Class 12 Exams</div>
+                <div class="chip" data-filter="entrance">Entrance Exams</div>
+                <div class="chip" data-filter="competitive">Competitive Exams</div>
+            </div>
+
+            <div id="searchResultInfo" style="display:none;"></div>
+
+            <!-- VIDEO GRID -->
+            <div class="video-grid" id="videoGrid">
+                <% if(tests && tests.length > 0){ %>
+                    <% tests.forEach(test => { %>
+                        <div class="video-card" data-test-id="<%= test._id %>" data-test-name="<%= test.name.toLowerCase() %>" data-subject="<%= test.subject?.toLowerCase() || '' %>" data-teacher="<%= test.teacher?.name?.toLowerCase() || '' %>" onclick="openTestPopup('<%= test._id %>', '<%= test.name %>')">
+                            <div class="thumbnail">
+                                <img src="https://picsum.photos/300/200" />
+                            </div>
+                            <div class="video-details">
+                                <div class="channel-avatar">
+                                    <%= test.teacher?.name?.charAt(0) || "T" %>
+                                </div>
+                                <div class="video-info">
+                                    <div class="title-row">
+                                        <div class="video-title"><%= test.name %></div>
+                                        <button class="like-btn <%= (user && test.likedBy?.includes(user._id)) ? 'liked' : '' %>" onclick="event.stopPropagation(); toggleLike(this, '<%= test._id %>')">
+                                            <i class="fas fa-heart"></i>
+                                            <span class="like-count"><%= test.likes || 0 %></span>
+                                        </button>
+                                        <button class="like-btn" onclick="event.stopPropagation(); shareTest('<%= test._id %>', '<%= test.name %>')">
+                                            <i class="fas fa-share-alt"></i>
+                                        </button>
+                                    </div>
+                                    <div class="channel-name"><%= test.teacher?.name %> • <%= test.subject %></div>
+                                    <div class="video-stats"><%= formatViews(test.views) %> views • <%= timeAgo(test.createdAt) %></div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <p style="padding:20px;">No tests available</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <!-- POPUP (must exist for openTestPopup) -->
+    <div id="startTestPopup" style="display:none;">
+        <div class="popup-container">
+            <div class="popup-header">
+                <h3><i class="fas fa-rocket"></i> Start Test</h3>
+                <button class="popup-close" onclick="closePopup()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="popup-body">
+                <div class="popup-icon"><i class="fas fa-clipboard-list"></i></div>
+                <p id="popupTestName" style="font-size:1.2rem; font-weight:600;"></p>
+                <p>Your test session will start immediately.</p>
+                <div class="test-warning"><i class="fas fa-info-circle"></i> Ensure stable internet & no distractions.</div>
+            </div>
+            <div class="popup-footer">
+                <button class="btn-cancel-popup" onclick="closePopup()">Cancel</button>
+                <button class="btn-start-popup" onclick="startTest()">Start Now</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== YOUR ORIGINAL JS (unchanged) ==========
+        async function toggleLike(btn, testId) {
+            try {
+                const res = await fetch(`/National-Test-Series/like/${testId}`, { method: "POST" });
+                const data = await res.json();
+                btn.classList.toggle("liked", data.liked);
+                btn.querySelector(".like-count").innerText = data.likes;
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        let selectedTestId = null;
+
+        function openTestPopup(testId, testName) {
+            selectedTestId = testId;
+            document.getElementById("popupTestName").innerText = testName;
+            document.getElementById("startTestPopup").style.display = "flex";
+        }
+
+        function closePopup() {
+            document.getElementById("startTestPopup").style.display = "none";
+        }
+
+        function startTest() {
+            if (selectedTestId) {
+                window.location.href = "/National-Test-Series/test/" + selectedTestId;
+            }
+        }
+
+        function shareTest(testId, testName) {
+            const url = window.location.origin + "/National-Test-Series/test/" + testId;
+            const text = `📘 ${testName}\n\n👉 Start your test:\n${url}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`);
+        }
+
+        // ========== MOVE CONTENT INTO MAIN LAYOUT ==========
+        document.addEventListener("DOMContentLoaded", function() {
+            const dynamicContent = document.getElementById("dynamicContent");
+            const tempContent = document.getElementById("tempContent");
+            if (dynamicContent && tempContent) {
+                // Move the inner .content div into dynamicContent
+                const contentDiv = tempContent.querySelector(".content");
+                if (contentDiv) {
+                    dynamicContent.appendChild(contentDiv);
+                }
+                // Remove the temporary container
+                tempContent.remove();
+            }
+        });
+
+        // ========== ADDED CLIENT-SIDE FILTERING (chips + search) ==========
+        let currentChipFilter = "all";
+        let currentSearchQuery = "";
+
+    function filterVideos() {
+    const cards = Array.from(document.querySelectorAll(".video-card"));
+    const grid = document.querySelector(".video-grid");
+    const infoDiv = document.getElementById("searchResultInfo");
+
+    const q = currentSearchQuery.trim().toLowerCase();
+
+    function getMatchScore(text, query) {
+        text = text.toLowerCase();
+        let score = 0;
+
+        if (text.includes(query)) score += 100;
+
+        const words = text.split(" ");
+        words.forEach(word => {
+            if (word.startsWith(query)) score += 50;
+            if (word.includes(query)) score += 20;
+        });
+
+        let matchCount = 0;
+        for (let char of query) {
+            if (text.includes(char)) matchCount++;
+        }
+        score += matchCount * 2;
+
+        return score;
+    }
+
+    let results = cards.map(card => {
+        const title = (card.getAttribute("data-test-name") || "").toLowerCase();
+        const teacher = (card.getAttribute("data-teacher") || "").toLowerCase();
+        const subject = (card.getAttribute("data-subject") || "").toLowerCase();
+
+        const fullText = `${title} ${teacher} ${subject}`;
+
+        // 🔥 CHIP FILTER
+        let matchesChip = false;
+
+        if (currentChipFilter === "all") {
+            matchesChip = true;
+        } else {
+            const chipKeywords = {
+                ssc: ["ssc", "cgl", "chsl", "mts"],
+                banking: ["bank", "ibps", "sbi"],
+                railway: ["railway", "rrb"],
+                upsc: ["upsc", "ias"],
+                neet: ["neet", "biology"],
+                jee: ["jee", "iit"],
+                state: ["psc"],
+                police: ["police", "defence"],
+                teaching: ["ctet", "tet"],
+                computer: ["computer"],
+                mock: ["mock"],
+                previous: ["previous"],
+                class10: ["class 10"],
+                class12: ["class 12"],
+                entrance: ["entrance"],
+                competitive: ["competitive"]
+            };
+
+            const keywords = chipKeywords[currentChipFilter] || [currentChipFilter];
+            matchesChip = keywords.some(kw => fullText.includes(kw));
+        }
+
+        // 🔥 SEARCH SCORE
+        let score = q === "" ? 1 : getMatchScore(fullText, q);
+
+        return { card, score, matchesChip };
+    });
+
+    // 🔥 FILTER + SORT
+    results = results.filter(item => item.matchesChip && item.score > 0);
+    results.sort((a, b) => b.score - a.score);
+
+    // 🔥 RENDER
+    grid.innerHTML = "";
+
+    if (results.length === 0) {
+        // fallback → show all
+        cards.forEach(card => {
+            card.style.display = "block";
+            grid.appendChild(card);
+        });
+
+        // ❌ RESULT TEXT REMOVE
+        if (infoDiv) {
+            infoDiv.style.display = "none";
+        }
+
+        return;
+    }
+
+    // show sorted results
+    results.forEach(item => {
+        item.card.style.display = "block";
+        grid.appendChild(item.card);
+    });
+
+    // ❌ REMOVE RESULT COUNT TEXT
+    if (infoDiv) {
+        infoDiv.style.display = "none";
+    }
+}
+
+        // Attach chip click events (delegation because chips may be moved)
+        document.addEventListener("click", function(e) {
+            const chip = e.target.closest(".chip");
+            if (chip) {
+                document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+                chip.classList.add("active");
+                currentChipFilter = chip.getAttribute("data-filter");
+                filterVideos();
+            }
+        });
+
+        // Desktop search integration
+        const desktopSearchInput = document.getElementById("desktopSearchInput");
+        const desktopSearchBtn = document.getElementById("desktopSearchBtn");
+        function updateSearch() {
+            currentSearchQuery = desktopSearchInput.value;
+            filterVideos();
+        }
+        if (desktopSearchBtn) desktopSearchBtn.addEventListener("click", updateSearch);
+        if (desktopSearchInput) desktopSearchInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") updateSearch();
+        });
+
+        // Initial filter after content is moved
+        setTimeout(() => filterVideos(), 150);
+    </script>
+</body>
+
+</html>

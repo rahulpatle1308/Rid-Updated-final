@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+
 const {
   addCertificate,
   getRegistrationsCount,
@@ -10,142 +11,148 @@ const {
   getEbooksCount,
   getPdfsCount,
 } = require("../controllers/adminController");
+
 const multer = require("multer");
-const authenticateJWT = require("../middleware/authMiddleware");
-const authorizeRole = require("../middleware/authorizeRole");
-const User = require("../models/user"); // Adjust the path as necessary
+
+// ✅ CORRECT MIDDLEWARE
+const verifyToken = require("../middleware/verifyToken");
+const requireAdmin = require("../middleware/requireAdmin");
+
+const User = require("../models/user");
+const Teacher = require("../models/Teacher");
+const Lead = require("../models/Lead");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
+// ================= ROUTES =================
+
 router.post("/upload", upload.single("certificate"), addCertificate);
-router.get("/registrations/count", getRegistrationsCount); // New route for getting registrations count
+
+router.get("/registrations/count", getRegistrationsCount);
 router.get("/admin-count", getAdminCount);
 router.get("/pdf-Count", getPdfsCount);
-//mujhe
 router.get("/student-count", getStudentCount);
 router.get("/teacher-count", getTeacherCount);
 router.get("/organisation-count", getOrganisationCount);
 router.get("/ebooks/count", getEbooksCount);
 
-router.get(
-  "/users",
-  authenticateJWT,
-  authorizeRole("admin"),
-  async (req, res) => {
-    try {
-      const users = await User.find({}, "email role gender name dob lastname"); // Fetch all users with email and role
-      res.json(users);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-      res.status(500).json({ message: "Server error" });
-    }
-  }
-);
+// ================= USERS =================
 
-// Endpoint to search for a user by email
-router.get(
-  "/search-user",
-  authenticateJWT,
-  authorizeRole("admin"),
-  async (req, res) => {
+router.get("/users", verifyToken, requireAdmin, async (req, res) => {
+  try {
+    const users = await User.find({}, "email role gender name dob lastname");
+    res.json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.get("/search-user", verifyToken, requireAdmin, async (req, res) => {
+  try {
     const { email } = req.query;
+    const user = await User.findOne({ email }, "email role");
 
-    try {
-      const user = await User.findOne({ email }, "email role"); // Search for the user by email
+    if (!user) return res.status(404).json({ message: "User not found" });
 
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
-
-      res.json(user); // Return user details
-    } catch (error) {
-      console.error("Error fetching user:", error);
-      res.status(500).json({ message: "Server error" });
-    }
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
-);
+});
 
-// Endpoint to change user role
-router.post(
-  "/change-role",
-  authenticateJWT,
-  authorizeRole("admin"),
-  async (req, res) => {
+router.post("/change-role", verifyToken, requireAdmin, async (req, res) => {
+  try {
     const { email, role } = req.body;
 
-    try {
-      const user = await User.findOne({ email });
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: "User not found" });
 
-      user.role = role; // Update the user role
-      await user.save();
+    user.role = role;
+    await user.save();
 
-      res.json({ message: `User role updated to ${role} for ${email}` });
-    } catch (error) {
-      console.error("Error changing user role:", error);
-      res.status(500).json({ message: "Server error" });
-    }
+    res.json({ message: "Role updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
-);
+});
 
-router.get(
-  "/all-admins",
-  authenticateJWT,
-  authorizeRole("admin"),
-  async (req, res) => {
-    try {
-      const admins = await User.find(
-        { role: "admin" },
-        "email role name lastname gender createdAt "
-      ); // Fetch all users with 'admin' role
+// ================= ADMINS =================
 
-      if (admins.length === 0) {
-        return res.status(404).json({ message: "No admins found" });
-      }
+router.get("/all-admins", verifyToken, requireAdmin, async (req, res) => {
+  try {
+    const admins = await User.find(
+      { role: "admin" },
+      "email role name lastname gender createdAt"
+    );
 
-      res.json(admins); // Return the list of admins
-    } catch (error) {
-      console.error("Error fetching admins:", error);
-      res.status(500).json({ message: "Server error" });
-    }
+    res.json(admins);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
-);
+});
 
 router.get("/count-admins", async (req, res) => {
   try {
-    // Count documents where the role is 'admin'
-    const adminCount = await User.countDocuments({ role: "admin" });
-
-    // Send the count as a response
-    res.json({ count: adminCount });
+    const count = await User.countDocuments({ role: "admin" });
+    res.json({ count });
   } catch (error) {
-    console.error("Error fetching admin count:", error);
     res.status(500).json({ message: "Error fetching admin count" });
   }
 });
 
-const Lead = require("../models/Lead");
+// ================= LEADS =================
 
-// GET all leads
 router.get("/leads", async (req, res) => {
   try {
-
     const leads = await Lead.find().sort({ createdAt: -1 });
-
     res.json(leads);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
-  } catch (err) {
+// ================= TEACHERS (FINAL FIX) =================
 
-    console.log(err);
+router.get("/teachers", async (req, res) => {
+  try {
+    let teachers = await Teacher.find();
 
-    res.status(500).json({
-      success: false,
-      message: "Server error"
+    if (!teachers.length) {
+      teachers = await User.find({ role: "teacher" });
+    }
+
+    res.json(teachers);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+const TeacherTest = require("../models/teacherTestModel");
+
+// ✅ PAGE OPEN KARNE KE LIYE
+router.get("/teacher-tests-page/:teacherId", async (req, res) => {
+  try {
+    const { teacherId } = req.params;
+
+    const teacher = await Teacher.findById(teacherId);
+    const tests = await TeacherTest.find({ teacher: teacherId });
+
+    res.render("Admin/teachertestcards/testcards", {
+      teacher,
+      tests
     });
 
+  } catch (err) {
+    console.log(err);
+    res.send("Error loading page");
   }
 });
 

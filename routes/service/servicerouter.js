@@ -69,4 +69,26 @@ router.get("/service2", (req, res) => {
   res.render("service/servicecontent", { service });
 });
 
+const Lead = require("../../models/Lead");
+router.post("/contact", async (req, res) => {
+  try {
+    // ✅ FIX: convert "on" → true
+    req.body.nda = req.body.nda === "on";
+
+    const newLead = new Lead(req.body);
+    await newLead.save();
+
+    res.json({
+      success: true,
+      message: "Lead saved"
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: "Server error"
+    });
+  }
+});
 module.exports = router;

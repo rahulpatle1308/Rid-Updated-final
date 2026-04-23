@@ -1,30 +1,38 @@
 const jwt = require("jsonwebtoken");
-const Admin = require("../models/Admin");
 
-const requireAdmin = async (req, res, next) => {
+const requireAdmin = (req, res, next) => {
   try {
     const token = req.cookies.token;
 
     if (!token) {
-      return res.redirect("/admin/login");
+      return res.status(401).json({
+        success: false,
+        message: "No token"
+      });
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    const admin = await Admin.findById(decoded.id);
-
-    if (!admin) {
-      return res.redirect("/admin/login");
+    // ✅ CHECK ROLE
+    if (decoded.role !== "admin") {
+      return res.status(403).json({
+        success: false,
+        message: "Not admin"
+      });
     }
 
-    req.admin = admin;         // request me attach
-    res.locals.admin = admin;  // views ke liye attach
+    req.userId = decoded.userId;
+    req.role = decoded.role;
 
     next();
 
   } catch (err) {
-    console.log("Auth Error:", err.message);
-    return res.redirect("/admin/login");
+    console.log("Admin Auth Error:", err.message);
+
+    return res.status(403).json({
+      success: false,
+      message: "Invalid token"
+    });
   }
 };
 

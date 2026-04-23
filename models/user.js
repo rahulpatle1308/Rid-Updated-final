@@ -30,14 +30,28 @@ const userSchema = new mongoose.Schema(
     district: String,
     city: String,
 
-    // 🔥 ✅ TECH INTERVIEW COUNT (FIXED HERE)
+    // 🔥 TECH INTERVIEW COUNT
     techInterviewCount: {
       type: Number,
       default: 0
     },
 
-    // ✅ TEST HISTORY
+    // ✅ TEST HISTORY (RESULT BASED)
     testHistory: [testHistorySchema],
+
+    // 🔥 ✅ NEW: VIEW HISTORY (USER NE KYA DEKHA)
+    viewHistory: [
+      {
+        test: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "TeacherTest"
+        },
+        viewedAt: {
+          type: Date,
+          default: Date.now
+        }
+      }
+    ],
 
     totalTestsAttempted: {
       type: Number,

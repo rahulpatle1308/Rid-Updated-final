@@ -5,4 +5,10 @@ router.get("/myteam",(req,res)=>{
     res.render("myteampages/myteam.ejs")
 })
 
+router.get("/about",(req,res)=>{
+    res.render("footerparts/about.ejs")
+})
+
+
+
 module.exports = router;

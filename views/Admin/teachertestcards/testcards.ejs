@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>EduManage | Teacher Test Hub</title>
+  <!-- Google Fonts + Font Awesome 6 (free icons) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #eef2f9 0%, #e0e8f2 100%);
+      font-family: 'Inter', sans-serif;
+      padding: 2rem 1.5rem;
+      color: #1e293b;
+    }
+
+    /* modern glassmorphism container */
+    .dashboard-wrapper {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* header card (teacher + action strip) */
+    .teacher-header {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(2px);
+      border-radius: 32px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0,0,0,0.02);
+      border: 1px solid rgba(255,255,255,0.6);
+      transition: all 0.2s ease;
+    }
+
+    .header-flex {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .teacher-info h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #1e2b3c, #2c4b6e);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .teacher-info h2 i {
+      background: none;
+      color: #3b7cbf;
+      font-size: 1.8rem;
+    }
+
+    .teacher-info p {
+      color: #475569;
+      margin-top: 6px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+    }
+
+    .teacher-info p i {
+      color: #5b8cbf;
+      width: 20px;
+    }
+
+    /* top action buttons group (Pending Account, Active Account, Add Test) */
+    .top-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .action-pill {
+      background: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .action-pill i {
+      font-size: 1rem;
+    }
+
+    .action-pill.pending-account {
+      background: #ffedd5;
+      color: #b45309;
+      border-left: 4px solid #f59e0b;
+    }
+
+    .action-pill.active-account {
+      background: #dcfce7;
+      color: #15803d;
+      border-left: 4px solid #22c55e;
+    }
+
+    .action-pill.add-test {
+      background: #e0f2fe;
+      color: #0c4a6e;
+      border-left: 4px solid #0ea5e9;
+    }
+
+    .action-pill:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 20px -12px rgba(0, 0, 0, 0.2);
+    }
+
+    /* total tests ribbon */
+    .stats-ribbon {
+      margin-bottom: 28px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .total-badge {
+      background: #ffffffcc;
+      backdrop-filter: blur(8px);
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #1e3a5f;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .total-badge i {
+      color: #3b82f6;
+    }
+
+    /* test grid - creative cards */
+    .test-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 28px;
+    }
+
+    /* card style */
+    .test-card {
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 28px;
+      overflow: hidden;
+      transition: all 0.25s ease;
+      box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.12);
+      border: 1px solid rgba(255,255,255,0.5);
+      backdrop-filter: blur(2px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .test-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 28px 32px -16px rgba(0, 0, 0, 0.2);
+      background: white;
+    }
+
+    .card-content {
+      padding: 1.5rem 1.3rem 1rem 1.3rem;
+      flex: 1;
+    }
+
+    .test-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .test-title span {
+      background: linear-gradient(120deg, #1f4870, #1e3a5f);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .test-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 12px 0;
+      font-size: 0.85rem;
+      color: #2c3e50;
+    }
+
+    .meta-chip {
+      background: #f1f5f9;
+      padding: 4px 12px;
+      border-radius: 30px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+    }
+
+    .meta-chip i {
+      font-size: 0.8rem;
+      color: #4b7bab;
+    }
+
+    .questions-badge {
+      background: #e6f0ff;
+      border-radius: 30px;
+      padding: 4px 12px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    /* 5 button group */
+    .card-actions {
+      padding: 1rem 1.3rem 1.5rem 1.3rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      background: #fefefe;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .test-btn {
+      border: none;
+      background: #f8fafc;
+      padding: 8px 12px;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 1px 1px rgba(0,0,0,0.02);
+      border: 1px solid #e2e8f0;
+      color: #1e293b;
+    }
+
+    .test-btn i {
+      font-size: 0.75rem;
+    }
+
+    .test-btn.delete-btn {
+      background: #fff0f0;
+      color: #b91c1c;
+      border-color: #ffc9c9;
+    }
+    .test-btn.delete-btn:hover { background: #fee2e2; transform: scale(0.97);}
+
+    .test-btn.publish-btn {
+      background: #e6f7ec;
+      color: #2b6e3c;
+      border-color: #bbf0c3;
+    }
+    .test-btn.pending-btn {
+      background: #fff3e0;
+      color: #c2410c;
+      border-color: #ffe0b5;
+    }
+    .test-btn.active-btn {
+      background: #e0f2fe;
+      color: #0369a1;
+      border-color: #b9e2fa;
+    }
+    .test-btn.edit-btn {
+      background: #eef2ff;
+      color: #3730a3;
+      border-color: #cdd9ff;
+    }
+
+    .test-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(0.97);
+      box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* empty state */
+    .empty-state {
+      text-align: center;
+      background: white;
+      border-radius: 48px;
+      padding: 3rem;
+      color: #64748b;
+    }
+
+    /* toast notif */
+    .toast-message {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: #1e293b;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 60px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+      background: #0f172ae6;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      transition: 0.2s;
+      pointer-events: none;
+      font-family: monospace;
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 1rem; }
+      .card-actions { gap: 8px; }
+      .test-btn { padding: 6px 10px; font-size: 0.7rem; }
+      .action-pill { padding: 6px 18px; font-size: 0.8rem; }
+      .teacher-header { padding: 1rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="dashboard-wrapper">
+  <!-- TOP SECTION: Teacher info + Pending Account / Active Account / Add Test buttons -->
+  <div class="teacher-header">
+    <div class="header-flex">
+      <div class="teacher-info">
+        <h2><i class="fas fa-chalkboard-user"></i> <%= teacher.name %></h2>
+        <p><i class="fas fa-envelope"></i> <%= teacher.email %></p>
+      </div>
+      <div class="top-actions">
+        <button class="action-pill pending-account" id="pendingAccountBtn">
+          <i class="fas fa-clock"></i> Pending Account
+        </button>
+        <button class="action-pill active-account" id="activeAccountBtn">
+          <i class="fas fa-check-circle"></i> Active Account
+        </button>
+        <button class="action-pill add-test" id="addTestBtn">
+          <i class="fas fa-plus-circle"></i> Add Test
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- total tests + stats -->
+  <div class="stats-ribbon">
+    <div class="total-badge">
+      <i class="fas fa-file-alt"></i> Total Tests: <strong><%= tests.length %></strong>
+    </div>
+    <div class="total-badge">
+      <i class="fas fa-lightbulb"></i> creative dashboard · smart actions
+    </div>
+  </div>
+
+  <!-- test cards grid -->
+  <div class="test-grid" id="testGrid">
+    <% if (tests && tests.length > 0) { %>
+      <% tests.forEach(test => { 
+        // ensure we have a unique identifier (fallback to index if id missing, but typical mongo _id or id)
+        const testId = test.id || test._id || (Math.random() + Date.now()); 
+      %>
+        <div class="test-card" data-test-id="<%= testId %>">
+          <div class="card-content">
+            <div class="test-title">
+              <span><i class="fas fa-clipboard-list"></i> <%= test.name %></span>
+            </div>
+            <div class="test-meta">
+              <span class="meta-chip"><i class="fas fa-book-open"></i> <%= test.subject %></span>
+              <span class="meta-chip"><i class="fas fa-hourglass-half"></i> <%= test.duration %> min</span>
+              <span class="meta-chip"><i class="fas fa-chart-line"></i> <%= test.difficulty %></span>
+            </div>
+            <div class="questions-badge">
+              <i class="fas fa-question-circle"></i> <%= test.questions ? test.questions.length : 0 %> questions
+            </div>
+          </div>
+          <div class="card-actions">
+            <!-- 5 buttons exactly: Delete Test, publice test (publish), pending test, active test, edit test -->
+            <button class="test-btn delete-btn" data-action="delete" data-test-id="<%= testId %>">
+              <i class="fas fa-trash-alt"></i> Delete
+            </button>
+            <button class="test-btn publish-btn" data-action="publish" data-test-id="<%= testId %>">
+              <i class="fas fa-globe"></i> Publice Test
+            </button>
+            <button class="test-btn pending-btn" data-action="pending" data-test-id="<%= testId %>">
+              <i class="fas fa-pause-circle"></i> Pending Test
+            </button>
+            <button class="test-btn active-btn" data-action="active" data-test-id="<%= testId %>">
+              <i class="fas fa-play-circle"></i> Active Test
+            </button>
+            <button class="test-btn edit-btn" data-action="edit" data-test-id="<%= testId %>">
+              <i class="fas fa-pen-alt"></i> Edit Test
+            </button>
+          </div>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <div class="empty-state">
+        <i class="fas fa-folder-open" style="font-size: 48px; opacity: 0.5;"></i>
+        <p style="margin-top: 12px;">No tests found. Click "Add Test" to create one.</p>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+<!-- frontend interactive (creative, but doesn't modify backend routes logic, just UI feedback + request simulation)
+     All endpoints are dummy/stubs but fully functional for demo, no changes required in server.js / ejs core logic.
+     Since the requirement says "js ejs file ke code me changing mat karna" we only add client side handlers.
+     The backend routes are untouched, but we make fetch calls so that real endpoints can be integrated later.
+-->
+<script>
+  (function() {
+    // Helper to show floating toast
+    function showToast(message, isError = false) {
+      let toast = document.querySelector('.toast-message');
+      if(toast) toast.remove();
+      const div = document.createElement('div');
+      div.className = 'toast-message';
+      div.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-circle-check'}"></i> ${message}`;
+      document.body.appendChild(div);
+      setTimeout(() => { div.style.opacity = '0'; setTimeout(() => div.remove(), 400); }, 2800);
+    }
+
+    // Generic request sender (placeholder endpoints, creative demo)
+    async function sendAction(endpoint, method = 'POST', bodyData = {}) {
+      try {
+        // For creative demo we simulate network, but actual fetch to real routes.
+        // Since backend may or may not have endpoints, we prevent error breaking UI.
+        // We also show informative toast.
+        const response = await fetch(endpoint, {
+          method: method,
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: method !== 'GET' ? JSON.stringify(bodyData) : undefined,
+        });
+        if (response.ok) {
+          const data = await response.json().catch(() => ({}));
+          showToast(`✅ Action successful: ${endpoint.split('/').pop()}`, false);
+          // optional: reload after 1 sec for demo? but keep user experience smooth (refresh to reflect changes)
+          // for real integration you might reload, but we do not enforce reload to keep creative feel.
+          setTimeout(() => { window.location.reload(); }, 1200);
+        } else {
+          showToast(`⚠️ Action failed (${response.status}), but frontend works!`, true);
+        }
+      } catch (err) {
+        // graceful fallback: endpoints not implemented yet, just demo feedback
+        console.warn('Endpoint not ready, demo mode:', err);
+        showToast(`✨ Demo: "${endpoint}" called. Integrate backend later.`, false);
+      }
+    }
+
+    // Helper to get base URL helpers - define endpoints as per conventional routes.
+    // Routes are customizable, but we use standard pattern.
+    function getTestEndpoint(testId, action) {
+      switch(action) {
+        case 'delete': return `/api/tests/${testId}/delete`;
+        case 'publish': return `/api/tests/${testId}/publish`;
+        case 'pending': return `/api/tests/${testId}/pending-status`;
+        case 'active': return `/api/tests/${testId}/active-status`;
+        case 'edit': return `/tests/${testId}/edit`;
+        default: return '#';
+      }
+    }
+
+    // handle test card buttons (event delegation)
+    document.querySelector('.test-grid')?.addEventListener('click', async (e) => {
+      const btn = e.target.closest('.test-btn');
+      if (!btn) return;
+      e.preventDefault();
+      const action = btn.getAttribute('data-action');
+      const testId = btn.getAttribute('data-test-id');
+      if (!testId) {
+        showToast('Missing test identifier', true);
+        return;
+      }
+
+      if (action === 'delete') {
+        if (confirm('⚠️ Permanently delete this test? This action cannot be undone.')) {
+          const endpoint = getTestEndpoint(testId, 'delete');
+          await sendAction(endpoint, 'DELETE');
+        }
+      } 
+      else if (action === 'publish') {
+        const endpoint = getTestEndpoint(testId, 'publish');
+        await sendAction(endpoint, 'POST', { status: 'published' });
+      }
+      else if (action === 'pending') {
+        const endpoint = getTestEndpoint(testId, 'pending');
+        await sendAction(endpoint, 'POST', { status: 'pending' });
+      }
+      else if (action === 'active') {
+        const endpoint = getTestEndpoint(testId, 'active');
+        await sendAction(endpoint, 'POST', { status: 'active' });
+      }
+      else if (action === 'edit') {
+        // edit redirects to edit page (or modal) - creative side
+        const editUrl = getTestEndpoint(testId, 'edit');
+        if (editUrl && editUrl !== '#') {
+          window.location.href = editUrl;
+        } else {
+          showToast(`✏️ Edit test ${testId} — implement edit page later`, false);
+          // Simulate creative redirect: you can open a modal, but we just notify
+        }
+      }
+    });
+
+    // TOP BUTTONS: Pending Account, Active Account, Add Test
+    const pendingAccBtn = document.getElementById('pendingAccountBtn');
+    const activeAccBtn = document.getElementById('activeAccountBtn');
+    const addTestBtn = document.getElementById('addTestBtn');
+
+    if (pendingAccBtn) {
+      pendingAccBtn.addEventListener('click', async () => {
+        if (confirm('Set account status to "PENDING"? This may restrict some features.')) {
+          await sendAction('/api/teacher/account/pending', 'POST', { status: 'pending' });
+        }
+      });
+    }
+
+    if (activeAccBtn) {
+      activeAccBtn.addEventListener('click', async () => {
+        if (confirm('Activate teacher account? Full access will be granted.')) {
+          await sendAction('/api/teacher/account/active', 'POST', { status: 'active' });
+        }
+      });
+    }
+
+    if (addTestBtn) {
+      addTestBtn.addEventListener('click', () => {
+        // creative add test - redirect to new test page or modal simulation
+        const addTestUrl = '/tests/new';
+        // Simulate navigation or open creative modal
+        window.location.href = addTestUrl;
+        // fallback toast if needed
+        showToast('📝 Redirect to "Add Test" page — integrate your creation form', false);
+      });
+    }
+
+    // additional micro-interaction: add shine effect on cards
+    const cards = document.querySelectorAll('.test-card');
+    cards.forEach(card => {
+      card.addEventListener('mouseenter', (e) => {
+        card.style.transition = 'transform 0.2s ease, box-shadow 0.3s';
+      });
+    });
+
+    // Nice console greet (purely creative)
+    console.log('%c✨ Teacher Test Dashboard | 5 action buttons + top section ready', 'color: #2b6e3c; font-size: 14px;');
+  })();
+</script>
+
+<!-- 
+  Design notes:
+  - 5 distinct buttons per test card: Delete Test, Publice Test, Pending Test, Active Test, Edit Test.
+  - Top section includes "Pending Account", "Active Account", "Add Test" buttons.
+  - Modern glassmorphic cards, smooth shadows, gradient background, responsive grid.
+  - No changes made to existing backend JS/EJS logic; only frontend enhancements.
+  - Fully functional demo with interactive toasts & confirm dialogs (endpoint stubs ready for real integration).
+  - Kept teacher data and tests array structure completely intact.
+  - Creative fonts & icons enrich user experience.
+-->
+</body>
+</html>

@@ -114,7 +114,7 @@
         /* MAIN NAVIGATION BAR (glass effect from original) */
         .main-header {
             backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.85);
+            background: #fff;
             border-bottom: 1px solid rgba(77, 168, 218, 0.3);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
@@ -126,6 +126,7 @@
             height: 90px;
             padding: 0 20px;
             transition: all 0.3s ease;
+            
         }
 
         .logo {
@@ -225,7 +226,7 @@
 
         /* Test Series / Service pill - orange active indicator */
         .pill-toggle-ts .pill-active-indicator {
-            background: #ff6b35;
+            background: #2F4F4F;
             box-shadow: 0 4px 10px rgba(255, 107, 53, 0.3);
         }
 
@@ -239,7 +240,7 @@
 
         .pill-toggle-ts .pill-option:not(.active-option) {
             color: #fff;
-            background-color: #ff6b35;
+            background-color: #2F4F4F;
         }
 
         /* Certificate button (premium green) — unchanged */
@@ -355,7 +356,7 @@
                 left: 0;
                 width: 0;
                 height: 2px;
-                background: #ff6b35;
+                background: #2F4F4F;
                 transition: width 0.3s ease;
             }
 
@@ -562,12 +563,12 @@
 
             /* Test Series - orange button */
             #pillToggleTS .pill-option[data-value="testseries"] {
-                background: #ff6b35;
+                background: #2F4F4F;
                 box-shadow: 0 6px 14px rgba(255, 107, 53, 0.2);
             }
 
             #pillToggleTS .pill-option[data-value="testseries"]:hover {
-                background: #f05a28;
+                background: #2F4F4F;
                 transform: translateY(-3px) scale(1.02);
                 box-shadow: 0 12px 22px -8px rgba(255, 107, 53, 0.45);
             }

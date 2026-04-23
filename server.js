@@ -14,30 +14,15 @@ const fileUpload = require("express-fileupload");
 const nodemailer = require("nodemailer");
 const dashboardRoutes = require("./routes/dashboard-count-all-system.js");
 const candidateRoutes = require("./routes/candidateRoutes.js");
-
-
-
-
-
-
+const configureMiddleware = require("./config/middleware");
 dotenv.config();
-
-
-// Routes
-// app.use("/", require("./routes/product"));
-
-
-
-
 // Initialize express app
 const app = express();
 const port = process.env.PORT || 9191;
 const http = require("http");
 const server = http.createServer(app);
 const mongoUrl = process.env.MONGODB_URI;
-
 console.log('🔗 Attempting MongoDB Atlas connection...');
-
 mongoose.connect(mongoUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -73,7 +58,6 @@ mongoose.connect(mongoUrl, {
     console.error('   4. Check database name in connection string');
     process.exit(1);
 });
-
 // ========== SESSION CONFIGURATION ==========
 app.use(session({
     secret: process.env.SESSION_SECRET || crypto.randomBytes(64).toString("hex"),
@@ -90,18 +74,9 @@ app.use(session({
         secure: process.env.NODE_ENV === 'production'
     }
 }));
-
 // ========== SECURITY MIDDLEWARE ==========
-app.use(helmet({
-    contentSecurityPolicy: false // Temporarily disable for debugging
-}));
-
-app.use(cors());
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 app.use('/ebook/uploads', express.static(path.join(__dirname, 'public/uploads')));
-
 // ========== CREATE UPLOAD DIRECTORIES ==========
 const ensureUploadDirs = () => {
    const directories = [
@@ -109,9 +84,7 @@ const ensureUploadDirs = () => {
     'public/uploads/covers',
     'uploads/research'
 ];
-
-
-    directories.forEach(dir => {
+     directories.forEach(dir => {
         const fullPath = path.join(__dirname, dir);
         if (!fs.existsSync(fullPath)) {
             fs.mkdirSync(fullPath, { recursive: true });
@@ -122,33 +95,6 @@ const ensureUploadDirs = () => {
     });
 };
 ensureUploadDirs();
-// ========== ADDITIONAL MIDDLEWARE ==========
-const configureMiddleware = () => {
-  app.use(cookieParser());
-
-  app.use(
-    fileUpload({
-      useTempFiles: false,
-      limits: { fileSize: 50 * 1024 * 1024 }
-    })
-  );
-
-  app.use(passport.initialize());
-  app.use(passport.session());
-  require("./config/passport")(passport);
-};
-  // ❌ express-fileupload remove karo (multer use ho raha hai)
-  // app.use(
-  //   fileUpload({
-  //     useTempFiles: true,
-  //     tempFileDir: "/tmp/",
-  //     limits: { fileSize: 100 * 1024 * 1024 },
-  //   })
-  // );
-
-
-
-
 // ========== VIEW ENGINE SETUP ==========
 const configureViews = () => {
   app.set("view engine", "ejs");
@@ -165,32 +111,51 @@ const configureViews = () => {
   app.use(express.static(path.join(__dirname, "code", "public"))); // 🔥 code/public
 };
 //=========================RTS MIDDLEWIRE=====================
-// ===== RTS MODULE CONNECT =====
 const rtsApp = require("./RTS/rtsmiddlewire");
 app.use("/rts", rtsApp);
-
 // ========== GLOBAL VARIABLES MIDDLEWARE ==========
-app.use((req, res, next) => {
-    res.locals.currentPath = req.path;
-    res.locals.success = req.query.success;
-    res.locals.error = req.query.error;
-    res.locals.user = req.user || req.session.user || null;
-    res.locals.basePath = '/ebook';
+const User = require("./models/user");
+const Teacher = require("./models/Teacher");
+const Organisation = require("./models/Organisation");
+const Question = require("./models/Question"); // ✅ ADD THIS
+const TeacherTest = require("./models/teacherTestModel");
+app.use(async (req, res, next) => {
+    res.locals.user = null;
+
+    if (req.session && req.session.userId) {
+        try {
+            let user = null;
+
+            if (req.session.userRole === "student") {
+                user = await User.findById(req.session.userId);
+            }
+            else if (req.session.userRole === "teacher") {
+                user = await Teacher.findById(req.session.userId);
+            }
+            else if (req.session.userRole === "organisation") {
+                user = await Organisation.findById(req.session.userId);
+            }
+
+            if (user) {
+                res.locals.user = user;
+            }
+
+        } catch (err) {
+            console.log("User fetch error:", err);
+        }
+    }
+
     next();
 });
-
 // ========== INITIALIZE SECURITY STORAGE ==========
 app.locals.securityEvents = new Map();
 app.locals.pdfTokens = new Map();
-
 // ========== EBOOK ROUTES ==========
 app.use('/ebook', require('./routes/pdfRoutes'));
 app.use('/ebook', require('./routes/authebookRoutes'));
-
 // ========== WORKSHOP ROUTES (MOVE HERE) ==========
 const workshopRoutes = require('./routes/workshopRoutes');
 app.use('/api/workshop', workshopRoutes);
-
 // ========== MAIN APPLICATION ROUTES ==========
 const configureRoutes = () => {
   // API Routes
@@ -200,18 +165,15 @@ const configureRoutes = () => {
   const adminRoutes = require("./routes/admin");
   const verifyRoutes = require("./routes/verify");
   const authenticateJWT = require("./middleware/authMiddleware");
-
   // ========== CERTIFICATE ROUTES ==========
   const applicationRoutes = require("./routes/applicationRoutes");
   app.use("/api", applicationRoutes);
-
   app.use("/user", userRoutes);
   app.use("/auth", authRoutes);
   app.use("/admin", adminRoutes);
   app.use("/verify", verifyRoutes);
   app.use("/api/organisation", organisationRoutes);
   app.use("/api/user", userRoutes);
-
   // ========== SECURE PDF ACCESS ==========
   app.use('/ebook/uploads/pdfs', (req, res, next) => {
       const referer = req.get('Referer');
@@ -223,14 +185,11 @@ const configureRoutes = () => {
       }
       next();
   });
-
-
 // Socket.IO
 const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: { origin: "*" }
 });
-
 // socket logic
 let onlineTestUsers = 0;
 io.on("connection", (socket) => {
@@ -242,15 +201,10 @@ io.on("connection", (socket) => {
     io.emit("onlineUsers", onlineTestUsers);
   });
 });
-
 // 🔥 IMPORTANT PART
 app.listen = function () {
   return server.listen.apply(server, arguments);
 };
-
-
-
-
   // ========== RTS INTEGRATION ==========
   app.use("/RTS/public", express.static(path.join(__dirname, "RTS", "public")));
   app.use("/rts", express.static(path.join(__dirname, "RTS", "public")));
@@ -258,8 +212,7 @@ app.listen = function () {
   app.get("/rts/main", (req, res) => {
     res.sendFile(path.join(__dirname, "RTS", "public", "main.html"));
   });
-
-  // ========== VIEW ROUTES ==========
+// ========== VIEW ROUTES ==========
   const Organisation = require("./models/Organisation");
   const Book = require("./models/Book");
 
@@ -384,8 +337,7 @@ app.listen = function () {
     res.setHeader("Content-Disposition", "inline");
     pdfStream.pipe(res);
   });
-
-  // ========== LOGOUT ROUTE ==========
+// ========== LOGOUT ROUTE ==========
   app.get("/logout", (req, res) => {
     if (req.session) {
       req.session.destroy((err) => {
@@ -396,8 +348,7 @@ app.listen = function () {
       res.json({ message: "Logged out successfully" });
     }
   });
-
-  // ========== DURATION API ==========
+// ========== DURATION API ==========
   app.get("/api/duration", (req, res) => {
     const duration = process.env.DURATION;
     if (!duration)
@@ -410,15 +361,9 @@ app.listen = function () {
     res.status(404).sendFile(path.join(__dirname, "public", "404/404.html"));
   });
 };
-
-// ========== CONFIGURE THE APPLICATION ==========
-configureMiddleware();
+configureMiddleware(app);
 configureViews();
-
 // ======= RTS AUTH ROUTES (MUST BE BEFORE 404) =======
-
-
-//=============test routers
 const teacherRoutes = require("./routes/teacherRoutes");
 app.use("/", teacherRoutes);
 const studentRoutes = require("./routes/studentRoutes");
@@ -429,30 +374,21 @@ app.use("/", giftRoutes);
 // student ranks system ==============
 const authenticateJWT = require("./middleware/authMiddleware");
 const teacherAnalyticsRoutes = require("./routes/teacherAnalytics");
-
 // 🔥 AUTH REQUIRED FOR ANALYTICS
 app.use(
   "/api/teacher/analytics",
   authenticateJWT,
   teacherAnalyticsRoutes
 );
-
 // pdf downloads 
 const teacherAnalyticsRoutess = require("./routes/teacherAnalyticsRoutes");
 app.use(teacherAnalyticsRoutess);
-
 app.get("/ebook", (req, res) => {
   res.render("ebook/dashboard");
 });
-app.get("/about", (req, res) => {
-  res.sendFile(path.join(process.cwd(), "public/about/about.html"));
-});
-
-
 // advance version routes
 const teacherTestApi = require("./routes/teacherTestApi");
 app.use("/api/teacher-tests", teacherTestApi);
-
 app.post("/api/send-email", async (req, res) => {
     const { studentEmail, subject, message } = req.body;
 
@@ -480,9 +416,6 @@ app.post("/api/send-email", async (req, res) => {
         res.json({ success: false });
     }
 });
-  // app.get("/grammarchecker",(req,res)=>{
-  // res.render("product/texttools/grammar.ejs")
-  // })
 app.get("/com",(req,res)=>{
   res.render("product/pdftools/compresspdf.ejs")
   })
@@ -501,7 +434,6 @@ app.get("/research-papper",(req,res)=>{
 app.use("/uploads", express.static("uploads"));
 const researchRoutes = require("./routes/researchRoutes");
 app.use("/api/research", researchRoutes);
-
 //===role by login pages origanition pages ===========================
 app.get("/library-dashboard",(req,res)=>{
   res.render("organisation/library-dashboard.ejs")
@@ -519,12 +451,11 @@ app.get("/coaching-dashboard",(req,res)=>{
 app.get("/research-paper", (req, res) => {
   res.render("Research-Papers/Home");
 });
-
 //typing software
 app.get("/typing-software",(req,res)=>{
   res.render("typing-software/main.ejs")
 })
-
+app.use("/service", require("./routes/service/servicerouter"));
 //////////////////////////////////////////////////product routes/////////////////////////////////////////
 const  productRoutes = require("./routes/product.js");
 app.use("/",productRoutes);
@@ -570,7 +501,13 @@ const intership=require("./routes/intanships/intanshippage.js")
 app.use("/",intership)
 // service pages auto diteated logic routes
 const Lead = require("./models/Lead.js");
+//test serice admin routes 
+const testServiceRoutes = require("./routes/admintestroutes/testserviceRoutes");
+app.use("/api/tests", testServiceRoutes);  // IMPORTANT
 
+//==========================National-Test-Series===============
+const NationalTestSeries=require("./routes/nationalTestSeries/nationalTest")
+app.use("/National-Test-Series",NationalTestSeries)
 app.post("/api/save-lead", async (req,res)=>{
 
  try{
@@ -594,6 +531,10 @@ app.post("/api/save-lead", async (req,res)=>{
  }
 
 })
+// all india test routes 
+const shortsRoutes = require("./routes/nationalTestSeries/shortroutes");
+app.use("/", shortsRoutes);
+
 const myteam=require("./routes/myteampages/myteam.js")
 app.use("/",myteam)
 // ===== TECH INTERVIEW SERVER CONNECT =====
@@ -620,10 +561,7 @@ async function startServer() {
     process.exit(1);
   }
 }
-
 startServer();
-
-
 // ✅ SOCKET.IO AFTER SERVER
 const { Server } = require("socket.io");
 const io = new Server(server);

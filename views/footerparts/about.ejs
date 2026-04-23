@@ -2,507 +2,1475 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
-  <title>RID Bharat – Research Innovation Discovery</title>
-
-  <!-- Google Fonts + fallback system fonts -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>RID TECH – Engineering Tomorrow's Intelligent Systems</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"> -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Poppins:wght@300;400;500;600;700;800&family=Rajdhani:wght@500;600;700&family=Exo+2:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="/css/about.css">
+  <link rel="stylesheet" href="/css/common/header.css">
+  <link rel="stylesheet" href="/css/common/footer.css">
+  <style>
+    /* ===== RESET & GLOBAL - NO CSS ON BODY TAG ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-dark: #051e2f;
+      --blue-deep-2: #0a2e44;
+      --blue-deep-3: #0e4160;
+      --blue-mid-1: #135e82;
+      --blue-mid-2: #1a7ca3;
+      --blue-light-1: #2a9bc9;
+      --blue-glow: #3eb3e0;
+      --accent: #ff6b35;
+      --accent-glow: #ff8c5a;
+      --white: #ffffff;
+      --shadow-dark: 0 20px 35px -12px rgba(0, 0, 0, 0.5);
+      --shadow-glow: 0 10px 25px -5px rgba(62, 179, 224, 0.3);
+      --transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+
+      --frontend: #6c5ce7;
+      --backend: #00b894;
+      --api: #e17055;
+      --ai: #0984e3;
+
+      --bg-dark: rgba(7, 30, 44, 0.7);
+      --bg-medium: rgba(10, 46, 68, 0.55);
+      --bg-light: rgba(12, 54, 78, 0.45);
+      --bg-lighter: rgba(14, 62, 88, 0.4);
+      --bg-soft: rgba(16, 70, 98, 0.35);
+    }
+
+    /* Body styling removed - no CSS on body element */
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: var(--transition);
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Main wrapper to apply background without touching body */
+    .page-wrapper {
+      font-family: 'Inter', 'Poppins', sans-serif;
+      background: var(--primary-dark);
+      color: var(--white);
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 0 20px;
+      }
+    }
+
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--blue-glow), var(--accent), var(--blue-glow), transparent);
+      margin: 0 auto 30px;
+      border-radius: 2px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .section-title h2 {
+      font-size: 36px;
+      background: linear-gradient(135deg, #c0e4ff, var(--blue-light-1), var(--blue-glow));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
+      position: relative;
+    }
+
+    .section-title h2::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--blue-glow));
+      margin: 8px auto 0;
+      border-radius: 4px;
+    }
+
+    .section-title p {
+      max-width: 700px;
+      margin: 6px auto 0;
+      color: #b8d4e8;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 768px) {
+      .section-title h2 {
+        font-size: 28px;
+      }
+
+      .section-title p {
+        font-size: 0.85rem;
+      }
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 26px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .btn-primary {
+      background: linear-gradient(105deg, var(--blue-mid-1), var(--blue-deep-3));
+      color: var(--white);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(105deg, var(--blue-mid-2), var(--blue-deep-2));
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--blue-glow);
+    }
+
+    /* Hero Section */
+    .about-hero {
+      background: radial-gradient(circle at 30% 20%, #0a2e44, var(--primary-dark), #010e17);
+      padding: 40px 0 50px;
+      position: relative;
+      overflow: hidden;
+      min-height: auto;
+
+    }
+
+    .about-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 18px;
+      background: linear-gradient(105deg,
+          transparent 48%,
+          rgba(62, 179, 224, 0.5) 48.5%,
+          rgba(255, 107, 53, 0.6) 50%,
+          rgba(62, 179, 224, 0.5) 51.5%,
+          transparent 52%);
+      transform: skewY(-1.5deg);
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .about-hero .tilted-border-glow {
+      position: absolute;
+      bottom: -1px;
+      left: -10%;
+      width: 120%;
+      height: 25px;
+      background: linear-gradient(90deg,
+          transparent,
+          rgba(62, 179, 224, 0.3),
+          rgba(255, 107, 53, 0.4),
+          rgba(62, 179, 224, 0.3),
+          transparent);
+      transform: skewY(-2deg) rotate(0.5deg);
+      filter: blur(3px);
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    .about-hero::before {
+      content: '';
+      position: absolute;
+      inset: -20%;
+      background-image: radial-gradient(rgba(240, 246, 255, 0.08) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none;
+      animation: particleDrift 20s linear infinite;
+    }
+
+    @keyframes particleDrift {
+      0% {
+        transform: translateY(0);
+      }
+
+      100% {
+        transform: translateY(-100px);
+      }
+    }
+
+    .hero-flex-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-left {
+      flex: 1.2;
+      animation: fadeSlideUp 0.6s ease both;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255, 107, 53, 0.2);
+      backdrop-filter: blur(8px);
+      padding: 4px 14px;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+
+    .hero-left h1 {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+      background: linear-gradient(125deg, #ffffff, #b8e2ff, #5fc3f0);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      line-height: 1.2;
+    }
+
+    .hero-left p {
+      max-width: 580px;
+      font-size: 0.95rem;
+      opacity: 0.9;
+      color: #cfe9ff;
+      margin-bottom: 20px;
+    }
+
+    .hero-stats-two-lines {
+      flex: 0.8;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px 25px;
+      background: rgba(5, 30, 47, 0.65);
+      backdrop-filter: blur(16px);
+      border-radius: 36px;
+      padding: 22px 28px;
+      border: 1px solid rgba(62, 179, 224, 0.4);
+      box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s, border-color 0.3s;
+      animation: fadeSlideUp 0.6s 0.1s ease both;
+    }
+
+    .hero-stats-two-lines:hover {
+      transform: translateY(-5px);
+      border-color: var(--blue-glow);
+      background: rgba(10, 46, 68, 0.85);
+    }
+
+    .hero-stat-item {
+      text-align: center;
+      padding: 6px 10px;
+      border-radius: 24px;
+      transition: all 0.3s;
+    }
+
+    .hero-stat-number {
+      font-size: 2.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffb347, var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      line-height: 1.2;
+      margin-bottom: 4px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-stat-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #eaf4ff;
+      letter-spacing: 0.3px;
+    }
+
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 992px) {
+      .hero-flex-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero-left {
+        text-align: center;
+      }
+
+      .hero-left h1 {
+        font-size: 2rem;
+      }
+
+      .hero-stats-two-lines {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero-left h1 {
+        font-size: 1.6rem;
+      }
+
+      .hero-stats-two-lines {
+        gap: 12px;
+        padding: 18px;
+      }
+
+      .hero-stat-number {
+        font-size: 1.5rem;
+      }
+
+      .hero-stat-label {
+        font-size: 0.65rem;
+      }
+    }
+
+    /* Canvas Section */
+    .canvas-effect-section {
+      position: relative;
+      background: linear-gradient(135deg, #051e2f, #0a2e44);
+      overflow: hidden;
+      padding: 50px 0;
+    }
+
+    #canvas-bg-effect {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      display: block;
+    }
+
+    .canvas-section-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .obj-card-3d {
+      flex: 0 0 340px;
+      background: rgba(10, 46, 68, 0.75);
+      backdrop-filter: blur(12px);
+      border-radius: 32px;
+      padding: 28px 24px;
+      border: 1px solid rgba(62, 179, 224, 0.35);
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+      box-shadow: 0 15px 25px -10px rgba(0, 0, 0, 0.4);
+      position: relative;
+      cursor: pointer;
+    }
+
+    .obj-card-3d::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(62, 179, 224, 0.15), rgba(255, 107, 53, 0.08));
+      border-radius: 32px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+
+    .obj-card-3d:hover {
+      transform: translateY(-12px) scale(1.02);
+      border-color: var(--blue-glow);
+      background: rgba(19, 94, 130, 0.92);
+      box-shadow: 0 30px 45px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(62, 179, 224, 0.4);
+    }
+
+    .obj-card-3d:hover::before {
+      opacity: 1;
+    }
+
+    .obj-icon-3d {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(145deg, var(--accent), #e05a2a);
+      border-radius: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      margin-bottom: 22px;
+      transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+    }
+
+    .obj-card-3d:hover .obj-icon-3d {
+      transform: rotateY(12deg) scale(1.1);
+      background: linear-gradient(145deg, var(--blue-glow), var(--blue-mid-2));
+      box-shadow: 0 12px 25px rgba(62, 179, 224, 0.5);
+    }
+
+    .obj-card-3d h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+      color: #ffffff;
+    }
+
+    .obj-card-3d p {
+      color: #cde3f0;
+      font-size: 0.9rem;
+      line-height: 1.55;
+      margin-bottom: 18px;
+    }
+
+    .obj-tag-3d {
+      display: inline-block;
+      background: rgba(255, 107, 53, 0.25);
+      padding: 5px 16px;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+      transition: all 0.3s;
+    }
+
+    .cards-3d-scroll {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 28px;
+      overflow-x: auto;
+      padding: 20px 6px 30px 6px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--blue-glow) #0a2e44;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .cards-3d-scroll::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .cards-3d-scroll::-webkit-scrollbar-track {
+      background: #0a2e44;
+      border-radius: 10px;
+    }
+
+    .cards-3d-scroll::-webkit-scrollbar-thumb {
+      background: var(--blue-glow);
+      border-radius: 10px;
+    }
+
+    .obj-header-3d {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .obj-header-3d h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #fff, #2a9bc9, #3eb3e0);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+    }
+
+    @media (max-width: 768px) {
+      .obj-card-3d {
+        flex: 0 0 300px;
+        padding: 22px 18px;
+      }
+
+      .obj-card-3d h3 {
+        font-size: 1.3rem;
+      }
+
+      .obj-header-3d h2 {
+        font-size: 1.6rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .obj-card-3d {
+        flex: 0 0 270px;
+        padding: 18px 16px;
+      }
+
+      .obj-card-3d h3 {
+        font-size: 1.2rem;
+      }
+    }
+
+    /* Premium Background */
+    .premium-bg-only {
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(ellipse at 20% 30%, rgba(10, 46, 68, 0.95), rgba(5, 30, 47, 0.98), #020c14);
+    }
+
+    .premium-bg-only::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(62, 179, 224, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(62, 179, 224, 0.045) 1px, transparent 1px);
+      background-size: 55px 55px;
+      animation: rhGridDrift 18s linear infinite;
+      z-index: 1;
+    }
+
+    .premium-bg-only::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background:
+        radial-gradient(circle at 15% 25%, rgba(62, 179, 224, 0.08) 0%, transparent 55%),
+        radial-gradient(circle at 85% 70%, rgba(255, 107, 53, 0.06) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes rhGridDrift {
+      0% {
+        background-position: 0 0, 0 0;
+      }
+
+      100% {
+        background-position: 55px 55px, -55px 55px;
+      }
+    }
+
+    .premium-bg-only .container {
+      position: relative;
+      z-index: 5;
+    }
+
+    /* Community Background */
+    .community-bg-style {
+      width: 100%;
+      background-color: var(--primary-dark);
+      background-image:
+        repeating-linear-gradient(45deg, rgba(62, 179, 224, 0.04) 0, rgba(62, 179, 224, 0.04) 1px, transparent 1px, transparent 40px),
+        repeating-linear-gradient(-45deg, rgba(255, 107, 53, 0.03) 0, rgba(255, 107, 53, 0.03) 1px, transparent 1px, transparent 40px);
+      background-position: 0 0;
+      animation: communityGridDrift 15s linear infinite;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .community-bg-style::before {
+      content: '';
+      position: absolute;
+      inset: -20%;
+      background-image: radial-gradient(rgba(240, 246, 255, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none;
+      animation: communityParticleDrift 20s linear infinite;
+      z-index: 1;
+    }
+
+    .community-bg-style::after {
+      content: '';
+      position: absolute;
+      width: 150%;
+      height: 150%;
+      top: -25%;
+      left: -25%;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(62, 179, 224, 0.1) 0%, transparent 45%),
+        radial-gradient(circle at 90% 80%, rgba(255, 107, 53, 0.08) 0%, transparent 45%);
+      pointer-events: none;
+      animation: communityAmbientGlow 8s ease-in-out infinite alternate;
+      z-index: 1;
+    }
+
+    .community-bg-style .container {
+      position: relative;
+      z-index: 5;
+    }
+
+    @keyframes communityGridDrift {
+      0% {
+        background-position: 0 0, 0 0;
+      }
+
+      100% {
+        background-position: 40px 40px, -40px 40px;
+      }
+    }
+
+    @keyframes communityParticleDrift {
+      0% {
+        transform: translateY(0);
+      }
+
+      100% {
+        transform: translateY(-100px);
+      }
+    }
+
+    @keyframes communityAmbientGlow {
+      0% {
+        transform: scale(1);
+        opacity: 0.6;
+      }
+
+      100% {
+        transform: scale(1.1);
+        opacity: 1;
+      }
+    }
+
+    /* Story Section */
+    .story-section {
+      padding: 45px 0;
+      background: var(--bg-dark);
+      backdrop-filter: blur(6px);
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .story-text h3 {
+      font-size: 1.8rem;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, #fff, var(--blue-light-1));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .story-text p {
+      margin-bottom: 14px;
+      color: #cde3f0;
+      font-size: 0.95rem;
+    }
+
+    .story-stats {
+      display: flex;
+      gap: 28px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .story-stat-number {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .story-image img {
+      border-radius: 28px;
+      box-shadow: 0 20px 30px -12px black;
+      border: 1px solid rgba(62, 179, 224, 0.4);
+      width: 100%;
+      transition: transform 0.5s ease;
+    }
+
+    @media (max-width: 992px) {
+      .story-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+      }
+
+      .story-stats {
+        justify-content: center;
+      }
+
+      .story-text h3 {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* Values */
+    .values-section {
+      padding: 45px 0;
+      background: var(--bg-medium);
+      backdrop-filter: blur(6px);
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .value-card {
+      background: rgba(10, 46, 68, 0.75);
+      backdrop-filter: blur(8px);
+      padding: 26px 18px;
+      border-radius: 28px;
+      text-align: center;
+      transition: all 0.3s;
+      border: 1px solid rgba(62, 179, 224, 0.3);
+    }
+
+    .value-icon {
+      width: 55px;
+      height: 55px;
+      background: linear-gradient(145deg, var(--blue-mid-2), var(--blue-deep-2));
+      border-radius: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 26px;
+    }
+
+    @media (max-width: 768px) {
+      .values-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+    }
+
+    /* Services */
+    .services-modern {
+      padding: 45px 0;
+    }
+
+    .services-modern .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .service-card-modern {
+      background: rgba(5, 30, 47, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 28px 20px;
+      border-radius: 28px;
+      text-align: center;
+      transition: all 0.3s;
+      border: 1px solid rgba(62, 179, 224, 0.25);
+    }
+
+    .service-icon-modern {
+      width: 65px;
+      height: 65px;
+      margin: 0 auto 16px;
+      background: linear-gradient(135deg, var(--blue-mid-2), #0f5c7c);
+      border-radius: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+    }
+
+    .btn-service {
+      display: inline-block;
+      margin-top: 12px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 6px 18px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: var(--blue-light-1);
+      border: 1px solid var(--blue-light-1);
+    }
+
+    @media (max-width: 992px) {
+      .services-modern .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .services-modern .services-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Domains Carousel */
+    .domains-carousel-section {
+      padding: 45px 0;
+    }
+
+    .carousel-wrapper {
+      position: relative;
+      padding: 10px 0;
+      overflow: hidden;
+    }
+
+    .carousel-container {
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .carousel-track {
+      display: flex;
+      gap: 24px;
+      animation: domainScroll 32s linear infinite;
+      width: max-content;
+      padding: 8px 0;
+    }
+
+    .carousel-track:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes domainScroll {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(calc(-50% - 12px));
+      }
+    }
+
+    .domain-card {
+      min-width: 270px;
+      padding: 22px;
+      border-radius: 24px;
+      background: rgba(10, 46, 68, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(62, 179, 224, 0.3);
+    }
+
+    .domain-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin-bottom: 14px;
+    }
+
+    .domain-features {
+      margin: 10px 0 16px;
+    }
+
+    .domain-features li {
+      padding: 3px 0 3px 20px;
+      position: relative;
+      font-size: 0.8rem;
+      color: #cde3f0;
+    }
+
+    .domain-features li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    .carousel-btn {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 4px 14px;
+      border-radius: 30px;
+      border: 1px solid;
+      transition: all 0.3s;
+      background: transparent;
+    }
+
+    @media (max-width: 640px) {
+      .domain-card {
+        min-width: 240px;
+        padding: 18px;
+      }
+    }
+
+    /* Gallery */
+    .gallery-premium {
+      padding: 45px 0;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .gallery-card {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.3);
+      aspect-ratio: 4 / 3;
+      cursor: pointer;
+      border: 1px solid rgba(62, 179, 224, 0.3);
+    }
+
+    .gallery-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+      color: white;
+      padding: 18px;
+      transform: translateY(100%);
+      transition: transform 0.35s ease;
+    }
+
+    .gallery-card:hover .gallery-overlay {
+      transform: translateY(0);
+    }
+
+    @media (max-width: 992px) {
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Mentor Spotlight */
+    .mentor-spotlight {
+      padding: 45px 0;
+    }
+
+    .mentor-card {
+      display: flex;
+      gap: 32px;
+      background: rgba(7, 35, 50, 0.9);
+      border-radius: 32px;
+      overflow: hidden;
+      align-items: center;
+      border: 1px solid rgba(62, 179, 224, 0.2);
+      flex-wrap: wrap;
+    }
+
+    .mentor-image {
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .mentor-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      min-height: 260px;
+    }
+
+    .mentor-content {
+      flex: 1.8;
+      padding: 32px 28px;
+    }
+
+    .mentor-tag {
+      color: var(--accent);
+      font-weight: 600;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    @media (max-width: 768px) {
+      .mentor-card {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .mentor-content {
+        text-align: center;
+        padding: 28px 20px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-   <!-- Header (unchanged structure, but fonts now bulletproof) -->
-  <div class="header-container">
-    <div class="top-header">
-      <div class="web-text">
-        <p><span>RID Bharat Run by TWF</span></p>
-        <p>Helpline: <span>+91- 9202707903</span></p>
-        <p>Email: <span>ridorg.in@gmail.com</span></p>
-      </div>
-      <div class="right-text">
-        <a href="#">ISO:9001:2015 Certified</a>
-        <a href="#">TWF</a>
-        <a href="#">Reg.No:048884</a>
-        <a href="#">ESTD:2020</a>
-      </div>
-    </div>
-
-    <div class="main-header">
-      <div class="nav">
-        <div class="logo">
-          <img src="/assets/logo ridtech.jpeg" alt="RID Bharat Logo"
-            onerror="this.src='https://via.placeholder.com/260x70/083d5d/FFFFFF?text=RID+Bharat+Logo'">
-          <div class="menu-icon" id="menuIcon">
-            <span></span><span></span><span></span>
-          </div>
-        </div>
-        <div class="menu" id="innerCont">
-          <div class="upperNav">
-            <a href="/rts/dashboard" class="nav-button" id="onlineTest1">
-              <i class="fa-brands fa-servicestack"></i> Test Series
-            </a>
-         
-           <a href="/service" <button class="nav-button"><i class="fa-solid fa-book"></i> Service</button></a>
-            <div class="certificate">
-              <a href="/Certificate-Verification/verify.html" <button class="nav-button" id="certificate"><i
-                  class="fa-solid fa-certificate"></i> Certificate</button></a>
+  <%- include("common/header.ejs")%>
+    <div class="page-wrapper">
+      <!-- Hero Section -->
+      <section class="about-hero">
+        <div class="tilted-border-glow"></div>
+        <div class="container">
+          <div class="hero-flex-container">
+            <div class="hero-left">
+              <div class="hero-badge"><i class="fas fa-bullseye"></i> Registered under RID Tech Private Limited</div>
+              <h1>Engineering Tomorrow's <br>Intelligent Systems</h1>
+              <p> RID Tech Pvt. Ltd.  is a pioneering force in software, AI, robotics, and advanced tech education — bridging
+                innovation with real-world impact.</p>
             </div>
-            <div class="btn-box">
-              <div id="swap-btn"></div>
-              <a href="/login" <button class="toggle-btn" id="logInButton"><i class="fa-solid fa-right-to-bracket"></i>
-                Login</button></a>
-              <a href="/form" <button class="toggle-btn" id="signUpBtn"><i class="fa-solid fa-user-plus"></i>
-                Register</button></a>
-            </div>
-          </div>
-         <ul class="lowerNav">
-  <li>
-    <a class="menu-link" href="/index.html">
-      <i class="fa-solid fa-house"></i> Home
-    </a>
-  </li>
-  <li>
-    <a class="menu-link" href="/about">
-      <i class="fa-solid fa-circle-info"></i> About Us
-    </a>
-  </li>
-  <li>
-    <a class="menu-link" href="/research">
-      <i class="fa-solid fa-flask"></i> Research Papers
-    </a>
-  </li>
-  <li>
-    <a class="menu-link" href="/internship">
-      <i class="fa-solid fa-laptop-code"></i> Internship
-    </a>
-  </li>
-  <li>
-    <a class="menu-link" href="/ebook/?search=&filter=all&sort=newest">
-      <i class="fa-solid fa-book-open"></i> E-Book
-    </a>
-  </li>
-  <li>
-    <a class="menu-link" href="#" onclick="window.location.href='/tech-interview'">
-      <i class="fa-solid fa-headset"></i> Tech Interview
-    </a>
-  </li>
-</ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========== ABOUT PAGE CONTENT (hero section removed, all about sections added) ========== -->
-
-  <!-- About Section -->
-  <section class="about" id="about">
-    <div class="container">
-      <div class="section-title">
-        <h2>Why Choose RidTechMentor?</h2>
-        <p>We provide comprehensive technical coaching that transforms engineers into industry-ready professionals</p>
-      </div>
-      <div class="about-content">
-        <div class="about-text">
-          <h3>Industry-Focused Technical Education</h3>
-          <p>At RidTechMentor, we bridge the gap between academic knowledge and industry requirements. Our curriculum is designed by senior engineers from top tech companies.</p>
-          <p>We focus on practical implementation, real-world projects, and the latest technologies that matter in today's competitive job market.</p>
-
-          <div class="features-grid">
-            <div class="feature-item">
-              <div class="feature-icon"><i class="fas fa-user-graduate"></i></div>
-              <div class="feature-text">
-                <h4>Expert Mentors</h4>
-                <p>Learn from senior engineers at FAANG companies</p>
+            <div class="hero-stats-two-lines">
+              <div class="hero-stat-item">
+                <div class="hero-stat-number counter-inline" data-target="1200">0</div>
+                <div class="hero-stat-label">Interns</div>
               </div>
-            </div>
-            <div class="feature-item">
-              <div class="feature-icon"><i class="fas fa-briefcase"></i></div>
-              <div class="feature-text">
-                <h4>Guaranteed Internships</h4>
-                <p>Get real-world experience with partner companies</p>
+
+              <div class="hero-stat-item">
+                <div class="hero-stat-number counter-inline" data-target="25">0</div>
+                <div class="hero-stat-label">Employees</div>
               </div>
-            </div>
-            <div class="feature-item">
-              <div class="feature-icon"><i class="fas fa-project-diagram"></i></div>
-              <div class="feature-text">
-                <h4>Project-Based Learning</h4>
-                <p>Build portfolio-worthy projects</p>
+
+              <div class="hero-stat-item">
+                <div class="hero-stat-number counter-inline" data-target="3">0</div>
+                <div class="hero-stat-label">Partner Companies</div>
               </div>
-            </div>
-            <div class="feature-item">
-              <div class="feature-icon"><i class="fas fa-certificate"></i></div>
-              <div class="feature-text">
-                <h4>Career Support</h4>
-                <p>Interview prep and placement assistance</p>
+
+              <div class="hero-stat-item">
+                <div class="hero-stat-number counter-inline" data-target="52">0</div>
+                <div class="hero-stat-label">Happy Clients</div>
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          <a href="#stats" class="btn btn-primary" style="margin-top: 2rem;">
-            <i class="fas fa-chart-line"></i> View Success Metrics
-          </a>
-        </div>
-        <div class="about-image">
-          <img src="../assets/about7.png" alt="TechMentor Team" onerror="this.src='https://via.placeholder.com/600x400/083d5d/FFFFFF?text=About+Image'">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Stats Section -->
-  <section class="stats" id="stats">
-    <div class="container">
-      <div class="section-title">
-        <h2>Our Achievements</h2>
-        <p>Years of excellence in engineering education and placement</p>
-      </div>
-      <div class="stats-grid">
-        <div class="stat-item">
-          <div class="stat-icon"><i class="fas fa-user-graduate"></i></div>
-          <h3 class="counter" data-count="2500">0</h3>
-          <p>Engineers Trained</p>
-        </div>
-        <div class="stat-item">
-          <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
-          <h3 class="counter" data-count="94">0</h3>
-          <p>Placement Rate</p>
-        </div>
-        <div class="stat-item">
-          <div class="stat-icon"><i class="fas fa-handshake"></i></div>
-          <h3 class="counter" data-count="300">0</h3>
-          <p>Partner Companies</p>
-        </div>
-        <div class="stat-item">
-          <div class="stat-icon"><i class="fas fa-star"></i></div>
-          <h3><span class="counter" data-count="4.9">0</span>/5</h3>
-          <p>Student Rating</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Domains Carousel -->
-  <section class="domains" id="domains">
-    <div class="container">
-      <div class="section-title">
-        <h2>Our Development Domains</h2>
-        <p>Comprehensive coverage of modern software development areas</p>
-      </div>
-      <div class="carousel-wrapper">
-        <div class="carousel-overlay overlay-left"></div>
-        <div class="carousel-overlay overlay-right"></div>
-        <div class="carousel-container">
-          <div class="carousel-track" id="carouselTrack">
-            <!-- Frontend Card -->
-            <div class="domain-card frontend">
-              <div class="domain-icon"><i class="fas fa-paint-brush"></i></div>
-              <h3>Frontend Development</h3>
-              <p>Create stunning, responsive user interfaces with modern frameworks.</p>
-              <ul class="domain-features">
-                <li>React, Vue, Angular</li>
-                <li>Responsive Design</li>
-                <li>State Management</li>
-                <li>Performance Optimization</li>
-              </ul>
-              <a href="#" class="carousel-btn" style="border-color: var(--frontend); color: var(--frontend);">Explore Frontend</a>
+      <!-- Canvas Section -->
+      <section class="canvas-effect-section">
+        <canvas id="canvas-bg-effect"></canvas>
+        <div class="container canvas-section-content">
+          <div class="obj-header-3d">
+            <h2><i class="fas fa-flag-checkered" style="color: var(--accent); margin-right: 10px;"></i> Main Objective
+              of RID Tech Private Limited</h2>
+            <p>Empowering tomorrow through advanced tech, research, and skill development</p>
+          </div>
+          <div class="cards-3d-scroll">
+            <div class="obj-card-3d">
+              <div class="obj-icon-3d"><i class="fas fa-laptop-code"></i></div>
+              <h3>Software & IT Solutions</h3>
+              <p>Designing, developing, implementing software, web & mobile apps, IT consulting, and digital
+                transformation.</p><span class="obj-tag-3d">Innovation</span>
             </div>
-            <!-- Backend Card -->
-            <div class="domain-card backend">
-              <div class="domain-icon"><i class="fas fa-server"></i></div>
-              <h3>Backend Development</h3>
-              <p>Build robust server-side applications and scalable architectures.</p>
-              <ul class="domain-features">
-                <li>Node.js, Python, Java</li>
-                <li>Database Design</li>
-                <li>Authentication & Security</li>
-                <li>Microservices</li>
-              </ul>
-              <a href="#" class="carousel-btn" style="border-color: var(--backend); color: var(--backend);">Explore Backend</a>
+            <div class="obj-card-3d">
+              <div class="obj-icon-3d"><i class="fas fa-robot"></i></div>
+              <h3>AI & Robotics</h3>
+              <p>Design, manufacture & provide robotics systems, automation solutions, intelligent systems, and
+                AI-driven products.</p><span class="obj-tag-3d">Automation</span>
             </div>
-            <!-- API Card -->
-            <div class="domain-card api">
-              <div class="domain-icon"><i class="fas fa-code"></i></div>
-              <h3>API Development</h3>
-              <p>Design, build, and secure RESTful and GraphQL APIs.</p>
-              <ul class="domain-features">
-                <li>REST & GraphQL</li>
-                <li>API Security</li>
-                <li>OpenAPI/Swagger</li>
-                <li>Rate Limiting</li>
-              </ul>
-              <a href="#" class="carousel-btn" style="border-color: var(--api); color: var(--api);">Explore API Dev</a>
+            <div class="obj-card-3d">
+              <div class="obj-icon-3d"><i class="fas fa-chalkboard-user"></i></div>
+              <h3>Tech Education Hubs</h3>
+              <p>Establish training centers & online platforms for programming, AI, cybersecurity, cloud computing.</p>
+              <span class="obj-tag-3d">Upskilling</span>
             </div>
-            <!-- AI Card -->
-            <div class="domain-card ai">
-              <div class="domain-icon"><i class="fas fa-robot"></i></div>
-              <h3>AI & Machine Learning</h3>
-              <p>Integrate AI and machine learning into your applications.</p>
-              <ul class="domain-features">
-                <li>Python for AI/ML</li>
-                <li>TensorFlow & PyTorch</li>
-                <li>NLP</li>
-                <li>Model Deployment</li>
-              </ul>
-              <a href="#" class="carousel-btn" style="border-color: var(--ai); color: var(--ai);">Explore AI/ML</a>
+            <div class="obj-card-3d">
+              <div class="obj-icon-3d"><i class="fas fa-users"></i></div>
+              <h3>Workshops & Certifications</h3>
+              <p>Workshops, seminars, certification programs with academic & industry partners to bridge skill gaps.</p>
+              <span class="obj-tag-3d">Partnerships</span>
             </div>
-            <!-- Duplicate for seamless loop -->
-            <div class="domain-card frontend">
-              <div class="domain-icon"><i class="fas fa-paint-brush"></i></div>
-              <h3>Frontend Development</h3>
-              <p>Create stunning, responsive user interfaces with modern frameworks.</p>
-              <ul class="domain-features">
-                <li>React, Vue, Angular</li>
-                <li>Responsive Design</li>
-                <li>State Management</li>
-                <li>Performance Optimization</li>
-              </ul>
-              <a href="#" class="carousel-btn" style="border-color: var(--frontend); color: var(--frontend);">Explore Frontend</a>
+            <div class="obj-card-3d">
+              <div class="obj-icon-3d"><i class="fas fa-flask"></i></div>
+              <h3>R&D & Emerging Tech</h3>
+              <p>Research & development in artificial intelligence, machine learning, robotics, and next-gen digital
+                ecosystems.</p><span class="obj-tag-3d">Future Ready</span>
             </div>
-            <div class="domain-card backend">
-              <div class="domain-icon"><i class="fas fa-server"></i></div>
-              <h3>Backend Development</h3>
-              <p>Build robust server-side applications and scalable architectures.</p>
-              <ul class="domain-features">
-                <li>Node.js, Python, Java</li>
-                <li>Database Design</li>
-                <li>Authentication & Security</li>
-                <li>Microservices</li>
-              </ul>
-              <a href="#" class="carousel-btn" style="border-color: var(--backend); color: var(--backend);">Explore Backend</a>
-            </div>
-            <div class="domain-card api">
-              <div class="domain-icon"><i class="fas fa-code"></i></div>
-              <h3>API Development</h3>
-              <p>Design, build, and secure RESTful and GraphQL APIs.</p>
-              <ul class="domain-features">
-                <li>REST & GraphQL</li>
-                <li>API Security</li>
-                <li>OpenAPI/Swagger</li>
-                <li>Rate Limiting</li>
-              </ul>
-              <a href="#" class="carousel-btn" style="border-color: var(--api); color: var(--api);">Explore API Dev</a>
-            </div>
-            <div class="domain-card ai">
-              <div class="domain-icon"><i class="fas fa-robot"></i></div>
-              <h3>AI & Machine Learning</h3>
-              <p>Integrate AI and machine learning into your applications.</p>
-              <ul class="domain-features">
-                <li>Python for AI/ML</li>
-                <li>TensorFlow & PyTorch</li>
-                <li>NLP</li>
-                <li>Model Deployment</li>
-              </ul>
-              <a href="#" class="carousel-btn" style="border-color: var(--ai); color: var(--ai);">Explore AI/ML</a>
+            <div class="obj-card-3d">
+              <div class="obj-icon-3d"><i class="fas fa-cloud-upload-alt"></i></div>
+              <h3>IT-Enabled Services</h3>
+              <p>Automation solutions, digital transformation, and enterprise software services for global business
+                excellence.</p><span class="obj-tag-3d">Scalable</span>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
+      </section>
 
-  <!-- Gallery Section -->
-  <section class="gallery-section" id="gallery">
-    <div class="container">
-      <div class="section-title">
-        <h2>Our Learning Environment & Community</h2>
-        <p>A glimpse of our collaborative learning culture, mentorship, and real-world projects</p>
-      </div>
-      <div class="gallery-grid">
-        <div class="gallery-card"><img src="../assets/about1.png" alt="Team Collaboration" onerror="this.src='https://via.placeholder.com/400x250/083d5d/FFFFFF?text=Team'"><div class="gallery-overlay"><h4>Team Collaboration</h4></div></div>
-        <div class="gallery-card"><img src="../assets/about-class.png" alt="Mentorship" onerror="this.src='https://via.placeholder.com/400x250/4da8da/FFFFFF?text=Mentorship'"><div class="gallery-overlay"><h4>Expert Mentorship</h4></div></div>
-        <div class="gallery-card"><img src="../assets/about-id.png" alt="Projects" onerror="this.src='https://via.placeholder.com/400x250/ff6b35/FFFFFF?text=Projects'"><div class="gallery-overlay"><h4>Real Projects</h4></div></div>
-        <div class="gallery-card"><img src="../assets/about.png" alt="Discussion" onerror="this.src='https://via.placeholder.com/400x250/085d0f/FFFFFF?text=Discussion'"><div class="gallery-overlay"><h4>Peer Discussions</h4></div></div>
-        <div class="gallery-card"><img src="../assets/about6.png" alt="Workshops" onerror="this.src='https://via.placeholder.com/400x250/6c5ce7/FFFFFF?text=Workshops'"><div class="gallery-overlay"><h4>Workshops</h4></div></div>
-        <div class="gallery-card"><img src="../assets/about5.png" alt="Career Growth" onerror="this.src='https://via.placeholder.com/400x250/00b894/FFFFFF?text=Career'"><div class="gallery-overlay"><h4>Career Growth</h4></div></div>
-        <div class="gallery-card"><img src="../assets/rajsingh.jpeg" alt="Career Growth" onerror="this.src='https://via.placeholder.com/400x250/00b894/FFFFFF?text=Career'"><div class="gallery-overlay"><h4>Developer</h4></div></div>
-        <div class="gallery-card"><img src="../assets/mansisingh.jpeg" alt="Career Growth" onerror="this.src='https://via.placeholder.com/400x250/00b894/FFFFFF?text=Career'"><div class="gallery-overlay"><h4>Developer</h4></div></div>
-        <div class="gallery-card"><img src="../assets/brijesh.jpeg" alt="Career Growth" onerror="this.src='https://via.placeholder.com/400x250/00b894/FFFFFF?text=Career'"><div class="gallery-overlay"><h4>Developer</h4></div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Services Section -->
-  <section class="services">
-    <div class="container">
-      <div class="section-title">
-        <h2>Our Coaching Services</h2>
-        <p>Comprehensive development coaching solutions for all skill levels</p>
-      </div>
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="service-icon"><i class="fas fa-code"></i></div>
-          <h3>1-on-1 Development Coaching</h3>
-          <p>Personalized sessions with senior developers to master frontend, backend, API, and AI development with real-time code review.</p>
-          <a href="#" class="btn btn-primary">Learn More</a>
-        </div>
-        <div class="service-card">
-          <div class="service-icon"><i class="fas fa-project-diagram"></i></div>
-          <h3>Project-Based Learning</h3>
-          <p>Build real-world full-stack applications with guidance from industry experts to strengthen your portfolio.</p>
-          <a href="#" class="btn btn-primary">View Projects</a>
-        </div>
-        <div class="service-card">
-          <div class="service-icon"><i class="fas fa-briefcase"></i></div>
-          <h3>Technical Interview Prep</h3>
-          <p>Mock interviews, coding challenges, system design practice, and negotiation coaching for top tech companies.</p>
-          <a href="#" class="btn btn-primary">Prepare Now</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Founder Section -->
-  <section class="founder-section" id="founder">
-    <div class="container">
-      <div class="section-title">
-        <h2>Meet Our Founder</h2>
-        <p>The vision and leadership behind RidTechMentor</p>
-      </div>
-      <div class="founder-card">
-        <div class="founder-image">
-          <img src="../assets/founder.png" alt="Er. Rajesh Prasad" onerror="this.src='https://via.placeholder.com/500x350/083d5d/FFFFFF?text=Founder'">
-        </div>
-        <div class="founder-content">
-          <h3>Er. Rajesh Prasad</h3>
-          <span class="founder-degree">B.Tech – Anna University, Chennai</span>
-          <p>Er. Rajesh Prasad is the visionary founder of RidTechMentor, dedicated to bridging the gap between academic learning and real-world industry requirements. With a strong technical background and passion for mentoring, he has guided thousands of students toward successful engineering careers.</p>
-          <p>His mission is to empower engineers with practical skills, industry exposure, and confidence to excel in modern software development and emerging technologies.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== END OF ABOUT CONTENT ========== -->
-
-  <!-- Footer (unchanged) -->
-  <footer>
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-logo">
-          <img src="/assets/logo ridtech.jpeg" alt="RID Bharat Logo"
-            onerror="this.src='https://via.placeholder.com/260x70/083d5d/FFFFFF?text=RID+Bharat+Logo'">
-          <p>Mig, 72, Rajiv Nagar, A Sector, Aayodhya bypass Bhopal, Madhya Pradesh, India (462022)</p>
-          <div class="contact-info">
-            <p><i class="fas fa-envelope"></i> <a href="mailto:ridorg.in@gmail.com">ridorg.in@gmail.com</a></p>
-            <p><i class="fas fa-phone"></i> <a href="tel:+919892782728">+91- 9202707903</a></p>
+      <!-- Story Section -->
+      <section class="story-section">
+        <div class="container">
+          <div class="story-grid">
+            <div class="story-text">
+              <h3>Our Journey: From Vision to Impact</h3>
+              <p>Founded with a mission to bridge academia and industry,RID Tech Pvt. Ltd. has become a launchpad for
+                engineers, researchers, and innovators. We cultivate practical skills, research mindset, and real
+                confidence in emerging technologies like AI, Robotics, and Full-Stack Development.</p>
+         <p>
+  Backed by RID Tech Pvt. Ltd., we deliver innovative software solutions, AI-driven systems, and cutting-edge technology services designed to solve real-world business challenges.
+</p>
+              <div class="story-stats">
+                <div>
+                  <div class="story-stat-number">6+ Years</div>
+                  <div>Excellence <span>(TWF)</span></div>
+                </div>
+               
+                <div>
+                  <div class="story-stat-number">15+</div>
+                  <div>Research Domains</div>
+                </div>
+              </div>
+            </div>
+            <div class="story-image"><img
+                src="/assets/company.jpeg"
+                alt="RID Bharat Innovation Hub"></div>
           </div>
         </div>
+      </section>
 
-        <div class="footer-links">
-          <h3>Research Topics</h3>
-          <ul>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Computers & Technology</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> AI & Machine Learning</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Space Engineering</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Data Science</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Renewable Energy</a></li>
-          </ul>
+      <!-- Values Section -->
+      <section class="values-section">
+        <div class="container">
+          <div class="section-title">
+            <h2>Our Core Values</h2>
+            <p>Driving ethical innovation & technical mastery</p>
+          </div>
+          <div class="values-grid">
+            <div class="value-card">
+              <div class="value-icon"><i class="fas fa-brain"></i></div>
+              <h4>Innovation First</h4>
+              <p>Cutting-edge AI, robotics and software research.</p>
+            </div>
+            <div class="value-card">
+              <div class="value-icon"><i class="fas fa-handshake"></i></div>
+              <h4>Industry Integration</h4>
+              <p>Real-world projects & active mentorship.</p>
+            </div>
+            <div class="value-card">
+              <div class="value-icon"><i class="fas fa-users"></i></div>
+              <h4>Inclusive Growth</h4>
+              <p>Empowering every learner irrespective of background.</p>
+            </div>
+          </div>
         </div>
-
-        <div class="footer-links">
-          <h3>Quick Links</h3>
-          <ul>
-            <li><a href="/about"><i class="fas fa-chevron-right"></i> About RID</a></li>
-            <li><a href="/research"><i class="fas fa-chevron-right"></i> Research Papers</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Innovation Hub</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Join Community</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Events & Workshops</a></li>
-          </ul>
+        <div class="container">
+          <div class="section-divider"></div>
         </div>
+      </section>
 
-        <div class="footer-social">
-          <h3>Follow Us</h3>
-          <ul>
-            <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
-            <li><a href="https://www.linkedin.com/in/rid-bharat-9a4517324"><i class="fab fa-linkedin-in"></i> LinkedIn</a></li>
-            <li><a href="https://youtube.com/@ridbharat"><i class="fab fa-youtube"></i> YouTube</a></li>
-            <li><a href="https://github.com/RID-bharat25"><i class="fab fa-github"></i> GitHub</a></li>
-            <li><a href="https://www.instagram.com/ridbharat"><i class="fab fa-instagram"></i> Instagram</a></li>
-            <li><a href="mailto:ridorg.in@gmail.com"><i class="fas fa-envelope"></i> Email</a></li>
-          </ul>
+      <!-- Services -->
+      <section class="services-modern premium-bg-only">
+        <div class="container">
+          <div class="section-title">
+            <h2>Our Tech Training & Development Programs</h2>
+            <p>Comprehensive upskilling for modern engineering careers</p>
+          </div>
+          <div class="services-grid">
+            <div class="service-card-modern">
+              <div class="service-icon-modern"><i class="fas fa-chalkboard-user"></i></div>
+              <h3>1-on-1 Dev Training</h3>
+              <p>Personalized sessions: frontend, backend, AI, cloud with real-time code reviews & project mentorship.
+              </p><a href="#" class="btn-service">Learn More →</a>
+            </div>
+            <div class="service-card-modern">
+              <div class="service-icon-modern"><i class="fas fa-laptop-code"></i></div>
+              <h3>Project-Based Learning</h3>
+              <p>Build full-stack apps, robotics simulations & capstone projects with industry experts.</p><a href="#"
+                class="btn-service">View Projects →</a>
+            </div>
+            <div class="service-card-modern">
+              <div class="service-icon-modern"><i class="fas fa-microphone-alt"></i></div>
+              <h3>Tech Interview Prep</h3>
+              <p>Mock interviews, system design, FAANG coaching & coding challenges to crack top roles.</p><a href="#"
+                class="btn-service">Prepare Now →</a>
+            </div>
+          </div>
         </div>
-      </div>
-
-      <div class="footer-bottom">
-        <p>Copyright ©2024, RID | TWF (TWKSAA WELFARE FOUNDATION). All Rights Reserved.</p>
-        <div class="footer-links-bottom">
-          <a href="/about">About Us</a>
-          <a href="/terms&conditions">Terms & Conditions</a>
-          <a href="/privacy&policy">Privacy Policy</a>
-          <a href="/Disclaimer">Disclaimer</a>
-          <a href="/contact">Contact</a>
+        <div class="container">
+          <div class="section-divider"></div>
         </div>
-      </div>
+      </section>
 
-      <a href="#" class="back-to-top">
-        <i class="fas fa-arrow-up"></i>
-      </a>
+      <!-- Domains Carousel -->
+      <section class="domains-carousel-section community-bg-style">
+        <div class="container">
+          <div class="section-title">
+            <h2>Our Development Domains</h2>
+            <p>Modern software engineering coverage for real-world impact</p>
+          </div>
+          <div class="carousel-wrapper">
+            <div class="carousel-container">
+              <div class="carousel-track">
+                <div class="domain-card">
+                  <div class="domain-icon" style="background:linear-gradient(135deg,var(--frontend),#764ba2)"><i
+                      class="fas fa-paint-brush"></i></div>
+                  <h3>Frontend Development</h3>
+                  <ul class="domain-features">
+                    <li>React, Vue, Angular</li>
+                    <li>Responsive Design</li>
+                    <li>State Management</li>
+                  </ul><a href="#" class="carousel-btn"
+                    style="border-color:var(--frontend);color:var(--frontend)">Explore →</a>
+                </div>
+                <div class="domain-card">
+                  <div class="domain-icon" style="background:linear-gradient(135deg,var(--backend),#667eea)"><i
+                      class="fas fa-server"></i></div>
+                  <h3>Backend Engineering</h3>
+                  <ul class="domain-features">
+                    <li>Node.js, Python, Java</li>
+                    <li>Database Design</li>
+                    <li>Microservices</li>
+                  </ul><a href="#" class="carousel-btn" style="border-color:var(--backend);color:var(--backend)">Explore
+                    →</a>
+                </div>
+                <div class="domain-card">
+                  <div class="domain-icon" style="background:linear-gradient(135deg,var(--api),#f093fb)"><i
+                      class="fas fa-code"></i></div>
+                  <h3>API Development</h3>
+                  <ul class="domain-features">
+                    <li>REST & GraphQL</li>
+                    <li>API Security</li>
+                    <li>OpenAPI/Swagger</li>
+                  </ul><a href="#" class="carousel-btn" style="border-color:var(--api);color:var(--api)">Explore →</a>
+                </div>
+                <div class="domain-card">
+                  <div class="domain-icon" style="background:linear-gradient(135deg,var(--ai),#f5576c)"><i
+                      class="fas fa-robot"></i></div>
+                  <h3>AI & Machine Learning</h3>
+                  <ul class="domain-features">
+                    <li>Python for AI/ML</li>
+                    <li>TensorFlow & PyTorch</li>
+                    <li>NLP & LLMs</li>
+                  </ul><a href="#" class="carousel-btn" style="border-color:var(--ai);color:var(--ai)">Explore →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="section-divider"></div>
+        </div>
+      </section>
+
+      <!-- Gallery -->
+      <section class="gallery-premium premium-bg-only">
+        <div class="container">
+          <div class="section-title">
+            <h2>Our Learning Environment & Community</h2>
+            <p>A glimpse of our collaborative learning culture, mentorship, and real-world projects</p>
+          </div>
+          <div class="gallery-grid">
+            <div class="gallery-card"><img
+                src="https://via.placeholder.com/400x300/135e82/FFFFFF?text=Team+Collaboration" alt="Team">
+              <div class="gallery-overlay">
+                <h4>Team Collaboration</h4>
+                <p>Hands-on group projects</p>
+              </div>
+            </div>
+            <div class="gallery-card"><img
+                src="https://via.placeholder.com/400x300/1a7ca3/FFFFFF?text=Expert+Mentorship" alt="Mentorship">
+              <div class="gallery-overlay">
+                <h4>Expert Mentorship</h4>
+                <p>Guidance from industry leaders</p>
+              </div>
+            </div>
+            <div class="gallery-card"><img src="https://via.placeholder.com/400x300/ff6b35/FFFFFF?text=Real+Projects"
+                alt="Projects">
+              <div class="gallery-overlay">
+                <h4>Real Projects</h4>
+                <p>Portfolio-ready applications</p>
+              </div>
+            </div>
+            <div class="gallery-card"><img src="https://via.placeholder.com/400x300/2a9bc9/FFFFFF?text=Peer+Discussions"
+                alt="Peer">
+              <div class="gallery-overlay">
+                <h4>Peer Discussions</h4>
+                <p>Collaborative problem solving</p>
+              </div>
+            </div>
+            <div class="gallery-card"><img src="https://via.placeholder.com/400x300/3eb3e0/FFFFFF?text=Workshops"
+                alt="Workshops">
+              <div class="gallery-overlay">
+                <h4>Workshops</h4>
+                <p>Hands-on technical sessions</p>
+              </div>
+            </div>
+            <div class="gallery-card"><img src="https://via.placeholder.com/400x300/00b894/FFFFFF?text=Career+Growth"
+                alt="Career">
+              <div class="gallery-overlay">
+                <h4>Career Growth</h4>
+                <p>Placement & interview prep</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="section-divider"></div>
+        </div>
+      </section>
+
+      <!-- Mentor Spotlight -->
+      <section class="mentor-spotlight community-bg-style">
+        <div class="container">
+          <div class="section-title">
+            <h2>Meet Our Founder</h2>
+            <p>The vision and leadership behind RID Tech Pvt. Ltd. </p>
+          </div>
+          <div class="mentor-card">
+            <div class="mentor-image"><img src="/assets/images/ridtechlogo.png"
+                alt="Founder"></div>
+            <div class="mentor-content">
+              <h3>Er. Rajesh Prasad</h3><span class="mentor-tag"><i class="fas fa-graduation-cap"></i> B.Tech – Anna
+                University, Chennai</span>
+              <p>Visionary founder & chief mentor with deep technical expertise in software architecture, AI systems,
+                and robotics education. He has personally mentored thousands of students into top product companies and
+                research roles.</p><a href="#" class="btn btn-primary" style="margin-top: 12px;"><i
+                  class="fas fa-calendar-alt"></i> Connect with Mentor</a>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
-  </footer>
-
-  <!-- tiny script for demo interactions (dropdown toggle) -->
-  <script>
-    (function () {
-      // Mobile menu toggle
-      const menuIcon = document.getElementById('menuIcon');
-      const menu = document.getElementById('innerCont');
-      if (menuIcon) {
-        menuIcon.addEventListener('click', function (e) {
-          e.stopPropagation();
-          this.classList.toggle('active');
-          menu.classList.toggle('active');
-        });
-      }
-      // Dropdown toggle for mobile
-      const dropdowns = document.querySelectorAll('.dropdown');
-      dropdowns.forEach(dd => {
-        const toggle = dd.querySelector('.dropdown-toggle');
-        if (toggle) {
-          toggle.addEventListener('click', function (e) {
-            e.preventDefault();
-            if (window.innerWidth <= 768) {
-              dd.classList.toggle('active');
-            }
+<%- include("common/footer.ejs")%>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+      (function () {
+        const counters = document.querySelectorAll('.counter-inline');
+        let counted = false;
+        const startHeroCounters = () => {
+          if (counted) return;
+          counters.forEach(counter => {
+            const target = parseFloat(counter.getAttribute('data-target'));
+            let current = 0;
+            const increment = target / 40;
+            function formatNumber(num) {
+                  if (num >= 1000) {
+                    return (num / 1000).toFixed(1).replace('.0', '') + 'K';
+                  }
+                  return Math.floor(num);
+                }
+            const update = () => {
+              current += increment;
+              if (current < target) {
+                
+                counter.innerText = formatNumber(current);
+                requestAnimationFrame(update);
+              } else counter.innerText = formatNumber(target) + '+';
+            };
+            update();
           });
+          counted = true;
+        };
+        const heroObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => { if (entry.isIntersecting) { startHeroCounters(); heroObserver.disconnect(); } });
+        }, { threshold: 0.3 });
+        const heroStats = document.querySelector('.hero-stats-two-lines');
+        if (heroStats) heroObserver.observe(heroStats);
+        else startHeroCounters();
+
+        const canvas = document.getElementById('canvas-bg-effect');
+        if (canvas) {
+          const ctx = canvas.getContext('2d');
+          let W, H, pts = [];
+          function resizeCanvas() {
+            const container = canvas.parentElement;
+            W = canvas.width = container.offsetWidth;
+            H = canvas.height = container.offsetHeight;
+          }
+          resizeCanvas();
+          window.addEventListener('resize', () => { resizeCanvas(); pts = []; for (let i = 0; i < 100; i++) pts.push(mkPt()); });
+          function mkPt() { return { x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * 1.8, vy: (Math.random() - 0.5) * 1.8, r: Math.random() * 2 + 0.8, pulse: Math.random() * Math.PI * 2 }; }
+          for (let i = 0; i < 100; i++) pts.push(mkPt());
+          function drawNetwork() {
+            if (!ctx) return;
+            ctx.clearRect(0, 0, W, H);
+            for (let i = 0; i < pts.length; i++) {
+              const p = pts[i];
+              for (let j = i + 1; j < pts.length; j++) {
+                const q = pts[j];
+                const dx = p.x - q.x, dy = p.y - q.y;
+                const d = Math.sqrt(dx * dx + dy * dy);
+                if (d < 130) {
+                  ctx.strokeStyle = `rgba(62, 179, 224, ${(1 - d / 130) * 0.45})`;
+                  ctx.lineWidth = 0.7;
+                  ctx.beginPath();
+                  ctx.moveTo(p.x, p.y);
+                  ctx.lineTo(q.x, q.y);
+                  ctx.stroke();
+                }
+              }
+              p.x += p.vx; p.y += p.vy;
+              if (p.x < 0 || p.x > W) p.vx *= -1;
+              if (p.y < 0 || p.y > H) p.vy *= -1;
+              p.pulse += 0.05;
+              const glowR = p.r + Math.sin(p.pulse) * 0.5;
+              ctx.beginPath();
+              ctx.arc(p.x, p.y, glowR, 0, Math.PI * 2);
+              ctx.fillStyle = `rgba(62, 179, 224, 0.85)`;
+              ctx.fill();
+            }
+            requestAnimationFrame(drawNetwork);
+          }
+          drawNetwork();
         }
-      });
-      // Hero dots (if any left, but we removed hero – safe)
-    })();
-
-    // ===== LOGIN REGISTER SLIDE EFFECT =====
-    const loginBtn = document.getElementById("logInButton");
-    const registerBtn = document.getElementById("signUpBtn");
-    const swapBtn = document.getElementById("swap-btn");
-
-    if (loginBtn && registerBtn && swapBtn) {
-      loginBtn.addEventListener("click", function () {
-        swapBtn.style.left = "0%";
-        loginBtn.style.color = "white";
-        registerBtn.style.color = "#000";
-      });
-
-      registerBtn.addEventListener("click", function () {
-        swapBtn.style.left = "50%";
-        registerBtn.style.color = "white";
-        loginBtn.style.color = "#000";
-      });
-    }
-
-    function workshop() {
-      window.open("workshop/form.html", "_self");
-    }
-    function typingsoftware() {
-      window.location.href = "/typing-software"
-    }
-    function compress() {
-      window.location.href = "/com"
-    }
-
-   
-  </script>
+        const cards = document.querySelectorAll('.obj-card-3d');
+        cards.forEach(card => {
+          card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / 20;
+            const rotateY = (centerX - x) / 20;
+            card.style.transform = `perspective(1200px) translateY(-8px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+          });
+          card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+        });
+        gsap.fromTo('.obj-card-3d', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: 'back.out(1.2)' });
+      })();
+    </script>
 </body>
+
 </html>

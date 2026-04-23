@@ -10,7 +10,7 @@ const sendMail = require("../utils/sendMail");
 const Test = require("../models/Test");       // ✅ ALSO ADD
 const Question = require("../models/Question"); // ✅ ALSO ADD
 const ClassModel = require("../models/Class");
-
+const TeacherTest = require("../models/teacherTestModel");
 
 // ================= DASHBOARD =================
 
@@ -506,5 +506,50 @@ router.get("/advance-version", ensureTeacher, async (req, res) => {
   }
 });
 
+// All india test show the teacher this routes 
+// 🔥 TEACHER CHANNEL (View Your Channel)
+router.get("/teacher/channel", ensureTeacher, async (req, res) => {
+  try {
 
+   const tests = await TeacherTest.find({
+  teacher: req.user._id
+}).sort({ createdAt: -1 });
+
+    res.render("NationalTestSeries/teacher/channel", { tests });
+
+  } catch (err) {
+    console.log("Channel Error:", err);
+    res.send("Error loading channel");
+  }
+});
+router.get("/teacher/:id", async (req, res) => {
+
+    const questions = await Question.aggregate([
+        {
+            $lookup: {
+                from: "tests",
+                localField: "testId",
+                foreignField: "_id",
+                as: "test"
+            }
+        },
+        { $unwind: "$test" },
+
+        {
+            $lookup: {
+                from: "teachers",
+                localField: "test.teacherId",
+                foreignField: "_id",
+                as: "teacher"
+            }
+        },
+        { $unwind: "$teacher" },
+
+        {
+            $match: { "teacher._id": new mongoose.Types.ObjectId(req.params.id) }
+        }
+    ]);
+
+    res.render("teacherProfile", { questions });
+});
 module.exports = router;

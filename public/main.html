@@ -1,453 +1,716 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>RID Bharat - Premium Navbar (Updated Colors)</title>
-    <!-- Font Awesome 6 + Google Fonts (for better look) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>RIDTECH — Smart Search | Empty = All Videos | Sticky Chips</title>
+    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
-        rel="stylesheet">
-    <style>
-        /* ---------- RESET & ROOT VARIABLES (original + premium touches) ---------- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <!-- Google Fonts: Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/Allindiatestserice/testserice.css">
 
-        :root {
-            --primary: #083d5d;
-            --primary-dark: #062a41;
-            --secondary: #4da8da;
-            --accent: #ff6b35;
-            --light: #f2f7fc;
-            --dark: #333;
-            --gray: #555;
-            --white: #ffffff;
-            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            --transition: all 0.3s ease;
-        }
-
-        /* base body styles */
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #f2f2f2;
-            color: #333;
-            line-height: 1.6;
-            padding-top: 130px;
-            font-weight: 400;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* ============================================ */
-        /* FOOTER - RESPONSIVE - COMPACT VERSION        */
-        /* ALL CLASS NAMES ARE RENAMED TO "BRARA BARA"  */
-        /* CSS PROPERTIES REMAIN 100% IDENTICAL         */
-        /* ============================================ */
-        footer {
-            background: linear-gradient(145deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: var(--white);
-            padding: 20px 0 0;
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-            margin: 0;
-        }
-
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--secondary), var(--accent));
-        }
-
-        /* main footer container - full width no gaps (RENAMED) */
-        footer .sara-brara-mega-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 30px;
-        }
-
-        /* ===== FOOTER GRID - RESPONSIVE (RENAMED: bara-brara-grid) ===== */
-        .bara-brara-grid {
-            display: grid;
-            gap: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-            margin-bottom: 10px;
-        }
-
-        /* Desktop default: 4 columns */
-        .bara-brara-grid {
-            grid-template-columns: repeat(4, 1fr);
-        }
-
-        /* Tablet (768px - 1024px): 2 columns */
-        @media (max-width: 1024px) {
-            .bara-brara-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 25px 30px;
-            }
-        }
-
-        /* Mobile (≤768px): 2 columns */
-        @media (max-width: 768px) {
-            .bara-brara-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 20px 20px;
-                text-align: left;
-            }
-        }
-
-        /* Small mobile (≤550px) */
-        @media (max-width: 550px) {
-            .bara-brara-grid {
-                gap: 15px 15px;
-            }
-        }
-
-        /* Very small (≤400px) */
-        @media (max-width: 400px) {
-            .bara-brara-grid {
-                gap: 12px 10px;
-            }
-        }
-
-        /* ===== FOOTER COLUMN STYLES (RENAMED) ===== */
-        .brara-logo-zone {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .brara-logo-zone img {
-            max-width: 95px;
-            height: auto;
-            margin-bottom: 8px;
-            background: #fff;
-            padding: 4px;
-            border-radius: 50%;
-        }
-
-        .brara-logo-zone p {
-            margin-bottom: 5px;
-            color: var(--light-gray);
-            font-size: 0.75rem;
-            line-height: 1.4;
-        }
-
-        .sara-contact-details {
-            margin-top: 3px;
-        }
-
-        .sara-contact-details p {
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.75rem;
-            flex-wrap: wrap;
-        }
-
-        .sara-contact-details i {
-            color: var(--secondary);
-            width: 14px;
-            font-size: 0.75rem;
-        }
-
-        .sara-contact-details a {
-            color: var(--light-gray);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .sara-contact-details a:hover {
-            color: var(--accent);
-        }
-
-        /* headings with underline (RENAMED) */
-        .bara-links-panel h3,
-        .brara-social-zone h3 {
-            font-size: 0.9rem;
-            margin-bottom: 8px;
-            position: relative;
-            padding-bottom: 5px;
-            font-weight: 600;
-        }
-
-        .bara-links-panel h3:after,
-        .brara-social-zone h3:after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 30px;
-            height: 2px;
-            background: var(--accent);
-            border-radius: 2px;
-        }
-
-        /* mobile headings */
-        @media (max-width: 768px) {
-            .bara-links-panel h3,
-            .brara-social-zone h3 {
-                text-align: left;
-                font-size: 0.85rem;
-                margin-bottom: 6px;
-            }
-
-            .bara-links-panel h3:after,
-            .brara-social-zone h3:after {
-                left: 0;
-                transform: none;
-            }
-        }
-
-        /* lists (RENAMED) */
-        .bara-links-panel ul {
-            list-style: none;
-        }
-
-        .bara-links-panel li {
-            margin-bottom: 4px;
-            transition: transform 0.3s;
-        }
-
-        .bara-links-panel li:hover {
-            transform: translateX(5px);
-        }
-
-        .bara-links-panel a {
-            color: var(--light-gray);
-            transition: color 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.75rem;
-            text-decoration: none;
-        }
-
-        .bara-links-panel a:hover {
-            color: var(--white);
-        }
-
-        .bara-links-panel a i {
-            color: var(--secondary);
-            font-size: 0.65rem;
-        }
-
-        /* social section (RENAMED) */
-        .brara-social-zone ul {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            list-style: none;
-        }
-
-        .brara-social-zone a {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: var(--light-gray);
-            transition: all 0.3s;
-            padding: 4px 10px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 30px;
-            font-size: 0.7rem;
-            text-decoration: none;
-        }
-
-        .brara-social-zone a:hover {
-            color: var(--white);
-            background: rgba(77, 168, 218, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .brara-social-zone i {
-            font-size: 0.7rem;
-        }
-
-        /* footer bottom section (RENAMED) */
-        .sara-bottom-bar {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 8px 0;
-            text-align: center;
-            color: var(--light-gray);
-            font-size: 0.7rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .brara-bottom-links {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 5px;
-            flex-wrap: wrap;
-        }
-
-        .brara-bottom-links a {
-            color: var(--light-gray);
-            transition: color 0.3s;
-            position: relative;
-            font-size: 0.7rem;
-            text-decoration: none;
-        }
-
-        .brara-bottom-links a:not(:last-child)::after {
-            content: '|';
-            position: absolute;
-            right: -8px;
-            color: var(--secondary);
-        }
-
-        .brara-bottom-links a:hover {
-            color: var(--white);
-        }
-
-        /* back to top button (RENAMED) */
-        .bara-up-button {
-            position: fixed;
-            right: 20px;
-            bottom: 30px;
-            background: var(--accent);
-            color: var(--white);
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            opacity: 0;
-            visibility: hidden;
-            text-decoration: none;
-            z-index: 99;
-        }
-
-        .bara-up-button:hover {
-            background: #e55a2b;
-            transform: translateY(-3px);
-        }
-
-        /* ===== EXTRA: container adjustments with new class ===== */
-        footer .sara-brara-mega-container {
-            width: 100%;
-            max-width: 100%;
-            padding-left: 30px;
-            padding-right: 30px;
-        }
-
-        @media (max-width: 768px) {
-            footer .sara-brara-mega-container {
-                padding-left: 20px;
-                padding-right: 20px;
-            }
-        }
-
-        @media (max-width: 550px) {
-            footer .sara-brara-mega-container {
-                padding-left: 15px;
-                padding-right: 15px;
-            }
-        }
-
-        /* ===== ENSURE NO GREY GAPS ON MOBILE ===== */
-        body {
-            background-color: #ffffff;
-        }
-
-        /* ===== SOCIAL ICONS ROW ALIGNMENT ON MOBILE ===== */
-        @media (max-width: 550px) {
-            .brara-social-zone ul {
-                justify-content: flex-start;
-            }
-        }
-    </style>
 </head>
+
 <body>
 
-    <!-- FOOTER SECTION - ALL CLASS NAMES CHANGED TO 'BRARA BARA' STYLE NAMES, CSS PROPERTIES UNCHANGED -->
-    <footer>
-        <div class="sara-brara-mega-container">
-            <div class="bara-brara-grid">
-                <!-- Logo + address column (RENAMED) -->
-                <div class="brara-logo-zone">
-                    <img src="logo.jpeg" alt="RID Bharat Logo"
-                        onerror="this.src='https://via.placeholder.com/260x70/083d5d/FFFFFF?text=RID+Bharat+Logo'">
-                    <p>Mig, 72, Rajiv Nagar, A Sector, Aayodhya bypass Bhopal, Madhya Pradesh, India (462022)</p>
-                    <div class="sara-contact-details">
-                        <p><i class="fas fa-envelope"></i> <a href="mailto:ridorg.in@gmail.com">ridorg.in@gmail.com</a>
-                        </p>
-                        <p><i class="fas fa-phone"></i> <a href="tel:+919892782728">+91- 9202707903</a></p>
+    <% function timeAgo(date) { const seconds=Math.floor((new Date() - new Date(date)) / 1000); const intervals={ year:
+        31536000, month: 2592000, day: 86400, hour: 3600, minute: 60 }; for (let key in intervals) { const
+        value=Math.floor(seconds / intervals[key]); if (value>= 1) {
+        return value + " " + key + (value > 1 ? "s" : "") + " ago";
+        }
+        }
+        return "just now";
+        }
+        %>
+        <% function formatViews(views) { if (views>= 1000000) {
+            return (views / 1000000).toFixed(1).replace('.0','') + "M";
+            } else if (views >= 1000) {
+            return (views / 1000).toFixed(1).replace('.0','') + "K";
+            } else {
+            return views;
+            }
+            }
+            %>
+            <div class="app">
+                <div class="header">
+                    <div class="header-left">
+                        <i class="fas fa-bars menu-icon" id="menuIcon"></i>
+                        <div class="logo-icon" id="logoHome">
+                            <i class="fas fa-book-open" style="color: red;"></i>
+                            <span class="logo-text">RIDTECH</span>
+                        </div>
+                    </div>
+
+                    <!-- Desktop Search Bar with dropdown suggestions -->
+                    <div class="header-center">
+                        <div class="search-box">
+                            <input type="text" id="desktopSearchInput" placeholder="Search" autocomplete="off">
+                            <button class="search-btn" id="desktopSearchBtn"><i class="fas fa-search"></i></button>
+                        </div>
+                        <div class="mic-btn" id="desktopMicBtn"><i class="fas fa-microphone"></i></div>
+                        <div id="desktopSuggestions" class="search-suggestions-dropdown"></div>
+                    </div>
+
+                    <div class="header-right">
+                        <i class="fas fa-search search-trigger-icon" id="searchTriggerIcon"></i>
+                        <div class="create-btn">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Create Test</span>
+                        </div>
+                        <i class="fas fa-bell" id="bellIcon"></i>
+                        <div class="avatar" id="avatarIcon">
+                            <% if(typeof user !=="undefined" && user){ %>
+                                <%= user.name?.charAt(0).toUpperCase() %>
+                                    <% } else { %>
+                                        U
+                                        <% } %>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Research Topics (RENAMED) -->
-                <div class="bara-links-panel">
-                    <h3>Research Topics</h3>
-                    <ul>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Computers & Technology</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> AI & Machine Learning</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Space Engineering</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Data Science</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Renewable Energy</a></li>
-                    </ul>
+                <!-- ========== IMPROVED PROFILE SIDEBAR (MATCHES IMAGE EXACTLY) ========== -->
+                <div id="profileSidebar" class="profile-sidebar">
+                    <div class="close-sidebar-icon" id="closeProfileSidebar"><i class="fas fa-times"></i></div>
+                    <div class="profile-header">
+                        <div class="profile-avatar-large">
+                            <% if(typeof user !=="undefined" && user){ %>
+                                <%= user.name?.charAt(0).toUpperCase() %>
+                                    <% } else { %>U<% } %>
+                        </div>
+                        <div class="profile-info">
+                            <h3>
+                                <%= user ? user.name : 'Guest User' %>
+                            </h3>
+                            <p>
+                                <%= user ? user.email : 'guest@example.com' %>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="profile-menu-item" id="viewChannelBtn"><i class="fas fa-eye"></i><span>View your
+                            channel</span></div>
+                    <div class="profile-menu-item" id="googleAccountBtn"><i class="fab fa-google"></i><span>Google
+                            Account</span></div>
+                    <div class="profile-menu-item" id="switchAccountBtn"><i class="fas fa-exchange-alt"></i><span>Switch
+                            account</span></div>
+                    <div class="profile-menu-item" id="signOutBtn"><i class="fas fa-sign-out-alt"></i><span>Sign
+                            out</span></div>
+                    <div class="profile-divider"></div>
+                    <div class="profile-menu-item" id="youtubeStudioBtn"><i class="fas fa-video"></i><span>YouTube
+                            Studio</span></div>
+                    <div class="profile-menu-item" id="purchasesBtn"><i class="fas fa-shopping-cart"></i><span>Purchases
+                            and memberships</span></div>
+                    <div class="profile-menu-item" id="yourDataBtn"><i class="fas fa-database"></i><span>Your data in
+                            YouTube</span></div>
+                    <div class="profile-divider"></div>
+                    <div class="profile-menu-item profile-label"><i class="fas fa-palette"></i><span>Appearance: Device
+                            theme</span><span></span></div>
+                    <div class="profile-menu-item profile-label"><i class="fas fa-language"></i><span>Display language:
+                            British En...</span><span></span></div>
+                    <div class="profile-menu-item profile-label"><i class="fas fa-ban"></i><span>Restricted Mode:
+                            Off</span><span></span></div>
+                    <div class="profile-menu-item profile-label"><i class="fas fa-map-marker-alt"></i><span>Location:
+                            India</span><span></span></div>
+                    <div class="profile-divider"></div>
+                    <div class="profile-menu-item" id="keyboardShortcuts"><i class="fas fa-keyboard"></i><span>Keyboard
+                            shortcuts</span></div>
+                    <div class="profile-menu-item" id="settingsBtn"><i class="fas fa-cog"></i><span>Settings</span>
+                    </div>
+                    <div class="profile-menu-item" id="helpBtn"><i class="fas fa-question-circle"></i><span>Help</span>
+                    </div>
+                    <div class="profile-menu-item" id="feedbackBtn"><i class="fas fa-comment-dots"></i><span>Send
+                            feedback</span></div>
+                </div>
+                <div id="profileOverlay" class="profile-overlay"></div>
+
+                <div class="main-layout">
+                    <div class="desktop-sidebar" id="desktopSidebar">
+                        <div class="sidebar-item active" data-nav="home"><i class="fas fa-home"></i><span>Home</span>
+                        </div>
+                        <!-- <div class="sidebar-item" data-nav="shorts"><i class="fas fa-fire"></i><span>Shorts</span></div> -->
+                        <div class="sidebar-item" data-nav="subscriptions"><i class="fas fa-newspaper"></i><span>My
+                                Mentors</span></div>
+                        <div class="sidebar-divider"></div>
+                        <div class="sidebar-item" data-nav="library"><i class="fas fa-bookmark"></i><span>Library</span>
+                        </div>
+                        <div class="sidebar-item" data-nav="history"><i class="fas fa-history"></i><span>History</span>
+                        </div>
+                        <div class="sidebar-item" data-nav="yourvideos"><i class="fas fa-play-circle"></i><span>Your
+                                videos</span></div>
+                        <div class="sidebar-divider"></div>
+                        <div class="sidebar-title">EXPLORE</div>
+                        <div class="sidebar-item" data-nav="music"><i class="fas fa-music"></i><span>Music</span></div>
+                        <div class="sidebar-item" data-nav="gaming"><i class="fas fa-gamepad"></i><span>Gaming</span>
+                        </div>
+                        <div class="sidebar-item" data-nav="movies"><i class="fas fa-tv"></i><span>Movies</span></div>
+                    </div>
+
+                    <div class="content">
+                        <!-- CHIPS ROW - sticky horizontal scroll -->
+                        <div class="chips-row" id="chipsRow">
+                            <div class="chip active">All Exams</div>
+                            <div class="chip">SSC Exams</div>
+                            <div class="chip">Banking Exams</div>
+                            <div class="chip">Railway Exams</div>
+                            <div class="chip">UPSC / Civil Services</div>
+                            <div class="chip">NEET Exam</div>
+                            <div class="chip">JEE Exam</div>
+                            <div class="chip">State Government Exams</div>
+                            <div class="chip">Police / Defence Exams</div>
+                            <div class="chip">Teaching Exams (CTET / TET)</div>
+                            <div class="chip">Computer / IT Tests</div>
+                            <div class="chip">Mock Tests</div>
+                            <div class="chip">Previous Year Papers</div>
+                            <div class="chip">Class 10 Exams</div>
+                            <div class="chip">Class 12 Exams</div>
+                            <div class="chip">Entrance Exams</div>
+                            <div class="chip">Competitive Exams</div>
+                        </div>
+                        <div id="searchResultInfo" style="display:none;"></div>
+                        <div class="video-grid">
+                            <% if(tests && tests.length> 0){ %>
+                                <% tests.forEach(test=> { %>
+
+                                    <div class="video-card"
+                                        onclick="openTestPopup('<%= test._id %>', '<%= test.name %>')">
+
+                                        <div class="thumbnail">
+                                            <img src="https://picsum.photos/300/200" />
+
+                                        </div>
+
+                                        <div class="video-details">
+                                            <div class="channel-avatar">
+                                                <%= test.teacher?.name?.charAt(0) || "T" %>
+                                            </div>
+
+                                            <div class="video-info">
+                                                <div class="title-row">
+                                                    <div class="video-title">
+                                                        <%= test.name %>
+                                                    </div>
+
+                                                    <!-- ❤️ LIKE BUTTON -->
+                                                    <button class="like-btn 
+                                                <%= (typeof user !== " undefined" && user &&
+                                                        test.likedBy?.includes(user._id)) ? 'liked' : '' %>"
+                                                        onclick="event.stopPropagation(); toggleLike(this, '<%= test._id
+                                                            %>
+                                                            ')">
+
+                                                            <i class="fas fa-heart"></i>
+                                                            <span class="like-count">
+                                                                <%= test.likes || 0 %>
+                                                            </span>
+                                                    </button>
+
+                                                    <!-- 🔗 SHARE BUTTON -->
+                                                    <button class="like-btn"
+                                                        onclick="event.stopPropagation(); shareTest('<%= test._id %>', '<%= test.name %>')">
+
+                                                        <i class="fas fa-share-alt"></i>
+                                                    </button>
+                                                </div>
+
+                                                <div class="channel-name">
+                                                    <%= test.teacher?.name %> • <%= test.subject %>
+                                                </div>
+
+                                                <div class="video-stats">
+                                                    <%= formatViews(test.views) %> views • <%= timeAgo(test.createdAt)
+                                                            %>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <% }) %>
+                                        <% } else { %>
+                                            <p>No tests available</p>
+                                            <% } %>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Quick Links (RENAMED) -->
-                <div class="bara-links-panel">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="/about"><i class="fas fa-chevron-right"></i> About RID</a></li>
-                        <li><a href="/research"><i class="fas fa-chevron-right"></i> Research Papers</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Innovation Hub</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Join Community</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Events & Workshops</a></li>
-                    </ul>
+                <div class="bottom-nav">
+                    <div class="nav-item active" data-nav="home"><i class="fas fa-home"></i><span>Home</span></div>
+                    <div class="nav-item" data-nav="shorts"><i class="fas fa-fire"></i><span>Shorts</span></div>
+                    <div class="nav-item" data-nav="subscriptions"><i
+                            class="fas fa-newspaper"></i><span>Subscriptions</span></div>
+                    <div class="nav-item" data-nav="library"><i class="fas fa-bookmark"></i><span>Library</span></div>
+                    <div class="nav-item" data-nav="you"><i class="fas fa-user"></i><span>You</span></div>
                 </div>
 
-                <!-- Social Media Column (RENAMED) -->
-                <div class="brara-social-zone">
-                    <h3>Follow Us</h3>
-                    <ul>
-                        <li><a href="https://m.facebook.com/rid.bharat/"><i class="fab fa-facebook-f"></i> Facebook</a>
-                        </li>
-                        <li><a href="https://www.linkedin.com/in/rid-bharat-9a4517324"><i class="fab fa-linkedin-in"></i> LinkedIn</a></li>
-                        <li><a href="https://youtube.com/@ridbharat"><i class="fab fa-youtube"></i> YouTube</a></li>
-                        <li><a href="https://github.com/RID-bharat25"><i class="fab fa-github"></i> GitHub</a></li>
-                        <li><a href="https://www.instagram.com/ridbharat"><i class="fab fa-instagram"></i> Instagram</a>
-                        </li>
-                        <li><a href="mailto:ridorg.in@gmail.com"><i class="fas fa-envelope"></i> Email</a></li>
-                    </ul>
+                <div class="drawer-overlay" id="drawerOverlay">
+                    <div class="mobile-drawer" id="mobileDrawer">
+                        <div class="sidebar-item active" data-nav="home"><i class="fas fa-home"></i><span>Home</span>
+                        </div>
+                        <div class="sidebar-item" data-nav="shorts"><i class="fas fa-fire"></i><span>Shorts</span></div>
+                        <div class="sidebar-item" data-nav="subscriptions"><i
+                                class="fas fa-newspaper"></i><span>Subscriptions</span></div>
+                        <div class="sidebar-divider"></div>
+
+                        <div class="sidebar-item" data-nav="library"><i class="fas fa-bookmark"></i><span>Library</span>
+                        </div>
+                        <div class="sidebar-item" data-nav="history"><i class="fas fa-history"></i><span>History</span>
+                        </div>
+                        <div class="sidebar-item" data-nav="yourvideos"><i class="fas fa-play-circle"></i><span>Your
+                                videos</span></div>
+                        <div class="sidebar-divider"></div>
+                        <div class="sidebar-title">EXPLORE</div>
+                        <div class="sidebar-item" data-nav="music"><i class="fas fa-music"></i><span>Music</span></div>
+                        <div class="sidebar-item" data-nav="gaming"><i class="fas fa-gamepad"></i><span>Gaming</span>
+                        </div>
+                        <div class="sidebar-item" data-nav="movies"><i class="fas fa-tv"></i><span>Movies</span></div>
+                    </div>
+                </div>
+
+                <div class="search-overlay" id="searchOverlay">
+                    <div class="search-header">
+                        <i class="fas fa-arrow-left back-icon" id="closeSearchOverlay"></i>
+                        <div class="search-input-wrapper">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="overlaySearchInput" placeholder="Search exams, videos, tutorials...">
+                            <i class="fas fa-times-circle clear-search" id="clearOverlaySearch"
+                                style="display: none;"></i>
+                        </div>
+                        <button class="voice-search-btn" id="overlayVoiceBtn"><i class="fas fa-microphone"></i></button>
+                    </div>
+                    <div class="search-suggestions" id="searchSuggestions">
+                        <div class="suggestion-item"><i class="fas fa-history"></i><span>SSC CGL 2025</span></div>
+                        <div class="suggestion-item"><i class="fas fa-history"></i><span>Banking exam preparation</span>
+                        </div>
+                        <div class="suggestion-item"><i class="fas fa-history"></i><span>NEET previous year
+                                papers</span>
+                        </div>
+                        <div class="suggestion-item"><i class="fas fa-history"></i><span>UPSC mock test series</span>
+                        </div>
+                        <div class="suggestion-item"><i class="fas fa-history"></i><span>Railway group d exam</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Bottom copyright + legal links (RENAMED) -->
-            <div class="sara-bottom-bar">
-                <p>Copyright ©2024, RID | TWF (TWKSAA WELFARE FOUNDATION). All Rights Reserved.</p>
-                <div class="brara-bottom-links">
-                    <a href="#">About Us</a>
-                    <a href="#">Terms & Conditions</a>
-                    <a href="/myteam">My Teams</a>
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Disclaimer</a>
-                    <a href="#">Contact</a>
+            <!-- ========== PROFESSIONAL POPUP HTML (REPLACED OLD POPUP) ========== -->
+            <div id="startTestPopup">
+                <div class="popup-container">
+                    <div class="popup-header">
+                        <h3><i class="fas fa-rocket"></i> Start Test</h3>
+                        <button class="popup-close" onclick="closePopup()"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="popup-body">
+                        <div class="popup-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <p id="popupTestName" style="font-size: 1.2rem; font-weight: 600; color: #0f172a;"></p>
+                        <p style="margin-bottom: 8px;">Your test session will start immediately.</p>
+                        <div class="test-warning">
+                            <i class="fas fa-info-circle"></i> Ensure stable internet & no distractions.
+                        </div>
+                    </div>
+                    <div class="popup-footer">
+                        <button class="btn-cancel-popup" onclick="closePopup()"><i class="fas fa-times"></i>
+                            Cancel</button>
+                        <button class="btn-start-popup" onclick="startTest()"><i class="fas fa-arrow-right"></i> Start
+                            Now</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Back to top button (RENAMED) -->
-            <a href="#" class="bara-up-button">
-                <i class="fas fa-arrow-up"></i>
-            </a>
-        </div>
-    </footer>
+            <script>
+                // VIDEO DATABASE (Exam & Education Focus)
+                const videosData = [
+                    { title: "SSC CGL 2025 Complete Strategy | Mock Test Analysis", channel: "Exam Warriors", views: "1.2M views", timeAgo: "3 days ago", thumbnail: "https://picsum.photos/id/104/360/200", avatarColor: "#e91e63" },
+                    { title: "Bank PO Previous Year Paper Solution | Reasoning", channel: "Bankers Adda", views: "890K views", timeAgo: "1 week ago", thumbnail: "https://picsum.photos/id/26/360/200", avatarColor: "#2c3e50" },
+                    { title: "NEET 2025 Biology Top 100 Questions", channel: "NEET Prep Guide", views: "2.1M views", timeAgo: "2 days ago", thumbnail: "https://picsum.photos/id/20/360/200", avatarColor: "#16a085" },
+                    { title: "UPSC Civil Services Interview Tips | IAS Topper", channel: "StudyIQ IAS", views: "4.8M views", timeAgo: "1 month ago", thumbnail: "https://picsum.photos/id/29/360/200", avatarColor: "#f39c12" },
+                    { title: "Railway NTPC Exam Analysis 2025 | Maths", channel: "Railway Exam Hub", views: "1.7M views", timeAgo: "5 days ago", thumbnail: "https://picsum.photos/id/155/360/200", avatarColor: "#9b59b6" },
+                    { title: "JEE Main 2025 Strategy | Physics + Chemistry", channel: "IIT Prep Zone", views: "3.4M views", timeAgo: "2 weeks ago", thumbnail: "https://picsum.photos/id/42/360/200", avatarColor: "#e67e22" },
+                    { title: "CTET/TET Preparation | Child Development", channel: "Teaching Goal", views: "980K views", timeAgo: "4 days ago", thumbnail: "https://picsum.photos/id/169/360/200", avatarColor: "#e74c3c" },
+                    { title: "State PCS Previous Year Papers | GK GS", channel: "State Exam Master", views: "512K views", timeAgo: "1 week ago", thumbnail: "https://picsum.photos/id/96/360/200", avatarColor: "#3498db" },
+                    { title: "Defence Exams (CDS/AFCAT) | English Section", channel: "Defence Academy", views: "780K views", timeAgo: "8 days ago", thumbnail: "https://picsum.photos/id/151/360/200", avatarColor: "#1abc9c" },
+                    { title: "Computer Awareness for IBPS | 500 MCQs", channel: "Tech Exam Prep", views: "2.3M views", timeAgo: "3 weeks ago", thumbnail: "https://picsum.photos/id/132/360/200", avatarColor: "#c0392b" },
+                    { title: "Class 10 Board Exam Tips | Science & Maths", channel: "CBSE Guide", views: "1.1M views", timeAgo: "2 months ago", thumbnail: "https://picsum.photos/id/0/360/200", avatarColor: "#d35400" },
+                    { title: "Class 12 Commerce | Economics Most Expected Questions", channel: "Commerce Planet", views: "890K views", timeAgo: "1 week ago", thumbnail: "https://picsum.photos/id/22/360/200", avatarColor: "#4c6ef5" }
+                ];
 
+                let currentSearchQuery = "";
+
+                function escapeHtml(str) {
+                    return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
+                }
+
+                function renderVideos(videosArray, searchTerm = null) {
+                    const grid = document.getElementById('videoGrid');
+                    const infoDiv = document.getElementById('searchResultInfo');
+                    if (!grid) return;
+                    grid.innerHTML = '';
+                    if (!videosArray.length) {
+                        grid.innerHTML = '<div style="padding: 40px; text-align:center;">😢 No videos found. Try another search!</div>';
+                        if (infoDiv) infoDiv.innerHTML = '';
+                        return;
+                    }
+                    videosArray.forEach(video => {
+                        const card = document.createElement('div');
+                        card.className = 'video-card';
+                        card.innerHTML = `
+                    <div class="thumbnail"><img src="${video.thumbnail}" alt="${video.title}" loading="lazy"></div>
+                    <div class="video-details">
+                        <div class="channel-avatar" style="background:${video.avatarColor}">${video.channel.charAt(0)}</div>
+                        <div class="video-info">
+                            <div class="video-title">${escapeHtml(video.title)}</div>
+                            <div class="channel-name">${escapeHtml(video.channel)}</div>
+                            <div class="video-stats">${video.views} • ${video.timeAgo}</div>
+                        </div>
+                    </div>
+                `;
+                        card.addEventListener('click', () => alert(`🎬 Playing: ${video.title}\n(RIDTECH Demo)`));
+                        grid.appendChild(card);
+                    });
+                    if (searchTerm && searchTerm.trim() !== "") {
+                        infoDiv.innerHTML = `🔍 Search results for "${escapeHtml(searchTerm)}" · ${videosArray.length} videos`;
+                    } else if (infoDiv) {
+                        infoDiv.innerHTML = '';
+                    }
+                }
+
+                function executeSearch(query) {
+                    const trimmed = query.trim().toLowerCase();
+                    const cards = Array.from(document.querySelectorAll(".video-card"));
+                    const grid = document.querySelector(".video-grid");
+                    const infoDiv = document.getElementById("searchResultInfo");
+
+                    if (trimmed === "") {
+                        cards.forEach(card => {
+                            card.style.display = "block";
+                            grid.appendChild(card);
+                        });
+                        if (infoDiv) infoDiv.innerHTML = "";
+                        return;
+                    }
+
+                    function getMatchScore(text, query) {
+                        text = text.toLowerCase();
+                        let score = 0;
+                        if (text.includes(query)) score += 100;
+                        const words = text.split(" ");
+                        words.forEach(word => {
+                            if (word.startsWith(query)) score += 50;
+                            if (word.includes(query)) score += 20;
+                        });
+                        let matchCount = 0;
+                        for (let char of query) {
+                            if (text.includes(char)) matchCount++;
+                        }
+                        score += matchCount * 2;
+                        return score;
+                    }
+
+                    let results = cards.map(card => {
+                        const text = card.innerText.toLowerCase();
+                        return {
+                            card,
+                            score: getMatchScore(text, trimmed)
+                        };
+                    });
+                    results.sort((a, b) => b.score - a.score);
+                    let found = 0;
+                    results.forEach(item => {
+                        if (item.score > 0) {
+                            item.card.style.display = "block";
+                            grid.appendChild(item.card);
+                            found++;
+                        } else {
+                            item.card.style.display = "none";
+                        }
+                    });
+                    if (found === 0) {
+                        cards.forEach(card => {
+                            card.style.display = "block";
+                            grid.appendChild(card);
+                        });
+                        if (infoDiv) {
+                            infoDiv.innerHTML = `⚠️ No exact match — showing all tests`;
+                        }
+                    } else {
+                        if (infoDiv) {
+                            infoDiv.innerHTML = ""
+                        }
+                    }
+                }
+
+                const desktopInput = document.getElementById('desktopSearchInput');
+                const suggestionsDropdown = document.getElementById('desktopSuggestions');
+
+                function updateSuggestionsDropdown() {
+                    const val = desktopInput.value.trim();
+                    if (val === "") {
+                        suggestionsDropdown.classList.remove('show');
+                        return;
+                    }
+                    const matched = videosData.filter(v => v.title.toLowerCase().includes(val.toLowerCase()) || v.channel.toLowerCase().includes(val.toLowerCase())).slice(0, 6);
+                    if (matched.length === 0) {
+                        suggestionsDropdown.classList.remove('show');
+                        return;
+                    }
+                    suggestionsDropdown.innerHTML = '';
+                    matched.forEach(video => {
+                        const div = document.createElement('div');
+                        div.className = 'suggestion-item-dropdown';
+                        div.innerHTML = `<i class="fas fa-search"></i><span class="suggestion-text">${escapeHtml(video.title)}</span>`;
+                        div.addEventListener('click', () => {
+                            desktopInput.value = video.title;
+                            executeSearch(video.title);
+                            suggestionsDropdown.classList.remove('show');
+                        });
+                        suggestionsDropdown.appendChild(div);
+                    });
+                    suggestionsDropdown.classList.add('show');
+                }
+
+                function closeSuggestions() { suggestionsDropdown.classList.remove('show'); }
+
+                function initDesktopLiveSuggestions() {
+                    desktopInput.addEventListener('input', (e) => {
+                        const val = e.target.value;
+                        if (val.trim() === "") {
+                            executeSearch('');
+                            closeSuggestions();
+                        } else {
+                            updateSuggestionsDropdown();
+                        }
+                    });
+                    desktopInput.addEventListener('blur', () => setTimeout(closeSuggestions, 200));
+                    desktopInput.addEventListener('focus', () => {
+                        if (desktopInput.value.trim() !== "") updateSuggestionsDropdown();
+                    });
+                }
+
+                function initDesktopSearchButtons() {
+                    const desktopBtn = document.getElementById('desktopSearchBtn');
+                    const doSearch = () => { executeSearch(desktopInput.value); closeSuggestions(); };
+                    desktopBtn.addEventListener('click', doSearch);
+                    desktopInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') { e.preventDefault(); doSearch(); } });
+                }
+
+                function initDesktopVoice() {
+                    const micBtn = document.getElementById('desktopMicBtn');
+                    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) { micBtn.style.opacity = '0.5'; micBtn.disabled = true; return; }
+                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                    const recognition = new SpeechRecognition();
+                    recognition.continuous = false; recognition.interimResults = false; recognition.lang = 'en-IN';
+                    micBtn.addEventListener('click', () => { recognition.start(); micBtn.classList.add('listening'); });
+                    recognition.onresult = (event) => { const transcript = event.results[0][0].transcript; desktopInput.value = transcript; executeSearch(transcript); closeSuggestions(); micBtn.classList.remove('listening'); };
+                    recognition.onerror = () => micBtn.classList.remove('listening');
+                    recognition.onend = () => micBtn.classList.remove('listening');
+                }
+
+                const overlay = document.getElementById('searchOverlay');
+                const searchTrigger = document.getElementById('searchTriggerIcon');
+                const closeOverlayBtn = document.getElementById('closeSearchOverlay');
+                const overlaySearchInput = document.getElementById('overlaySearchInput');
+                const clearOverlay = document.getElementById('clearOverlaySearch');
+                const voiceOverlayBtn = document.getElementById('overlayVoiceBtn');
+
+                function openSearchOverlay() { if (overlay && window.innerWidth <= 768) { overlay.classList.add('open'); overlaySearchInput.focus(); clearOverlay.style.display = overlaySearchInput.value ? 'inline-block' : 'none'; } }
+                function closeSearchOverlay() { if (overlay) overlay.classList.remove('open'); }
+                function submitOverlaySearch() { let query = overlaySearchInput.value; executeSearch(query); closeSearchOverlay(); if (desktopInput) desktopInput.value = query; }
+
+                function initMobileOverlay() {
+                    searchTrigger.addEventListener('click', openSearchOverlay);
+                    closeOverlayBtn.addEventListener('click', closeSearchOverlay);
+                    overlaySearchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') submitOverlaySearch(); });
+                    overlaySearchInput.addEventListener('input', () => {
+                        clearOverlay.style.display = overlaySearchInput.value.length ? 'inline-block' : 'none';
+                        if (overlaySearchInput.value.trim() === "") {
+                            executeSearch('');
+                        }
+                    });
+                    clearOverlay.addEventListener('click', () => {
+                        overlaySearchInput.value = '';
+                        clearOverlay.style.display = 'none';
+                        overlaySearchInput.focus();
+                        executeSearch('');
+                    });
+                    document.querySelectorAll('.suggestion-item').forEach(item => {
+                        item.addEventListener('click', () => {
+                            const text = item.querySelector('span')?.innerText;
+                            if (text) { overlaySearchInput.value = text; submitOverlaySearch(); }
+                        });
+                    });
+                    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                        const recognition = new SpeechRecognition();
+                        recognition.continuous = false; recognition.interimResults = false; recognition.lang = 'en-IN';
+                        voiceOverlayBtn.addEventListener('click', () => { recognition.start(); voiceOverlayBtn.classList.add('listening'); });
+                        recognition.onresult = (event) => { const transcript = event.results[0][0].transcript; overlaySearchInput.value = transcript; clearOverlay.style.display = 'inline-block'; voiceOverlayBtn.classList.remove('listening'); submitOverlaySearch(); };
+                        recognition.onerror = () => voiceOverlayBtn.classList.remove('listening');
+                        recognition.onend = () => voiceOverlayBtn.classList.remove('listening');
+                    } else { voiceOverlayBtn.style.opacity = '0.5'; voiceOverlayBtn.disabled = true; }
+                }
+
+                function setActiveNav(navId, resetGridIfHome = true) {
+                    document.querySelectorAll('.desktop-sidebar .sidebar-item, #mobileDrawer .sidebar-item, .bottom-nav .nav-item').forEach(el => {
+                        if (el.getAttribute('data-nav') === navId) el.classList.add('active');
+                        else el.classList.remove('active');
+                    });
+                    if (navId === 'home' && resetGridIfHome) { if (desktopInput) desktopInput.value = ''; executeSearch(''); closeSuggestions(); }
+                    else if (navId !== 'home') alert(`📺 ${navId} section (demo)`);
+                }
+
+                function initNavClicks() {
+                    document.querySelectorAll('.sidebar-item, .nav-item').forEach(el => {
+                        el.addEventListener('click', () => {
+                            const nav = el.getAttribute('data-nav');
+
+                            if (nav === "library") {
+                                window.location.href = "/ebook/?search=&filter=all&sort=newest";
+                            }
+                            else if (nav === "history") {
+                                window.location.href = "/National-Test-Series/history";
+                            }
+                            else if (nav === "you") {
+                                const isLoggedIn = "<%= typeof user !== 'undefined' && user ? 'yes' : '' %>";
+
+                                if (isLoggedIn === "yes") {
+                                    sidebar.classList.add("open");
+                                    overlayProfile.classList.add("show");
+                                } else {
+                                    window.location.href = "/login";
+                                }
+                            }
+                            else if (nav === "home") {
+                                setActiveNav('home', true);
+                            }
+                            else {
+                                // ❌ REMOVE ALERT
+                                console.log(nav + " section");
+                            }
+                        });
+                    });
+                }
+
+                function initSidebarControls() {
+                    const menuIcon = document.getElementById('menuIcon');
+                    const desktopSidebar = document.getElementById('desktopSidebar');
+                    const drawerOverlay = document.getElementById('drawerOverlay');
+                    menuIcon.addEventListener('click', (e) => { e.stopPropagation(); if (window.innerWidth <= 768) drawerOverlay.classList.add('open'); else desktopSidebar.classList.toggle('collapsed'); });
+                    drawerOverlay.addEventListener('click', (e) => { if (e.target === drawerOverlay) drawerOverlay.classList.remove('open'); });
+                    document.querySelectorAll('#mobileDrawer .sidebar-item').forEach(item => { item.addEventListener('click', () => drawerOverlay.classList.remove('open')); });
+                }
+
+                function initChips() {
+                    const chips = document.querySelectorAll('.chip');
+                    chips.forEach(chip => {
+                        chip.addEventListener('click', function () {
+                            chips.forEach(c => c.classList.remove('active'));
+                            this.classList.add('active');
+                            const chipText = this.innerText;
+                            if (chipText === 'All Exams') { if (desktopInput) desktopInput.value = ''; executeSearch(''); }
+                            else { if (desktopInput) desktopInput.value = chipText; executeSearch(chipText); }
+                            closeSuggestions();
+                        });
+                    });
+                }
+
+                function handleResize() {
+                    const desktopSidebar = document.getElementById('desktopSidebar');
+                    if (window.innerWidth <= 768 && desktopSidebar && desktopSidebar.classList.contains('collapsed')) desktopSidebar.classList.remove('collapsed');
+                    const drawerOverlay = document.getElementById('drawerOverlay');
+                    if (window.innerWidth > 768 && drawerOverlay) drawerOverlay.classList.remove('open');
+                    if (window.innerWidth > 768 && overlay) overlay.classList.remove('open');
+                }
+
+                document.getElementById('createIcon')?.addEventListener('click', () => alert('📹 Create (Demo)'));
+                document.getElementById('bellIcon')?.addEventListener('click', () => alert('🔔 Notifications'));
+
+                // Profile sidebar logic (avatar click, close, and menu actions)
+                const avatar = document.getElementById("avatarIcon");
+                const sidebar = document.getElementById("profileSidebar");
+                const overlayProfile = document.getElementById("profileOverlay");
+                const closeProfileBtn = document.getElementById("closeProfileSidebar");
+
+                avatar.addEventListener("click", () => {
+                    const isLoggedIn = "<%= typeof user !== 'undefined' && user ? 'yes' : '' %>";
+                    if (isLoggedIn === "yes") {
+                        sidebar.classList.add("open");
+                        overlayProfile.classList.add("show");
+                    } else {
+                        window.location.href = "/login?redirect=" + encodeURIComponent(window.location.pathname);
+                    }
+                });
+
+                overlayProfile.addEventListener("click", () => {
+                    sidebar.classList.remove("open");
+                    overlayProfile.classList.remove("show");
+                });
+                closeProfileBtn.addEventListener("click", () => {
+                    sidebar.classList.remove("open");
+                    overlayProfile.classList.remove("show");
+                });
+
+                // Profile menu item actions (demo / functional)
+                document.getElementById('viewChannelBtn')?.addEventListener('click', () => alert('📺 View your channel (demo)'));
+                document.getElementById('googleAccountBtn')?.addEventListener('click', () => alert('🔐 Google Account settings'));
+                document.getElementById('switchAccountBtn')?.addEventListener('click', () => { window.location.href = '/login'; });
+                document.getElementById('signOutBtn')?.addEventListener('click', () => { fetch('/logout', { method: 'POST' }).then(() => window.location.href = '/'); });
+                document.getElementById('youtubeStudioBtn')?.addEventListener('click', () => alert('🎬 YouTube Studio (demo)'));
+                document.getElementById('purchasesBtn')?.addEventListener('click', () => alert('🛒 Purchases and memberships'));
+                document.getElementById('yourDataBtn')?.addEventListener('click', () => alert('📊 Your data in YouTube'));
+                document.getElementById('keyboardShortcuts')?.addEventListener('click', () => alert('⌨️ Keyboard shortcuts: j/k to scroll'));
+                document.getElementById('settingsBtn')?.addEventListener('click', () => alert('⚙️ Settings (demo)'));
+                document.getElementById('helpBtn')?.addEventListener('click', () => alert('❓ Help Center'));
+                document.getElementById('feedbackBtn')?.addEventListener('click', () => alert('💬 Send feedback'));
+
+                renderVideos(videosData);
+                initDesktopLiveSuggestions();
+                initDesktopSearchButtons();
+                initDesktopVoice();
+                initMobileOverlay();
+                initNavClicks();
+                initSidebarControls();
+                initChips();
+                window.addEventListener('resize', handleResize);
+
+                async function toggleLike(btn, testId) {
+                    try {
+                        const res = await fetch(`/National-Test-Series/like/${testId}`, {
+                            method: "POST"
+                        });
+                        const data = await res.json();
+                        btn.classList.toggle("liked", data.liked);
+                        btn.querySelector(".like-count").innerText = data.likes;
+                    } catch (err) {
+                        console.log(err);
+                    }
+                }
+
+                let selectedTestId = null;
+
+                function openTestPopup(testId, testName) {
+                    selectedTestId = testId;
+                    document.getElementById("popupTestName").innerText = testName;
+                    document.getElementById("startTestPopup").style.display = "flex";
+                }
+                function closePopup() {
+                    document.getElementById("startTestPopup").style.display = "none";
+                }
+                function startTest() {
+                    if (selectedTestId) {
+                        window.location.href = "/National-Test-Series/test/" + selectedTestId;
+                    }
+                }
+                function shareTest(testId, testName) {
+                    const url = window.location.origin + "/National-Test-Series/test/" + testId;
+                    const shareText = `📘 ${testName}\n\n👉 Start your test:\n${url}`;
+                    window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`);
+                }
+            </script>
 </body>
+
 </html>

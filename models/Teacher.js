@@ -13,11 +13,24 @@ const teacherSchema = new mongoose.Schema(
       default: ""
     },
 
-    // 🔥 ADD THIS
     otp: { type: String },
-    otpExpiry: { type: Date }
+    otpExpiry: { type: Date },
+
+    // 🔥 ADD THIS (VERY IMPORTANT)
+    viewHistory: [
+      {
+        test: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "TeacherTest"
+        },
+        viewedAt: {
+          type: Date,
+          default: Date.now
+        }
+      }
+    ]
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Teacher", teacherSchema);
+module.exports = mongoose.models.Teacher || mongoose.model("Teacher", teacherSchema);

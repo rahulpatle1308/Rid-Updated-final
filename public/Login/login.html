@@ -536,6 +536,7 @@ hr {
       
       <form id="loginForm" action="/auth/login" method="POST">
         <!-- Email field with icon label -->
+         <input type="hidden" name="redirect" id="redirectInput">
         <label for="emailInput"><i class="fas fa-envelope"></i> Enter Email Address</label>
         <div class="input-wrapper">
           <input type="text" id="emailInput" name="email" placeholder="hello@research.com" autocomplete="email">
@@ -590,6 +591,12 @@ hr {
 document.addEventListener("DOMContentLoaded",function(){
   document.getElementById("currentYear").textContent=new Date().getFullYear();
 })
+ const params = new URLSearchParams(window.location.search);
+  const redirect = params.get("redirect");
+
+  if (redirect) {
+    document.getElementById("redirectInput").value = redirect;
+  }
 </script>
 
 <script src="../js/showToast.js"></script>

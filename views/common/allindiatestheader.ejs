@@ -1,0 +1,353 @@
+<head>
+    <link rel="stylesheet" href="/css/Allindiatestserice/testserice.css">
+    
+</head>
+<div class="app">
+
+    <!-- ================= HEADER ================= -->
+    <div class="header">
+        <div class="header-left">
+            <i class="fas fa-bars menu-icon" id="menuIcon"></i>
+            <div class="logo-icon" id="logoHome">
+                <i class="fas fa-book-open" style="color: red;"></i>
+                <span class="logo-text">RIDTECH</span>
+            </div>
+        </div>
+
+        <div class="header-center">
+            <div class="search-box">
+                <input type="text" id="desktopSearchInput" placeholder="Search" autocomplete="off">
+                <button class="search-btn" id="desktopSearchBtn"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="mic-btn" id="desktopMicBtn"><i class="fas fa-microphone"></i></div>
+            <div id="desktopSuggestions" class="search-suggestions-dropdown"></div>
+        </div>
+
+        <div class="header-right">
+            <i class="fas fa-search search-trigger-icon" id="searchTriggerIcon"></i>
+            <div class="create-btn" id="createIcon">
+                <i class="fas fa-plus-circle"></i>
+                <span>Create Test</span>
+            </div>
+            <i class="fas fa-bell" id="bellIcon"></i>
+            <div class="avatar" id="avatarIcon">
+                <% if(typeof user !=="undefined" && user){ %>
+                    <%= user.name?.charAt(0).toUpperCase() %>
+                <% } else { %>
+                    U
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= PROFILE SIDEBAR ================= -->
+    <div id="profileSidebar" class="profile-sidebar">
+        <div class="close-sidebar-icon" id="closeProfileSidebar"><i class="fas fa-times"></i></div>
+        <div class="profile-header">
+            <div class="profile-avatar-large">
+                <% if(typeof user !=="undefined" && user){ %>
+                    <%= user.name?.charAt(0).toUpperCase() %>
+                <% } else { %>U<% } %>
+            </div>
+            <div class="profile-info">
+                <h3><%= user ? user.name : 'Guest User' %></h3>
+                <p><%= user ? user.email : 'guest@example.com' %></p>
+            </div>
+        </div>
+        <div class="profile-menu-item" id="viewChannelBtn"><i class="fas fa-eye"></i><span>View your channel</span></div>
+        <div class="profile-menu-item" id="googleAccountBtn"><i class="fab fa-google"></i><span>Google Account</span></div>
+        <div class="profile-menu-item" id="switchAccountBtn"><i class="fas fa-exchange-alt"></i><span>Switch account</span></div>
+        <div class="profile-menu-item" id="signOutBtn"><i class="fas fa-sign-out-alt"></i><span>Sign out</span></div>
+        <div class="profile-divider"></div>
+        <div class="profile-menu-item" id="appearanceBtn">
+  <i class="fas fa-adjust"></i>
+  <span>Display Settings</span>
+</div>
+
+<!-- 🔥 DROPDOWN OPTIONS -->
+<div id="themeOptions" style="display:none; padding-left:20px;">
+
+  <div class="profile-menu-item theme-option" data-theme="light">
+    ☀️ Light Mode
+  </div>
+
+  <div class="profile-menu-item theme-option" data-theme="dark">
+    🌙 Dark Mode
+  </div>
+
+</div>
+        <div class="profile-menu-item" id="purchasesBtn"><i class="fas fa-shopping-cart"></i><span>Purchases</span></div>
+        <div class="profile-menu-item" id="yourDataBtn"><i class="fas fa-database"></i><span>Your data</span></div>
+        <div class="profile-divider"></div>
+        <div class="profile-menu-item" id="settingsBtn"><i class="fas fa-cog"></i><span>Settings</span></div>
+        <div class="profile-menu-item" id="helpBtn"><i class="fas fa-question-circle"></i><span>Help</span></div>
+        <div class="profile-menu-item" id="feedbackBtn"><i class="fas fa-comment-dots"></i><span>Feedback</span></div>
+    </div>
+    <div id="profileOverlay" class="profile-overlay"></div>
+
+    <!-- ================= MAIN LAYOUT (SIDEBAR + CONTENT) ================= -->
+    <div class="main-layout">
+        <!-- LEFT SIDEBAR (DESKTOP) -->
+        <div class="desktop-sidebar" id="desktopSidebar">
+            <div class="sidebar-item" data-nav="home">
+                <i class="fas fa-home"></i><span>Home</span>
+            </div>
+            <div class="sidebar-item" data-nav="subscriptions">
+                <i class="fas fa-newspaper"></i><span>My Mentors</span>
+            </div>
+            <div class="sidebar-divider"></div>
+            <div class="sidebar-item" data-nav="library">
+                <i class="fas fa-bookmark"></i><span>Library</span>
+            </div>
+            <div class="sidebar-item" data-nav="history">
+                <i class="fas fa-history"></i><span>History</span>
+            </div>
+            <div class="sidebar-item" data-nav="yourvideos">
+                <i class="fas fa-play-circle"></i><span>Your videos</span>
+            </div>
+            <div class="sidebar-divider"></div>
+            <div class="sidebar-title">EXPLORE</div>
+            <div class="sidebar-item" data-nav="music">
+                <i class="fas fa-music"></i><span>Music</span>
+            </div>
+            <div class="sidebar-item" data-nav="gaming">
+                <i class="fas fa-gamepad"></i><span>Gaming</span>
+            </div>
+            <div class="sidebar-item" data-nav="movies">
+                <i class="fas fa-tv"></i><span>Movies</span>
+            </div>
+        </div>
+
+        <!-- CONTENT WILL BE INJECTED HERE FROM NationalTest.ejs -->
+        <div id="dynamicContent"></div>
+    </div>
+
+    <!-- MOBILE DRAWER (LEFT SIDEBAR ON MOBILE) -->
+    <div class="drawer-overlay" id="drawerOverlay">
+        <div class="mobile-drawer" id="mobileDrawer">
+            <div class="sidebar-item active" data-nav="home">
+                <i class="fas fa-home"></i><span>Home</span>
+            </div>
+            <div class="sidebar-item" data-nav="library">
+                <i class="fas fa-bookmark"></i><span>Library</span>
+            </div>
+            <div class="sidebar-item" data-nav="history">
+                <i class="fas fa-history"></i><span>History</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- MOBILE BOTTOM NAV -->
+    <div class="bottom-nav">
+        <div class="nav-item active" data-nav="home">
+            <i class="fas fa-home"></i><span>Home</span>
+        </div>
+        <div class="nav-item" data-nav="shorts">
+            <i class="fas fa-fire"></i><span>Shorts MCQ</span>
+        </div>
+        <div class="nav-item" data-nav="subscriptions" id="createIcon">
+             <i class="fas fa-plus-circle"></i>
+                <span>Create Test</span>
+        </div>
+        <div class="nav-item" data-nav="library">
+            <i class="fas fa-bookmark"></i><span>Library</span>
+        </div>
+        <div class="nav-item" data-nav="you">
+            <i class="fas fa-user"></i><span>You</span>
+        </div>
+    </div>
+
+    <!-- MOBILE SEARCH OVERLAY (if needed) -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-header">
+            <i class="fas fa-arrow-left back-icon" id="closeSearchOverlay"></i>
+            <div class="search-input-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="overlaySearchInput" placeholder="Search exams, videos...">
+                <i class="fas fa-times-circle clear-search" id="clearOverlaySearch" style="display: none;"></i>
+            </div>
+            <button class="voice-search-btn" id="overlayVoiceBtn"><i class="fas fa-microphone"></i></button>
+        </div>
+        <div class="search-suggestions" id="searchSuggestions">
+            <div class="suggestion-item"><i class="fas fa-history"></i><span>SSC CGL 2025</span></div>
+            <div class="suggestion-item"><i class="fas fa-history"></i><span>Banking exam preparation</span></div>
+            <div class="suggestion-item"><i class="fas fa-history"></i><span>NEET previous year papers</span></div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // ========== SIDEBAR & PROFILE JS (unchanged) ==========
+    const avatar = document.getElementById("avatarIcon");
+    const sidebar = document.getElementById("profileSidebar");
+    const overlayProfile = document.getElementById("profileOverlay");
+    const closeProfileBtn = document.getElementById("closeProfileSidebar");
+
+    avatar.addEventListener("click", () => {
+        const isLoggedIn = "<%= typeof user !== 'undefined' && user ? 'yes' : '' %>";
+        if (isLoggedIn === "yes") {
+            sidebar.classList.add("open");
+            overlayProfile.classList.add("show");
+        } else {
+           window.location.href = "/login?redirect=" + encodeURIComponent(window.location.pathname);
+        }
+    });
+
+    overlayProfile.addEventListener("click", () => {
+        sidebar.classList.remove("open");
+        overlayProfile.classList.remove("show");
+    });
+
+    closeProfileBtn.addEventListener("click", () => {
+        sidebar.classList.remove("open");
+        overlayProfile.classList.remove("show");
+    });
+
+    document.getElementById('bellIcon')?.addEventListener('click', () => alert('🔔 Notifications'));
+
+    function initSidebarControls() {
+        const menuIcon = document.getElementById('menuIcon');
+        const desktopSidebar = document.getElementById('desktopSidebar');
+        const drawerOverlay = document.getElementById('drawerOverlay');
+
+        menuIcon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (window.innerWidth <= 768) {
+                drawerOverlay.classList.add('open');
+            } else {
+                desktopSidebar.classList.toggle('collapsed');
+            }
+        });
+
+        drawerOverlay.addEventListener('click', (e) => {
+            if (e.target === drawerOverlay) drawerOverlay.classList.remove('open');
+        });
+
+        document.querySelectorAll('#mobileDrawer .sidebar-item').forEach(item => {
+            item.addEventListener('click', () => drawerOverlay.classList.remove('open'));
+        });
+    }
+
+    initSidebarControls();
+
+    document.querySelectorAll('.bottom-nav .nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const nav = item.getAttribute('data-nav');
+            document.querySelectorAll('.bottom-nav .nav-item').forEach(el => el.classList.remove('active'));
+            item.classList.add('active');
+
+            if (nav === "home") window.location.href = "/National-Test-Series";
+            else if (nav === "library") window.location.href = "/ebook/?search=&filter=all&sort=newest";
+            else if (nav === "subscriptions") window.location.href = "/subscriptions";
+            else if (nav === "shorts") window.location.href = "/shorts-mcq";
+            else if (nav === "you") {
+                const isLoggedIn = "<%= typeof user !== 'undefined' && user ? 'yes' : '' %>";
+                if (isLoggedIn === "yes") {
+                    document.getElementById("profileSidebar").classList.add("open");
+                    document.getElementById("profileOverlay").classList.add("show");
+                } else {
+                    window.location.href = "/login";
+                }
+            }
+        });
+    });
+    // 🔥 DESKTOP SIDEBAR CLICK FIX
+document.querySelectorAll('.desktop-sidebar .sidebar-item').forEach(item => {
+    item.addEventListener('click', () => {
+        const nav = item.getAttribute('data-nav');
+
+        if (nav === "home") {
+            window.location.href = "/";
+        }
+        else if (nav === "library") {
+            window.location.href = "/ebook/?search=&filter=all&sort=newest";
+        }
+        else if (nav === "history") {
+            window.location.href = "/National-Test-Series/history";
+        }
+        else if (nav === "subscriptions") {
+            window.location.href = "/subscriptions";
+        }
+        else {
+            console.log(nav + " clicked");
+        }
+    });
+});
+document.querySelectorAll('#mobileDrawer .sidebar-item').forEach(item => {
+    item.addEventListener('click', () => {
+        const nav = item.getAttribute('data-nav');
+
+        if (nav === "home") {
+            window.location.href = "/";
+        }
+        else if (nav === "library") {
+            window.location.href = "/ebook/?search=&filter=all&sort=newest";
+        }
+        else if (nav === "history") {
+            window.location.href = "/National-Test-Series/history";
+        }
+    });
+});
+
+document.getElementById("viewChannelBtn")?.addEventListener("click", () => {
+    window.location.href = "/teacher/channel";
+});
+
+// sara opection par pink karega 
+function setActiveNav() {
+    const path = window.location.pathname;
+
+    // remove all active
+    document.querySelectorAll('.sidebar-item').forEach(el => {
+        el.classList.remove('active');
+    });
+
+    document.querySelectorAll('.bottom-nav .nav-item').forEach(el => {
+        el.classList.remove('active');
+    });
+
+    // set active based on URL
+    if (path === "/") {
+        document.querySelectorAll('[data-nav="home"]').forEach(el => el.classList.add('active'));
+    }
+    else if (path.includes("/history")) {
+        document.querySelectorAll('[data-nav="history"]').forEach(el => el.classList.add('active'));
+    }
+    else if (path.includes("/ebook")) {
+        document.querySelectorAll('[data-nav="library"]').forEach(el => el.classList.add('active'));
+    }
+    else if (path.includes("/subscriptions")) {
+        document.querySelectorAll('[data-nav="subscriptions"]').forEach(el => el.classList.add('active'));
+    }
+}
+
+setActiveNav();
+const btn = document.getElementById("appearanceBtn");
+const options = document.getElementById("themeOptions");
+
+// toggle open
+btn.addEventListener("click", () => {
+    options.style.display = options.style.display === "none" ? "block" : "none";
+});
+
+// theme change
+document.querySelectorAll(".theme-option").forEach(item => {
+    item.addEventListener("click", () => {
+        const theme = item.getAttribute("data-theme");
+
+        if (theme === "dark") {
+            document.body.classList.add("dark-mode");
+            localStorage.setItem("theme", "dark");
+        } else {
+            document.body.classList.remove("dark-mode");
+            localStorage.setItem("theme", "light");
+        }
+    });
+});
+
+// load saved theme
+if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark-mode");
+}
+</script>

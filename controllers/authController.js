@@ -62,17 +62,25 @@ req.session.userRole = user.role;
 req.session.userEmail = user.email;
 
 // 🔥 REDIRECT FIX
-const redirectUrl = req.session.redirectTo || "/rts/dashboard";
-delete req.session.redirectTo;
+//const redirectUrl = req.session.redirectTo || "/rts/dashboard";
+const redirectUrl = req.body.redirect || req.query.redirect;
 
-// 🔹 Role-based redirect
+// 🟢 STUDENT
 if (user.role === "student") {
-  return res.redirect("/rts/dashboard");
+  return res.redirect(redirectUrl || "/rts/dashboard");
 }
 
-    if (user.role === "teacher") {
-      return res.redirect("/teacher-dashboard");
-    }
+// 🟢 TEACHER 🔥
+if (user.role === "teacher") {
+
+  // agar redirect hai (like specific page)
+  if (redirectUrl) {
+    return res.redirect(redirectUrl);
+  }
+
+  // warna direct dashboard
+  return res.redirect("/teacher-dashboard");
+}
 
     if (user.role === "organisation") {
 

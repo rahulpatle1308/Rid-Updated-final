@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>History - RIDTECH</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Additional styles only for history page */
+        .history-container {
+            padding: 20px 24px 40px 24px;
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .history-header h2 {
+            font-size: 24px;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        .history-header button {
+            border: none;
+            background: #e3f2fd;
+            padding: 8px 16px;
+            border-radius: 24px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .history-header button:hover {
+            background: #d0e3f5;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid #e5e5e5;
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+
+        .history-item:hover {
+            background-color: #f2f2f2;
+        }
+
+        .history-left {
+            display: flex;
+            gap: 16px;
+            flex: 1;
+        }
+
+        .history-thumb img {
+            width: 160px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .history-info {
+            flex: 1;
+        }
+
+        .history-title {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .history-meta {
+            font-size: 13px;
+            color: #606060;
+        }
+
+        .history-actions {
+            position: relative;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .history-actions:hover {
+            background: #e5e5e5;
+        }
+
+        .three-dots {
+            font-size: 20px;
+            font-weight: bold;
+            color: #606060;
+            letter-spacing: 2px;
+        }
+
+        /* Simple dropdown menu for delete */
+        .action-menu {
+            position: absolute;
+            right: 0;
+            top: 30px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            z-index: 100;
+            display: none;
+            min-width: 120px;
+        }
+
+        .action-menu.show {
+            display: block;
+        }
+
+        .action-menu div {
+            padding: 10px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+
+        .action-menu div:hover {
+            background: #f2f2f2;
+        }
+
+        .action-menu .delete-item {
+            color: #d32f2f;
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .history-container {
+                padding: 12px 12px 20px 12px;
+            }
+
+            .history-thumb img {
+                width: 120px;
+                height: 68px;
+            }
+
+            .history-header h2 {
+                font-size: 20px;
+            }
+
+            .history-header button {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .history-container {
+                padding: 20px 24px 40px 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <%- include("../common/allindiatestheader.ejs") %>
+
+        <div id="historyPageContent" style="display: none;">
+            <div class="history-container">
+
+
+                <% function getGroup(date){ const d=new Date(date); const today=new Date(); today.setHours(0,0,0,0);
+                    const yesterday=new Date(today); yesterday.setDate(today.getDate() - 1); const weekAgo=new
+                    Date(today); weekAgo.setDate(today.getDate() - 7); d.setHours(0,0,0,0);
+                    if(d.getTime()===today.getTime()) return "Today" ; if(d.getTime()===yesterday.getTime())
+                    return "Yesterday" ; if(d> weekAgo) return "This week";
+                    return "Older";
+                    }
+
+                    let grouped = {};
+
+                    if(history && history.length){
+                    history.forEach(item => {
+                    const group = getGroup(item.viewedAt);
+                    if(!grouped[group]) grouped[group] = [];
+                    grouped[group].push(item);
+                    });
+                    }
+
+                    const order = ["Today","Yesterday","This week","Older"];
+                    %>
+
+                    <div class="history-container">
+
+                        <div class="history-header">
+                            <h2><i class="fas fa-history"></i> History</h2>
+                            <div>
+                                <button id="clearAllHistoryBtn">Clear all history</button>
+                                <button id="pauseHistoryBtn">Pause history</button>
+                            </div>
+                        </div>
+
+                        <% if(history && history.length > 0){ %>
+
+<% order.forEach(group => { 
+    if(grouped[group]){ %>
+
+    <h3 style="margin:20px 0 10px;"><%= group %></h3>
+
+    <% grouped[group].forEach(item => { 
+        
+        if(!item.test) return; // 🔥 IMPORTANT FIX
+
+    %>
+
+    <div class="history-item">
+
+        <div class="history-left"
+            onclick="window.location.href='/National-Test-Series/test/<%= item.test._id %>'">
+
+            <div class="history-thumb">
+                <img src="https://picsum.photos/300/200">
+            </div>
+
+            <div class="history-info">
+                <div class="history-title">
+                    <%= item.test.name %>
+                </div>
+                <div class="history-meta">
+                    <%= item.test.teacher?.name || "RIDTECH" %>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 🔥 RIGHT SIDE THREE DOTS -->
+        <div class="history-actions">
+            <span class="three-dots">⋮</span>
+
+            <div class="action-menu">
+                <div class="delete-item" data-id="<%= item._id %>">
+                    🗑️ Delete
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <% }) %>
+
+<% } }) %>
+
+<% } else { %>
+
+<p style="text-align:center;padding:40px;">No history found</p>
+
+<% } %>
+                    </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const dynamicContent = document.getElementById("dynamicContent");
+                const tempContent = document.getElementById("historyPageContent");
+                if (dynamicContent && tempContent) {
+                    const container = tempContent.querySelector(".history-container");
+                    if (container) {
+                        dynamicContent.innerHTML = "";
+                        dynamicContent.appendChild(container);
+                    }
+                    tempContent.remove();
+                }
+
+                // Clear all history
+                const clearBtn = document.getElementById("clearAllHistoryBtn");
+                if (clearBtn) {
+                    clearBtn.addEventListener("click", () => {
+                        if (confirm("Delete all history?")) {
+                            fetch("/history/clear", { method: "POST" })
+                                .then(() => location.reload());
+                        }
+                    });
+                }
+
+                // Pause history (demo)
+                const pauseBtn = document.getElementById("pauseHistoryBtn");
+                if (pauseBtn) {
+                    pauseBtn.addEventListener("click", () => alert("History pause coming soon"));
+                }
+
+                // ========== PER-ITEM DELETE (Three dots menu) ==========
+                function closeAllMenus() {
+                    document.querySelectorAll('.action-menu').forEach(menu => {
+                        menu.classList.remove('show');
+                    });
+                }
+
+                // Attach click handlers to each three-dots button
+                document.querySelectorAll('.history-actions').forEach(actionsDiv => {
+                    const dots = actionsDiv.querySelector('.three-dots');
+                    const menu = actionsDiv.querySelector('.action-menu');
+
+                    dots.addEventListener('click', (e) => {
+                        e.stopPropagation();  // prevent navigating to test
+                        closeAllMenus();
+                        menu.classList.toggle('show');
+                    });
+
+                    // Delete action inside menu
+                    const deleteOption = menu.querySelector('.delete-item');
+                    if (deleteOption) {
+                        deleteOption.addEventListener('click', async (e) => {
+                            e.stopPropagation();
+                            const historyId = deleteOption.getAttribute('data-id');
+                            if (confirm("Delete this history entry?")) {
+                                try {
+                                    const res = await fetch(`/history/delete/${historyId}`, { method: "DELETE" });
+                                    if (res.ok) {
+                                        // Remove the entire history-item from DOM
+                                        const historyItem = actionsDiv.closest('.history-item');
+                                        historyItem.remove();
+                                        // If no items left, show "No history" message
+                                        if (document.querySelectorAll('.history-item').length === 0) {
+                                            const container = document.querySelector('.history-container');
+                                            const noHistoryMsg = document.createElement('p');
+                                            noHistoryMsg.style.padding = "40px 0";
+                                            noHistoryMsg.style.textAlign = "center";
+                                            noHistoryMsg.style.color = "#606060";
+                                            noHistoryMsg.innerHTML = '<i class="fas fa-folder-open"></i> No history found';
+                                            container.appendChild(noHistoryMsg);
+                                        }
+                                    } else {
+                                        alert("Failed to delete history");
+                                    }
+                                } catch (err) {
+                                    console.error(err);
+                                    alert("Error deleting history");
+                                }
+                            }
+                            closeAllMenus();
+                        });
+                    }
+                });
+
+                // Close any open menu when clicking elsewhere
+                document.addEventListener('click', (e) => {
+                    if (!e.target.closest('.history-actions')) {
+                        closeAllMenus();
+                    }
+                });
+            });
+            function filterVideos() {
+                const cards = Array.from(document.querySelectorAll(".history-item"));
+
+                const input = document.getElementById("desktopSearchInput");
+                if (!input) return; // 🔥 important fix
+
+                const q = input.value.toLowerCase().trim();
+
+                function getMatchScore(text, query) {
+                    let score = 0;
+
+                    if (text.includes(query)) score += 100;
+
+                    const words = text.split(" ");
+                    words.forEach(word => {
+                        if (word.startsWith(query)) score += 50;
+                        if (word.includes(query)) score += 20;
+                    });
+
+                    let matchCount = 0;
+                    for (let char of query) {
+                        if (text.includes(char)) matchCount++;
+                    }
+
+                    score += matchCount * 2;
+                    return score;
+                }
+
+                let results = cards.map(card => {
+                    const text = card.innerText.toLowerCase();
+                    const score = q === "" ? 1 : getMatchScore(text, q);
+
+                    return { card, score };
+                });
+
+                results = results.filter(item => item.score > 0);
+                results.sort((a, b) => b.score - a.score);
+
+                // 🔥 SHOW ALL IF EMPTY SEARCH
+                if (q === "") {
+                    cards.forEach(card => card.style.display = "flex");
+                    return;
+                }
+
+                // 🔥 NO RESULT → SHOW ALL
+                if (results.length === 0) {
+                    cards.forEach(card => card.style.display = "flex");
+                    return;
+                }
+
+                // 🔥 HIDE ALL
+                cards.forEach(card => card.style.display = "none");
+
+                // 🔥 SHOW MATCHED
+                results.forEach(item => {
+                    item.card.style.display = "flex";
+                });
+            }
+            setTimeout(() => {
+                const input = document.getElementById("desktopSearchInput");
+                const btn = document.getElementById("desktopSearchBtn");
+
+                if (input) {
+                    input.addEventListener("input", filterVideos);
+                    input.addEventListener("keypress", (e) => {
+                        if (e.key === "Enter") filterVideos();
+                    });
+                }
+
+                if (btn) {
+                    btn.addEventListener("click", filterVideos);
+                }
+            }, 500);
+
+history = history.filter(item => item.test);
+        </script>
+
+</body>
+
+</html>
