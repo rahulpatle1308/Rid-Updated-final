@@ -6,11 +6,13 @@ const state = {
     templates: [],
     questions: [],
     currentTestQuestions: [],
+    students: [],
     currentSection: 'payment-section',
     selectedColor: "#e34f26",
     dashboardAnimationsPlayed: false,
     profilePhoto: null,
-    editingQuestionId: null
+    editingQuestionId: null,
+    editingTestId: null
 };
 
 // Course Data
@@ -65,6 +67,9 @@ const navTests = document.getElementById('nav-tests-sidebar');
 const navTemplates = document.getElementById('nav-templates-sidebar');
 const navPython = document.getElementById('nav-python-sidebar');
 const navTestServices = document.getElementById('nav-test-services');
+const navStudents = document.getElementById('nav-students');
+const studentsSection = document.getElementById('students-section');
+const studentsLock = document.getElementById('students-lock');
 const navAnalytics = document.getElementById('nav-analytics');
 const navSettings = document.getElementById('nav-settings');
 const makePaymentBtn = document.getElementById('make-payment');
@@ -100,6 +105,7 @@ const gotoPaymentFromTemplates = document.getElementById('goto-payment-from-temp
 const gotoPaymentFromPython = document.getElementById('goto-payment-from-python');
 const gotoPaymentFromAnalytics = document.getElementById('goto-payment-from-analytics');
 const gotoPaymentFromSettings = document.getElementById('goto-payment-from-settings');
+const gotoPaymentFromStudents = document.getElementById('goto-payment-from-students');
 // Statistics elements
 const totalTestsElement = document.getElementById('total-tests');
 const totalQuestionsElement = document.getElementById('total-questions');
@@ -116,9 +122,31 @@ const quickTestNameInput = document.getElementById('quick-test-name');
 const quickSubjectInput = document.getElementById('quick-subject');
 const quickCreateBtn = document.getElementById('quick-create-btn');
 const colorOptions = document.getElementById('color-options');
+// Translator elements
+const translatorFromLang = document.getElementById('translator-from-lang');
+const translatorToLang = document.getElementById('translator-to-lang');
+const translatorInputText = document.getElementById('translator-input-text');
+const translatorOutputText = document.getElementById('translator-output-text');
+const translatorVoiceBtn = document.getElementById('translator-voice-btn');
+const translatorSpeakBtn = document.getElementById('translator-speak-btn');
+const translatorTranslateBtn = document.getElementById('translator-translate-btn');
+const translatorSwapBtn = document.getElementById('translator-swap-btn');
+const translatorClearBtn = document.getElementById('translator-clear-btn');
+const translatorHistoryList = document.getElementById('translator-history-list');
 // Question management elements
 const manageQuestionsBtn = document.getElementById('manage-questions-btn');
 const questionCountElement = document.getElementById('question-count');
+const addStudentBtn = document.getElementById('add-student-btn');
+const addStudentModal = document.getElementById('addStudentModal');
+const addStudentForm = document.getElementById('add-student-form');
+const studentsTableBody = document.getElementById('students-table-body');
+const studentSearchInput = document.getElementById('student-search');
+const studentFirstNameInput = document.getElementById('student-first-name');
+const studentLastNameInput = document.getElementById('student-last-name');
+const studentEmailInput = document.getElementById('student-email-input');
+const studentClassInput = document.getElementById('student-class');
+const studentRollInput = document.getElementById('student-roll');
+const studentParentContactInput = document.getElementById('student-parent-contact');
 const questionPreviewElement = document.getElementById('question-preview');
 const createTestModal = document.getElementById('createTestModal');
 const questionListElement = document.getElementById('questionList');
@@ -179,6 +207,14 @@ function initApp() {
         state.questions = JSON.parse(savedQuestions);
     }
 
+    // Load students passed from server
+    if (typeof initialStudents !== 'undefined') {
+        state.students = initialStudents.map(student => ({
+            ...student,
+            className: student.class || student.className || ''
+        }));
+    }
+
     // Load profile photo
     const savedProfilePhoto = localStorage.getItem('profilePhoto');
     if (savedProfilePhoto) {
@@ -210,6 +246,7 @@ function initApp() {
     // ✅ ADD THESE TWO LINES HERE (theme system)
     loadSavedTheme();
     setupThemeControls();
+    attachTranslatorEvents();
 }
 
 
@@ -277,9 +314,15 @@ function handleResize() {
 }
 
 // Initialize question management
-function initializeQuestionManagement() {
-    state.currentTestQuestions = [];
-    updateQuestionPreview();
+// function initializeQuestionManagement() {
+//     state.currentTestQuestions = [];
+//     updateQuestionPreview();
+// }
+
+function initializeQuestionManagement(isEdit = false) {
+    if (!isEdit) {
+        state.currentTestQuestions = [];
+    }
 }
 
 
@@ -335,6 +378,7 @@ function lockAllFeatures() {
     if (templatesLock) templatesLock.style.display = 'flex';
     if (pythonServiceLock) pythonServiceLock.style.display = 'flex';
     if (analyticsLock) analyticsLock.style.display = 'flex';
+    if (studentsLock) studentsLock.style.display = 'flex';
     if (settingsLock) settingsLock.style.display = 'flex';
     if (notesLock) notesLock.style.display = 'flex';
     if (previousLock) previousLock.style.display = 'flex';
@@ -374,6 +418,7 @@ function unlockAllFeatures() {
     if (templatesLock) templatesLock.style.display = 'none';
     if (pythonServiceLock) pythonServiceLock.style.display = 'none';
     if (analyticsLock) analyticsLock.style.display = 'none';
+    if (studentsLock) studentsLock.style.display = 'none';
     if (settingsLock) settingsLock.style.display = 'none';
     if (researchLock) researchLock.style.display = 'none';
     if (notesLock) notesLock.style.display = 'none';
@@ -394,7 +439,7 @@ function unlockAllFeatures() {
     });
 
     // Show success notification
-    showNotification('All features unlocked successfully!', 'success');
+    // showNotification('All features unlocked successfully!', 'success');
 }
 
 // Disable all form elements
@@ -485,6 +530,15 @@ function setupEventListeners() {
             showTestServicesSection();
         } else {
             alert('Please complete payment first to access Test Services.');
+            showPaymentSection();
+        }
+    });
+
+    navStudents.addEventListener('click', () => {
+        if (state.paymentCompleted) {
+            showStudentsSection();
+        } else {
+            alert('Please complete payment first to access Students.');
             showPaymentSection();
         }
     });
@@ -608,6 +662,28 @@ function setupEventListeners() {
     gotoPaymentFromPython.addEventListener('click', () => showPaymentSection());
     gotoPaymentFromAnalytics.addEventListener('click', () => showPaymentSection());
     gotoPaymentFromSettings.addEventListener('click', () => showPaymentSection());
+    gotoPaymentFromStudents.addEventListener('click', () => showPaymentSection());
+
+    addStudentBtn.addEventListener('click', () => {
+        if (state.paymentCompleted) {
+            addStudentModal.style.display = 'flex';
+        } else {
+            alert('Please complete payment first to add students.');
+            showPaymentSection();
+        }
+    });
+
+    addStudentForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (state.paymentCompleted) {
+            handleAddStudent();
+        } else {
+            alert('Please complete payment first to add students.');
+            showPaymentSection();
+        }
+    });
+
+    studentSearchInput?.addEventListener('input', filterStudentsTable);
 
     // Test form - only if payment completed
     testForm.addEventListener('submit', function (e) {
@@ -672,31 +748,38 @@ function setupEventListeners() {
 
     // Test Services details buttons (event delegation)
     document.addEventListener('click', function (e) {
-        if (e.target.classList.contains('delete-test-icon')) {
-            const testId = e.target.dataset.id;
+       if (e.target.classList.contains('delete-test-icon')) {
+    const testId = e.target.dataset.id;
 
-            if (!confirm("Delete this test?")) return;
+    if (!confirm("Delete this test?")) return;
 
-            fetch(`/teacher-tests/delete/${testId}`, {
-                method: "DELETE"
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        loadTestsFromDB();
-                        showNotification("Test deleted", "success");
-                    }
-                });
+    fetch(`/teacher-tests/delete/${testId}`, {
+        method: "DELETE"
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+
+            // 🔥 FULL RELOAD (BEST)
+            loadTestsFromDB();
+
+            showNotification("Test deleted", "success");
         }
-        if (e.target.classList.contains('edit-btn')) {
-            const testId = e.target.dataset.id;
+    });
+}
+       const editBtn = e.target.closest('.edit-btn');
 
-            fetch(`/teacher-tests/api/${testId}`)
-                .then(res => res.json())
-                .then(test => {
-                    openTestForEdit(test);
-                });
-        }
+if (editBtn) {
+    const testId = editBtn.dataset.id;
+
+    console.log("Edit Clicked:", testId);
+
+    fetch(`/teacher-tests/api/${testId}`)
+        .then(res => res.json())
+        .then(test => {
+            openTestForEdit(test);
+        });
+}
 
         if (e.target.classList.contains('details-btn') || e.target.closest('.details-btn')) {
             if (!state.paymentCompleted) {
@@ -824,7 +907,12 @@ function setupEventListeners() {
     if (topNavBirthday) {
         topNavBirthday.addEventListener('click', (e) => {
             e.preventDefault();
-            document.getElementById('nav-birthday').click();
+            const birthdayLink = document.querySelector('#nav-birthday a');
+            if (birthdayLink) {
+                birthdayLink.click();
+            } else {
+                window.location.href = '/rts/birthday-software';
+            }
         });
     }
 
@@ -984,7 +1072,7 @@ function showTemplatesSection() {
 function showPythonServiceSection() {
     hideAllSections();
     pythonServiceSection.classList.remove('hidden');
-    updateActiveNav('nav-python');
+    updateActiveNav('nav-python-sidebar');
     state.currentSection = 'python-service-section';
 }
 
@@ -998,6 +1086,199 @@ function showAnalyticsSection() {
     loadAnalyticsCards(); // ye zaroor hona chahiye
 }
 
+function showStudentsSection() {
+    hideAllSections();
+    studentsSection.classList.remove('hidden');
+    updateActiveNav('nav-students');
+    state.currentSection = 'students-section';
+    renderStudentsTable();
+}
+
+function renderStudentsTable(filter = '') {
+    const students = state.students.filter(student => {
+        if (!filter) return true;
+        const value = filter.toLowerCase();
+        return [student.name, student.className, student.roll, student.email, student.parentContact]
+            .filter(Boolean)
+            .some(text => text.toLowerCase().includes(value));
+    });
+
+    if (!studentsTableBody) return;
+    studentsTableBody.innerHTML = '';
+
+    if (students.length === 0) {
+        studentsTableBody.innerHTML = `
+            <tr>
+                <td colspan="6" style="text-align:center; color:#7f8c8d; padding:20px;">
+                    No students added yet.
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    students.forEach(student => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${student.name}</td>
+            <td>${student.className || '-'}</td>
+            <td>${student.roll || '-'}</td>
+            <td>${student.email || '-'}</td>
+            <td>${student.parentContact || '-'}</td>
+            <td>
+                <!-- VIEW -->
+    <button class="btn btn-sm btn-info" onclick="viewStudent('${student._id}')">
+        <i class="fas fa-eye"></i>
+    </button>
+
+    <!-- EDIT -->
+    <button class="btn btn-sm btn-outline edit-student-btn" onclick="editStudent('${student._id}')">
+        <i class="fas fa-edit"></i>
+    </button>
+
+    <!-- DELETE -->
+    <button class="btn btn-sm btn-danger delete-student-btn" onclick="deleteStudent('${student._id}')">
+        <i class="fas fa-trash"></i>
+    </button>
+            </td>
+        `;
+        studentsTableBody.appendChild(row);
+    });
+}
+
+async function handleAddStudent() {
+    const firstName = studentFirstNameInput.value.trim();
+    const lastName = studentLastNameInput.value.trim();
+    const email = studentEmailInput.value.trim();
+    const className = studentClassInput.value.trim();
+    const roll = studentRollInput.value.trim();
+    const parentContact = studentParentContactInput.value.trim();
+
+    if (!firstName || !lastName) {
+        alert('Please enter student first and last name.');
+        return;
+    }
+
+    const isEditing = addStudentModal.dataset.editingId;
+    const url = isEditing ? `/teacher/update-student/${isEditing}` : '/teacher/add-student';
+    const method = isEditing ? 'PUT' : 'POST';
+
+    
+
+    try {
+        const response = await fetch(url, {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                firstName,
+                lastName,
+                email,
+                className,
+                roll,
+                parentContact
+            })
+        });
+
+        const result = await response.json();
+        if (!result.success) {
+            alert(`Unable to ${isEditing ? 'update' : 'add'} student. Please try again.`);
+            return;
+        }
+
+        if (isEditing) {
+            // Update existing student in state
+            const index = state.students.findIndex(s => s._id === isEditing);
+            if (index !== -1) {
+                state.students[index] = {
+                    ...state.students[index],
+                    name: `${firstName} ${lastName}`,
+                    email,
+                    className,
+                    roll,
+                    parentContact
+                };
+            }
+        } else {
+            // Add new student to state
+            const savedStudent = result.student;
+            state.students.push({
+                ...savedStudent,
+                className: savedStudent.class || savedStudent.className || ''
+            });
+        }
+
+        renderStudentsTable(studentSearchInput?.value || '');
+        closeModal('addStudentModal');
+        addStudentForm.reset();
+
+        // Reset modal state
+        delete addStudentModal.dataset.editingId;
+        const modalTitle = addStudentModal.querySelector('h2');
+        const submitBtn = addStudentModal.querySelector('.btn-primary');
+        if (modalTitle) modalTitle.textContent = 'Add Student';
+        if (submitBtn) submitBtn.textContent = 'Add Student';
+
+        showNotification(`Student ${isEditing ? 'updated' : 'added'} successfully!`, 'success');
+    } catch (err) {
+        console.error(`${isEditing ? 'Update' : 'Add'} student failed:`, err);
+        alert(`An error occurred while ${isEditing ? 'updating' : 'saving'} student.`);
+    }
+}
+
+function filterStudentsTable(e) {
+    renderStudentsTable(e.target.value);
+}
+
+async function editStudent(studentId) {
+    const student = state.students.find(s => s._id === studentId);
+    if (!student) return;
+
+    // Populate the modal with student data
+    const parts = student.name.split(' ');
+    studentFirstNameInput.value = parts[0] || '';
+    studentLastNameInput.value = parts.slice(1).join(' ') || '';
+    studentEmailInput.value = student.email || '';
+    studentClassInput.value = student.className || '';
+    studentRollInput.value = student.roll || '';
+    studentParentContactInput.value = student.parentContact || '';
+
+    // Set editing mode
+    addStudentModal.dataset.editingId = studentId;
+    addStudentModal.style.display = 'flex';
+
+    // Update modal title and button
+    const modalTitle = addStudentModal.querySelector('h2');
+    const submitBtn = addStudentModal.querySelector('.btn-primary');
+    if (modalTitle) modalTitle.textContent = 'Edit Student';
+    if (submitBtn) submitBtn.textContent = 'Update Student';
+}
+
+async function deleteStudent(studentId) {
+    if (!confirm('Are you sure you want to delete this student? This action cannot be undone.')) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`/teacher/delete-student/${studentId}`, {
+            method: 'DELETE'
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            // Remove from state
+            state.students = state.students.filter(s => s._id !== studentId);
+            renderStudentsTable(studentSearchInput?.value || '');
+            showNotification('Student deleted successfully!', 'success');
+        } else {
+            alert('Unable to delete student. Please try again.');
+        }
+    } catch (err) {
+        console.error('Delete student failed:', err);
+        alert('An error occurred while deleting student.');
+    }
+}
 
 
 // Show settings section
@@ -1017,6 +1298,7 @@ function hideAllSections() {
     templatesSection.classList.add('hidden');
     pythonServiceSection.classList.add('hidden');
     analyticsSection.classList.add('hidden');
+    studentsSection.classList.add('hidden');
     settingsSection.classList.add('hidden');
     researchSection.classList.add('hidden');
     notesSection.classList.add('hidden');
@@ -1046,11 +1328,116 @@ function updateActiveNav(activeId) {
     });
 
     // Find and activate corresponding top navbar link
-    const topNavId = activeId.replace('nav-', 'top-nav-');
+    const topNavId = activeId === 'nav-python-sidebar' ? 'top-nav-python' : activeId.replace('nav-', 'top-nav-');
     const topNavLink = document.getElementById(topNavId);
     if (topNavLink) {
         topNavLink.classList.add('active');
     }
+}
+
+function attachTranslatorEvents() {
+    if (!translatorTranslateBtn) return;
+
+    translatorTranslateBtn.addEventListener('click', translatorTranslate);
+    translatorVoiceBtn?.addEventListener('click', translatorStartVoice);
+    translatorSpeakBtn?.addEventListener('click', translatorSpeak);
+    translatorSwapBtn?.addEventListener('click', translatorSwapLang);
+    translatorClearBtn?.addEventListener('click', translatorClearInputs);
+
+    loadTranslatorHistory();
+}
+
+function translatorDetectLanguage(text) {
+    const hindiRegex = /[\u0900-\u097F]/;
+    const hinglishWords = [
+        'aaj', 'kya', 'kaise', 'mera', 'tera', 'hai', 'nahi', 'kyu', 'kaam', 'bahut', 'acha', 'haan'
+    ];
+
+    if (hindiRegex.test(text)) return 'hi';
+
+    let score = 0;
+    hinglishWords.forEach(word => {
+        if (text.toLowerCase().includes(word)) score++;
+    });
+
+    return score >= 2 ? 'hi' : 'en';
+}
+
+async function translatorTranslate() {
+    const text = translatorInputText?.value.trim();
+    if (!text) return alert('Enter text to translate.');
+
+    const source = translatorFromLang?.value === 'auto' ? translatorDetectLanguage(text) : translatorFromLang?.value;
+    const target = translatorToLang?.value || 'en';
+
+    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${source}|${target}`;
+
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        const translated = data?.responseData?.translatedText || '';
+        if (translatorOutputText) translatorOutputText.value = translated;
+        saveTranslatorHistory(text, translated);
+    } catch (err) {
+        console.error(err);
+        alert('Translation error.');
+    }
+}
+
+function translatorStartVoice() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) return alert('Voice input not supported in this browser.');
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'hi-IN';
+    recognition.start();
+    recognition.onresult = (e) => {
+        const transcript = e.results[0][0].transcript;
+        if (translatorInputText) translatorInputText.value = transcript;
+    };
+}
+
+function translatorSpeak() {
+    if (!translatorOutputText?.value) return;
+    const msg = new SpeechSynthesisUtterance(translatorOutputText.value);
+    msg.lang = translatorToLang?.value === 'hi' ? 'hi-IN' : 'en-US';
+    speechSynthesis.speak(msg);
+}
+
+function saveTranslatorHistory(src, res) {
+    if (!src || !res) return;
+    const history = JSON.parse(localStorage.getItem('translatorHistory') || '[]');
+    history.unshift({ src, res });
+    localStorage.setItem('translatorHistory', JSON.stringify(history.slice(0, 10)));
+    loadTranslatorHistory();
+}
+
+function loadTranslatorHistory() {
+    if (!translatorHistoryList) return;
+    const history = JSON.parse(localStorage.getItem('translatorHistory') || '[]');
+    if (!history.length) {
+        translatorHistoryList.innerHTML = '<p style="color:#7f8c8d; margin:0;">No history yet.</p>';
+        return;
+    }
+    translatorHistoryList.innerHTML = history.slice(0, 5).map(item =>
+        `<div class="history-item" style="background:#fff; padding:10px; border-radius:8px; border:1px solid #e2e8f0;"><strong>${item.src}</strong><br>→ ${item.res}</div>`
+    ).join('');
+}
+
+function translatorSwapLang() {
+    if (!translatorFromLang || !translatorToLang) return;
+    const fromValue = translatorFromLang.value;
+    translatorFromLang.value = translatorToLang.value;
+    translatorToLang.value = fromValue;
+    const inputValue = translatorInputText?.value || '';
+    const outputValue = translatorOutputText?.value || '';
+    if (translatorInputText) translatorInputText.value = outputValue;
+    if (translatorOutputText) translatorOutputText.value = inputValue;
+}
+
+function translatorClearInputs() {
+    if (translatorInputText) translatorInputText.value = '';
+    if (translatorOutputText) translatorOutputText.value = '';
 }
 
 // Animate dashboard elements
@@ -1142,7 +1529,20 @@ function openQuestionModal() {
 
 // Close modal
 function closeModal(modalId) {
-    document.getElementById(modalId).style.display = 'none';
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'none';
+
+        // Reset student modal edit state
+        if (modalId === 'addStudentModal') {
+            delete modal.dataset.editingId;
+            const modalTitle = modal.querySelector('h2');
+            const submitBtn = modal.querySelector('.btn-primary');
+            if (modalTitle) modalTitle.textContent = 'Add Student';
+            if (submitBtn) submitBtn.textContent = 'Add Student';
+            addStudentForm.reset();
+        }
+    }
 }
 
 // Handle question type change
@@ -1498,80 +1898,38 @@ function saveQuestions() {
 async function createTest(e) {
     e.preventDefault();
 
-    if (!state.paymentCompleted) {
-        alert('Please complete payment first to create tests.');
-        showPaymentSection();
-        return;
-    }
-
-    const testName = document.getElementById('test-name').value;
-    const testSubject = document.getElementById('test-subject').value;
-    const testDuration = document.getElementById('test-duration').value;
-    const testDifficulty = document.getElementById('test-difficulty').value;
-    const testDescription = document.getElementById('test-description').value;
-
-    if (!testSubject) {
-        alert('Please enter a subject.');
-        return;
-    }
-
-    if (state.currentTestQuestions.length === 0) {
-        alert('Please add questions to the test.');
-        openQuestionModal();
-        return;
-    }
-
-    const testData = {
-        name: testName,
-        subject: testSubject,
-        duration: testDuration,
-        difficulty: testDifficulty,
-        description: testDescription,
+    const data = {
+        name: document.getElementById("test-name").value,
+        subject: document.getElementById("test-subject").value,
+        duration: document.getElementById("test-duration").value,
+        description: document.getElementById("test-description").value,
         questions: state.currentTestQuestions
     };
 
-    try {
-        let url = "/api/teacher-tests/create-test";
-        let method = "POST";
+    let url = "/teacher-tests/create";
+    let method = "POST";
 
-        // Agar edit mode hai to update route use hoga
-        if (editingTestId) {
-            url = `/teacher-tests/update/${editingTestId}`;
-            method = "PUT";
-        }
+    // 🔥 EDIT MODE
+    if (state.editingTestId) {
+        url = `/teacher-tests/update/${state.editingTestId}`;
+        method = "PUT";
+    }
 
-        const res = await fetch(url, {
-            method: method,
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(testData)
-        });
+    const res = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    });
 
-        const data = await res.json();
+    const result = await res.json();
 
-        if (!data.success) {
-            alert("Error saving test.");
-            return;
-        }
+    if (result.success) {
+        alert(state.editingTestId ? "Test Updated!" : "Test Created!");
 
-        // Edit complete hone par reset
-        editingTestId = null;
+        state.editingTestId = null; // reset
 
-        // Reset form
         resetTestForm();
-
-        // Reload from database
         await loadTestsFromDB();
-
-        // Update dashboard
-        updateDashboard();
-
-        showNotification(`Test "${testName}" saved successfully!`, 'success');
-
-    } catch (err) {
-        console.error(err);
-        alert("Server error while saving test.");
     }
 }
 
@@ -1690,7 +2048,7 @@ function resetTestForm() {
 
     // Reset questions
     state.currentTestQuestions = [];
-    updateQuestionPreview();
+    
 }
 
 // Update dashboard
@@ -1846,7 +2204,7 @@ function renderTestServices(courseName) {
                 <button class="enroll-btn edit-btn" 
                         data-id="${service.id}"
                         style="background: linear-gradient(90deg, #f39c12, #e67e22);">
-                    <i class="fas fa-edit"></i> Edit
+                    <i class="fas fa-edit"></i><span>Edit</span>
                 </button>
 
                <button class="enroll-btn result-btn"
@@ -1958,20 +2316,21 @@ async function translateAuto() {
 async function loadTestsFromDB() {
     try {
         const res = await fetch("/teacher-tests/api/my-tests");
-        ;
         const tests = await res.json();
 
+        // RESET
         coursesData.length = 0;
         Object.keys(testServicesData).forEach(k => delete testServicesData[k]);
 
         const subjectsMap = {};
 
         tests.forEach(test => {
+
+            // 👉 अगर subject नहीं है तो new main card बनाओ
             if (!subjectsMap[test.subject]) {
                 subjectsMap[test.subject] = {
                     id: Date.now() + Math.random(),
                     title: test.subject,
-                    subtitle: test.name,
                     icon: getIconForSubject(test.subject),
                     color: getRandomColor(),
                     viewers: 1,
@@ -1984,19 +2343,30 @@ async function loadTestsFromDB() {
                 testServicesData[test.subject] = [];
             }
 
+            // 👉 sub card add
             testServicesData[test.subject].push({
                 id: test._id,
                 name: test.name,
-                type: test.difficulty,
                 icon: getIconForSubject(test.subject),
                 level: test.difficulty,
                 levelClass: getLevelClass(test.difficulty),
                 description: test.description,
-
                 duration: test.duration + " min",
                 students: 0,
                 color: subjectsMap[test.subject].color
             });
+        });
+
+        // 🔥 IMPORTANT: अगर कोई subject empty है → remove
+        Object.keys(testServicesData).forEach(subject => {
+            if (testServicesData[subject].length === 0) {
+                delete testServicesData[subject];
+
+                const index = coursesData.findIndex(c => c.title === subject);
+                if (index !== -1) {
+                    coursesData.splice(index, 1);
+                }
+            }
         });
 
         renderCourses();
@@ -2006,6 +2376,27 @@ async function loadTestsFromDB() {
         console.error("Error loading tests:", err);
     }
 }
+
+
+function openRequestModal() {
+    const modal = document.getElementById("requestModal");
+    modal.style.display = "flex"; // 🔥 IMPORTANT
+}
+
+function closeRequestModal() {
+    document.getElementById("requestModal").style.display = "none";
+}
+
+// outside click close
+window.addEventListener("click", function(e) {
+    const modal = document.getElementById("requestModal");
+    if (e.target === modal) {
+        modal.style.display = "none";
+    }
+});
+
+
+
 // Reserch papper
 function showResearchSection() {
     hideAllSections();
@@ -2166,25 +2557,30 @@ function showAlertsSection() {
 let editingTestId = null;
 
 function openTestForEdit(test) {
-    editingTestId = test._id;
 
+    state.editingTestId = test._id;
+
+    // ✅ FORM SECTION OPEN (backup)
     showCreateTestSection();
 
-    document.getElementById('test-name').value = test.name;
-    document.getElementById('test-subject').value = test.subject;
-    document.getElementById('test-duration').value = test.duration;
-    document.getElementById('test-difficulty').value = test.difficulty;
-    document.getElementById('test-description').value = test.description;
+    // ✅ FILL FORM
+    document.getElementById("test-name").value = test.name || "";
+    document.getElementById("test-subject").value = test.subject || "";
+    document.getElementById("test-duration").value = test.duration || 60;
+    document.getElementById("test-description").value = test.description || "";
 
-    state.currentTestQuestions = (test.questions || []).map(q => ({
-        ...q,
-        id: q.id || q._id || Date.now() + Math.random()
-    }));
+    // ✅ QUESTIONS LOAD
+    state.currentTestQuestions = test.questions || [];
 
-    renderQuestionList();
+    initializeQuestionManagement(true);
     updateQuestionPreview();
 
-    showNotification("Edit mode enabled", "info");
+    // ❌ REMOVE THIS IF EXISTS
+    // openQuestionModal();
+
+    // ✅ BUTTON CHANGE
+    document.querySelector("#test-creation-form button[type='submit']")
+        .innerText = "Update Test";
 }
 // ===== QR SHARE SYSTEM =====
 let currentShareUrl = "";
@@ -2203,6 +2599,22 @@ document.addEventListener("click", function (e) {
         openQrPopup(testId);
     }
 });
+
+function updateQuestionPreview() {
+    const preview = document.getElementById("question-preview");
+    preview.innerHTML = "";
+
+    if (!state.currentTestQuestions.length) {
+        preview.innerHTML = "<p>No questions added</p>";
+        return;
+    }
+
+    state.currentTestQuestions.forEach((q, i) => {
+        const div = document.createElement("div");
+        div.innerHTML = `<b>Q${i + 1}:</b> ${q.text}`;
+        preview.appendChild(div);
+    });
+}
 
 function openQrPopup(testId) {
     const modal = document.getElementById("qrModal");
@@ -2364,6 +2776,27 @@ function openAnalytics(testId) {
     window.location.href = `/teacher-tests/analytics?testId=${testId}`;
 }
 
+// Update progress bars for dashboard stats
+function updateProgress(type, current, max) {
+    const percentage = Math.min((current / max) * 100, 100);
+    
+    const progressElement = document.getElementById(`${type}-progress`);
+    const progressValueElement = document.getElementById(`${type}-progress-value`);
+    const progressTextElement = document.getElementById(`${type}-progress-text`);
+    
+    if (progressElement) {
+        progressElement.style.width = percentage + '%';
+    }
+    
+    if (progressValueElement) {
+        progressValueElement.textContent = Math.round(percentage) + '%';
+    }
+    
+    if (progressTextElement) {
+        progressTextElement.textContent = Math.round(percentage) + '%';
+    }
+}
+
 // test count system 
 async function loadDashboardStats() {
     try {
@@ -2518,3 +2951,87 @@ function previous(){
     window.location.href="/previous-year-paper";
 }
 
+const generateLinkBtn = document.getElementById('generate-link-btn');
+
+if (generateLinkBtn) {
+    generateLinkBtn.addEventListener('click', () => {
+
+        const link = `${window.location.origin}/student-register/${TEACHER_ID}`;
+
+        prompt("Copy this link and send to students:", link);
+    });
+}
+
+
+let inviteLink = "";
+
+// Open Modal
+function openInviteModal() {
+    inviteLink = `${window.location.origin}/student-register/${TEACHER_ID}`;
+
+    document.getElementById("inviteLinkInput").value = inviteLink;
+
+    // QR Generate
+    QRCode.toCanvas(document.getElementById("qrCanvas"), inviteLink);
+
+    document.getElementById("inviteModal").style.display = "flex";
+}
+
+// Close Modal
+function closeInviteModal() {
+    document.getElementById("inviteModal").style.display = "none";
+}
+
+// Copy Link
+function copyInviteLink() {
+    navigator.clipboard.writeText(inviteLink);
+    alert("Link copied ✅");
+}
+
+// WhatsApp Share
+function shareWhatsApp() {
+    const text = encodeURIComponent("Register here:\n" + inviteLink);
+    window.open(`https://wa.me/?text=${text}`, "_blank");
+}
+
+// Download QR
+function downloadQR() {
+    const canvas = document.getElementById("qrCanvas");
+    const link = document.createElement("a");
+    link.download = "invite-qr.png";
+    link.href = canvas.toDataURL();
+    link.click();
+}
+window.addEventListener("click", function(e) {
+  const modal = document.getElementById("inviteModal");
+  if (e.target === modal) {
+    modal.style.display = "none";
+  }
+}); 
+
+
+function viewStudent(studentId) {
+    const student = state.students.find(s => s._id === studentId);
+
+    if (!student) {
+        alert("Student not found");
+        return;
+    }
+
+    const modal = document.getElementById("viewStudentModal");
+    const details = document.getElementById("studentDetails");
+
+    details.innerHTML = `
+        <p><b>Name:</b> ${student.name}</p>
+        <p><b>Class:</b> ${student.className || '-'}</p>
+        <p><b>Roll:</b> ${student.roll || '-'}</p>
+        <p><b>Email:</b> ${student.email || '-'}</p>
+        <p><b>Parent Contact:</b> ${student.parentContact || '-'}</p>
+    `;
+
+    modal.style.display = "flex";
+}
+
+function closeViewStudent() {
+    document.getElementById("viewStudentModal").style.display = "none";
+}

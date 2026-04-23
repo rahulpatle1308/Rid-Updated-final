@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Registration</title>
+</head>
+<body>
+
+<h2>Student Registration</h2>
+
+<form action="/student-register" method="POST">
+
+    <input type="hidden" name="teacherId" value="<%= teacherId %>">
+
+    <input type="text" name="name" placeholder="Full Name" required><br><br>
+
+    <input type="text" name="class" placeholder="Class" required><br><br>
+
+    <input type="text" name="roll" placeholder="Roll No" required><br><br>
+
+    <input type="email" name="email" placeholder="Email" required><br><br>
+
+    <input type="text" name="parentContact" placeholder="Parent Contact"><br><br>
+
+    <button type="submit">Register</button>
+
+</form>
+
+</body>
+</html>

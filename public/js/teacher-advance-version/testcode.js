@@ -361,3 +361,24 @@ function backToTestService() {
     window.history.back();
 }
 
+// ----------------- Auto Submit on Page Exit -----------------
+window.addEventListener("beforeunload", function (e) {
+
+    // Agar already submit ho chuka hai to dobara mat karo
+    if (localStorage.getItem("quizSubmitted") === "true") return;
+
+    // Mark as submitted (duplicate submit avoid)
+    localStorage.setItem("quizSubmitted", "true");
+
+    // Timer stop
+    if (timerInterval) {
+        clearInterval(timerInterval);
+    }
+
+    // Silent submit (without confirmation)
+    submitQuiz();
+
+    // Optional browser message (some browsers ignore this)
+    e.preventDefault();
+    e.returnValue = '';
+});
