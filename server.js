@@ -552,7 +552,7 @@ app.get("/test-details", (req, res) => {
 app.use("/api", require("./routes/nationalTestSeries/follow"));
 app.get("/cre",(req,res)=>{
   res.render("NationalTestSeries/CreateTest/CreateTest.ejs")
-})
+ })
 const testRoutes = require("./routes/nationalTestSeries/teacherStudentTest");
 app.use("/National-Test-Series", testRoutes);
 // all india test routes 
