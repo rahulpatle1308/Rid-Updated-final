@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Test = require("../../models/teacherTestModel");
 const User = require("../../models/user"); // 🔥 ADD THIS
-const Teacher = require("../../models/teacher"); // 🔥 ADD THIS
+const Teacher = require("../../models/Teacher"); // 🔥 ADD THIS
 router.get("/", async (req, res) => {
   try {
     const tests = await Test.find({ status: "published" })
