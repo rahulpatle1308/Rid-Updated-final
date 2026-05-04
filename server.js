@@ -546,18 +546,18 @@ app.use(async (req, res, next) => {
 
   next();
 });
-app.get("/test-details", (req, res) => {
-  res.render("NationalTestSeries/test-details");
-});
-app.use("/api", require("./routes/nationalTestSeries/follow"));
-app.get("/cre",(req,res)=>{
-  res.render("NationalTestSeries/CreateTest/CreateTest.ejs")
-})
-const testRoutes = require("./routes/nationalTestSeries/teacherStudentTest");
-app.use("/National-Test-Series", testRoutes);
+// app.get("/test-details", (req, res) => {
+//   res.render("NationalTestSeries/test-details");
+// });
+// app.use("/api", require("./routes/nationalTestSeries/follow"));
+// app.get("/cre",(req,res)=>{
+//   res.render("NationalTestSeries/CreateTest/CreateTest.ejs")
+// })
+// const testRoutes = require("./routes/nationalTestSeries/teacherStudentTest");
+// app.use("/National-Test-Series", testRoutes);
 // all india test routes 
-const shortsRoutes = require("./routes/nationalTestSeries/shortroutes");
-app.use("/", shortsRoutes);
+// const shortsRoutes = require("./routes/nationalTestSeries/shortroutes");
+// app.use("/", shortsRoutes);
 
 const myteam=require("./routes/myteampages/myteam.js")
 app.use("/",myteam)
