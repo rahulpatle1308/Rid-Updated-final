@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 
 const questionSchema = new mongoose.Schema({
-  testId: { type: mongoose.Schema.Types.ObjectId, ref: "Test" },
-
   text: String,
   type: String,
   points: { type: Number, default: 1 },
@@ -16,33 +14,40 @@ const questionSchema = new mongoose.Schema({
 });
 
 const teacherTestSchema = new mongoose.Schema({
-  teacher: {
+
+  // 🔥 MAIN CHANGE
+  createdBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Teacher"
+    required: true,
+    refPath: "creatorModel"
   },
+
+  creatorModel: {
+    type: String,
+    enum: ["Teacher", "User"],
+    required: true
+  },
+
   name: String,
-  
   subject: String,
   duration: Number,
-  difficulty: String,
   description: String,
+
+  // 🔥 PUBLIC / PRIVATE
+  visibility: {
+    type: String,
+    enum: ["private", "public"],
+    default: "private"
+  },
 
   status: {
     type: String,
-    enum: ["pending", "published", "active"],
+    enum: ["pending", "published"],
     default: "pending"
   },
 
-  views: {
-    type: Number,
-    default: 0
-  },
-
-  // 🔥 LIKE SYSTEM (YAHI ADD KIYA)
-  likes: {
-    type: Number,
-    default: 0
-  },
+  views: { type: Number, default: 0 },
+  likes: { type: Number, default: 0 },
 
   likedBy: [
     {
@@ -50,17 +55,14 @@ const teacherTestSchema = new mongoose.Schema({
       ref: "User"
     }
   ],
-  banner: {
-    type: String,
-    default: ""
-},
+
   questions: [questionSchema],
 
   createdAt: {
     type: Date,
     default: Date.now
   }
-  
+
 });
 
 module.exports = mongoose.model("TeacherTest", teacherTestSchema);

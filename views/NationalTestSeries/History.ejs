@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>History - RIDTECH</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/Allindiatestserice/History.css">
     <style>
-        /* Additional styles only for history page */
+            /* Additional styles only for history page */
         .history-container {
             padding: 20px 24px 40px 24px;
         }
@@ -204,156 +205,221 @@
                             </div>
                         </div>
 
-                        <% if(history && history.length > 0){ %>
+                        <% if(history && history.length> 0){ %>
 
-<% order.forEach(group => { 
-    if(grouped[group]){ %>
+                            <% order.forEach(group=> {
+                                if(grouped[group]){ %>
 
-    <h3 style="margin:20px 0 10px;"><%= group %></h3>
+                                <h3 style="margin:20px 0 10px;">
+                                    <%= group %>
+                                </h3>
 
-    <% grouped[group].forEach(item => { 
-        
-        if(!item.test) return; // 🔥 IMPORTANT FIX
+                                <% grouped[group].forEach(item=> {
 
-    %>
+                                    if(!item.test) return; // 🔥 IMPORTANT FIX
 
-    <div class="history-item">
+                                    %>
 
-        <div class="history-left"
-            onclick="window.location.href='/National-Test-Series/test/<%= item.test._id %>'">
+                                    <div class="history-item">
 
-            <div class="history-thumb">
-                <img src="https://picsum.photos/300/200">
-            </div>
+                                        <div class="history-left"
+                                            onclick="window.location.href='/National-Test-Series/test/<%= item.test._id %>'">
 
-            <div class="history-info">
-                <div class="history-title">
-                    <%= item.test.name %>
-                </div>
-                <div class="history-meta">
-                    <%= item.test.teacher?.name || "RIDTECH" %>
-                </div>
-            </div>
+                                            <div class="history-thumb">
+                                                <img src="https://picsum.photos/300/200">
+                                            </div>
 
-        </div>
+                                            <div class="history-info">
+                                                <div class="history-title">
+                                                    <%= item.test.name %>
+                                                </div>
+                                                <div class="history-meta">
+                                                    <%= item.test.teacher?.name || "RIDTECH" %>
+                                                </div>
+                                            </div>
 
-        <!-- 🔥 RIGHT SIDE THREE DOTS -->
-        <div class="history-actions">
-            <span class="three-dots">⋮</span>
+                                        </div>
 
-            <div class="action-menu">
-                <div class="delete-item" data-id="<%= item._id %>">
-                    🗑️ Delete
-                </div>
-            </div>
-        </div>
+                                        <!-- 🔥 RIGHT SIDE THREE DOTS -->
+                                        <div class="history-actions">
+                                            <span class="three-dots">⋮</span>
 
-    </div>
+                                            <div class="action-menu">
+                                                <div class="delete-item" data-id="<%= item._id %>">
+                                                    🗑️ Delete
+                                                </div>
+                                            </div>
+                                        </div>
 
-    <% }) %>
+                                    </div>
 
-<% } }) %>
+                                    <% }) %>
 
-<% } else { %>
+                                        <% } }) %>
 
-<p style="text-align:center;padding:40px;">No history found</p>
+                                            <% } else { %>
 
-<% } %>
+                                                <p style="text-align:center;padding:40px;">No history found</p>
+
+                                                <% } %>
                     </div>
             </div>
         </div>
 
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const dynamicContent = document.getElementById("dynamicContent");
-                const tempContent = document.getElementById("historyPageContent");
-                if (dynamicContent && tempContent) {
-                    const container = tempContent.querySelector(".history-container");
-                    if (container) {
-                        dynamicContent.innerHTML = "";
-                        dynamicContent.appendChild(container);
+           document.addEventListener("DOMContentLoaded", function () {
+
+    const dynamicContent = document.getElementById("dynamicContent");
+    const tempContent = document.getElementById("historyPageContent");
+
+    if (dynamicContent && tempContent) {
+        const container = tempContent.querySelector(".history-container");
+        if (container) {
+            dynamicContent.innerHTML = "";
+            dynamicContent.appendChild(container);
+        }
+        tempContent.remove();
+    }
+
+    // ================= CLEAR ALL HISTORY =================
+    const clearBtn = document.getElementById("clearAllHistoryBtn");
+
+    if (clearBtn) {
+        clearBtn.addEventListener("click", async () => {
+
+            if (!confirm("Delete all history?")) return;
+
+            try {
+                const res = await fetch("/National-Test-Series/history/clear", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    }
+})
+                const data = await res.json();
+
+                if (res.status === 401) {
+                    alert("Please login first 🔐");
+                    window.location.href = "/login";
+                    return;
+                }
+
+                if (!res.ok || !data.success) {
+                    alert(data.msg || "Failed to clear history ❌");
+                    return;
+                }
+
+                location.reload();
+
+            } catch (err) {
+                console.error(err);
+                alert("Server error ❌");
+            }
+        });
+    }
+
+    // ================= PAUSE BUTTON =================
+    const pauseBtn = document.getElementById("pauseHistoryBtn");
+
+    if (pauseBtn) {
+        pauseBtn.addEventListener("click", () => {
+            alert("History pause coming soon");
+        });
+    }
+
+    // ================= MENU HANDLING =================
+    function closeAllMenus() {
+        document.querySelectorAll('.action-menu').forEach(menu => {
+            menu.classList.remove('show');
+        });
+    }
+
+    // ================= PER ITEM DELETE =================
+    document.querySelectorAll('.history-actions').forEach(actionsDiv => {
+
+        const dots = actionsDiv.querySelector('.three-dots');
+        const menu = actionsDiv.querySelector('.action-menu');
+
+        // 🔥 OPEN MENU
+        dots.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeAllMenus();
+            menu.classList.toggle('show');
+        });
+
+        const deleteOption = menu.querySelector('.delete-item');
+
+        if (deleteOption) {
+            deleteOption.addEventListener('click', async (e) => {
+
+                e.stopPropagation();
+
+                const historyId = deleteOption.getAttribute('data-id');
+
+                if (!historyId) {
+                    alert("Invalid history ID ❌");
+                    return;
+                }
+
+                if (!confirm("Delete this history entry?")) return;
+
+                try {
+                    const res = await fetch(`/National-Test-Series/history/delete/${historyId}`, {
+    method: "DELETE",
+    headers: {
+        "Content-Type": "application/json"
+    }
+})
+
+                    const data = await res.json(); // 🔥 IMPORTANT
+
+                    // 🔐 LOGIN REQUIRED
+                    if (res.status === 401) {
+                        alert("Please login first 🔐");
+                        window.location.href = "/login";
+                        return;
                     }
-                    tempContent.remove();
-                }
 
-                // Clear all history
-                const clearBtn = document.getElementById("clearAllHistoryBtn");
-                if (clearBtn) {
-                    clearBtn.addEventListener("click", () => {
-                        if (confirm("Delete all history?")) {
-                            fetch("/history/clear", { method: "POST" })
-                                .then(() => location.reload());
-                        }
-                    });
-                }
-
-                // Pause history (demo)
-                const pauseBtn = document.getElementById("pauseHistoryBtn");
-                if (pauseBtn) {
-                    pauseBtn.addEventListener("click", () => alert("History pause coming soon"));
-                }
-
-                // ========== PER-ITEM DELETE (Three dots menu) ==========
-                function closeAllMenus() {
-                    document.querySelectorAll('.action-menu').forEach(menu => {
-                        menu.classList.remove('show');
-                    });
-                }
-
-                // Attach click handlers to each three-dots button
-                document.querySelectorAll('.history-actions').forEach(actionsDiv => {
-                    const dots = actionsDiv.querySelector('.three-dots');
-                    const menu = actionsDiv.querySelector('.action-menu');
-
-                    dots.addEventListener('click', (e) => {
-                        e.stopPropagation();  // prevent navigating to test
-                        closeAllMenus();
-                        menu.classList.toggle('show');
-                    });
-
-                    // Delete action inside menu
-                    const deleteOption = menu.querySelector('.delete-item');
-                    if (deleteOption) {
-                        deleteOption.addEventListener('click', async (e) => {
-                            e.stopPropagation();
-                            const historyId = deleteOption.getAttribute('data-id');
-                            if (confirm("Delete this history entry?")) {
-                                try {
-                                    const res = await fetch(`/history/delete/${historyId}`, { method: "DELETE" });
-                                    if (res.ok) {
-                                        // Remove the entire history-item from DOM
-                                        const historyItem = actionsDiv.closest('.history-item');
-                                        historyItem.remove();
-                                        // If no items left, show "No history" message
-                                        if (document.querySelectorAll('.history-item').length === 0) {
-                                            const container = document.querySelector('.history-container');
-                                            const noHistoryMsg = document.createElement('p');
-                                            noHistoryMsg.style.padding = "40px 0";
-                                            noHistoryMsg.style.textAlign = "center";
-                                            noHistoryMsg.style.color = "#606060";
-                                            noHistoryMsg.innerHTML = '<i class="fas fa-folder-open"></i> No history found';
-                                            container.appendChild(noHistoryMsg);
-                                        }
-                                    } else {
-                                        alert("Failed to delete history");
-                                    }
-                                } catch (err) {
-                                    console.error(err);
-                                    alert("Error deleting history");
-                                }
-                            }
-                            closeAllMenus();
-                        });
+                    // ❌ ERROR
+                    if (!res.ok || !data.success) {
+                        alert(data.msg || "Delete failed ❌");
+                        return;
                     }
-                });
 
-                // Close any open menu when clicking elsewhere
-                document.addEventListener('click', (e) => {
-                    if (!e.target.closest('.history-actions')) {
-                        closeAllMenus();
+                    // ✅ SUCCESS → REMOVE UI
+                    const historyItem = actionsDiv.closest('.history-item');
+                    if (historyItem) historyItem.remove();
+
+                    // ✅ EMPTY STATE
+                    if (document.querySelectorAll('.history-item').length === 0) {
+                        const container = document.querySelector('.history-container');
+                        const noHistoryMsg = document.createElement('p');
+                        noHistoryMsg.style.padding = "40px 0";
+                        noHistoryMsg.style.textAlign = "center";
+                        noHistoryMsg.style.color = "#606060";
+                        noHistoryMsg.innerHTML = '<i class="fas fa-folder-open"></i> No history found';
+                        container.appendChild(noHistoryMsg);
                     }
-                });
+
+                } catch (err) {
+                    console.error("DELETE ERROR:", err);
+                    alert("Server error ❌");
+                }
+
+                closeAllMenus();
             });
+        }
+
+    });
+
+    // ================= CLICK OUTSIDE =================
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.history-actions')) {
+            closeAllMenus();
+        }
+    });
+
+});
             function filterVideos() {
                 const cards = Array.from(document.querySelectorAll(".history-item"));
 
@@ -428,7 +494,7 @@
                 }
             }, 500);
 
-history = history.filter(item => item.test);
+            history = history.filter(item => item.test);
         </script>
 
 </body>

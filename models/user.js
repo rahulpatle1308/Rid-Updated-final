@@ -52,7 +52,20 @@ const userSchema = new mongoose.Schema(
         }
       }
     ],
+// 🔥 FOLLOWING (user kis teacher ko follow kar raha hai)
+following: [
+  {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }
+],
 
+followers: [
+  {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }
+],
     totalTestsAttempted: {
       type: Number,
       default: 0

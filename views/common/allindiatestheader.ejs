@@ -1,6 +1,6 @@
 <head>
     <link rel="stylesheet" href="/css/Allindiatestserice/testserice.css">
-    
+
 </head>
 <div class="app">
 
@@ -33,9 +33,9 @@
             <div class="avatar" id="avatarIcon">
                 <% if(typeof user !=="undefined" && user){ %>
                     <%= user.name?.charAt(0).toUpperCase() %>
-                <% } else { %>
-                    U
-                <% } %>
+                        <% } else { %>
+                            U
+                            <% } %>
             </div>
         </div>
     </div>
@@ -47,36 +47,44 @@
             <div class="profile-avatar-large">
                 <% if(typeof user !=="undefined" && user){ %>
                     <%= user.name?.charAt(0).toUpperCase() %>
-                <% } else { %>U<% } %>
+                        <% } else { %>U<% } %>
             </div>
             <div class="profile-info">
-                <h3><%= user ? user.name : 'Guest User' %></h3>
-                <p><%= user ? user.email : 'guest@example.com' %></p>
+                <h3>
+                    <%= user ? user.name : 'Guest User' %>
+                </h3>
+                <p>
+                    <%= user ? user.email : 'guest@example.com' %>
+                </p>
             </div>
         </div>
-        <div class="profile-menu-item" id="viewChannelBtn"><i class="fas fa-eye"></i><span>View your channel</span></div>
-        <div class="profile-menu-item" id="googleAccountBtn"><i class="fab fa-google"></i><span>Google Account</span></div>
-        <div class="profile-menu-item" id="switchAccountBtn"><i class="fas fa-exchange-alt"></i><span>Switch account</span></div>
+        <div class="profile-menu-item" id="viewChannelBtn"><i class="fas fa-eye"></i><span>View your channel</span>
+        </div>
+        <div class="profile-menu-item" id="googleAccountBtn"><i class="fab fa-google"></i><span>Google Account</span>
+        </div>
+        <div class="profile-menu-item" id="switchAccountBtn"><i class="fas fa-exchange-alt"></i><span>Switch
+                account</span></div>
         <div class="profile-menu-item" id="signOutBtn"><i class="fas fa-sign-out-alt"></i><span>Sign out</span></div>
         <div class="profile-divider"></div>
         <div class="profile-menu-item" id="appearanceBtn">
-  <i class="fas fa-adjust"></i>
-  <span>Display Settings</span>
-</div>
+            <i class="fas fa-adjust"></i>
+            <span>Display Settings</span>
+        </div>
 
-<!-- 🔥 DROPDOWN OPTIONS -->
-<div id="themeOptions" style="display:none; padding-left:20px;">
+        <!-- 🔥 DROPDOWN OPTIONS -->
+        <div id="themeOptions" style="display:none; padding-left:20px;">
 
-  <div class="profile-menu-item theme-option" data-theme="light">
-    ☀️ Light Mode
-  </div>
+            <div class="profile-menu-item theme-option" data-theme="light">
+                ☀️ Light Mode
+            </div>
 
-  <div class="profile-menu-item theme-option" data-theme="dark">
-    🌙 Dark Mode
-  </div>
+            <div class="profile-menu-item theme-option" data-theme="dark">
+                🌙 Dark Mode
+            </div>
 
-</div>
-        <div class="profile-menu-item" id="purchasesBtn"><i class="fas fa-shopping-cart"></i><span>Purchases</span></div>
+        </div>
+        <div class="profile-menu-item" id="purchasesBtn"><i class="fas fa-shopping-cart"></i><span>Purchases</span>
+        </div>
         <div class="profile-menu-item" id="yourDataBtn"><i class="fas fa-database"></i><span>Your data</span></div>
         <div class="profile-divider"></div>
         <div class="profile-menu-item" id="settingsBtn"><i class="fas fa-cog"></i><span>Settings</span></div>
@@ -92,8 +100,14 @@
             <div class="sidebar-item" data-nav="home">
                 <i class="fas fa-home"></i><span>Home</span>
             </div>
-            <div class="sidebar-item" data-nav="subscriptions">
-                <i class="fas fa-newspaper"></i><span>My Mentors</span>
+            <div class="sidebar-item" onclick="
+                 <% if (user && user._id) { %>
+                 window.location.href='/api/profile/<%= user._id %>'
+                 <% } else { %>
+            window.location.href='/login'
+            <% } %>
+">
+                <i class="fas fa-newspaper"></i><span>Follower</span>
             </div>
             <div class="sidebar-divider"></div>
             <div class="sidebar-item" data-nav="library">
@@ -128,12 +142,26 @@
             <div class="sidebar-item active" data-nav="home">
                 <i class="fas fa-home"></i><span>Home</span>
             </div>
+            <div class="sidebar-item" onclick="
+                 <% if (user && user._id) { %>
+                 window.location.href='/api/profile/<%= user._id %>'
+                 <% } else { %>
+            window.location.href='/login'
+            <% } %>
+">
+                <i class="fas fa-newspaper"></i><span>Follower</span>
+            </div>
+            
             <div class="sidebar-item" data-nav="library">
                 <i class="fas fa-bookmark"></i><span>Library</span>
             </div>
             <div class="sidebar-item" data-nav="history">
                 <i class="fas fa-history"></i><span>History</span>
             </div>
+            <div class="sidebar-item logout-item" id="logoutBtn">
+    <i class="fas fa-sign-out-alt"></i>
+    <span>Sign out</span>
+</div>
         </div>
     </div>
 
@@ -145,9 +173,9 @@
         <div class="nav-item" data-nav="shorts">
             <i class="fas fa-fire"></i><span>Shorts MCQ</span>
         </div>
-        <div class="nav-item" data-nav="subscriptions" id="createIcon">
-             <i class="fas fa-plus-circle"></i>
-                <span>Create Test</span>
+        <div class="nav-item" data-nav="create" id="createTestMobile">
+            <i class="fas fa-plus-circle"></i>
+            <span>Create Test</span>
         </div>
         <div class="nav-item" data-nav="library">
             <i class="fas fa-bookmark"></i><span>Library</span>
@@ -176,7 +204,12 @@
     </div>
 
 </div>
-
+<div id="voicePopup" class="voice-popup">
+    <div class="voice-circle">
+        <i class="fas fa-microphone"></i>
+    </div>
+    <p>Listening...</p>
+</div>
 <script>
     // ========== SIDEBAR & PROFILE JS (unchanged) ==========
     const avatar = document.getElementById("avatarIcon");
@@ -190,7 +223,7 @@
             sidebar.classList.add("open");
             overlayProfile.classList.add("show");
         } else {
-           window.location.href = "/login?redirect=" + encodeURIComponent(window.location.pathname);
+            window.location.href = "/login?redirect=" + encodeURIComponent(window.location.pathname);
         }
     });
 
@@ -253,101 +286,214 @@
         });
     });
     // 🔥 DESKTOP SIDEBAR CLICK FIX
-document.querySelectorAll('.desktop-sidebar .sidebar-item').forEach(item => {
-    item.addEventListener('click', () => {
-        const nav = item.getAttribute('data-nav');
+    document.querySelectorAll('.desktop-sidebar .sidebar-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const nav = item.getAttribute('data-nav');
 
-        if (nav === "home") {
-            window.location.href = "/";
-        }
-        else if (nav === "library") {
-            window.location.href = "/ebook/?search=&filter=all&sort=newest";
-        }
-        else if (nav === "history") {
-            window.location.href = "/National-Test-Series/history";
-        }
-        else if (nav === "subscriptions") {
-            window.location.href = "/subscriptions";
-        }
-        else {
-            console.log(nav + " clicked");
-        }
+            if (nav === "home") {
+                window.location.href = "/National-Test-Series";
+            }
+            else if (nav === "library") {
+                window.location.href = "/ebook/?search=&filter=all&sort=newest";
+            }
+            else if (nav === "history") {
+                window.location.href = "/National-Test-Series/history";
+            }
+            else if (nav === "subscriptions") {
+                window.location.href = "/subscriptions";
+            }
+            else {
+                console.log(nav + " clicked");
+            }
+        });
     });
-});
-document.querySelectorAll('#mobileDrawer .sidebar-item').forEach(item => {
-    item.addEventListener('click', () => {
-        const nav = item.getAttribute('data-nav');
+    document.querySelectorAll('#mobileDrawer .sidebar-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const nav = item.getAttribute('data-nav');
 
-        if (nav === "home") {
-            window.location.href = "/";
-        }
-        else if (nav === "library") {
-            window.location.href = "/ebook/?search=&filter=all&sort=newest";
-        }
-        else if (nav === "history") {
-            window.location.href = "/National-Test-Series/history";
-        }
-    });
-});
-
-document.getElementById("viewChannelBtn")?.addEventListener("click", () => {
-    window.location.href = "/teacher/channel";
-});
-
-// sara opection par pink karega 
-function setActiveNav() {
-    const path = window.location.pathname;
-
-    // remove all active
-    document.querySelectorAll('.sidebar-item').forEach(el => {
-        el.classList.remove('active');
+            if (nav === "home") {
+                window.location.href = "/National-Test-Series";
+            }
+            else if (nav === "library") {
+                window.location.href = "/ebook/?search=&filter=all&sort=newest";
+            }
+            else if (nav === "history") {
+                window.location.href = "/National-Test-Series/history";
+            }
+        });
     });
 
-    document.querySelectorAll('.bottom-nav .nav-item').forEach(el => {
-        el.classList.remove('active');
+    document.getElementById("viewChannelBtn")?.addEventListener("click", () => {
+        window.location.href = "/National-Test-Series/teacher/channel";
     });
 
-    // set active based on URL
-    if (path === "/") {
-        document.querySelectorAll('[data-nav="home"]').forEach(el => el.classList.add('active'));
+    // sara opection par pink karega 
+    function setActiveNav() {
+        const path = window.location.pathname;
+
+        // remove all active
+        document.querySelectorAll('.sidebar-item').forEach(el => {
+            el.classList.remove('active');
+        });
+
+        document.querySelectorAll('.bottom-nav .nav-item').forEach(el => {
+            el.classList.remove('active');
+        });
+
+        // set active based on URL
+        if (path === "/National-Test-Series") {
+            document.querySelectorAll('[data-nav="home"]').forEach(el => el.classList.add('active'));
+        }
+        else if (path.includes("/history")) {
+            document.querySelectorAll('[data-nav="history"]').forEach(el => el.classList.add('active'));
+        }
+        else if (path.includes("/ebook")) {
+            document.querySelectorAll('[data-nav="library"]').forEach(el => el.classList.add('active'));
+        }
+        else if (path.includes("/subscriptions")) {
+            document.querySelectorAll('[data-nav="subscriptions"]').forEach(el => el.classList.add('active'));
+        }
     }
-    else if (path.includes("/history")) {
-        document.querySelectorAll('[data-nav="history"]').forEach(el => el.classList.add('active'));
+
+    setActiveNav();
+    const btn = document.getElementById("appearanceBtn");
+    const options = document.getElementById("themeOptions");
+
+    // toggle open
+    btn.addEventListener("click", () => {
+        options.style.display = options.style.display === "none" ? "block" : "none";
+    });
+
+    // theme change
+    document.querySelectorAll(".theme-option").forEach(item => {
+        item.addEventListener("click", () => {
+            const theme = item.getAttribute("data-theme");
+
+            if (theme === "dark") {
+                document.body.classList.add("dark-mode");
+                localStorage.setItem("theme", "dark");
+            } else {
+                document.body.classList.remove("dark-mode");
+                localStorage.setItem("theme", "light");
+            }
+        });
+    });
+
+    // load saved theme
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark-mode");
     }
-    else if (path.includes("/ebook")) {
-        document.querySelectorAll('[data-nav="library"]').forEach(el => el.classList.add('active'));
-    }
-    else if (path.includes("/subscriptions")) {
-        document.querySelectorAll('[data-nav="subscriptions"]').forEach(el => el.classList.add('active'));
-    }
+
+    document.getElementById("createIcon")?.addEventListener("click", () => {
+        const isLoggedIn = "<%= typeof user !== 'undefined' && user ? 'yes' : '' %>";
+
+        if (isLoggedIn === "yes") {
+            window.location.href = "/National-Test-Series/cre";
+        } else {
+            window.location.href = "/login?redirect=" + encodeURIComponent("/National-Test-Series/cre");
+        }
+    });
+
+    document.getElementById("createTestMobile")?.addEventListener("click", () => {
+        const isLoggedIn = "<%= typeof user !== 'undefined' && user ? 'yes' : '' %>";
+
+        if (isLoggedIn === "yes") {
+            window.location.href = "/National-Test-Series/cre";
+        } else {
+            window.location.href = "/login?redirect=" + encodeURIComponent("/National-Test-Series/cre");
+        }
+    });
+
+    const searchIcon = document.getElementById("searchTriggerIcon");
+    const searchOverlay = document.getElementById("searchOverlay");
+    const closeSearch = document.getElementById("closeSearchOverlay");
+
+    searchIcon?.addEventListener("click", () => {
+        searchOverlay.classList.add("open");
+    });
+
+    closeSearch?.addEventListener("click", () => {
+        searchOverlay.classList.remove("open");
+    });
+
+
+  // 🎤 VOICE SEARCH (FINAL FIX)
+
+const micBtn = document.getElementById("desktopMicBtn");
+const searchInput = document.getElementById("desktopSearchInput");
+
+const overlayMic = document.getElementById("overlayVoiceBtn");
+const overlayInput = document.getElementById("overlaySearchInput");
+
+const voicePopup = document.getElementById("voicePopup");
+
+if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+
+    recognition.lang = "en-IN"; // "hi-IN" bhi use kar sakte ho
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    // 🎤 DESKTOP MIC CLICK
+    micBtn.addEventListener("click", () => {
+        recognition.start();
+        voicePopup.classList.add("active"); // popup show
+    });
+
+    // 📱 OVERLAY MIC CLICK
+    overlayMic?.addEventListener("click", () => {
+        recognition.start();
+        voicePopup.classList.add("active");
+    });
+
+    // 🎯 RESULT (SINGLE — duplicate hata diya)
+    recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+
+        // check kaha type karna hai
+        if (document.activeElement === overlayInput) {
+            overlayInput.value = transcript;
+        } else {
+            searchInput.value = transcript;
+        }
+    };
+
+    // ❌ ERROR
+    recognition.onerror = (event) => {
+        console.error("Voice error:", event.error);
+        voicePopup.classList.remove("active");
+    };
+
+    // ✅ END
+    recognition.onend = () => {
+        voicePopup.classList.remove("active");
+    };
+
+} else {
+    alert("❌ Browser support nahi karta voice recognition");
 }
 
-setActiveNav();
-const btn = document.getElementById("appearanceBtn");
-const options = document.getElementById("themeOptions");
+// 📱 MOBILE SEARCH FIX
 
-// toggle open
-btn.addEventListener("click", () => {
-    options.style.display = options.style.display === "none" ? "block" : "none";
+const overlaySearchBtn = document.querySelector(".voice-search-btn"); // mic ke bagal wala button nahi chahiye
+const overlayInputField = document.getElementById("overlaySearchInput");
+
+// 🔍 ENTER PRESS
+overlayInputField.addEventListener("keypress", function(e) {
+    if (e.key === "Enter") {
+        runMobileSearch();
+    }
 });
 
-// theme change
-document.querySelectorAll(".theme-option").forEach(item => {
-    item.addEventListener("click", () => {
-        const theme = item.getAttribute("data-theme");
+// 🔍 SEARCH FUNCTION
+function runMobileSearch() {
+    const query = overlayInputField.value.trim();
 
-        if (theme === "dark") {
-            document.body.classList.add("dark-mode");
-            localStorage.setItem("theme", "dark");
-        } else {
-            document.body.classList.remove("dark-mode");
-            localStorage.setItem("theme", "light");
-        }
-    });
-});
+    if (!query) return;
 
-// load saved theme
-if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("dark-mode");
+    // redirect same as desktop
+    window.location.href = "/National-Test-Series?search=" + encodeURIComponent(query);
 }
 </script>

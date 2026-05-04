@@ -2,20 +2,6 @@ const PDFDocument = require("pdfkit");
 const fs = require("fs");
 const path = require("path");
 
-/**
- * Generate an offer letter PDF matching the exact text from the image
- * @param {Object} offer - offer data
- * @param {string} offer.offerId - unique offer ID (e.g., "OFF-47FEB0")
- * @param {string} offer.fullName - candidate full name
- * @param {string} offer.dob - date of birth (ISO string)
- * @param {string} offer.doj - date of joining (ISO string)
- * @param {string} offer.project - project name
- * @param {string|number} offer.durationValue - e.g., 5
- * @param {string} offer.durationUnit - 'months' or 'years'
- * @param {string} offer.workMode - 'Remote', 'On-site', or 'Hybrid'
- * @param {string} filePath - output PDF file path
- * @returns {Promise<string>} - resolves with filePath
- */
 async function generateOfferLetterPDF(offer, filePath) {
   return new Promise((resolve, reject) => {
     try {
@@ -23,9 +9,9 @@ async function generateOfferLetterPDF(offer, filePath) {
       const stream = fs.createWriteStream(filePath);
       doc.pipe(stream);
 
-      const logoPath = path.resolve(__dirname, "../assets/logo.jpeg");
+      const logoPath = path.resolve(__dirname, "../assets/back.jpeg");
       const signaturePath = path.resolve(__dirname, "../assets/sign.png");
-      const stampPath = path.resolve(__dirname, "../assets/Stamp.png");
+      const stampPath = path.resolve(__dirname, "../assets/image.png");
 
       const formatDate = (dateStr) => {
         if (!dateStr) return "________";
@@ -47,9 +33,9 @@ async function generateOfferLetterPDF(offer, filePath) {
 
       const pageWidth = doc.page.width;
       const pageHeight = doc.page.height;
-      const safeLeft = 60;
-      const safeRight = pageWidth - 60;
-      const usableWidth = safeRight - safeLeft;
+      const safeLeft = 45;
+const safeRight = pageWidth - 45;
+const usableWidth = safeRight - safeLeft;
 
       const primaryColor = "#000000";
       const secondaryColor = "#666666";
@@ -59,7 +45,6 @@ async function generateOfferLetterPDF(offer, filePath) {
       // --- Green Border ---
       doc.lineWidth(2).strokeColor("#16a34a")
         .rect(30, 30, pageWidth - 60, pageHeight - 60).stroke();
-
       doc.lineWidth(1).strokeColor("#cccccc")
         .rect(35, 35, pageWidth - 70, pageHeight - 70).stroke();
 
@@ -71,118 +56,117 @@ async function generateOfferLetterPDF(offer, filePath) {
         doc.restore();
       }
 
-      // --- Header ---
+      // --- Header (smaller compact) ---
       doc.fillColor(secondaryColor).fontSize(10)
-        .text("Registration Number: 048884", safeLeft, 60);
+        .text("Registration Number: 083632", safeLeft, 60);
       doc.text("Website: www.ridtech.in", 0, 60, { align: "right" });
 
-      doc.fillColor(accentColor).fontSize(22).font("Helvetica-Bold")
-        .text("Research, Innovation & Discovery Bharat", 0, 90, { align: "center" });
+      doc.fillColor("#0f172a")
+        .font("Helvetica-Bold")
+        .fontSize(18) // thoda chota
+        .text("RRID TECH PVT. LTD.", 0, 90, { align: "center" });
 
-      doc.fontSize(14).font("Helvetica")
-        .text("RID Organization, Provides Solutions for Every Problem", 0, 115, { align: "center" });
+      doc.moveDown(0.2);
+      doc.fillColor("#2563eb")
+        .font("Helvetica")
+        .fontSize(10)
+        .text("Software & IT Solutions Company", { align: "center" });
 
-      doc.fillColor(secondaryColor).fontSize(10)
-        .text("Managed & Run by TWKSAA Welfare Foundation, Certified by Central Government", 0, 140, { align: "center" });
+      doc.moveDown(0.2);
+      doc.fillColor("#555")
+        .fontSize(9)
+        .text("Web Development | App Development | AI | Cloud Solutions", { align: "center" });
 
-      doc.text("An ISO 9001:2015 Certified Organization", 0, 155, { align: "center" });
+      doc.moveDown(0.2);
+      doc.fillColor("#777")
+        .fontSize(8)
+        .text("An ISO 9001:2015 Certified Organization", { align: "center" });
 
       doc.strokeColor("#cccccc").lineWidth(1)
-        .moveTo(safeLeft, 170).lineTo(safeRight, 170).stroke();
+        .moveTo(safeLeft, 155).lineTo(safeRight, 155).stroke();
 
-      // --- Meta ---
-    // --- Meta ---
-const issueDate = formatDate(offer.issueDate); // ✅ FIXED
-
-doc.fillColor(primaryColor).fontSize(11)
-  .text(`Issue Date: ${issueDate}`, safeLeft, 190);
-
-doc.text(`Offer ID: ${offer.offerId}`, 0, 190, { align: "right" });
+      // --- Meta (Issue Date, Offer ID) ---
+      const issueDate = formatDate(offer.issueDate);
+      doc.fillColor(primaryColor).fontSize(10)
+        .text(`Issue Date: ${issueDate}`, safeLeft, 175);
+      doc.text(`Offer ID: ${offer.offerId}`, 0, 175, { align: "right" });
 
       // --- Title ---
-      doc.fillColor(highlightColor).fontSize(28).font("Helvetica-Bold")
-        .text("OFFER LETTER", 0, 225, { align: "center" });
+      doc.fillColor(highlightColor).fontSize(24).font("Helvetica-Bold")
+        .text("OFFER LETTER", 0, 205, { align: "center" });
 
       // --- Greeting ---
-      doc.fillColor(primaryColor).fontSize(14).font("Helvetica")
-        .text(`Dear Mr. ${offer.fullName},`, safeLeft, 280);
+      doc.fillColor(primaryColor).fontSize(11).font("Helvetica")
+        doc.text(`Dear Mr. ${offer.fullName},`, safeLeft, 245, {
+  width: usableWidth,
+  align: "left"
+});
 
-      doc.moveDown(1.5);
+      // --- Main body (font size 10, less line gap) ---
+      doc.fontSize(10).font("Helvetica");
+      let yPos = doc.y;
 
-      // --- Main Professional Paragraph ---
-      doc.fontSize(12).fillColor(primaryColor).font("Helvetica")
-        .text(
-          `We are pleased to confirm that you have been selected to join RID Bharat as an Intern for the project "${offer.project}". ` +
-          `Your engagement will commence on ${formatDate(offer.doj)} for a duration of ${offer.durationValue} ${offer.durationUnit} ` +
-          `under the ${offer.workMode} work mode, in accordance with company guidelines. ` +
-          `As an Intern, you are expected to maintain the highest standards of professionalism and integrity throughout your tenure.`,
-          safeLeft,
-          doc.y,
-          { width: usableWidth, align: "justify" }
-        );
+      const para1 = `We are pleased to offer you the position of Intern at RRID TECH PVT. LTD. ` +
+        `You will be working on the project "${offer.project}" with our development team. ` +
+        `Your engagement will commence on ${formatDate(offer.doj)} for a duration of ${offer.durationValue} ${offer.durationUnit} ` +
+        `under ${offer.workMode} work mode.\n\n` +
+        `During this period, you will be involved in real-world development tasks including software development, API integration, debugging, and optimization.\n\n` +
+        `You are expected to maintain professional conduct, follow coding standards, and complete assigned tasks on time.\n\n` +
+        `Strict adherence to organizational policies and procedures is required at all times. ` +
+        `Additionally, you must maintain complete confidentiality regarding any company data, proprietary information, ` +
+        `or client-related materials that you may access during the course of your engagement.\n\n` +
+        `We are confident in your abilities and look forward to your valuable contribution to the organization. ` +
+        `We anticipate a productive and successful association with you.`;
 
-      doc.moveDown(1.5);
+      doc.text(para1, safeLeft, yPos, {
+        width: usableWidth,
+        align: "justify",
+       lineGap: 3,
+paragraphGap: 6 // kam gap
+      });
 
-      doc.text(
-        "Strict adherence to organizational policies and procedures is required at all times. " +
-        "Additionally, you must maintain complete confidentiality regarding any company data, proprietary information, " +
-        "or client-related materials that you may access during the course of your engagement.",
-        { width: usableWidth, align: "justify" }
-      );
-
-      doc.moveDown(2);
-
-      doc.text(
-        "We are confident in your abilities and look forward to your valuable contribution to the organization. " +
-        "We anticipate a productive and successful association with you.",
-        { width: usableWidth, align: "justify" }
-      );
-
-      doc.moveDown(2);
-
+      doc.moveDown(0.8);
       doc.text("Best Regards,", safeLeft);
 
-      // --- Signature ---
-      const signatureY = doc.y + 20;
-
+      // --- Signature area (thoda upar kiya) ---
+      const signatureY = doc.y + 12;
       if (fs.existsSync(signaturePath)) {
-        doc.image(signaturePath, safeLeft, signatureY, { width: 120 });
+        doc.image(signaturePath, safeLeft, signatureY, { width: 100 });
       }
 
-      doc.fontSize(14).font("Helvetica-Bold")
-        .text("Er-Rajesh Prasad", safeLeft, signatureY + 60);
+      doc.fontSize(12).font("Helvetica-Bold")
+        .text("Er-Rajesh Prasad", safeLeft, signatureY + 45);
 
-      doc.fontSize(12).font("Helvetica")
-        .text("CEO & Director", safeLeft, signatureY + 80);
-      doc.text("RID Bharat, Bhopal", safeLeft, signatureY + 95);
+      doc.fontSize(10).font("Helvetica")
+        .text("CEO & Director", safeLeft, signatureY + 62);
+      doc.text("RRID TECH PVT. LTD.", safeLeft, signatureY + 75);
 
       if (fs.existsSync(stampPath)) {
-        doc.image(stampPath, safeRight - 90, signatureY + 20, { width: 90 });
+        doc.image(stampPath, safeRight - 80, signatureY + 10, { width: 70 });
       }
 
-      // --- Footer ---
-      const footerY = pageHeight - 100;
-
+      // --- Footer (fixed at bottom) ---
+      const footerY = pageHeight - 85;
       doc.strokeColor("#cccccc").lineWidth(0.5)
         .moveTo(safeLeft, footerY).lineTo(safeRight, footerY).stroke();
 
-      doc.fontSize(8).fillColor(secondaryColor)
+      doc.fontSize(7).fillColor(secondaryColor)
         .text(
-          "Office Address: MiG–72, Sector A, Rajeev Nagar, Ayodhya Nagar, Bhopal, Madhya Pradesh 462021 (India)",
-          safeLeft, footerY + 10,
+          "Office Address: 51 Indrapuri, Sector C. Jubali Gate, Near Croma, Bhel, Bhopal, Huzur, Madhya Pradesh 462022 (India)",
+          safeLeft, footerY + 8,
           { width: usableWidth, align: "center" }
         );
 
       doc.text(
-        "Contact: +91 98927 82728 | Email: support@dmail.com",
-        safeLeft, footerY + 25,
+        "Email: ridorg.in@gmail.com | Website: www.ridtech.in",
+        safeLeft, footerY + 20,
         { width: usableWidth, align: "center" }
       );
 
-      doc.fillColor(highlightColor).fontSize(9)
+      doc.fillColor(highlightColor).fontSize(8)
         .text(
-          `Verify this offer at: ridbharat.com/verify | Offer ID: ${offer.offerId}`,
-          safeLeft, footerY + 40,
+          `Verify this offer at: ridtech.in/verify | Offer ID: ${offer.offerId}`,
+          safeLeft, footerY + 32,
           { width: usableWidth, align: "center" }
         );
 
@@ -190,7 +174,6 @@ doc.text(`Offer ID: ${offer.offerId}`, 0, 190, { align: "right" });
 
       stream.on("finish", () => resolve(filePath));
       stream.on("error", reject);
-
     } catch (err) {
       reject(err);
     }

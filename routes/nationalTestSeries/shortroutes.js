@@ -8,7 +8,10 @@ router.get("/shorts-mcq", async (req, res) => {
   try {
 
     const tests = await TeacherTest.find()
-      .populate("teacher")
+      .populate({
+        path: "createdBy",
+        select: "name"
+      })
       .limit(10);
 
     let questions = [];
@@ -18,7 +21,7 @@ router.get("/shorts-mcq", async (req, res) => {
         questions.push({
           text: q.text,
           options: q.options,
-          teacher: test.teacher
+          teacher: test.createdBy // ✅ FIX
         });
       });
     });
@@ -26,7 +29,7 @@ router.get("/shorts-mcq", async (req, res) => {
     res.render("NationalTestSeries/ShortsMCQ/Shortsmcq", { questions });
 
   } catch (err) {
-    console.log(err);
+    console.log("MCQ ERROR:", err); // 🔥 debug
     res.send("Error loading MCQ");
   }
 });

@@ -531,6 +531,30 @@ app.post("/api/save-lead", async (req,res)=>{
  }
 
 })
+
+// natinal test create test routes
+app.use(async (req, res, next) => {
+  res.locals.user = null;
+
+  if (req.session.userId) {
+    let user = await User.findById(req.session.userId);
+    if (!user) {
+      user = await Teacher.findById(req.session.userId);
+    }
+    res.locals.user = user;
+  }
+
+  next();
+});
+app.get("/test-details", (req, res) => {
+  res.render("NationalTestSeries/test-details");
+});
+app.use("/api", require("./routes/nationalTestSeries/follow"));
+app.get("/cre",(req,res)=>{
+  res.render("NationalTestSeries/CreateTest/CreateTest.ejs")
+})
+const testRoutes = require("./routes/nationalTestSeries/teacherStudentTest");
+app.use("/National-Test-Series", testRoutes);
 // all india test routes 
 const shortsRoutes = require("./routes/nationalTestSeries/shortroutes");
 app.use("/", shortsRoutes);

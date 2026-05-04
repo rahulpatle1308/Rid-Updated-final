@@ -28,7 +28,20 @@ const teacherSchema = new mongoose.Schema(
           default: Date.now
         }
       }
-    ]
+    ],// 🔥 FOLLOWERS (kaun kaun follow kar raha)
+followers: [
+  {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }
+],
+
+following: [
+  {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }
+],
   },
   { timestamps: true }
 );

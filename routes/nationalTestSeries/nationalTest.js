@@ -6,13 +6,18 @@ const Teacher = require("../../models/teacher"); // 🔥 ADD THIS
 router.get("/", async (req, res) => {
   try {
     const tests = await Test.find({ status: "published" })
-      .populate("teacher", "name")
+      .populate({
+  path: "createdBy",
+  select: "_id name followers"
+})
       .sort({ createdAt: -1 });
 
     res.render("NationalTestSeries/NationalTest", { 
-  tests,
-  user: res.locals.user
-});} catch (err) {
+      tests,
+      user: res.locals.user
+    });
+
+  } catch (err) {
     console.log(err);
     res.send("Error loading tests");
   }
@@ -143,6 +148,65 @@ router.get("/history", async (req, res) => {
   } catch (err) {
     console.log(err);
     res.send("Error loading history");
+  }
+});
+
+// ================= DELETE SINGLE HISTORY =================
+router.delete("/history/delete/:id", async (req, res) => {
+  try {
+    const userId = req.session.userId;
+
+    // 🔐 LOGIN CHECK
+    if (!userId) {
+      return res.status(401).json({ success: false, msg: "Login required" });
+    }
+
+    const historyId = req.params.id;
+
+    // ✅ USER se delete
+    let user = await User.findById(userId);
+
+    if (user) {
+      user.viewHistory = user.viewHistory.filter(
+        item => item._id.toString() !== historyId
+      );
+      await user.save();
+    }
+
+    // ✅ TEACHER se delete
+    let teacher = await Teacher.findById(userId);
+
+    if (teacher) {
+      teacher.viewHistory = teacher.viewHistory.filter(
+        item => item._id.toString() !== historyId
+      );
+      await teacher.save();
+    }
+
+    res.json({ success: true });
+
+  } catch (err) {
+    console.log("HISTORY DELETE ERROR:", err);
+    res.status(500).json({ success: false });
+  }
+});
+// ================= CLEAR ALL HISTORY =================
+router.post("/history/clear", async (req, res) => {
+  try {
+    const userId = req.session.userId;
+
+    if (!userId) {
+      return res.status(401).json({ msg: "Login required" });
+    }
+
+    await User.findByIdAndUpdate(userId, { viewHistory: [] });
+    await Teacher.findByIdAndUpdate(userId, { viewHistory: [] });
+
+    res.json({ success: true });
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ success: false });
   }
 });
 module.exports = router;

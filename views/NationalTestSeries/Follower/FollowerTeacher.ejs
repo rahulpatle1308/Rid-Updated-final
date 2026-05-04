@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Teacher Profile · RIDTECH</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ========== RESET ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f8fafc;
+            font-family: system-ui, -apple-system, 'Segoe UI', 'Inter', Roboto, Helvetica, Arial, sans-serif;
+            color: #0f172a;
+            overflow-x: hidden;
+        }
+
+        /* Dynamic content area – remove any extra spacing */
+        #dynamicContent {
+            padding: 0 !important;
+            margin: 0 !important;
+            overflow-x: hidden;
+        }
+
+        /* Profile wrapper – no gaps */
+        .profile-main-wrapper {
+            transition: margin 0.1s ease;
+            padding: 0 !important;
+            margin: 0 !important;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* Instagram‑style card – full width, edges flush */
+        .ig-profile-card {
+            background: white;
+            border-radius: 0;
+            box-shadow: none;
+            padding: 24px 20px 28px 20px;
+            width: 100%;
+            margin: 0;
+        }
+
+        /* ===== PROFILE HEADER (responsive) ===== */
+        .profile-header-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        /* On small screens, center avatar and stack text */
+        @media (max-width: 550px) {
+            .profile-header-row {
+                flex-direction: column;
+                text-align: center;
+                gap: 16px;
+            }
+            .profile-info h1 {
+                justify-content: center;
+            }
+            .profile-bio {
+                justify-content: center;
+            }
+        }
+
+        .avatar-circle {
+            width: 96px;
+            height: 96px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 44px;
+            font-weight: 600;
+            color: white;
+            box-shadow: 0 8px 18px rgba(59,130,246,0.25);
+            flex-shrink: 0;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 550px) {
+            .avatar-circle {
+                width: 80px;
+                height: 80px;
+                font-size: 36px;
+                margin: 0 auto;
+            }
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-info h1 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            color: #0f172a;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            word-break: break-word;
+        }
+
+        @media (max-width: 550px) {
+            .profile-info h1 {
+                font-size: 22px;
+                justify-content: center;
+            }
+        }
+
+        .teacher-handle {
+            font-size: 15px;
+            font-weight: 500;
+            background: #f1f5f9;
+            padding: 4px 14px;
+            border-radius: 40px;
+            color: #334155;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 480px) {
+            .teacher-handle {
+                white-space: normal;
+                word-break: break-word;
+                font-size: 13px;
+            }
+        }
+
+        .profile-bio {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 12px;
+            font-size: 14px;
+            color: #475569;
+            word-break: break-word;
+        }
+
+        .profile-bio i {
+            width: 20px;
+            color: #5b6e8c;
+        }
+
+        /* ===== STATS ROW (responsive) ===== */
+        .stats-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            margin: 24px 0 8px 0;
+            border-top: 1px solid #eef2ff;
+            padding-top: 20px;
+        }
+
+        @media (max-width: 550px) {
+            .stats-row {
+                justify-content: space-around;
+                gap: 16px;
+            }
+        }
+
+        .stat-item {
+            cursor: pointer;
+            transition: 0.1s;
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-number {
+            font-weight: 800;
+            font-size: 22px;
+            color: #0f172a;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #5b6e8c;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        @media (max-width: 550px) {
+            .stat-number {
+                font-size: 20px;
+            }
+            .stat-label {
+                font-size: 12px;
+            }
+        }
+
+        .profile-divider {
+            margin: 28px 0 32px 0;
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, #e2e8f0, #cbd5e1, #e2e8f0);
+        }
+
+        /* ===== TESTS SECTION ===== */
+        .tests-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 28px;
+            text-align: center;
+        }
+
+        .tests-header span {
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 1px;
+            color: #334155;
+            background: #f8fafc;
+            padding: 6px 20px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 550px) {
+            .tests-header span {
+                font-size: 13px;
+                padding: 5px 12px;
+                white-space: normal;
+                word-break: keep-all;
+            }
+        }
+
+        /* Responsive grid – perfect on all devices */
+        .tests-grid {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: 1fr; /* 1 column on phones */
+        }
+
+        @media (min-width: 640px) {
+            .tests-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .tests-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 28px;
+            }
+        }
+
+        /* Test cards */
+        .test-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            border: 1px solid #edf2f7;
+            width: 100%;
+        }
+
+        .test-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.12);
+        }
+
+        .thumbnail {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #eef2ff;
+            overflow: hidden;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .test-card:hover .thumbnail img {
+            transform: scale(1.02);
+        }
+
+        .video-details {
+            padding: 12px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .channel-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(145deg, #3b82f6, #a855f7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            color: white;
+            flex-shrink: 0;
+            text-transform: uppercase;
+        }
+
+        .video-info {
+            flex: 1;
+            min-width: 0; /* prevents overflow */
+        }
+
+        .video-title {
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 1.4;
+            margin-bottom: 4px;
+            color: #0f172a;
+            word-break: break-word;
+        }
+
+        .channel-name {
+            font-size: 13px;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 4px;
+            flex-wrap: wrap;
+        }
+
+        .video-stats {
+            font-size: 12px;
+            color: #6c7a91;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .empty-tests {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 56px 20px;
+            background: #fef9e6;
+            border-radius: 40px;
+            color: #b45309;
+        }
+
+        /* ===== MODAL (unchanged, but mobile friendly) ===== */
+        .followers-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
+        }
+
+        .followers-modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 460px;
+            border-radius: 28px;
+            overflow: hidden;
+            animation: fadeUp 0.2s ease;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 22px;
+            border-bottom: 1px solid #eef2ff;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .modal-header button {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        .followers-list {
+            max-height: 55vh;
+            overflow-y: auto;
+            padding: 8px 0;
+        }
+
+        .follower-entry {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 20px;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .follower-avatar-small {
+            width: 44px;
+            height: 44px;
+            background: #e2e8f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            color: #1e293b;
+        }
+
+        .follower-name {
+            font-weight: 600;
+            font-size: 15px;
+            word-break: break-word;
+        }
+
+        .follower-email {
+            font-size: 12px;
+            color: #6c7a91;
+            word-break: break-word;
+        }
+
+        .no-followers {
+            padding: 48px;
+            text-align: center;
+            color: #94a3b8;
+        }
+
+        /* Extra small devices */
+        @media (max-width: 480px) {
+            .ig-profile-card {
+                padding: 16px;
+            }
+            .video-title {
+                font-size: 14px;
+            }
+            .channel-name {
+                font-size: 12px;
+            }
+            .video-stats {
+                font-size: 11px;
+            }
+            .channel-avatar {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+        }
+
+        /* follow mw */
+ .profile-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.name-section {
+    flex: 1;
+}
+
+/* Follow button right side */
+.follow-btn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    
+    /* 🔥 SIZE बढ़ाया */
+    padding: 12px 28px;   /* पहले 8px 20px था */
+    font-size: 16px;      /* पहले छोटा था */
+    font-weight: 700;
+
+    border-radius: 25px;
+    cursor: pointer;
+
+    height: fit-content;
+    margin-top: 5px;
+
+    /* 🔥 extra look */
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    transition: all 0.2s ease;
+}
+
+.follow-btn:hover {
+    background: #1d4ed8;
+    transform: scale(1.05);
+}
+@media (max-width: 550px) {
+    .profile-top-row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .follow-btn {
+        width: 100%;
+        max-width: 200px;
+        margin-top: 10px;
+    }
+}
+@media (max-width: 550px) {
+    .follow-btn {
+        width: 100%;
+        max-width: 240px;
+        padding: 10px 20px;
+        font-size: 15px;
+    }
+}
+    </style>
+</head>
+
+<body>
+
+    <!-- Your existing sidebar + navbar -->
+    <%- include("../common/allindiatestheader.ejs") %>
+
+    <!-- Hidden profile content -->
+    <div id="profilePageContent" style="display: none;">
+        <div class="profile-main-wrapper" id="profileMainWrapper">
+            <div class="ig-profile-card">
+                <!-- Header -->
+                <div class="profile-header-row">
+                    <div class="avatar-circle">
+                        <%= teacher.name?.charAt(0).toUpperCase() || "T" %>
+                    </div>
+                    <div class="profile-info">
+                        <h1>
+                            👨‍🏫 <%= teacher.name %>
+                            <span class="teacher-handle">
+                                @<%= (teacher.username || teacher.name?.toLowerCase().replace(/\s/g, '') || 'educator').replace(/[^a-z0-9._]/g, '') %>
+                            </span>
+                        </h1>
+                        
+                        <div class="profile-bio">
+                            <span><i class="fas fa-envelope"></i> <%= teacher.email || 'teacher@ridtech.edu' %></span>
+                            <span><i class="fas fa-chalkboard-user"></i> Educator · knowledge creator</span>
+                        </div>
+                        
+                    </div>
+                    <button class="follow-btn">Follow</button>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats-row">
+                    <div class="stat-item" id="statTests">
+                        <div class="stat-number"><%= tests?.length || 0 %></div>
+                        <div class="stat-label">posts</div>
+                    </div>
+                    <div class="stat-item" id="followersTrigger">
+                        <div class="stat-number"><%= followers?.length || 0 %></div>
+                        <div class="stat-label">followers</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">0</div>
+                        <div class="stat-label">following</div>
+                    </div>
+                </div>
+
+                <hr class="profile-divider">
+
+                <!-- Tests section -->
+                <div class="tests-header">
+                    <span><i class="fas fa-pen-fancy"></i> 📝 TEACHER'S TESTS</span>
+                </div>
+
+                <div class="tests-grid">
+                    <% if (tests && tests.length > 0) { %>
+                        <% tests.forEach(t => { %>
+                            <div class="test-card" onclick="window.location.href='/National-Test-Series/test/<%= t._id %>'">
+                                <div class="thumbnail">
+                                    <img src="https://picsum.photos/300/200?random=<%= t._id %>" alt="test thumbnail">
+                                </div>
+                                <div class="video-details">
+                                    <div class="channel-avatar">
+                                        <%= teacher.name?.charAt(0).toUpperCase() || "T" %>
+                                    </div>
+                                    <div class="video-info">
+                                        <div class="video-title"><%= t.name %></div>
+                                        <div class="channel-name">
+                                            👨‍🏫 <%= teacher.name %>
+                                        </div>
+                                        <div class="video-stats">
+                                            📅 <%= new Date(t.createdAt).toLocaleDateString() %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }) %>
+                    <% } else { %>
+                        <div class="empty-tests">
+                            <i class="fas fa-flask" style="font-size: 36px; opacity: 0.5;"></i>
+                            <p style="margin-top: 12px;">📭 No tests created yet. Stay tuned!</p>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Followers Modal -->
+    <div id="followersModal" class="followers-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>👥 Followers (<%= followers?.length || 0 %>)</span>
+                <button id="closeModalBtn">&times;</button>
+            </div>
+            <div class="followers-list">
+                <% if (followers && followers.length > 0) { %>
+                    <% followers.forEach(f => { %>
+                        <div class="follower-entry">
+                            <div class="follower-avatar-small">
+                                <%= f.name?.charAt(0).toUpperCase() || '?' %>
+                            </div>
+                            <div>
+                                <div class="follower-name"><%= f.name %></div>
+                                <div class="follower-email"><%= f.email %></div>
+                            </div>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <div class="no-followers">
+                        <i class="far fa-frown" style="font-size: 28px;"></i>
+                        <p style="margin-top: 10px;">No followers yet 😢</p>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Move profile content into #dynamicContent
+            const dynamicContent = document.getElementById("dynamicContent");
+            const tempContent = document.getElementById("profilePageContent");
+            if (dynamicContent && tempContent) {
+                const wrapper = tempContent.querySelector(".profile-main-wrapper");
+                if (wrapper) {
+                    dynamicContent.innerHTML = "";
+                    dynamicContent.appendChild(wrapper);
+                }
+                tempContent.remove();
+            }
+
+            // Reposition profile – but reset margins on mobile if sidebar is hidden
+            function repositionProfile() {
+                const profileDiv = document.querySelector(".profile-main-wrapper");
+                if (!profileDiv) return;
+
+                let sidebar = document.querySelector('aside, .sidebar, [class*="sidebar"], [class*="side-bar"], .left-menu, .vertical-nav, #sidebar, .main-sidebar');
+                let navbar = document.querySelector('header, nav, .navbar, [class*="navbar"], [class*="header"], .top-bar, .main-header, .app-header');
+
+                let sidebarWidth = 0;
+                let navbarHeight = 0;
+
+                // On mobile (<768px), often sidebar is hidden or overlay – set margin to 0
+                const isMobile = window.innerWidth < 768;
+                if (isMobile) {
+                    profileDiv.style.marginLeft = '0px';
+                    profileDiv.style.marginTop = (navbar ? navbar.getBoundingClientRect().height : 60) + 'px';
+                    profileDiv.style.width = '100%';
+                    return;
+                }
+
+                // Desktop: detect actual widths
+                if (sidebar) {
+                    sidebarWidth = sidebar.getBoundingClientRect().width;
+                } else {
+                    const leftFixed = Array.from(document.querySelectorAll('div, aside')).find(el => {
+                        const style = getComputedStyle(el);
+                        return (style.position === 'fixed' || style.position === 'sticky') && 
+                               parseInt(style.left) === 0 && 
+                               el.offsetWidth > 150;
+                    });
+                    sidebarWidth = leftFixed ? leftFixed.offsetWidth : 260;
+                }
+
+                if (navbar) {
+                    navbarHeight = navbar.getBoundingClientRect().height;
+                } else {
+                    const topFixed = Array.from(document.querySelectorAll('header, nav, div')).find(el => {
+                        const style = getComputedStyle(el);
+                        return (style.position === 'fixed' || style.position === 'sticky') && 
+                               parseInt(style.top) === 0;
+                    });
+                    navbarHeight = topFixed ? topFixed.offsetHeight : 70;
+                }
+
+                profileDiv.style.marginLeft = sidebarWidth + 'px';
+                profileDiv.style.marginTop = navbarHeight + 'px';
+                profileDiv.style.width = `calc(100% - ${sidebarWidth}px)`;
+            }
+
+            window.addEventListener('DOMContentLoaded', () => setTimeout(repositionProfile, 60));
+            window.addEventListener('resize', () => setTimeout(repositionProfile, 30));
+            window.addEventListener('load', repositionProfile);
+
+            // Followers modal logic
+            const modal = document.getElementById('followersModal');
+            const trigger = document.getElementById('followersTrigger');
+            const closeBtn = document.getElementById('closeModalBtn');
+
+            if (trigger && modal) {
+                trigger.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    modal.classList.add('active');
+                });
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+                }
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) modal.classList.remove('active');
+                });
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && modal.classList.contains('active')) {
+                        modal.classList.remove('active');
+                    }
+                });
+            }
+        })();
+    </script>
+
+</body>
+</html>
